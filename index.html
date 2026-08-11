@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.7 Alpha</title>
+<title>Legion RX 4.0.8 Alpha</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -35,7 +35,7 @@ body.cockpitMode #viewHost{bottom:0;overflow:hidden}.cockpit{height:calc(100dvh 
 .designQuickBtn{height:38px;padding:0 13px;border:1px solid var(--line);border-radius:var(--radius-button);background:var(--panel2);color:var(--text);display:flex;align-items:center;gap:7px;font:inherit;font-size:12px;font-weight:850;cursor:pointer;white-space:nowrap}.designQuickBtn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue2)}.designQuickBtn svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.designQuickBtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}@media(max-width:760px){.designQuickBtn{width:39px;padding:0;display:grid;place-items:center}.designQuickBtn span{display:none}}
 
 /* =========================================================
-   LEGION RX 4.0.7 — REFERENCE UI SYSTEM
+   LEGION RX 4.0.8 — ANNOUNCER START AUDIO
    Based on the approved dark Live Heat concept.
    ========================================================= */
 :root{
@@ -126,7 +126,7 @@ html[data-theme="dark"] .btn{border-radius:8px;box-shadow:none}.disciplineTile.a
  .raceCockpit{min-height:560px;grid-template-rows:60px minmax(0,1fr) 116px 48px}.raceTopbar{grid-template-columns:125px 1fr}.raceBrand>span{font-size:18px}.raceBrand small{display:none}.raceTopMeta{grid-template-columns:1fr}.raceTopMeta .topMetaBlock:nth-child(3){display:none}.topMetaBlock b{font-size:14px}.topIcon{width:18px;height:18px}.raceCenterStack{display:none}.refPanelHead{height:46px;padding:0 10px}.refPanelHead h2{font-size:15px}.pilotBoardTable{padding:0 5px}.pilotRow{grid-template-columns:34px minmax(95px,1fr) 35px 64px 62px 55px;min-height:49px;padding:0 4px;gap:4px;font-size:10px}.pilotRow>*:nth-child(7){display:none}.pilotRow.header span:nth-child(7){display:none}.pilotRow .pos{font-size:18px}.pilotNameCell .name{font-size:12px}.pilotNameCell .sub{display:none}.bestLap{font-size:11px}.boardFooter{display:none}.raceBtn{font-size:11px;letter-spacing:0}.controlIcon{width:19px;height:19px}.raceModeBar{padding:6px}.modeTab{font-size:13px}.mobileWidgetLauncher{top:66px;right:8px}
 }
 
-/* ========================= 4.0.7 RACE CONSOLE VISUAL SYSTEM ========================= */
+/* ========================= 4.0.8 RACE CONSOLE VISUAL SYSTEM ========================= */
 :root{
   --console-bg:#070a0d;--console-panel:#0d1216;--console-panel2:#11171c;--console-panel3:#151d23;
   --console-line:#263036;--console-line-soft:#1b242a;--console-text:#f2f4f5;--console-muted:#8e989f;
@@ -170,7 +170,7 @@ body.cockpitMode #viewHost{top:0;bottom:0;overflow:hidden;background:var(--conso
 @media(max-width:900px){.raceCockpit{overflow:auto;height:100dvh;grid-template-rows:auto auto auto auto auto}.raceConsoleHeader{grid-template-columns:1fr auto}.raceBrand{border-right:1px solid var(--console-line)}.raceHeadInfo{display:none}.raceHeadStatus{padding:7px}.raceHeadStatus .consolePill.disabled{display:none}.eventFlow{grid-template-columns:100px minmax(0,1fr);}.flowResults{display:none}.flowItems{grid-template-columns:repeat(3,minmax(0,1fr))}.flowItems .flowItem:nth-child(n+4){display:none}.raceGrid{grid-template-columns:1fr;overflow:visible}.racePositions{min-height:460px}.raceCenterStack,.raceRightStack{overflow:visible;display:grid;grid-template-columns:1fr 1fr}.timerCard{grid-column:1/-1}.raceControls{grid-template-columns:repeat(3,1fr);grid-auto-rows:62px}.modeStrip{grid-template-columns:1fr}.modeStrip button{min-height:46px}.modeStrip button:not(.modeActive){display:none}}
 @media(max-width:620px){.raceCockpit{padding:6px}.raceConsoleHeader{grid-template-columns:minmax(0,1fr) auto}.raceBrand strong{font-size:22px}.raceBrand small{font-size:9px}.raceHeadStatus .consolePill{display:none}.raceHeadStatus .consolePill.ok{display:flex;width:42px;padding:0;justify-content:center}.raceHeadStatus .consolePill.ok span{display:none}.eventFlow{grid-template-columns:86px minmax(0,1fr);padding:4px}.flowMenu span{display:none}.flowItems{grid-template-columns:1fr 1fr}.flowItems .flowItem:nth-child(n+3){display:none}.racePositions{min-height:420px}.racePositions .pilotRow{grid-template-columns:40px minmax(120px,1fr) 42px 70px 70px 64px;min-height:54px;padding:0 7px}.racePositions .pilotRow span:nth-child(7),.racePositions .pilotRow.header span:nth-child(7){display:none}.racePositions .pilotRow .pos{margin-left:-7px;font-size:24px}.racePositions .pilotRow .name{font-size:15px}.racePositions .pilotRow.header{font-size:8px}.positionsFooter{font-size:9px}.positionsFooter span:last-child{display:none}.raceCenterStack,.raceRightStack{grid-template-columns:1fr}.timerCard strong{font-size:56px}.raceControls{grid-template-columns:repeat(2,1fr);grid-auto-rows:58px}.consoleControl{font-size:13px}.consoleControl svg{width:22px;height:22px}.manualPilotGrid{grid-template-columns:1fr}}
 
-/* ========================= 4.0.7 GLOBAL REFERENCE UI ========================= */
+/* ========================= 4.0.8 GLOBAL REFERENCE UI ========================= */
 .moduleGrid{grid-template-columns:repeat(4,1fr)}
 .pageHeader h1,.homeSectionHead h2,.card h2,.card h3,.disciplineTile h3,.moduleCard b,.btn,.sectionTabs button,.stageNo{font-family:"Bahnschrift Condensed","Arial Narrow","Segoe UI",sans-serif;letter-spacing:.01em}
 .card,.moduleCard,.disciplineTile{border-radius:var(--radius-widget);box-shadow:none}
@@ -246,7 +246,7 @@ html[data-theme="light"] .eventDrawer .eventItem.completed{background:var(--gree
 @media(max-width:760px){.formatRuleGrid,.moduleGrid,.champStageGrid,.archiveGrid{grid-template-columns:1fr}.scheduleRow{grid-template-columns:1fr auto}.scheduleRow span:nth-of-type(2){grid-column:1/-1}.champTitleRow,.champStagesHead{align-items:flex-start;flex-direction:column}.sectionTabs{margin-left:-2px;margin-right:-2px}}
 
 
-/* ========================= 4.0.7 MOBILE COCKPIT FIX ========================= */
+/* ========================= 4.0.8 MOBILE COCKPIT ========================= */
 :root{--rx-display-font:"Roboto Condensed","Arial Narrow","Segoe UI",Arial,sans-serif;--rx-ui-font:"Roboto Condensed","Segoe UI",Roboto,Arial,sans-serif}
 body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-font)}
 .pageHeader h1,.homeSectionHead h2,.card h2,.card h3,.disciplineTile h3,.moduleCard b,.sectionTabs button,.stageNo{font-family:var(--rx-display-font)}
@@ -274,7 +274,7 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.7 ALPHA</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.8 ALPHA</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -310,7 +310,7 @@ function makeRace(input={}){
       finalLimitType:input.finalLimitType||'laps',
       finalMinutes:Number(input.finalMinutes||5),
       finalLaps:Number(input.finalLaps||7),
-      countdownSec:Number(input.countdownSec||5),
+      countdownSec:Number(input.countdownSec||10),
       minLapSec:Number(input.minLapSec||2)
     },
     runtime:{activeEventKey:'',session:null,eventResults:{},eventLog:[]}
@@ -417,6 +417,124 @@ class LapWizCore extends EventTarget{
   unknownBeep(){this.beep(false);}
 }
 
+const ANNOUNCER_AUDIO={
+  prestart10:'./audio/voice/prestart_10.wav',
+  goodRace:'./audio/voice/good_race.wav',
+  startRace:'./audio/system/start_race.mp3',
+  bleep:'./audio/system/bleep.mp3',
+  countdown:Object.fromEntries(Array.from({length:10},(_,i)=>[i+1,`./audio/voice/countdown_${String(i+1).padStart(2,'0')}.wav`]))
+};
+class AnnouncerEngine extends EventTarget{
+  constructor(){
+    super();
+    this.enabled=true;
+    this.startMode='full';
+    this.token=0;
+    this.voiceCache=new Map();
+    this.bleepPool=[];
+    this.bleepIndex=0;
+    this.lastMessage='Готов к старту';
+  }
+  emit(detail){this.dispatchEvent(new CustomEvent('status',{detail}));}
+  getAudio(key){
+    if(this.voiceCache.has(key))return this.voiceCache.get(key);
+    const src=key.startsWith('countdown_')?ANNOUNCER_AUDIO.countdown[Number(key.split('_')[1])]:ANNOUNCER_AUDIO[key];
+    if(!src)return null;
+    const a=new Audio(src);a.preload='auto';this.voiceCache.set(key,a);return a;
+  }
+  preload(){
+    ['prestart10','goodRace','startRace',...Array.from({length:10},(_,i)=>`countdown_${i+1}`)].forEach(k=>{const a=this.getAudio(k);try{a?.load();}catch{}});
+    if(!this.bleepPool.length)this.bleepPool=Array.from({length:8},()=>{const a=new Audio(ANNOUNCER_AUDIO.bleep);a.preload='auto';return a;});
+  }
+  stopVoice(){
+    this.voiceCache.forEach(a=>{try{a.pause();a.currentTime=0;}catch{}});
+  }
+  cancel(){
+    this.token++;
+    this.stopVoice();
+    this.lastMessage='Отсчёт отменён';
+    this.emit({message:this.lastMessage,running:false});
+  }
+  async play(key,{wait=true,force=false,volume=1}={}){
+    if(!force&&!this.enabled)return;
+    const a=this.getAudio(key);if(!a)return;
+    try{
+      a.pause();a.currentTime=0;a.volume=volume;
+      const p=a.play();if(p&&typeof p.then==='function')await p;
+      this.lastMessage=key;
+      this.emit({message:key,running:true});
+      if(wait)await new Promise(resolve=>{
+        const done=()=>{a.removeEventListener('ended',done);a.removeEventListener('error',done);resolve();};
+        a.addEventListener('ended',done,{once:true});a.addEventListener('error',done,{once:true});
+      });
+    }catch(e){
+      console.warn('Announcer audio:',key,e);
+      this.emit({message:`Ошибка аудио: ${key}`,error:String(e)});
+    }
+  }
+  playBleep(){
+    this.preload();
+    if(!this.bleepPool.length)return;
+    const a=this.bleepPool[this.bleepIndex++%this.bleepPool.length];
+    try{a.currentTime=0;a.volume=1;a.play().catch(()=>{});}catch{}
+  }
+  delay(ms,token){return new Promise(resolve=>setTimeout(()=>resolve(token===this.token),Math.max(0,ms)));}
+  async timedCountdown(from,{token,onTick,voiceFrom=from,voiceTo=1,goodRaceAt=null}={}){
+    const origin=performance.now();
+    for(let n=from;n>=0;n--){
+      if(token!==this.token)return false;
+      if(n!==from){
+        const ok=await this.delay(origin+(from-n)*1000-performance.now(),token);
+        if(!ok)return false;
+      }
+      onTick?.(n);
+      if(n>0&&this.enabled){
+        if(goodRaceAt!==null&&n===goodRaceAt)this.play('goodRace',{wait:false});
+        else if(n<=10&&n<=voiceFrom&&n>=voiceTo)this.play(`countdown_${n}`,{wait:false});
+      }
+    }
+    return token===this.token;
+  }
+  async runStartSequence({seconds=10,mode='full',onTick,onStart}={}){
+    this.cancel();
+    const token=this.token;
+    this.preload();
+    const sec=Math.max(1,Math.min(10,Math.round(Number(seconds)||10)));
+    this.lastMessage='Подготовка старта';
+    this.emit({message:this.lastMessage,running:true,mode,seconds:sec});
+
+    if(!this.enabled){
+      const ok=await this.timedCountdown(sec,{token,onTick,voiceFrom:0,voiceTo:99});
+      if(ok&&token===this.token)await onStart?.();
+      return;
+    }
+
+    if(mode==='full'){
+      // Записанная фраза существует именно для 10 секунд.
+      if(sec===10){
+        await this.play('prestart10',{wait:true});
+        if(token!==this.token)return;
+      }
+      const ok=await this.timedCountdown(sec,{token,onTick,voiceFrom:10,voiceTo:5,goodRaceAt:4});
+      if(!ok||token!==this.token)return;
+    }else{
+      await this.play('goodRace',{wait:true});
+      if(token!==this.token)return;
+      const first=Math.max(0,sec-1);
+      if(first>0){
+        const ok=await this.timedCountdown(first,{token,onTick,voiceFrom:10,voiceTo:1});
+        if(!ok||token!==this.token)return;
+      }else onTick?.(0);
+    }
+    if(token!==this.token)return;
+    this.play('startRace',{wait:false,force:true});
+    this.lastMessage='СТАРТ';
+    this.emit({message:'СТАРТ',running:false});
+    await onStart?.();
+  }
+}
+
+
 
 'use strict';
 
@@ -424,7 +542,8 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const KEYS={race:'legionrx4_current_race',pilots:'legionrx4_pilot_db',champ:'legionrx4_championships',archive:'legionrx4_archive',settings:'legionrx4_settings'};
 const defaultUi={cardRadius:10,tileRadius:10,buttonRadius:8,inputRadius:7,iconRadius:8,heroRadius:12,widgetRadius:10,modalRadius:10,cardPadding:16,sectionGap:10,buttonHeight:62,contentWidth:1440,disciplineCols:3};
 const defaultSettings={
-  theme:'dark',lang:'ru',lapSound:true,minLapSec:2,countdownSec:5,
+  theme:'dark',lang:'ru',lapSound:true,minLapSec:2,countdownSec:10,
+  announcerEnabled:true,startVoiceMode:'full',
   qualificationLimitType:'time',qualificationMinutes:5,qualificationLaps:8,
   finalLimitType:'laps',finalMinutes:5,finalLaps:7,
   ui:{...defaultUi}
@@ -437,6 +556,9 @@ const storedSettings=load(KEYS.settings,{});
 const state={view:'home',race:load(KEYS.race,null),pilotDb:load(KEYS.pilots,[]),championships:load(KEYS.champ,[]),archive:load(KEYS.archive,[]),settings:{...defaultSettings,...storedSettings,ui:{...defaultUi,...(storedSettings.ui||{})}},session:null,sessionTick:null,countdownTick:null,resultsOpen:false,mobileEvents:false,mobileWidgets:false,widgetCollapsed:{events:false,results:true,voice:false,next:false},activeChampionshipId:'',champTab:'stages'};
 const lapwiz=new LapWizCore();
 lapwiz.sound=state.settings.lapSound;
+const announcer=new AnnouncerEngine();
+announcer.enabled=state.settings.announcerEnabled;
+announcer.startMode=state.settings.startVoiceMode;
 
 function load(key,fallback){try{const v=JSON.parse(localStorage.getItem(key)||'null');return v??fallback;}catch{return fallback;}}
 function save(key,v){localStorage.setItem(key,JSON.stringify(v));}
@@ -485,7 +607,7 @@ function translateStatic(){
  const root=document.getElementById('viewHost');if(!root)return;const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);nodes.forEach(n=>{const raw=n.nodeValue,trim=raw.trim();if(map[trim])n.nodeValue=raw.replace(trim,map[trim]);});
 }
 function applyUiTokens(ui=state.settings.ui){const r=document.documentElement.style;r.setProperty('--radius-card',`${ui.cardRadius}px`);r.setProperty('--radius-tile',`${ui.tileRadius}px`);r.setProperty('--radius-button',`${ui.buttonRadius}px`);r.setProperty('--radius-input',`${ui.inputRadius}px`);r.setProperty('--radius-icon',`${ui.iconRadius}px`);r.setProperty('--radius-hero',`${ui.heroRadius}px`);r.setProperty('--radius-widget',`${ui.widgetRadius}px`);r.setProperty('--radius-modal',`${ui.modalRadius}px`);r.setProperty('--card-padding',`${ui.cardPadding}px`);r.setProperty('--section-gap',`${ui.sectionGap}px`);r.setProperty('--control-height',`${ui.buttonHeight}px`);r.setProperty('--content-width',`${ui.contentWidth}px`);r.setProperty('--discipline-cols',String(ui.disciplineCols));}
-function applySettings(){document.documentElement.dataset.theme=state.settings.theme;document.documentElement.lang=state.settings.lang;lapwiz.sound=state.settings.lapSound;applyUiTokens();translateStatic();}
+function applySettings(){document.documentElement.dataset.theme=state.settings.theme;document.documentElement.lang=state.settings.lang;lapwiz.sound=state.settings.lapSound;applyUiTokens();translateStatic();announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;}
 function updateHeader(){const race=state.race;$('#headerRace').textContent=race?`${race.eventName} · ${stageLabel(race.stage)}`:'Нет активной гонки';const el=$('#headerLapwiz');el.textContent=lapwiz.connected?`LapWiz · ${lapwiz.device?.name||'подключён'}`:'LapWiz · не подключён';el.className=`statusPill ${lapwiz.connected?'good':'neutral'}`;}
 function stageLabel(stage){return({setup:'Настройка',qualifying:'Квалификация',tie:'Жеребьёвка',finals:'Финалы',finished:'Завершено'})[stage]||stage;}
 
@@ -500,7 +622,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.7 ALPHA</b><span>Reference UI · RallyCross активен</span></div>`}</div>
+   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.8 ALPHA</b><span>Reference UI · RallyCross активен</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
@@ -570,7 +692,7 @@ function cockpitView(){
    <div class="raceTopStatus">
     <button class="liveStatus ${lapwiz.connected?'ok':'off'}" data-action="lap-connect" ${lapwiz.connected?'disabled':''}>${uiIcon('bluetooth','statusIcon')}<span>${lapwiz.connected?'LapWiz подключён':'LapWiz не подключён'}</span></button>
     <span class="liveStatus ${session?.phase==='running'||session?.phase==='finishing'?'ok':session?.phase==='paused'?'warn':'off'}">${uiIcon('play','statusIcon')}<span>${phaseStatusText(session)}</span></span>
-    <span class="liveStatus off">${uiIcon('mic','statusIcon')}<span>Диктор: скоро</span></span>
+    <span class="liveStatus ${state.settings.announcerEnabled?'ok':'off'}">${uiIcon('mic','statusIcon')}<span>${state.settings.announcerEnabled?'Диктор: ВКЛ':'Диктор: ВЫКЛ'}</span></span>
    </div>
   </header>
 
@@ -612,7 +734,7 @@ function raceBoardFooter(pilots,session){if(!session||!pilots.length)return `<sp
 function timerCard(race,ev,s,done,tie){const r=ev?eventRule(race,ev):null;const cap=done?'ФИНИШ':tie?'ЖЕРЕБЬЁВКА':timerCaption(s,ev);const timer=done||tie?'00:00':displayTimer(s,ev);const total=r?.limitType==='time'?`${r.durationMin + (s?.extraMinutes||0)}:00`:r?.limitType==='laps'?`${r.targetLaps} кругов`:'—';const canStart=ev&&s?.phase==='ready';return `<section class="timerCard refPanel"><div class="timerLabel">${cap}</div><div class="timerBody"><div><div id="mainTimer" class="heroTimer">${timer}</div><div class="timerTotal">${r?.limitType==='time'?'ЗАЕЗД ':''}${total}</div>${canStart?`<button class="timerStart" data-action="start-session">${uiIcon('play','miniIcon')} СТАРТ</button>`:''}</div><div id="timerRing" class="timerRing" style="--progress:${timerProgress(s,ev)}"></div></div></section>`;}
 function timerProgress(s,ev){if(!ev||!s)return 100;const r=eventRule(state.race,ev);if(s.phase==='countdown')return Math.max(0,Math.min(100,(s.countdownLeft/(state.race.raceSettings.countdownSec||1))*100));if(r.limitType==='time'){const total=(r.durationMin+(s.extraMinutes||0))*60000;return Math.max(0,Math.min(100,((total-sessionElapsed(s))/total)*100));}if(r.limitType==='laps'){const vals=Object.values(s.live||{}),max=Math.max(0,...vals.map(v=>v.laps||0));return Math.max(0,Math.min(100,(max/(r.targetLaps||1))*100));}return 100;}
 function raceStatsCard(race,ev,pilots,s){const ranked=s?liveRanking(pilots,s):pilots,leader=ranked[0],ll=leader&&s?.live?.[leader.id];const rule=ev?eventRule(race,ev):null;return `<section class="statsCard refPanel"><div class="refPanelHead compact"><h3>${uiIcon('users','panelTitleIcon')} СТАТИСТИКА ЗАЕЗДА</h3></div><div class="statsGrid"><div>${uiIcon('flag','statIcon')}<span>ЛИДЕР</span><b>${esc(leader?.name||'—')}</b></div><div>${uiIcon('refresh','statIcon')}<span>ПРОШЛО КРУГОВ</span><b>${ll?.laps||0}${rule?.limitType==='laps'?` / ${rule.targetLaps}`:''}</b></div><div>${uiIcon('clock','statIcon')}<span>ПОСЛЕДНИЙ ПРОХОД</span><b>${s?.lastPass?esc(s.lastPass.split(' · ')[0]):'—'}</b></div><div>${uiIcon('timer','statIcon')}<span>РЕЖИМ</span><b>${rule?.limitType==='time'?`${rule.durationMin+(s?.extraMinutes||0)} мин`:`${rule?.targetLaps||0} кругов`}</b></div></div></section>`;}
-function voiceWidget(){return collapsibleWidget('voice',`${uiIcon('speaker','widgetIcon')} ГОЛОСОВОЕ СОПРОВОЖДЕНИЕ`,`<div class="futureLines"><div><time>—</time><span>Диктор будет подключён на этапе автоматизации.</span></div><div><time>—</time><span>Позиции, отсчёт, финиш и результаты.</span></div></div>`,true);}
+function voiceWidget(){const mode=state.settings.startVoiceMode==='compact'?'Короткий':'Полный';return collapsibleWidget('voice',`${uiIcon('speaker','widgetIcon')} ГОЛОСОВОЕ СОПРОВОЖДЕНИЕ`,`<div class="futureLines"><div><time>START</time><span>Стартовый диктор: ${mode}</span></div><div><time>BLEEP</time><span>Проход засечки: ${state.settings.lapSound?'ВКЛ':'ВЫКЛ'}</span></div></div>`,false);}
 function eventsWidget(race,events,ev){const curIndex=events.findIndex(e=>e.key===ev?.key);const shown=events.filter((e,i)=>e.saved||Math.abs(i-curIndex)<=2).slice(-6);const body=`<div class="eventMiniList">${shown.map(e=>{const st=eventStatus(race,e);return `<button class="eventMini ${st}" ${e.saved?`data-show-event="${e.key}"`:''} ${e.saved?'':'disabled'}><span class="eventMiniDot"></span><span><b>${esc(e.label)}</b><small>${st==='completed'?'завершён':st==='current'?'сейчас':st==='ready'?'готов':'закрыт'}</small></span></button>`;}).join('')}</div>`;return collapsibleWidget('events',`${uiIcon('list','widgetIcon')} ХОД СОРЕВНОВАНИЯ`,body,false);}
 function nextEventWidget(race,next){const body=next?`<div class="nextHeatBig"><b>${esc(next.label)}</b><span>${(next.pilots||[]).length} пилотов</span><strong>${uiIcon('timer','nextClockIcon')} СЛЕДУЮЩИЙ</strong></div>`:`<div class="nextHeatBig"><b>Нет следующего заезда</b><span>Текущий этап завершается</span></div>`;return collapsibleWidget('next',`${uiIcon('flag','widgetIcon')} СЛЕДУЮЩИЙ ЗАЕЗД`,body,false);}
 function collapsibleWidget(key,title,body,disabled=false){const collapsed=Boolean(state.widgetCollapsed[key]);return `<section class="raceWidget ${disabled?'futureWidget':''} ${collapsed?'collapsed':''}"><button class="raceWidgetHead" type="button" ${disabled?'disabled':`data-widget-toggle="${key}"`}><span>${title}</span>${disabled?'<span class="soonTag">СКОРО</span>':uiIcon('chevronDown','collapseIcon')}</button><div class="raceWidgetBody">${body}</div></section>`;}
@@ -636,13 +758,35 @@ function ensureSession(ev){if(!ev)return null;if(state.session?.eventKey!==ev.ke
 function sessionElapsed(s){if(!s)return 0;if(s.phase==='paused'||s.phase==='finished')return Number(s.accumulatedElapsedMs||0);if(!s.runStartedAtPerf)return Number(s.accumulatedElapsedMs||0);return Number(s.accumulatedElapsedMs||0)+(performance.now()-s.runStartedAtPerf);}
 function startTicker(){if(state.sessionTick)clearInterval(state.sessionTick);state.sessionTick=setInterval(()=>{if(state.view!=='cockpit')return;updateDynamicCockpit();checkSessionLimit();},120);}
 function updateDynamicCockpit(){const ev=currentEvent(state.race),s=state.session;const timer=$('#mainTimer');if(timer)timer.textContent=displayTimer(s,ev);const ring=$('#timerRing');if(ring)ring.style.setProperty('--progress',timerProgress(s,ev));const clock=$('#cockpitClock');if(clock)clock.textContent=clockNow();const lastId=$('#lastLapwizId');if(lastId)lastId.textContent=lapwiz.lastId||'—';const board=$('.pilotBoardTable');if(board&&ev&&s&&s.phase!=='finished'){const ranked=liveRanking(getEventPilots(state.race,ev),s);board.innerHTML=pilotTable(ranked,s);bindManualPasses();}}
-async function beginCountdown(){const ev=currentEvent(state.race),s=ensureSession(ev);if(!ev||s.phase!=='ready')return;s.phase='countdown';s.countdownLeft=state.race.raceSettings.countdownSec;render();state.countdownTick=setInterval(async()=>{s.countdownLeft--;if(s.countdownLeft<=0){clearInterval(state.countdownTick);state.countdownTick=null;await beginRaceNow();}else updateDynamicCockpit();},1000);}
+async function beginCountdown(){
+ const ev=currentEvent(state.race),s=ensureSession(ev);if(!ev||s.phase!=='ready')return;
+ const seconds=Math.max(1,Math.min(10,Math.round(Number(state.race.raceSettings.countdownSec||state.settings.countdownSec)||10)));
+ s.phase='countdown';s.countdownLeft=seconds;render();
+ announcer.preload();
+ await announcer.runStartSequence({
+   seconds,
+   mode:state.settings.startVoiceMode||'full',
+   onTick:n=>{s.countdownLeft=n;updateDynamicCockpit();},
+   onStart:async()=>{if(s.phase==='countdown')await beginRaceNow();}
+ });
+}
 async function beginRaceNow(){const ev=currentEvent(state.race),s=ensureSession(ev),rule=eventRule(state.race,ev);try{if(lapwiz.connected)await lapwiz.start(rule);}catch(e){toast(`LapWiz START: ${e.message}`);return;}s.phase='running';s.startedAtPerf=performance.now();s.runStartedAtPerf=s.startedAtPerf;s.accumulatedElapsedMs=0;s.startedAtEpoch=Date.now();s.finishedAtEpoch=null;s.timeExpired=false;s.extraMinutes=0;Object.values(s.live).forEach(v=>Object.assign(v,blankLive()));logEvent(`Старт: ${ev.label}`);startTicker();render();}
 async function finishSession(reason='Финиш судьёй'){const s=state.session;if(!s)return;if(s.phase!=='paused')s.accumulatedElapsedMs=sessionElapsed(s);if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){toast(`STOP: ${e.message}`);}}s.phase='finished';s.runStartedAtPerf=null;s.finishedAtEpoch=Date.now();logEvent(reason);state.resultsOpen=true;state.widgetCollapsed.results=false;render();}
-async function stopSession(){if(state.countdownTick){clearInterval(state.countdownTick);state.countdownTick=null;}await finishSession('Аварийный STOP');}
+async function stopSession(){
+ const s=state.session;
+ if(s?.phase==='countdown'){
+   announcer.cancel();
+   if(state.countdownTick){clearInterval(state.countdownTick);state.countdownTick=null;}
+   s.phase='ready';s.countdownLeft=state.race?.raceSettings?.countdownSec||state.settings.countdownSec||10;
+   logEvent('Стартовый отсчёт отменён');render();return;
+ }
+ announcer.cancel();
+ if(state.countdownTick){clearInterval(state.countdownTick);state.countdownTick=null;}
+ await finishSession('Аварийный STOP');
+}
 function checkSessionLimit(){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||s.phase!=='running')return;const r=eventRule(state.race,ev),elapsed=sessionElapsed(s),limit=(r.durationMin+(s.extraMinutes||0))*60000;if(r.limitType==='time'&&elapsed>=limit&&!s.timeExpired){s.timeExpired=true;s.phase='finishing';Object.values(s.live).forEach(v=>{if(!v.finished)v.needsFinish=true;});toast('Время истекло — финиш на следующем проходе');}if(r.limitType==='laps'){const all=Object.values(s.live).every(v=>v.finished);if(all)finishSession('Все пилоты финишировали');}}
-function processPass(transponder,deviceMs=null,source='MANUAL'){lapwiz.lastId=String(transponder);const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return;const p=getEventPilots(state.race,ev).find(x=>String(x.transponder)===String(transponder));if(!p){s.unknown[transponder]=(s.unknown[transponder]||0)+1;if(source==='LAPWIZ')lapwiz.unknownBeep();toast(`Неизвестный ID ${transponder}`);return;}if(source==='LAPWIZ'&&state.settings.lapSound)lapwiz.beep(true);processPilotPass(p,deviceMs,source);}
-function processPilotPass(p,deviceMs=null,source='MANUAL'){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return;const l=s.live[p.id]||blankLive();if(l.finished)return;const now=performance.now(),elapsedNow=sessionElapsed(s);let lapMs=null;if(Number.isFinite(deviceMs)&&source==='LAPWIZ'){if(Number.isFinite(l.lastDeviceMs)&&deviceMs>l.lastDeviceMs)lapMs=deviceMs-l.lastDeviceMs;else if(!l.lastDeviceMs&&deviceMs>0)lapMs=deviceMs;l.lastDeviceMs=deviceMs;}if(!Number.isFinite(lapMs)||lapMs<=0)lapMs=elapsedNow-(Number.isFinite(l.lastElapsedAtPass)?l.lastElapsedAtPass:0);l.lastElapsedAtPass=elapsedNow;l.lastPassPerf=now;l.lastLapMs=lapMs;l.bestLapMs=Math.min(l.bestLapMs,lapMs);l.laps++;l.elapsedMs=elapsedNow;const rule=eventRule(state.race,ev);if(rule.limitType==='laps'&&l.laps>=rule.targetLaps){l.finished=true;l.finishedAt=l.elapsedMs;}if(s.phase==='finishing'&&s.timeExpired){l.finished=true;l.finishedAt=l.elapsedMs;}s.live[p.id]=l;s.lastPass=`${p.name} · ${l.laps} · ${fmtMs(lapMs)}`;if(source==='MANUAL'&&state.settings.lapSound)lapwiz.beep(true);updateDynamicCockpit();if(Object.values(s.live).every(v=>v.finished)&&(rule.limitType==='laps'||s.phase==='finishing'))finishSession('Все пилоты завершили заезд');}
+function processPass(transponder,deviceMs=null,source='MANUAL'){lapwiz.lastId=String(transponder);const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return;const p=getEventPilots(state.race,ev).find(x=>String(x.transponder)===String(transponder));if(!p){s.unknown[transponder]=(s.unknown[transponder]||0)+1;if(source==='LAPWIZ')lapwiz.unknownBeep();toast(`Неизвестный ID ${transponder}`);return;}if(source==='LAPWIZ'&&state.settings.lapSound)announcer.playBleep();processPilotPass(p,deviceMs,source);}
+function processPilotPass(p,deviceMs=null,source='MANUAL'){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return;const l=s.live[p.id]||blankLive();if(l.finished)return;const now=performance.now(),elapsedNow=sessionElapsed(s);let lapMs=null;if(Number.isFinite(deviceMs)&&source==='LAPWIZ'){if(Number.isFinite(l.lastDeviceMs)&&deviceMs>l.lastDeviceMs)lapMs=deviceMs-l.lastDeviceMs;else if(!l.lastDeviceMs&&deviceMs>0)lapMs=deviceMs;l.lastDeviceMs=deviceMs;}if(!Number.isFinite(lapMs)||lapMs<=0)lapMs=elapsedNow-(Number.isFinite(l.lastElapsedAtPass)?l.lastElapsedAtPass:0);l.lastElapsedAtPass=elapsedNow;l.lastPassPerf=now;l.lastLapMs=lapMs;l.bestLapMs=Math.min(l.bestLapMs,lapMs);l.laps++;l.elapsedMs=elapsedNow;const rule=eventRule(state.race,ev);if(rule.limitType==='laps'&&l.laps>=rule.targetLaps){l.finished=true;l.finishedAt=l.elapsedMs;}if(s.phase==='finishing'&&s.timeExpired){l.finished=true;l.finishedAt=l.elapsedMs;}s.live[p.id]=l;s.lastPass=`${p.name} · ${l.laps} · ${fmtMs(lapMs)}`;updateDynamicCockpit();if(Object.values(s.live).every(v=>v.finished)&&(rule.limitType==='laps'||s.phase==='finishing'))finishSession('Все пилоты завершили заезд');}
 function logEvent(text){state.race.runtime.eventLog.push({time:new Date().toISOString(),text});persistRace();}
 function makeDraftResult(pilots,session){return pilots.map((p,i)=>{const l=session?.live?.[p.id]||blankLive();return{pilotId:p.id,name:p.name,status:'FIN',place:i+1,laps:l.laps,elapsedMs:l.elapsedMs};});}
 function readEditedResult(){const ev=currentEvent(state.race),ranked=liveRanking(getEventPilots(state.race,ev),state.session);return ranked.map((p,i)=>{const st=document.querySelector(`[data-result-status="${CSS.escape(String(p.id))}"]`)?.value||'FIN',place=Number(document.querySelector(`[data-result-place="${CSS.escape(String(p.id))}"]`)?.value||i+1);return{pilotId:p.id,status:st,place:st==='FIN'?place:null,dnfOrder:st==='DNF'?i+1:null};});}
@@ -677,15 +821,16 @@ function syncChampionshipIfFinished(race){if(race.stage!=='finished'||!race.cham
 
 function pilotsView(){return `<section class="page"><div class="pageHeader"><div><div class="sectionLabel">ОБЩАЯ БАЗА</div><h1>Пилоты</h1><p>Профиль используется в соревнованиях; транспондер хранится здесь и переносится в состав гонки.</p></div><button class="btn primary" data-action="new-db-pilot">＋ Пилот</button></div><div class="card"><div class="list">${state.pilotDb.length?state.pilotDb.map(p=>`<div class="listRow"><div class="avatar">${nameInitials(p.name)}</div><div class="grow"><div class="name">${esc(p.name)}</div><div class="sub">${esc(p.club||'Без клуба')} · ID транспондера ${esc(p.transponder||'—')}</div></div><button class="btn secondary" data-edit-pilot="${p.id}">Изменить</button><button class="btn danger" data-delete-pilot="${p.id}">Удалить</button></div>`).join(''):`<div class="empty">Создайте первый профиль пилота.</div>`}</div></div></section>`;}
 
-function settingsView(){return `<section class="page"><div class="pageHeader"><div><div class="sectionLabel">СИСТЕМА</div><h1>Настройки</h1><p>Единый визуальный язык и технические параметры Legion RX.</p></div></div><div class="settingsGrid">
- <article class="card settingGroup"><h3>${uiIcon('settings','widgetIcon')} Интерфейс</h3><div class="toggleRow"><span>Тёмная тема</span><input class="toggle" id="darkToggle" type="checkbox" ${state.settings.theme==='dark'?'checked':''}></div><div class="field" style="margin-top:12px"><label>Язык интерфейса</label><select id="langSelect"><option value="ru" ${state.settings.lang==='ru'?'selected':''}>Русский</option><option value="en" ${state.settings.lang==='en'?'selected':''}>English</option></select></div><p>Светлая тема применяется и к пульту гонки: те же белые поверхности, голубые акценты и контраст, что на главном экране.</p></article>
+function settingsView(){return `<section class="page"><div class="pageHeader"><div><div class="sectionLabel">СИСТЕМА</div><h1>Настройки</h1><p>Единый визуальный язык, звук и технические параметры Legion RX.</p></div></div><div class="settingsGrid">
+ <article class="card settingGroup"><h3>${uiIcon('settings','widgetIcon')} Интерфейс</h3><div class="toggleRow"><span>Тёмная тема</span><input class="toggle" id="darkToggle" type="checkbox" ${state.settings.theme==='dark'?'checked':''}></div><div class="field" style="margin-top:12px"><label>Язык интерфейса</label><select id="langSelect"><option value="ru" ${state.settings.lang==='ru'?'selected':''}>Русский</option><option value="en" ${state.settings.lang==='en'?'selected':''}>English</option></select></div><p>Светлая тема применяется и к пульту гонки.</p></article>
  <article class="card settingGroup designLabCard"><h3>${uiIcon('settings','widgetIcon')} Design Lab</h3><p>Живая настройка геометрии интерфейса без правки CSS.</p><div class="designLabSample"><span></span><span></span><span></span></div><button class="btn primary" data-action="open-design-lab">Открыть Design Lab</button></article>
- <article class="card settingGroup"><h3>${uiIcon('bluetooth','widgetIcon')} LapWiz</h3><div class="toggleRow"><span>Звук прохода</span><input class="toggle" id="soundToggle" type="checkbox" ${state.settings.lapSound?'checked':''}></div><div class="field" style="margin-top:12px"><label>Минимальное время круга, сек</label><input id="settingsMinLap" type="number" min="1" max="60" value="${state.settings.minLapSec}"></div><div class="btnRow" style="margin-top:12px">${lapwiz.connected?`<button class="btn secondary" data-action="lap-disconnect">Отключить LapWiz</button>`:`<button class="btn primary" data-action="lap-connect">Подключить LapWiz</button>`}</div><p>BLE FFF0 · команды FFF3 · уведомления FFF4. Web Bluetooth: Android/Windows Chrome + HTTPS.</p></article>
+ <article class="card settingGroup"><h3>${uiIcon('bluetooth','widgetIcon')} LapWiz</h3><div class="toggleRow"><span>Блип при принятом проходе</span><input class="toggle" id="soundToggle" type="checkbox" ${state.settings.lapSound?'checked':''}></div><div class="field" style="margin-top:12px"><label>Минимальное время круга, сек</label><input id="settingsMinLap" type="number" min="1" max="60" value="${state.settings.minLapSec}"></div><div class="btnRow" style="margin-top:12px">${lapwiz.connected?`<button class="btn secondary" data-action="lap-disconnect">Отключить LapWiz</button>`:`<button class="btn primary" data-action="lap-connect">Подключить LapWiz</button>`}<button class="btn secondary" data-action="test-bleep">Тест Bleep</button></div><p>Твой Bleep звучит только на валидном проходе зарегистрированного транспондера.</p></article>
+ <article class="card settingGroup"><h3>${uiIcon('mic','widgetIcon')} Диктор · старт</h3><div class="toggleRow"><span>Озвучка старта</span><input class="toggle" id="announcerToggle" type="checkbox" ${state.settings.announcerEnabled?'checked':''}></div><div class="field" style="margin-top:12px"><label>Сценарий старта</label><select id="startVoiceMode"><option value="full" ${state.settings.startVoiceMode==='full'?'selected':''}>Полный — «До старта 10 секунд» → 10…5 → «Хорошей гонки» → HORN</option><option value="compact" ${state.settings.startVoiceMode==='compact'?'selected':''}>Короткий — «Хорошей гонки» → 9…1 → HORN</option></select></div><div class="field" style="margin-top:12px"><label>Отсчёт перед стартом, сек</label><input id="settingsCountdown" type="number" min="1" max="10" value="${state.settings.countdownSec}"></div><p>В полном сценарии фраза «До старта десять секунд» проигрывается при значении 10. На отметке 4 цифры замолкают и звучит «Хорошей гонки», затем таймер молча доходит до старта.</p><div class="btnRow"><button class="btn secondary" data-action="test-good-race">Тест «Хорошей гонки»</button><button class="btn secondary" data-action="test-start-horn">Тест HORN</button></div></article>
  <article class="card settingGroup"><h3>${uiIcon('flag','widgetIcon')} Заезды по умолчанию</h3><div class="formatRuleGrid compactRules">
   <section class="ruleBox"><div class="ruleBoxHead"><b>Квалификация</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsQLimit"><option value="time" ${state.settings.qualificationLimitType==='time'?'selected':''}>По времени</option><option value="laps" ${state.settings.qualificationLimitType==='laps'?'selected':''}>По кругам</option></select></div><div class="field"><label>Минуты</label><input id="settingsQMin" type="number" value="${state.settings.qualificationMinutes}"></div><div class="field"><label>Круги</label><input id="settingsQLaps" type="number" value="${state.settings.qualificationLaps}"></div></div></section>
   <section class="ruleBox"><div class="ruleBoxHead"><b>Финалы / LCQ</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsFLimit"><option value="laps" ${state.settings.finalLimitType==='laps'?'selected':''}>По кругам</option><option value="time" ${state.settings.finalLimitType==='time'?'selected':''}>По времени</option></select></div><div class="field"><label>Круги</label><input id="settingsFLaps" type="number" value="${state.settings.finalLaps}"></div><div class="field"><label>Минуты</label><input id="settingsFMin" type="number" value="${state.settings.finalMinutes}"></div></div></section>
- </div><div class="field" style="margin-top:12px"><label>Отсчёт, сек</label><input id="settingsCountdown" type="number" value="${state.settings.countdownSec}"></div><button class="btn primary" style="margin-top:12px" data-action="save-settings">Сохранить</button></article>
- <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.7 Alpha</b></p><p>Мультисистемная оболочка, RallyCross Engine, LapWiz Core, чемпионаты, архив и единый Reference UI.</p><div class="list"><div class="listRow"><div class="grow"><b>Ралли-спринт</b><div class="sub">модуль ещё не реализован</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Classic RC</b><div class="sub">модуль ещё не реализован</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / диктор / Broadcast</b><div class="sub">архитектурно зарезервировано</div></div><span class="badge soon">СКОРО</span></div></div></article>
+ </div><button class="btn primary" style="margin-top:12px" data-action="save-settings">Сохранить настройки</button></article>
+ <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.8 Alpha</b></p><p>Общий Announcer Engine подключён поверх спортивных модулей. Сейчас реализованы стартовая последовательность и Bleep прохода; позиции, финиш, результаты и расписание будут подключаться к тому же движку дальше.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
  </div></section>`;}
 
 function bindView(){
@@ -725,7 +870,10 @@ async function legacyHandleAction(action){
  if(action==='toggle-results'){state.resultsOpen=!state.resultsOpen;state.widgetCollapsed.results=!state.resultsOpen;return render();}if(action==='start-session')return beginCountdown();if(action==='pause-session')return togglePause();if(action==='add-minute')return addMinute();if(action==='manual-pass-picker')return manualPassPicker();if(action==='next-event')return quickNextEvent();if(action==='finish-session')return finishSession();if(action==='stop-session')return stopSession();if(action==='save-event-result')return saveCurrentEventResult();
  if(action==='lap-connect'){try{lapwiz.ensureAudio();await lapwiz.connect();toast('LapWiz подключён');updateHeader();render();}catch(e){toast(e.message);}return;}if(action==='lap-disconnect'){await lapwiz.disconnect();toast('LapWiz отключён');updateHeader();render();return;}
  if(action==='new-db-pilot')return pilotModal();if(action==='new-champ')return championshipModal();if(action==='new-champ-stage')return champStageModal();if(action==='champ-add-pilots')return champPilotPicker();if(action==='back-champs')return nav('championships');if(action==='save-champ-settings')return saveChampionshipSettings();if(action==='open-design-lab')return openDesignLab();
- if(action==='save-settings'){state.settings.theme=$('#darkToggle')?.checked?'dark':'light';state.settings.lang=$('#langSelect')?.value||'ru';state.settings.lapSound=Boolean($('#soundToggle')?.checked);state.settings.minLapSec=Number($('#settingsMinLap')?.value)||2;state.settings.qualificationLimitType=$('#settingsQLimit')?.value||'time';state.settings.qualificationMinutes=Number($('#settingsQMin')?.value)||5;state.settings.qualificationLaps=Number($('#settingsQLaps')?.value)||8;state.settings.finalLimitType=$('#settingsFLimit')?.value||'laps';state.settings.finalLaps=Number($('#settingsFLaps')?.value)||7;state.settings.finalMinutes=Number($('#settingsFMin')?.value)||5;state.settings.countdownSec=Number($('#settingsCountdown')?.value)||5;save(KEYS.settings,state.settings);applySettings();toast('Настройки сохранены');return render();}
+ if(action==='test-good-race'){announcer.preload();announcer.play('goodRace',{wait:false,force:true});return;}
+ if(action==='test-start-horn'){announcer.preload();announcer.play('startRace',{wait:false,force:true});return;}
+ if(action==='test-bleep'){announcer.preload();announcer.playBleep();return;}
+ if(action==='save-settings'){state.settings.theme=$('#darkToggle')?.checked?'dark':'light';state.settings.lang=$('#langSelect')?.value||'ru';state.settings.lapSound=Boolean($('#soundToggle')?.checked);state.settings.minLapSec=Number($('#settingsMinLap')?.value)||2;state.settings.qualificationLimitType=$('#settingsQLimit')?.value||'time';state.settings.qualificationMinutes=Number($('#settingsQMin')?.value)||5;state.settings.qualificationLaps=Number($('#settingsQLaps')?.value)||8;state.settings.finalLimitType=$('#settingsFLimit')?.value||'laps';state.settings.finalLaps=Number($('#settingsFLaps')?.value)||7;state.settings.finalMinutes=Number($('#settingsFMin')?.value)||5;state.settings.countdownSec=Math.max(1,Math.min(10,Number($('#settingsCountdown')?.value)||10));state.settings.announcerEnabled=Boolean($('#announcerToggle')?.checked);state.settings.startVoiceMode=$('#startVoiceMode')?.value||'full';announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;if(state.race?.raceSettings){state.race.raceSettings.countdownSec=state.settings.countdownSec;persistRace();}save(KEYS.settings,state.settings);applySettings();toast('Настройки сохранены');return render();}
  if(action==='archive-race'||action==='complete-competition'){completeCompetition();return;}
 }
 
@@ -792,7 +940,7 @@ function closeModal(){$('#modalHost').innerHTML='';}
 
 
 
-/* ========================= 4.0.7 RACE CONSOLE ========================= */
+/* ========================= 4.0.8 RACE CONSOLE ========================= */
 function raceSvg(name,cls='raceSvg'){
  const paths={
   trophy:'<path d="M8 4h8v4a4 4 0 0 1-8 0V4Z"/><path d="M8 6H4v1a4 4 0 0 0 4 4m8-5h4v1a4 4 0 0 1-4 4M12 12v5m-4 3h8"/>',
@@ -827,20 +975,27 @@ function timerProgress(ev,s){if(!ev||!s)return 0;const r=eventRule(state.race,ev
 function displayTimer(s,ev){if(!ev)return'00:00';if(!s)return'00:00';if(s.phase==='countdown')return `00:${String(Math.max(0,s.countdownLeft||0)).padStart(2,'0')}`;if(s.phase==='finished')return'00:00';const r=eventRule(state.race,ev),elapsed=sessionElapsed(s);if(r.limitType==='time')return fmtClock((r.durationMin*60000+(s.extraMs||0))-elapsed);return fmtClock(elapsed);}
 function timerCaption(s,ev){if(!ev)return'ГОТОВО';if(s?.phase==='countdown')return'ДО СТАРТА';if(s?.phase==='paused')return'ПАУЗА';if(['running','finishing'].includes(s?.phase))return eventRule(state.race,ev).limitType==='time'?'ДО ФИНИША':'ВРЕМЯ ЗАЕЗДА';if(s?.phase==='finished')return'ЗАЕЗД ЗАВЕРШЁН';return'ГОТОВНОСТЬ';}
 function eventFlowStrip(race,events,ev){const ci=Math.max(0,events.findIndex(e=>e.key===ev?.key));const start=Math.max(0,Math.min(ci-1,Math.max(0,events.length-5)));const visible=events.slice(start,start+5);return `<div class="eventFlow"><button class="flowMenu" data-action="toggle-events">${raceSvg('list')}<span>События</span></button><div class="flowItems">${visible.map((e)=>{const st=eventStatus(race,e);return `<button class="flowItem ${st}" ${st==='completed'?`data-show-event="${e.key}"`:''} ${st==='locked'?'disabled':''}><span class="flowDot"></span><b>${esc(e.label)}</b><small>${st==='completed'?'готово':st==='current'?'сейчас':st==='ready'?'далее':'закрыт'}</small></button>`;}).join('')}</div><button class="flowResults" data-action="race-results">${raceSvg('chart')}<span>Все результаты</span></button></div>`;}
-function cockpitHeader(race,ev,s){return `<header class="raceConsoleHeader"><button class="raceBrand" data-action="home"><strong>LEGION <i>RX</i></strong><small>RallyCross · Live Heat</small></button><div class="raceHeadInfo"><div class="headCell"><span>${raceSvg('trophy')}</span><div><b>${esc(race.eventName)}</b><small>СОБЫТИЕ</small></div></div><div class="headCell"><span>${raceSvg('flag')}</span><div><b>RallyCross</b><small>КЛАСС</small></div></div><div class="headCell"><span>${raceSvg('flag')}</span><div><b>${esc(eventShortLabel(ev))}</b><small>ЗАЕЗД</small></div></div><div class="headClock"><b id="cockpitClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><div class="raceHeadStatus"><button class="consolePill ${lapwiz.connected?'ok':''}" data-action="lap-connect" ${lapwiz.connected?'disabled':''}>${raceSvg('bluetooth')}<span>${lapwiz.connected?'LapWiz подключён':'Подключить LapWiz'}</span></button><span class="consolePill ${phaseClass(s)}">${raceSvg('play')}<span>${phaseLabel(s)}</span></span><span class="consolePill disabled">${raceSvg('mic')}<span>Диктор: скоро</span></span><button class="squareConsoleBtn" data-action="open-settings" title="Настройки">${raceSvg('settings')}</button></div></header>`;}
+function cockpitHeader(race,ev,s){return `<header class="raceConsoleHeader"><button class="raceBrand" data-action="home"><strong>LEGION <i>RX</i></strong><small>RallyCross · Live Heat</small></button><div class="raceHeadInfo"><div class="headCell"><span>${raceSvg('trophy')}</span><div><b>${esc(race.eventName)}</b><small>СОБЫТИЕ</small></div></div><div class="headCell"><span>${raceSvg('flag')}</span><div><b>RallyCross</b><small>КЛАСС</small></div></div><div class="headCell"><span>${raceSvg('flag')}</span><div><b>${esc(eventShortLabel(ev))}</b><small>ЗАЕЗД</small></div></div><div class="headClock"><b id="cockpitClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><div class="raceHeadStatus"><button class="consolePill ${lapwiz.connected?'ok':''}" data-action="lap-connect" ${lapwiz.connected?'disabled':''}>${raceSvg('bluetooth')}<span>${lapwiz.connected?'LapWiz подключён':'Подключить LapWiz'}</span></button><span class="consolePill ${phaseClass(s)}">${raceSvg('play')}<span>${phaseLabel(s)}</span></span><span class="consolePill ${state.settings.announcerEnabled?'ok':'disabled'}">${raceSvg('mic')}<span>${state.settings.announcerEnabled?'Диктор: ВКЛ':'Диктор: ВЫКЛ'}</span></span><button class="squareConsoleBtn" data-action="open-settings" title="Настройки">${raceSvg('settings')}</button></div></header>`;}
 function widgetShell(id,title,icon,content,{disabled=false,badge=''}={}){const collapsed=Boolean(state.widgetCollapsed?.[id]);return `<section class="refWidget ${collapsed?'collapsed':''} ${disabled?'disabled':''}" data-widget="${id}"><button class="refWidgetHead" data-toggle-widget="${id}"><span>${raceSvg(icon,'refWidgetIcon')}<b>${title}</b></span><span class="widgetHeadRight">${badge?`<em>${badge}</em>`:''}${raceSvg('chevron','widgetChevron')}</span></button>${collapsed?'':`<div class="refWidgetBody">${content}</div>`}</section>`;}
 function statsWidget(race,ev,pilots,s){const leader=pilots[0],ll=leader?s?.live?.[leader.id]:null;const target=eventRule(race,ev)?.targetLaps||'—';return widgetShell('stats','СТАТИСТИКА ЗАЕЗДА','chart',`<div class="statGrid statsWidgetContent"><div><span>ЛИДЕР</span><b>${esc(leader?.name||'—')}</b></div><div><span>КРУГИ ЛИДЕРА</span><b>${ll?.laps||0}${target!=='—'?` / ${target}`:''}</b></div><div><span>ПОСЛЕДНИЙ ПРОХОД</span><b>${esc(s?.lastPass||'—')}</b></div><div><span>ПИЛОТОВ</span><b>${pilots.length}</b></div></div>`);}
 function lapwizWidget(){return widgetShell('lapwiz','LAPWIZ ПОДКЛЮЧЕНИЕ','bluetooth',`<div class="kvList"><div><span>Устройство:</span><b class="accentGreen">${esc(lapwiz.device?.name||'—')}</b></div><div><span>Bluetooth:</span><b>${lapwiz.connected?'стабильно':'не подключён'}</b></div><div><span>Режим:</span><b>${lapwiz.running?'RUNNING':'STOPPED'}</b></div><div><span>Звук прохода:</span><b>${state.settings.lapSound?'ВКЛ':'ВЫКЛ'}</b></div></div><div class="widgetActions">${lapwiz.connected?`<button class="miniAction" data-action="lap-disconnect">Отключить</button>`:`<button class="miniAction primary" data-action="lap-connect">Подключить</button>`}</div>`,{badge:lapwiz.connected?'ONLINE':'OFFLINE'});}
 function nextWidget(race,ev){const n=nextRaceEvent(race,ev);return widgetShell('next','СЛЕДУЮЩИЙ ЗАЕЗД','flag',n?`<div class="nextHeat"><b>${esc(n.label)}</b><span>${(n.pilots||[]).length} пилотов</span><strong>ПОСЛЕ ТЕКУЩЕГО</strong></div>`:`<div class="nextHeat"><b>Финиш соревнования</b><span>Следующих заездов нет</span></div>`,{badge:n?'ГОТОВ':'ФИНИШ'});}
 function resultsWidget(race,ev,pilots,session){if(race.stage==='finished')return widgetShell('results','ИТОГ СОРЕВНОВАНИЯ','trophy',compactFinalProtocol(race),{badge:'ГОТОВО'});if(!ev)return'';const draft=makeDraftResult(pilots,session);const edit=draft.map((x,i)=>`<div class="resultEditRow"><div><b>${i+1}. ${esc(x.name)}</b><div class="sub">${x.laps} кр. · ${fmtMs(x.elapsedMs)}</div></div><select data-result-status="${x.pilotId}"><option value="FIN" selected>FIN</option><option value="DNF">DNF</option><option value="DNS">DNS</option><option value="DSQ">DSQ</option></select><input type="number" min="1" value="${i+1}" data-result-place="${x.pilotId}"></div>`).join('');const preview=draft.slice(0,4).map((x,i)=>`<div class="resultPreview"><span>${i+1}</span><b>${esc(x.name)}</b><em>${x.laps} кр.</em></div>`).join('')||'<div class="muted">Пока нет данных</div>';const body=`<div class="resultPreviewList">${preview}</div>${session?.phase==='finished'?`<div class="resultEditor">${edit}</div><button class="miniAction primary full" data-action="save-event-result">Сохранить результат и дальше</button>`:`<button class="miniAction full" data-action="race-results">Открыть таблицы</button>`}`;return widgetShell('results','РЕЗУЛЬТАТЫ ЗАЕЗДА','chart',body,{badge:session?.phase==='finished'?'ГОТОВО':'LIVE'});}
-function disabledAnnouncerWidget(){return widgetShell('announcer','ГОЛОСОВОЕ СОПРОВОЖДЕНИЕ','mic','<div class="disabledCopy">Отсчёт, позиции, финиш и автоматические объявления появятся на этапе автоматизации.</div>',{disabled:true,badge:'СКОРО'});}
+function announcerWidget(){
+ const mode=state.settings.startVoiceMode==='compact'?'КОРОТКИЙ':'ПОЛНЫЙ';
+ const seq=state.settings.startVoiceMode==='compact'
+   ?`«Хорошей гонки» → ${Math.max(1,(state.race?.raceSettings?.countdownSec||state.settings.countdownSec||10)-1)}…1 → HORN`
+   :`«До старта 10 секунд» → 10…5 → «Хорошей гонки» → HORN`;
+ const body=`<div class="statsWidgetContent"><div><span>ДИКТОР</span><b>${state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'}</b></div><div><span>СЦЕНАРИЙ</span><b>${mode}</b></div><div><span>СТАРТ</span><b>${esc(seq)}</b></div><div><span>БЛИП ЗАСЕЧКИ</span><b>${state.settings.lapSound?'ВКЛ':'ВЫКЛ'}</b></div></div>`;
+ return widgetShell('announcer','ГОЛОСОВОЕ СОПРОВОЖДЕНИЕ','mic',body,{badge:state.settings.announcerEnabled?'ГОТОВ':'ВЫКЛ'});
+}
 function automationWidget(){return widgetShell('automation','РАСПИСАНИЕ / АВТОМАТИЗАЦИЯ','timer','<div class="disabledCopy">Предупреждения 10/3/1 мин, запуск по подтверждению и сдвиг расписания.</div>',{disabled:true,badge:'СКОРО'});}
 function eventDrawer(race,events){return `<div class="eventDrawer ${state.mobileEvents?'open':''}"><button class="eventDrawerBackdrop" data-action="close-events" aria-label="Закрыть"></button><aside><div class="eventDrawerHead"><div><span>ХОД СОРЕВНОВАНИЯ</span><b>${esc(race.eventName)}</b></div><button class="squareConsoleBtn" data-action="close-events">×</button></div><div class="eventDrawerList">${events.map((e,i)=>eventItem(race,e,i)).join('')}</div></aside></div>`;}
 function cockpitView(){
  if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
  const race=state.race,ev=currentEvent(race),events=eventList(race),session=ensureSession(ev),pilots=ev?liveRanking(getEventPilots(race,ev),session):[],done=race.stage==='finished',tie=race.stage==='tie';
  if(tie)return `<section class="raceCockpit">${cockpitHeader(race,ev,session)}${eventFlowStrip(race,events,ev)}<div class="tieConsole">${tieWidget(race)}</div><div class="raceControls">${controlButtons(false,session,true)}</div>${eventDrawer(race,events)}</section>`;
- return `<section class="raceCockpit">${cockpitHeader(race,ev,session)}${eventFlowStrip(race,events,ev)}<main class="raceGrid"><section class="racePositions"><div class="positionsTitle"><div>${raceSvg('trophy')}<h2>ТЕКУЩИЕ ПОЗИЦИИ</h2></div><div class="positionsActions"><button class="tableTopBtn" data-action="race-results">${raceSvg('chart')}<span>Таблицы</span></button><button class="mobileWidgetLauncher" data-action="toggle-widgets">${raceSvg('list')}<span>Виджеты</span></button></div></div><div class="pilotBoardTable">${done?finalProtocolTable(race):pilotTable(pilots,session)}</div><div class="positionsFooter"><span>${raceSvg('chart')} Лучший круг: <b id="bestHeatLap">${bestHeatLapText(pilots,session)}</b></span><span>Последний проход: <b id="lastPassLine">${esc(session?.lastPass||'—')}</b></span></div></section><div class="raceCenterStack"><section class="timerCard"><div><span class="timerCaption">${timerCaption(session,ev)}</span><strong id="mainTimer">${done?'00:00':displayTimer(session,ev)}</strong><small>${ev?eventRuleText405(race,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="timerRing" style="--progress:${timerProgress(ev,session)}"><span>${Math.round(timerProgress(ev,session))}%</span></div></section><div class="desktopCenterWidget">${done?widgetShell('stats','СОРЕВНОВАНИЕ','trophy',compactFinalProtocol(race),{badge:'ФИНИШ'}):statsWidget(race,ev,pilots,session)}</div><div class="desktopCenterWidget">${lapwizWidget()}</div></div><aside class="raceRightStack ${state.mobileWidgets?'open':''}"><div class="mobileWidgetSheetHead"><b>ВИДЖЕТЫ</b><button class="squareConsoleBtn" data-action="close-widgets" aria-label="Закрыть">×</button></div><div class="mobileOnlyWidget">${done?widgetShell('statsMobile','СОРЕВНОВАНИЕ','trophy',compactFinalProtocol(race),{badge:'ФИНИШ'}):statsWidget(race,ev,pilots,session)}</div><div class="mobileOnlyWidget">${lapwizWidget()}</div>${done?widgetShell('results','ИТОГОВЫЙ ПРОТОКОЛ','trophy',compactFinalProtocol(race),{badge:'ГОТОВО'}):resultsWidget(race,ev,pilots,session)}${nextWidget(race,ev)}${disabledAnnouncerWidget()}${automationWidget()}</aside></main><div class="raceControls">${controlButtons(done,session,false)}</div><div class="modeStrip"><button class="modeActive">${raceSvg('flag')}<span>РАЛЛИ-КРОСС</span></button><button disabled>${raceSvg('flag')}<span>РАЛЛИ-СПРИНТ</span><em>СКОРО</em></button><button disabled>${raceSvg('car')}<span>КЛАССИЧЕСКАЯ RC-ГОНКА</span><em>СКОРО</em></button></div>${eventDrawer(race,events)}</section>`;
+ return `<section class="raceCockpit">${cockpitHeader(race,ev,session)}${eventFlowStrip(race,events,ev)}<main class="raceGrid"><section class="racePositions"><div class="positionsTitle"><div>${raceSvg('trophy')}<h2>ТЕКУЩИЕ ПОЗИЦИИ</h2></div><div class="positionsActions"><button class="tableTopBtn" data-action="race-results">${raceSvg('chart')}<span>Таблицы</span></button><button class="mobileWidgetLauncher" data-action="toggle-widgets">${raceSvg('list')}<span>Виджеты</span></button></div></div><div class="pilotBoardTable">${done?finalProtocolTable(race):pilotTable(pilots,session)}</div><div class="positionsFooter"><span>${raceSvg('chart')} Лучший круг: <b id="bestHeatLap">${bestHeatLapText(pilots,session)}</b></span><span>Последний проход: <b id="lastPassLine">${esc(session?.lastPass||'—')}</b></span></div></section><div class="raceCenterStack"><section class="timerCard"><div><span class="timerCaption">${timerCaption(session,ev)}</span><strong id="mainTimer">${done?'00:00':displayTimer(session,ev)}</strong><small>${ev?eventRuleText405(race,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="timerRing" style="--progress:${timerProgress(ev,session)}"><span>${Math.round(timerProgress(ev,session))}%</span></div></section><div class="desktopCenterWidget">${done?widgetShell('stats','СОРЕВНОВАНИЕ','trophy',compactFinalProtocol(race),{badge:'ФИНИШ'}):statsWidget(race,ev,pilots,session)}</div><div class="desktopCenterWidget">${lapwizWidget()}</div></div><aside class="raceRightStack ${state.mobileWidgets?'open':''}"><div class="mobileWidgetSheetHead"><b>ВИДЖЕТЫ</b><button class="squareConsoleBtn" data-action="close-widgets" aria-label="Закрыть">×</button></div><div class="mobileOnlyWidget">${done?widgetShell('statsMobile','СОРЕВНОВАНИЕ','trophy',compactFinalProtocol(race),{badge:'ФИНИШ'}):statsWidget(race,ev,pilots,session)}</div><div class="mobileOnlyWidget">${lapwizWidget()}</div>${done?widgetShell('results','ИТОГОВЫЙ ПРОТОКОЛ','trophy',compactFinalProtocol(race),{badge:'ГОТОВО'}):resultsWidget(race,ev,pilots,session)}${nextWidget(race,ev)}${announcerWidget()}${automationWidget()}</aside></main><div class="raceControls">${controlButtons(done,session,false)}</div><div class="modeStrip"><button class="modeActive">${raceSvg('flag')}<span>РАЛЛИ-КРОСС</span></button><button disabled>${raceSvg('flag')}<span>РАЛЛИ-СПРИНТ</span><em>СКОРО</em></button><button disabled>${raceSvg('car')}<span>КЛАССИЧЕСКАЯ RC-ГОНКА</span><em>СКОРО</em></button></div>${eventDrawer(race,events)}</section>`;
 }
 function bestHeatLapText(pilots,s){let best=null,name='';for(const p of pilots){const l=s?.live?.[p.id];if(Number.isFinite(l?.bestLapMs)&&(!best||l.bestLapMs<best)){best=l.bestLapMs;name=p.name;}}return best?`${name} · ${fmtMs(best)}`:'—';}
 function pilotTable(pilots,session){return `<div class="pilotRow header"><span>POS</span><span>ПИЛОТ</span><span>КРУГИ</span><span>ЛУЧШИЙ КРУГ</span><span>ПОСЛЕДНИЙ</span><span>ОТСТАВАНИЕ</span><span>СТАТУС</span></div>${pilots.map((p,i)=>{const l=session?.live?.[p.id]||blankLive(),gap=gapText(pilots,session,p,i),status=l.finished?'Финиш':i===0&&l.laps>0?'Лидер':session?.phase==='paused'?'Пауза':['running','finishing'].includes(session?.phase)?'В гонке':'Готов';const key=String(p.id).replace(/[^a-zA-Z0-9_-]/g,'_');return `<div class="pilotRow ${i===0&&l.laps>0?'leader':''} ${l.finished?'finished':''}" data-pilot-row="${p.id}" style="view-transition-name:pilot_${key}"><div class="pos">${i+1}</div><div><div class="name">${esc(p.name)}</div><div class="sub">ID ${esc(p.transponder||'—')}</div></div><b class="lapsCell">${l.laps}</b><span class="bestCell">${fmtMs(l.bestLapMs)}</span><span>${fmtMs(l.lastLapMs)}</span><span>${gap}</span><span class="pilotStatus ${i===0&&l.laps>0?'leaderStatus':''}"><i></i>${status}</span></div>`;}).join('')}`;}
@@ -859,12 +1014,12 @@ async function resumeSession(){const ev=currentEvent(state.race),s=state.session
 async function addMinute(){const ev=currentEvent(state.race),s=state.session;if(!ev||!s)return;const rule=eventRule(state.race,ev);if(rule.limitType!=='time')return toast('+1 мин доступна только для заезда по времени');s.extraMs=(s.extraMs||0)+60000;if(s.phase==='finishing'&&sessionElapsed(s)<timerTotalMs(ev,s)){s.phase='running';s.timeExpired=false;Object.values(s.live).forEach(v=>v.needsFinish=false);}if(s.phase==='paused'&&s.resumePhase==='finishing'&&sessionElapsed(s)<timerTotalMs(ev,s)){s.resumePhase='running';s.timeExpired=false;Object.values(s.live).forEach(v=>v.needsFinish=false);}logEvent('Добавлена 1 минута');if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();const remaining=Math.max(1000,timerTotalMs(ev,s)-sessionElapsed(s));await lapwiz.start({...rule,durationMin:remaining/60000});Object.values(s.live).forEach(v=>{v.lastDeviceMs=null;});}catch(e){toast(`LapWiz +1 мин: ${e.message}`);}}toast('К заезду добавлена 1 минута');updateDynamicCockpit();}
 async function finishSession(reason='Финиш судьёй'){const s=state.session;if(!s)return;const elapsed=sessionElapsed(s);if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){toast(`STOP: ${e.message}`);}}s.elapsedFinalMs=elapsed;s.phase='finished';s.finishedAtEpoch=Date.now();logEvent(reason);state.resultsOpen=true;state.widgetCollapsed.results=false;render();}
 function checkSessionLimit(){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||s.phase!=='running')return;const r=eventRule(state.race,ev),elapsed=sessionElapsed(s);if(r.limitType==='time'&&elapsed>=r.durationMin*60000+(s.extraMs||0)&&!s.timeExpired){s.timeExpired=true;s.phase='finishing';Object.values(s.live).forEach(v=>{if(!v.finished)v.needsFinish=true;});toast('Время истекло — финиш на следующем проходе');}if(r.limitType==='laps'){const all=Object.values(s.live).every(v=>v.finished);if(all)finishSession('Все пилоты финишировали');}}
-function processPilotPass(p,deviceMs=null,source='MANUAL'){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return;const l=s.live[p.id]||blankLive();if(l.finished)return;const now=performance.now();let lapMs=null;if(Number.isFinite(deviceMs)){if(Number.isFinite(l.lastDeviceMs)&&deviceMs>l.lastDeviceMs)lapMs=deviceMs-l.lastDeviceMs;else if(Number.isFinite(l.lastPassPerf))lapMs=now-l.lastPassPerf;else if(deviceMs>0)lapMs=deviceMs;l.lastDeviceMs=deviceMs;}if(!Number.isFinite(lapMs)||lapMs<=0)lapMs=now-(l.lastPassPerf??s.startedAtPerf??now);l.lastPassPerf=now;l.lastLapMs=lapMs;l.bestLapMs=Math.min(l.bestLapMs,lapMs);l.laps++;l.elapsedMs=sessionElapsed(s);const rule=eventRule(state.race,ev);if(rule.limitType==='laps'&&l.laps>=rule.targetLaps){l.finished=true;l.finishedAt=l.elapsedMs;}if(s.phase==='finishing'&&s.timeExpired){l.finished=true;l.finishedAt=l.elapsedMs;}s.live[p.id]=l;s.lastPass=`${p.name} · ${l.laps} · ${fmtMs(lapMs)}`;if(source==='MANUAL'&&state.settings.lapSound)lapwiz.beep(true);updateDynamicCockpit();if(Object.values(s.live).every(v=>v.finished)&&(rule.limitType==='laps'||s.phase==='finishing'))finishSession('Все пилоты завершили заезд');}
+function processPilotPass(p,deviceMs=null,source='MANUAL'){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return;const l=s.live[p.id]||blankLive();if(l.finished)return;const now=performance.now();let lapMs=null;if(Number.isFinite(deviceMs)){if(Number.isFinite(l.lastDeviceMs)&&deviceMs>l.lastDeviceMs)lapMs=deviceMs-l.lastDeviceMs;else if(Number.isFinite(l.lastPassPerf))lapMs=now-l.lastPassPerf;else if(deviceMs>0)lapMs=deviceMs;l.lastDeviceMs=deviceMs;}if(!Number.isFinite(lapMs)||lapMs<=0)lapMs=now-(l.lastPassPerf??s.startedAtPerf??now);l.lastPassPerf=now;l.lastLapMs=lapMs;l.bestLapMs=Math.min(l.bestLapMs,lapMs);l.laps++;l.elapsedMs=sessionElapsed(s);const rule=eventRule(state.race,ev);if(rule.limitType==='laps'&&l.laps>=rule.targetLaps){l.finished=true;l.finishedAt=l.elapsedMs;}if(s.phase==='finishing'&&s.timeExpired){l.finished=true;l.finishedAt=l.elapsedMs;}s.live[p.id]=l;s.lastPass=`${p.name} · ${l.laps} · ${fmtMs(lapMs)}`;updateDynamicCockpit();if(Object.values(s.live).every(v=>v.finished)&&(rule.limitType==='laps'||s.phase==='finishing'))finishSession('Все пилоты завершили заезд');}
 function manualLapModal(){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return toast('Ручной круг доступен во время заезда');const pilots=liveRanking(getEventPilots(state.race,ev),s);$('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal manualLapModal"><div class="modalHead"><div><div class="sectionLabel">РУЧНОЙ РЕЗЕРВ</div><h2>Кому добавить круг?</h2></div><button class="iconBtn" id="closeModal">×</button></div><div class="manualPilotGrid">${pilots.map(p=>{const l=s.live[p.id]||blankLive();return `<button data-manual-modal="${p.id}" ${l.finished?'disabled':''}><span>${nameInitials(p.name)}</span><b>${esc(p.name)}</b><em>${l.laps} кругов</em></button>`;}).join('')}</div></div></div>`;$('#closeModal').onclick=closeModal;$$('[data-manual-modal]').forEach(b=>b.onclick=()=>{const p=getPilot(state.race,b.dataset.manualModal);if(p){processPilotPass(p,null,'MANUAL');toast(`Ручной круг: ${p.name}`);closeModal();}});}
 async function handleAction(action,button){if(action==='pause-session')return pauseSession();if(action==='add-minute')return addMinute();if(action==='next-event'){if(state.session?.phase!=='finished')return toast('Сначала завершите текущий заезд');return saveCurrentEventResult();}if(action==='manual-lap-modal')return manualLapModal();if(action==='open-settings')return nav('settings');return legacyHandleAction(action,button);}
 
 lapwiz.addEventListener('pass',e=>processPass(e.detail.transponder,e.detail.deviceMs,'LAPWIZ'));lapwiz.addEventListener('status',()=>updateHeader());
-window.addEventListener('pointerdown',()=>lapwiz.ensureAudio(),{once:true});
+window.addEventListener('pointerdown',()=>{lapwiz.ensureAudio();announcer.preload();},{once:true});
 window.addEventListener('beforeunload',()=>persistAll());
 
 $('#designQuickBtn')?.addEventListener('click',openDesignLab);
