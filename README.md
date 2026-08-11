@@ -1,4 +1,4 @@
-# Legion RX 4.0.6 Alpha
+# Legion RX 4.0.7 Alpha
 
 Мультисистема управления RC-соревнованиями.
 
@@ -15,3 +15,10 @@
 
 ## Важно для Alpha
 Перед реальным соревнованием проверяйте новую версию на тестовом событии. Исходную рабочую версию сохраняйте отдельно как резерв.
+
+
+## 4.0.7 mobile fix
+- Separate portrait cockpit layout for Android/iPhone UI testing.
+- Mobile widgets open as a sheet instead of overlapping the leaderboard.
+- Consistent Roboto Condensed web typography when online, with safe fallbacks.
+- 2×3 race controls and compact event strip on narrow screens.
