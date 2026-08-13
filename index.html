@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.12 Alpha</title>
+<title>Legion RX 4.0.13 Alpha</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -35,7 +35,7 @@ body.cockpitMode #viewHost{bottom:0;overflow:hidden}.cockpit{height:calc(100dvh 
 .designQuickBtn{height:38px;padding:0 13px;border:1px solid var(--line);border-radius:var(--radius-button);background:var(--panel2);color:var(--text);display:flex;align-items:center;gap:7px;font:inherit;font-size:12px;font-weight:850;cursor:pointer;white-space:nowrap}.designQuickBtn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue2)}.designQuickBtn svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.designQuickBtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}@media(max-width:760px){.designQuickBtn{width:39px;padding:0;display:grid;place-items:center}.designQuickBtn span{display:none}}
 
 /* =========================================================
-   LEGION RX 4.0.12 — MOBILE AUDIO FIX
+   LEGION RX 4.0.13 — MOBILE AUDIO FIX
    Based on the approved dark Live Heat concept.
    ========================================================= */
 :root{
@@ -274,7 +274,7 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.12 ALPHA</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.13 ALPHA</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -614,6 +614,26 @@ class AnnouncerEngine extends EventTarget{
     this.play('startRace',{wait:false,force:true});this.lastMessage='СТАРТ';this.emit({message:'СТАРТ',running:false});await onStart?.();
   }
 }
+'use strict';
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEYS={race:'legionrx4_current_race',pilots:'legionrx4_pilot_db',champ:'legionrx4_championships',archive:'legionrx4_archive',settings:'legionrx4_settings'};
+const defaultUi={cardRadius:10,tileRadius:10,buttonRadius:8,inputRadius:7,iconRadius:8,heroRadius:12,widgetRadius:10,modalRadius:10,cardPadding:16,sectionGap:10,buttonHeight:62,contentWidth:1440,disciplineCols:3};
+const defaultSettings={
+  theme:'dark',lang:'ru',lapSound:true,minLapSec:2,countdownSec:10,warmupMinutes:2,
+  announcerEnabled:true,startVoiceMode:'full',
+  qualificationLimitType:'time',qualificationMinutes:5,qualificationLaps:8,
+  finalLimitType:'laps',finalMinutes:5,finalLaps:7,
+  ui:{...defaultUi}
+};
+const I18N={
+ ru:{'nav.home':'Главная','nav.champs':'Чемпионаты','nav.pilots':'Пилоты','nav.settings':'Настройки'},
+ en:{'nav.home':'Home','nav.champs':'Championships','nav.pilots':'Drivers','nav.settings':'Settings'}
+};
+const storedSettings=load(KEYS.settings,{});
+const state={view:'home',race:load(KEYS.race,null),pilotDb:load(KEYS.pilots,[]),championships:load(KEYS.champ,[]),archive:load(KEYS.archive,[]),settings:{...defaultSettings,...storedSettings,ui:{...defaultUi,...(storedSettings.ui||{})}},session:null,sessionTick:null,countdownTick:null,resultsOpen:false,mobileEvents:false,mobileWidgets:false,widgetCollapsed:{events:false,results:true,voice:false,next:false},activeChampionshipId:'',champTab:'stages'};
+const lapwiz=new LapWizCore();
+lapwiz.sound=state.settings.lapSound;
 const announcer=new AnnouncerEngine();
 announcer.enabled=state.settings.announcerEnabled;
 announcer.startMode=state.settings.startVoiceMode;
@@ -682,7 +702,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.12 ALPHA</b><span>Reference UI · RallyCross активен</span></div>`}</div>
+   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.13 ALPHA</b><span>Reference UI · RallyCross активен</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
@@ -894,7 +914,7 @@ function settingsView(){return `<section class="page"><div class="pageHeader"><d
   <section class="ruleBox"><div class="ruleBoxHead"><b>Квалификация</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsQLimit"><option value="time" ${state.settings.qualificationLimitType==='time'?'selected':''}>По времени</option><option value="laps" ${state.settings.qualificationLimitType==='laps'?'selected':''}>По кругам</option></select></div><div class="field"><label>Минуты</label><input id="settingsQMin" type="number" value="${state.settings.qualificationMinutes}"></div><div class="field"><label>Круги</label><input id="settingsQLaps" type="number" value="${state.settings.qualificationLaps}"></div></div></section>
   <section class="ruleBox"><div class="ruleBoxHead"><b>Финалы / LCQ</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsFLimit"><option value="laps" ${state.settings.finalLimitType==='laps'?'selected':''}>По кругам</option><option value="time" ${state.settings.finalLimitType==='time'?'selected':''}>По времени</option></select></div><div class="field"><label>Круги</label><input id="settingsFLaps" type="number" value="${state.settings.finalLaps}"></div><div class="field"><label>Минуты</label><input id="settingsFMin" type="number" value="${state.settings.finalMinutes}"></div></div></section>
  </div><button class="btn primary" style="margin-top:12px" data-action="save-settings">Сохранить настройки</button></article>
- <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.12 Alpha</b></p><p>Нативный Mobile Audio Engine использует постоянные HTMLMediaElement-каналы для VOICE, HORN и пула BLEEP. Аудиоканал пробуждается бесшумным WAV при первом касании. Прогрев и непрерывный Free Practice LapWiz сохранены без изменения спортивной логики.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
+ <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.13 Alpha</b></p><p>Нативный Mobile Audio Engine использует постоянные HTMLMediaElement-каналы для VOICE, HORN и пула BLEEP. Аудиоканал пробуждается бесшумным WAV при первом касании. Прогрев и непрерывный Free Practice LapWiz сохранены без изменения спортивной логики.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
  </div></section>`;}
 
 function bindView(){
@@ -1083,7 +1103,7 @@ function processPilotPass(p,deviceMs=null,source='MANUAL'){const ev=currentEvent
 function manualLapModal(){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return toast('Ручной круг доступен во время заезда');const pilots=liveRanking(getEventPilots(state.race,ev),s);$('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal manualLapModal"><div class="modalHead"><div><div class="sectionLabel">РУЧНОЙ РЕЗЕРВ</div><h2>Кому добавить круг?</h2></div><button class="iconBtn" id="closeModal">×</button></div><div class="manualPilotGrid">${pilots.map(p=>{const l=s.live[p.id]||blankLive();return `<button data-manual-modal="${p.id}" ${l.finished?'disabled':''}><span>${nameInitials(p.name)}</span><b>${esc(p.name)}</b><em>${l.laps} кругов</em></button>`;}).join('')}</div></div></div>`;$('#closeModal').onclick=closeModal;$$('[data-manual-modal]').forEach(b=>b.onclick=()=>{const p=getPilot(state.race,b.dataset.manualModal);if(p){processPilotPass(p,null,'MANUAL');toast(`Ручной круг: ${p.name}`);closeModal();}});}
 async function handleAction(action,button){if(action==='pause-session')return pauseSession();if(action==='add-minute')return addMinute();if(action==='next-event'){if(state.session?.phase!=='finished')return toast('Сначала завершите текущий заезд');return saveCurrentEventResult();}if(action==='manual-lap-modal')return manualLapModal();if(action==='open-settings')return nav('settings');return legacyHandleAction(action,button);}
 
-/* ===== Legion RX 4.0.12 Alpha · Mobile Audio Fix + Warmup / Prestart ===== */
+/* ===== Legion RX 4.0.13 Alpha · Mobile Audio Fix + Warmup / Prestart ===== */
 
 function buildStartTiming(flag){return buildProtocolPacket(0x06,[flag?1:0]);}
 
@@ -1489,7 +1509,7 @@ async function stopSession(){
   }
   await finishSession('Аварийный STOP');
 }
-/* ===== /4.0.12 ===== */
+/* ===== /4.0.13 ===== */
 
 lapwiz.addEventListener('pass',e=>processPass(e.detail.transponder,e.detail.deviceMs,'LAPWIZ'));lapwiz.addEventListener('status',()=>updateHeader());
 // iOS Safari/PWA и Chrome Android требуют пользовательский жест для стабильного звука.

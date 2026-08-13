@@ -1,4 +1,4 @@
-# Legion RX 4.0.12 Alpha — Mobile Audio Fix
+# Legion RX 4.0.13 Alpha — Mobile Audio Fix
 
 Основа: 4.0.10 Alpha Warmup Voice.
 
@@ -11,7 +11,7 @@
 - После HORN первый проход = Bleep + `СТАРТ ✓`, без добавления круга.
 - Следующий проход становится кругом 1; первый круг считается от HORN.
 
-## Новый Mobile Audio Fix 4.0.12
+## Новый Mobile Audio Fix 4.0.13
 - Единый Web Audio `AudioContext` вместо независимых `Audio()` для штатных файлов.
 - Две независимые шины: `VOICE` и `SFX`.
 - Bleep и HORN могут играть поверх WAV диктора и не должны обрывать его.
