@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.11 Alpha</title>
+<title>Legion RX 4.0.12 Alpha</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -35,7 +35,7 @@ body.cockpitMode #viewHost{bottom:0;overflow:hidden}.cockpit{height:calc(100dvh 
 .designQuickBtn{height:38px;padding:0 13px;border:1px solid var(--line);border-radius:var(--radius-button);background:var(--panel2);color:var(--text);display:flex;align-items:center;gap:7px;font:inherit;font-size:12px;font-weight:850;cursor:pointer;white-space:nowrap}.designQuickBtn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue2)}.designQuickBtn svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.designQuickBtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}@media(max-width:760px){.designQuickBtn{width:39px;padding:0;display:grid;place-items:center}.designQuickBtn span{display:none}}
 
 /* =========================================================
-   LEGION RX 4.0.11 — AUDIO ENGINE
+   LEGION RX 4.0.12 — MOBILE AUDIO FIX
    Based on the approved dark Live Heat concept.
    ========================================================= */
 :root{
@@ -274,7 +274,7 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.11 ALPHA</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.12 ALPHA</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -439,20 +439,17 @@ class AnnouncerEngine extends EventTarget{
     this.enabled=true;
     this.startMode='full';
     this.token=0;
-    this.ctx=null;
-    this.masterGain=null;
-    this.voiceGain=null;
-    this.sfxGain=null;
-    this.voiceVolume=1;
-    this.sfxVolume=1;
-    this.rawCache=new Map();
-    this.bufferCache=new Map();
-    this.loading=new Map();
-    this.voiceSources=new Set();
-    this.sfxSources=new Set();
+    this.ctx={state:'suspended'}; // совместимость UI: это состояние нативного Media Audio Engine
     this.lastMessage='Готов к старту';
-    this.unlocked=false;
     this.lastError='';
+    this.unlocked=false;
+    this.unlocking=null;
+    this.voicePlayer=null;
+    this.hornPlayer=null;
+    this.unlockPlayer=null;
+    this.bleepPool=[];
+    this.bleepIndex=0;
+    this.preloadCache=new Map();
   }
   emit(detail){this.dispatchEvent(new CustomEvent('status',{detail}));}
   assetUrl(key){
@@ -462,143 +459,129 @@ class AnnouncerEngine extends EventTarget{
   }
   category(key){return (key==='bleep'||key==='startRace')?'sfx':'voice';}
   allKeys(){return ['prestart10','goodRace','startRace','bleep',...Array.from({length:10},(_,i)=>`countdown_${i+1}`),...'12345'.split('').map(n=>`warmup_${n}`),'warmup_30'];}
-  ensureContext(){
-    if(this.ctx&&this.ctx.state!=='closed')return this.ctx;
-    const AC=window.AudioContext||window.webkitAudioContext;
-    if(!AC)return null;
+  makeAudio(src=''){
+    const a=new Audio();
+    a.preload='auto';
+    a.playsInline=true;
+    a.setAttribute?.('playsinline','');
+    if(src){a.src=src;a.load?.();}
+    return a;
+  }
+  ensurePlayers(){
+    if(!this.voicePlayer)this.voicePlayer=this.makeAudio(ANNOUNCER_AUDIO.goodRace);
+    if(!this.hornPlayer)this.hornPlayer=this.makeAudio(ANNOUNCER_AUDIO.startRace);
+    if(!this.unlockPlayer)this.unlockPlayer=this.makeAudio('./audio/system/silence.wav');
+    if(!this.bleepPool.length)this.bleepPool=Array.from({length:8},()=>this.makeAudio(ANNOUNCER_AUDIO.bleep));
+  }
+  statusLabel(){
+    if(this.unlocked)return 'ГОТОВ';
+    if(this.lastError)return 'НУЖНО КАСАНИЕ';
+    return 'НАЖМИТЕ ЭКРАН';
+  }
+  updateStatusUi(){
+    const st=this.unlocked?'running':'suspended';this.ctx.state=st;
+    document.querySelectorAll?.('.audioEngineStatus').forEach(el=>{el.textContent=this.statusLabel();el.dataset.state=st;});
+  }
+  preload(){
+    this.ensurePlayers();
+    for(const key of this.allKeys()){
+      if(this.preloadCache.has(key))continue;
+      const url=this.assetUrl(key);if(!url)continue;
+      const a=this.makeAudio(url);this.preloadCache.set(key,a);
+    }
+    return true;
+  }
+  async prime(a){
+    if(!a)return false;
+    const oldSrc=a.getAttribute('src')||'';
+    const oldVol=a.volume;
+    const oldRate=a.playbackRate;
     try{
-      const ctx=new AC();
-      this.ctx=ctx;
-      this.masterGain=ctx.createGain();
-      this.voiceGain=ctx.createGain();
-      this.sfxGain=ctx.createGain();
-      this.voiceGain.gain.value=this.voiceVolume;
-      this.sfxGain.gain.value=this.sfxVolume;
-      this.voiceGain.connect(this.masterGain);
-      this.sfxGain.connect(this.masterGain);
-      this.masterGain.connect(ctx.destination);
-      ctx.addEventListener?.('statechange',()=>{
-        this.unlocked=ctx.state==='running';
-        this.updateStatusUi();
-        this.emit({message:this.lastMessage,audioState:ctx.state,running:false});
-      });
-      return ctx;
+      a.pause();a.src='./audio/system/silence.wav';a.volume=1;a.playbackRate=1;a.currentTime=0;a.load?.();
+      const promise=a.play();if(promise&&typeof promise.then==='function')await promise;
+      a.pause();a.currentTime=0;
+      if(oldSrc){a.src=oldSrc;a.load?.();}else a.removeAttribute('src');
+      a.volume=oldVol;a.playbackRate=oldRate;
+      return true;
     }catch(e){
-      this.lastError=String(e);
-      this.updateStatusUi();
-      return null;
+      try{a.pause();if(oldSrc){a.src=oldSrc;a.load?.();}}catch{}
+      return false;
     }
   }
   async unlock(){
-    const ctx=this.ensureContext();
-    if(!ctx){this.lastError='Web Audio API недоступен';this.updateStatusUi();return false;}
-    if(ctx.state==='running'&&this.unlocked){try{window.speechSynthesis?.resume?.();}catch{}return true;}
-    try{
-      if(ctx.state!=='running')await ctx.resume();
-      // Нулевой буфер запускается именно после жеста пользователя. Это важно для iOS Safari/PWA и Chrome Android.
-      const b=ctx.createBuffer(1,1,ctx.sampleRate||44100);
-      const src=ctx.createBufferSource();src.buffer=b;src.connect(this.masterGain);src.start(0);
-      this.unlocked=ctx.state==='running';
-      this.lastError='';
-      try{window.speechSynthesis?.resume?.();}catch{}
+    if(this.unlocked){this.updateStatusUi();return true;}
+    if(this.unlocking)return this.unlocking;
+    this.ensurePlayers();
+    // Вызовы play() создаются непосредственно внутри пользовательского жеста.
+    // Один и тот же постоянный media-element затем используется для будущих фраз.
+    const jobs=[this.prime(this.unlockPlayer),this.prime(this.voicePlayer),this.prime(this.hornPlayer),...this.bleepPool.map(a=>this.prime(a))];
+    this.unlocking=Promise.allSettled(jobs).then(results=>{
+      const ok=results.filter(r=>r.status==='fulfilled'&&r.value===true).length;
+      this.unlocked=ok>=2;
+      this.lastError=this.unlocked?'':`Аудиоканал не разблокирован (${ok}/${results.length})`;
       this.updateStatusUi();
-      // После разблокировки тихо подготавливаем файлы, не блокируя нажатие.
+      this.unlocking=null;
       this.preload();
       return this.unlocked;
-    }catch(e){
-      this.unlocked=false;this.lastError=String(e);this.updateStatusUi();
-      return false;
-    }
+    }).catch(e=>{this.unlocked=false;this.lastError=String(e);this.unlocking=null;this.updateStatusUi();return false;});
+    return this.unlocking;
   }
   async resume(){
-    const ctx=this.ensureContext();
-    if(!ctx)return false;
-    try{if(ctx.state!=='running')await ctx.resume();this.unlocked=ctx.state==='running';this.updateStatusUi();return this.unlocked;}
-    catch(e){this.unlocked=false;this.lastError=String(e);this.updateStatusUi();return false;}
+    // HTMLMediaElement не имеет AudioContext.resume(). Если ранее канал был разблокирован,
+    // сохраняем состояние. Если ОС его сбросила, ближайшее пользовательское касание снова вызовет unlock().
+    this.updateStatusUi();return this.unlocked;
   }
-  statusLabel(){
-    if(!this.ctx)return 'НАЖМИТЕ ЭКРАН';
-    if(this.ctx.state==='running')return 'ГОТОВ';
-    if(this.ctx.state==='suspended')return 'ОЖИДАЕТ КАСАНИЯ';
-    return String(this.ctx.state||'НЕ ГОТОВ').toUpperCase();
+  setSource(a,key,url){
+    if(a._legionKey===key&&a.src)return;
+    try{a.pause();a.currentTime=0;}catch{}
+    a.src=url;a._legionKey=key;a.load?.();
   }
-  updateStatusUi(){
-    document.querySelectorAll?.('.audioEngineStatus').forEach(el=>{
-      el.textContent=this.statusLabel();
-      el.dataset.state=this.ctx?.state||'locked';
-    });
-  }
-  async fetchRaw(key){
-    if(this.rawCache.has(key))return this.rawCache.get(key);
-    if(this.loading.has(`raw:${key}`))return this.loading.get(`raw:${key}`);
-    const url=this.assetUrl(key);if(!url)return null;
-    const job=fetch(url,{cache:'force-cache'}).then(r=>{if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);return r.arrayBuffer();}).then(buf=>{this.rawCache.set(key,buf);this.loading.delete(`raw:${key}`);return buf;}).catch(e=>{this.loading.delete(`raw:${key}`);console.warn('Audio preload',key,e);throw e;});
-    this.loading.set(`raw:${key}`,job);return job;
-  }
-  async ensureBuffer(key){
-    if(this.bufferCache.has(key))return this.bufferCache.get(key);
-    if(this.loading.has(`decode:${key}`))return this.loading.get(`decode:${key}`);
-    const ctx=this.ensureContext();if(!ctx)return null;
-    const job=(async()=>{
-      const raw=await this.fetchRaw(key);if(!raw)return null;
-      const copy=raw.slice(0);
-      const decoded=await new Promise((resolve,reject)=>{
-        const ret=ctx.decodeAudioData(copy,resolve,reject);
-        if(ret&&typeof ret.then==='function')ret.then(resolve,reject);
-      });
-      this.bufferCache.set(key,decoded);this.loading.delete(`decode:${key}`);return decoded;
-    })().catch(e=>{this.loading.delete(`decode:${key}`);console.warn('Audio decode',key,e);throw e;});
-    this.loading.set(`decode:${key}`,job);return job;
-  }
-  preload(){
-    // Скачивание разрешено до разблокировки звука; декодирование происходит лениво через Web Audio.
-    return Promise.allSettled(this.allKeys().map(k=>this.fetchRaw(k)));
-  }
-  getAudio(key){
-    const b=this.bufferCache.get(key);
-    return b?{duration:b.duration}:null;
-  }
-  stopSet(set){for(const src of [...set]){try{src.stop();}catch{}set.delete(src);}}
-  stopVoice(){this.stopSet(this.voiceSources);}
-  cancel(){
-    this.token++;
-    this.stopVoice();
-    this.lastMessage='Отсчёт отменён';
-    this.emit({message:this.lastMessage,running:false});
-  }
-  async play(key,{wait=true,force=false,volume=1}={}){
-    if(!force&&!this.enabled)return false;
-    // Если звук был выгружен ОС после сна/смены приложения, пробуем поднять контекст снова.
-    await this.resume();
-    const ctx=this.ensureContext();if(!ctx||ctx.state!=='running'){
-      this.lastError='AudioContext не разблокирован';this.updateStatusUi();
-      this.emit({message:`Звук ожидает касания: ${key}`,error:this.lastError});
-      return false;
-    }
+  async playElement(a,key,url,{wait=true,volume=1,rate=1}={}){
+    if(!a||!url)return false;
     try{
-      const buffer=await this.ensureBuffer(key);if(!buffer)return false;
-      const src=ctx.createBufferSource();src.buffer=buffer;
-      const gain=ctx.createGain();gain.gain.value=Math.max(0,Math.min(1.5,Number(volume)||0));
-      const cat=this.category(key),bus=cat==='sfx'?this.sfxGain:this.voiceGain,set=cat==='sfx'?this.sfxSources:this.voiceSources;
-      src.connect(gain).connect(bus);set.add(src);
-      let resolveEnded;const ended=new Promise(r=>resolveEnded=r);
-      src.onended=()=>{set.delete(src);try{src.disconnect();gain.disconnect();}catch{}resolveEnded?.();};
-      src.start(0);
-      this.lastMessage=key;this.lastError='';this.emit({message:key,running:true,category:cat});
-      if(wait)await ended;
+      this.setSource(a,key,url);
+      a.volume=Math.max(0,Math.min(1,Number(volume)||0));a.playbackRate=rate||1;a.currentTime=0;
+      const p=a.play();if(p&&typeof p.then==='function')await p;
+      this.unlocked=true;this.lastError='';this.updateStatusUi();
+      if(wait)await new Promise(resolve=>{
+        const done=()=>{a.removeEventListener('ended',done);a.removeEventListener('error',done);resolve();};
+        a.addEventListener('ended',done,{once:true});a.addEventListener('error',done,{once:true});
+      });
       return true;
     }catch(e){
-      console.warn('Announcer WebAudio:',key,e);this.lastError=String(e);this.updateStatusUi();
-      this.emit({message:`Ошибка аудио: ${key}`,error:String(e)});return false;
+      this.unlocked=false;this.lastError=String(e);this.updateStatusUi();
+      this.emit({message:`Ошибка аудио: ${key}`,error:String(e)});
+      return false;
     }
   }
-  playBleep(){return this.play('bleep',{wait:false,force:true});}
+  getAudio(key){
+    const a=this.preloadCache.get(key);return a?{duration:Number.isFinite(a.duration)?a.duration:0}:null;
+  }
+  stopVoice(){if(this.voicePlayer){try{this.voicePlayer.pause();this.voicePlayer.currentTime=0;}catch{}}}
+  cancel(){this.token++;this.stopVoice();this.lastMessage='Отсчёт отменён';this.emit({message:this.lastMessage,running:false});}
+  async play(key,{wait=true,force=false,volume=1}={}){
+    if(!force&&!this.enabled)return false;
+    this.ensurePlayers();
+    const url=this.assetUrl(key);if(!url)return false;
+    const cat=this.category(key);
+    let a=cat==='voice'?this.voicePlayer:(key==='startRace'?this.hornPlayer:this.bleepPool[this.bleepIndex++%this.bleepPool.length]);
+    const ok=await this.playElement(a,key,url,{wait,volume});
+    if(ok){this.lastMessage=key;this.emit({message:key,running:true,category:cat});}
+    return ok;
+  }
+  playBleep(){
+    if(!this.enabled&&false)return false;
+    this.ensurePlayers();
+    const a=this.bleepPool[this.bleepIndex++%this.bleepPool.length];
+    this.playElement(a,'bleep',ANNOUNCER_AUDIO.bleep,{wait:false,volume:1});
+    return true;
+  }
   playUnknown(){
-    const ctx=this.ensureContext();if(!ctx||ctx.state!=='running')return;
-    const tone=(freq,dur,vol,delay=0)=>{
-      const t=ctx.currentTime+delay,o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(this.sfxGain);o.start(t);o.stop(t+dur+.02);
-    };
-    tone(430,.09,.15);tone(330,.11,.13,.11);
+    this.ensurePlayers();
+    const a1=this.bleepPool[this.bleepIndex++%this.bleepPool.length];
+    const a2=this.bleepPool[this.bleepIndex++%this.bleepPool.length];
+    this.playElement(a1,'bleep',ANNOUNCER_AUDIO.bleep,{wait:false,volume:.42,rate:.62});
+    setTimeout(()=>this.playElement(a2,'bleep',ANNOUNCER_AUDIO.bleep,{wait:false,volume:.34,rate:.48}),120);
   }
   delay(ms,token){return new Promise(resolve=>setTimeout(()=>resolve(token===this.token),Math.max(0,ms)));}
   async timedCountdown(from,{token,onTick,voiceFrom=from,voiceTo=1,goodRaceAt=null}={}){
@@ -631,28 +614,6 @@ class AnnouncerEngine extends EventTarget{
     this.play('startRace',{wait:false,force:true});this.lastMessage='СТАРТ';this.emit({message:'СТАРТ',running:false});await onStart?.();
   }
 }
-
-
-'use strict';
-
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const KEYS={race:'legionrx4_current_race',pilots:'legionrx4_pilot_db',champ:'legionrx4_championships',archive:'legionrx4_archive',settings:'legionrx4_settings'};
-const defaultUi={cardRadius:10,tileRadius:10,buttonRadius:8,inputRadius:7,iconRadius:8,heroRadius:12,widgetRadius:10,modalRadius:10,cardPadding:16,sectionGap:10,buttonHeight:62,contentWidth:1440,disciplineCols:3};
-const defaultSettings={
-  theme:'dark',lang:'ru',lapSound:true,minLapSec:2,countdownSec:10,warmupMinutes:2,
-  announcerEnabled:true,startVoiceMode:'full',
-  qualificationLimitType:'time',qualificationMinutes:5,qualificationLaps:8,
-  finalLimitType:'laps',finalMinutes:5,finalLaps:7,
-  ui:{...defaultUi}
-};
-const I18N={
- ru:{'nav.home':'Главная','nav.champs':'Чемпионаты','nav.pilots':'Пилоты','nav.settings':'Настройки'},
- en:{'nav.home':'Home','nav.champs':'Championships','nav.pilots':'Drivers','nav.settings':'Settings'}
-};
-const storedSettings=load(KEYS.settings,{});
-const state={view:'home',race:load(KEYS.race,null),pilotDb:load(KEYS.pilots,[]),championships:load(KEYS.champ,[]),archive:load(KEYS.archive,[]),settings:{...defaultSettings,...storedSettings,ui:{...defaultUi,...(storedSettings.ui||{})}},session:null,sessionTick:null,countdownTick:null,resultsOpen:false,mobileEvents:false,mobileWidgets:false,widgetCollapsed:{events:false,results:true,voice:false,next:false},activeChampionshipId:'',champTab:'stages'};
-const lapwiz=new LapWizCore();
-lapwiz.sound=state.settings.lapSound;
 const announcer=new AnnouncerEngine();
 announcer.enabled=state.settings.announcerEnabled;
 announcer.startMode=state.settings.startVoiceMode;
@@ -721,7 +682,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.11 ALPHA</b><span>Reference UI · RallyCross активен</span></div>`}</div>
+   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.12 ALPHA</b><span>Reference UI · RallyCross активен</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
@@ -928,12 +889,12 @@ function settingsView(){return `<section class="page"><div class="pageHeader"><d
  <article class="card settingGroup"><h3>${uiIcon('settings','widgetIcon')} Интерфейс</h3><div class="toggleRow"><span>Тёмная тема</span><input class="toggle" id="darkToggle" type="checkbox" ${state.settings.theme==='dark'?'checked':''}></div><div class="field" style="margin-top:12px"><label>Язык интерфейса</label><select id="langSelect"><option value="ru" ${state.settings.lang==='ru'?'selected':''}>Русский</option><option value="en" ${state.settings.lang==='en'?'selected':''}>English</option></select></div><p>Светлая тема применяется и к пульту гонки.</p></article>
  <article class="card settingGroup designLabCard"><h3>${uiIcon('settings','widgetIcon')} Design Lab</h3><p>Живая настройка геометрии интерфейса без правки CSS.</p><div class="designLabSample"><span></span><span></span><span></span></div><button class="btn primary" data-action="open-design-lab">Открыть Design Lab</button></article>
  <article class="card settingGroup"><h3>${uiIcon('bluetooth','widgetIcon')} LapWiz</h3><div class="toggleRow"><span>Блип при принятом проходе</span><input class="toggle" id="soundToggle" type="checkbox" ${state.settings.lapSound?'checked':''}></div><div class="field" style="margin-top:12px"><label>Минимальное время круга, сек</label><input id="settingsMinLap" type="number" min="1" max="60" value="${state.settings.minLapSec}"></div><div class="btnRow" style="margin-top:12px">${lapwiz.connected?`<button class="btn secondary" data-action="lap-disconnect">Отключить LapWiz</button>`:`<button class="btn primary" data-action="lap-connect">Подключить LapWiz</button>`}<button class="btn secondary" data-action="test-bleep">Тест Bleep</button></div><p>Твой Bleep звучит только на валидном проходе зарегистрированного транспондера.</p></article>
- <article class="card settingGroup"><h3>${uiIcon('mic','widgetIcon')} Диктор · старт</h3><div class="toggleRow"><span>Озвучка старта</span><input class="toggle" id="announcerToggle" type="checkbox" ${state.settings.announcerEnabled?'checked':''}></div><div class="field" style="margin-top:12px"><label>Сценарий старта</label><select id="startVoiceMode"><option value="full" ${state.settings.startVoiceMode==='full'?'selected':''}>Полный — «До старта 10 секунд» → 10…5 → «Хорошей гонки» → HORN</option><option value="compact" ${state.settings.startVoiceMode==='compact'?'selected':''}>Короткий — «Хорошей гонки» → 9…1 → HORN</option></select></div><div class="field" style="margin-top:12px"><label>Прогрев / проверка транспондеров, мин</label><select id="settingsWarmupMinutes">${[5,4,3,2,1].map(n=>`<option value="${n}" ${Number(state.settings.warmupMinutes||2)===n?'selected':''}>${n} мин</option>`).join('')}</select></div><div class="field" style="margin-top:12px"><label>Финальный отсчёт перед стартом, сек</label><input id="settingsCountdown" type="number" min="1" max="10" value="${state.settings.countdownSec}"></div><p>Прогрев — общее время до HORN. Финальный отсчёт входит в выбранные минуты. LapWiz в этот период работает в Free Practice и проверяет транспондеры.</p><p><b>Audio Engine:</b> <span class="audioEngineStatus" data-state="${esc(announcer.ctx?.state||'locked')}">${esc(announcer.statusLabel())}</span>. На Android/iPhone первое касание экрана разблокирует системный аудиоканал.</p><div class="btnRow"><button class="btn secondary" data-action="test-good-race">Тест «Хорошей гонки»</button><button class="btn secondary" data-action="test-start-horn">Тест HORN</button></div></article>
+ <article class="card settingGroup"><h3>${uiIcon('mic','widgetIcon')} Диктор · старт</h3><div class="toggleRow"><span>Озвучка старта</span><input class="toggle" id="announcerToggle" type="checkbox" ${state.settings.announcerEnabled?'checked':''}></div><div class="field" style="margin-top:12px"><label>Сценарий старта</label><select id="startVoiceMode"><option value="full" ${state.settings.startVoiceMode==='full'?'selected':''}>Полный — «До старта 10 секунд» → 10…5 → «Хорошей гонки» → HORN</option><option value="compact" ${state.settings.startVoiceMode==='compact'?'selected':''}>Короткий — «Хорошей гонки» → 9…1 → HORN</option></select></div><div class="field" style="margin-top:12px"><label>Прогрев / проверка транспондеров, мин</label><select id="settingsWarmupMinutes">${[5,4,3,2,1].map(n=>`<option value="${n}" ${Number(state.settings.warmupMinutes||2)===n?'selected':''}>${n} мин</option>`).join('')}</select></div><div class="field" style="margin-top:12px"><label>Финальный отсчёт перед стартом, сек</label><input id="settingsCountdown" type="number" min="1" max="10" value="${state.settings.countdownSec}"></div><p>Прогрев — общее время до HORN. Финальный отсчёт входит в выбранные минуты. LapWiz в этот период работает в Free Practice и проверяет транспондеры.</p><p><b>Audio Engine:</b> <span class="audioEngineStatus" data-state="${esc(announcer.ctx?.state||'locked')}">${esc(announcer.statusLabel())}</span>. На Android/iPhone первое касание экрана разблокирует системный аудиоканал.</p><div class="btnRow"><button class="btn secondary" data-action="audio-wake">Разбудить звук</button><button class="btn secondary" data-action="test-good-race">Тест «Хорошей гонки»</button><button class="btn secondary" data-action="test-start-horn">Тест HORN</button></div></article>
  <article class="card settingGroup"><h3>${uiIcon('flag','widgetIcon')} Заезды по умолчанию</h3><div class="formatRuleGrid compactRules">
   <section class="ruleBox"><div class="ruleBoxHead"><b>Квалификация</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsQLimit"><option value="time" ${state.settings.qualificationLimitType==='time'?'selected':''}>По времени</option><option value="laps" ${state.settings.qualificationLimitType==='laps'?'selected':''}>По кругам</option></select></div><div class="field"><label>Минуты</label><input id="settingsQMin" type="number" value="${state.settings.qualificationMinutes}"></div><div class="field"><label>Круги</label><input id="settingsQLaps" type="number" value="${state.settings.qualificationLaps}"></div></div></section>
   <section class="ruleBox"><div class="ruleBoxHead"><b>Финалы / LCQ</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsFLimit"><option value="laps" ${state.settings.finalLimitType==='laps'?'selected':''}>По кругам</option><option value="time" ${state.settings.finalLimitType==='time'?'selected':''}>По времени</option></select></div><div class="field"><label>Круги</label><input id="settingsFLaps" type="number" value="${state.settings.finalLaps}"></div><div class="field"><label>Минуты</label><input id="settingsFMin" type="number" value="${state.settings.finalMinutes}"></div></div></section>
  </div><button class="btn primary" style="margin-top:12px" data-action="save-settings">Сохранить настройки</button></article>
- <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.11 Alpha</b></p><p>Единый Web Audio Engine обслуживает диктора и звуковые эффекты через раздельные VOICE/SFX шины. Звук разблокируется первым касанием экрана и восстанавливается после возврата приложения из фона. Прогрев и непрерывный Free Practice LapWiz сохранены без изменения спортивной логики.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
+ <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.12 Alpha</b></p><p>Нативный Mobile Audio Engine использует постоянные HTMLMediaElement-каналы для VOICE, HORN и пула BLEEP. Аудиоканал пробуждается бесшумным WAV при первом касании. Прогрев и непрерывный Free Practice LapWiz сохранены без изменения спортивной логики.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
  </div></section>`;}
 
 function bindView(){
@@ -973,6 +934,7 @@ async function legacyHandleAction(action){
  if(action==='toggle-results'){state.resultsOpen=!state.resultsOpen;state.widgetCollapsed.results=!state.resultsOpen;return render();}if(action==='start-session')return beginCountdown();if(action==='pause-session')return togglePause();if(action==='add-minute')return addMinute();if(action==='manual-pass-picker')return manualPassPicker();if(action==='next-event')return quickNextEvent();if(action==='finish-session')return finishSession();if(action==='stop-session')return stopSession();if(action==='save-event-result')return saveCurrentEventResult();
  if(action==='lap-connect'){try{await announcer.unlock();await lapwiz.connect();toast('LapWiz подключён');updateHeader();render();}catch(e){toast(e.message);}return;}if(action==='lap-disconnect'){await lapwiz.disconnect();toast('LapWiz отключён');updateHeader();render();return;}
  if(action==='new-db-pilot')return pilotModal();if(action==='new-champ')return championshipModal();if(action==='new-champ-stage')return champStageModal();if(action==='champ-add-pilots')return champPilotPicker();if(action==='back-champs')return nav('championships');if(action==='save-champ-settings')return saveChampionshipSettings();if(action==='open-design-lab')return openDesignLab();
+ if(action==='audio-wake'){const ok=await announcer.unlock();toast(ok?'Звук готов':'Звук не разблокирован — коснитесь ещё раз');render();return;}
  if(action==='test-good-race'){announcer.preload();announcer.play('goodRace',{wait:false,force:true});return;}
  if(action==='test-start-horn'){announcer.preload();announcer.play('startRace',{wait:false,force:true});return;}
  if(action==='test-bleep'){announcer.preload();announcer.playBleep();return;}
@@ -1121,7 +1083,7 @@ function processPilotPass(p,deviceMs=null,source='MANUAL'){const ev=currentEvent
 function manualLapModal(){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return toast('Ручной круг доступен во время заезда');const pilots=liveRanking(getEventPilots(state.race,ev),s);$('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal manualLapModal"><div class="modalHead"><div><div class="sectionLabel">РУЧНОЙ РЕЗЕРВ</div><h2>Кому добавить круг?</h2></div><button class="iconBtn" id="closeModal">×</button></div><div class="manualPilotGrid">${pilots.map(p=>{const l=s.live[p.id]||blankLive();return `<button data-manual-modal="${p.id}" ${l.finished?'disabled':''}><span>${nameInitials(p.name)}</span><b>${esc(p.name)}</b><em>${l.laps} кругов</em></button>`;}).join('')}</div></div></div>`;$('#closeModal').onclick=closeModal;$$('[data-manual-modal]').forEach(b=>b.onclick=()=>{const p=getPilot(state.race,b.dataset.manualModal);if(p){processPilotPass(p,null,'MANUAL');toast(`Ручной круг: ${p.name}`);closeModal();}});}
 async function handleAction(action,button){if(action==='pause-session')return pauseSession();if(action==='add-minute')return addMinute();if(action==='next-event'){if(state.session?.phase!=='finished')return toast('Сначала завершите текущий заезд');return saveCurrentEventResult();}if(action==='manual-lap-modal')return manualLapModal();if(action==='open-settings')return nav('settings');return legacyHandleAction(action,button);}
 
-/* ===== Legion RX 4.0.11 Alpha · Audio Engine + Warmup / Prestart ===== */
+/* ===== Legion RX 4.0.12 Alpha · Mobile Audio Fix + Warmup / Prestart ===== */
 
 function buildStartTiming(flag){return buildProtocolPacket(0x06,[flag?1:0]);}
 
@@ -1527,7 +1489,7 @@ async function stopSession(){
   }
   await finishSession('Аварийный STOP');
 }
-/* ===== /4.0.11 ===== */
+/* ===== /4.0.12 ===== */
 
 lapwiz.addEventListener('pass',e=>processPass(e.detail.transponder,e.detail.deviceMs,'LAPWIZ'));lapwiz.addEventListener('status',()=>updateHeader());
 // iOS Safari/PWA и Chrome Android требуют пользовательский жест для стабильного звука.
