@@ -62,3 +62,7 @@ Web Bluetooth: Chrome на Android/Windows + HTTPS (например GitHub Page
 - Landscape: пилоты слева, таймер/пульт справа.
 - Portrait: видны лимит, прошло, лучший круг и осталось; служебные LapWiz/«Как считаем» свернуты и расположены после списка пилотов.
 - Спортивная логика, PIT, аудио и RallyCross не изменялись.
+
+
+## 4.0.21 TEST — Mobile Control Fix
+Compact theme-aware header controls, portrait Track Day main timer/ring, and 1–60 s Track Day minimum-lap filter.

@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.20 TEST</title>
+<title>Legion RX 4.0.21 TEST</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -360,7 +360,7 @@ body.layoutLabActive #layoutElementPalette.open{display:grid}
  .trackCockpit .raceBrand{padding:7px 11px}.trackCockpit .raceBrand strong{font-size:21px}.trackCockpit .raceBrand small{font-size:8px}
  .trackCockpit .raceHeadInfo{display:grid;grid-template-columns:minmax(130px,1.2fr) 70px minmax(115px,1fr) 88px}
  .trackCockpit .headCell{padding:5px 7px}.trackCockpit .headCell b{font-size:12px}.trackCockpit .headCell small,.trackCockpit .headClock small{font-size:7px}.trackCockpit .headClock b{font-size:17px}
- .trackCockpit .raceHeadStatus{padding:5px;gap:4px}.trackCockpit .raceHeadStatus .consolePill{display:flex!important;height:38px;padding:0 7px;font-size:9px}.trackCockpit .squareConsoleBtn{width:38px;height:38px}
+ .trackCockpit .raceHeadStatus{padding:5px;gap:4px}.trackCockpit .consolePill{height:38px;padding:0 7px;font-size:9px}.trackCockpit .squareConsoleBtn{width:38px;height:38px}
  .trackCockpit .trackHeroStrip{grid-template-columns:.72fr .72fr 1.55fr .72fr;gap:5px}.trackCockpit .trackHeroStrip>div{padding:6px 9px}.trackCockpit .trackHeroStrip span{font-size:7px}.trackCockpit .trackHeroStrip b{font-size:17px}.trackCockpit .trackBestHero strong{font-size:14px}
  .trackCockpit .trackMainGrid{grid-template-columns:minmax(0,1.65fr) minmax(250px,.7fr);grid-template-rows:minmax(0,1fr);gap:6px;padding:0;overflow:hidden}
  .trackCockpit .trackPositions{grid-column:1;grid-row:1;min-height:0;height:100%}
@@ -397,13 +397,57 @@ body.layoutLabActive #layoutElementPalette.open{display:grid}
 }
 </style>
 
+
+<style id="mobileControl421Styles">
+/* 4.0.21 TEST — compact header controls, theme-aware actions, portrait Track Day timer. */
+.raceHeadStatus.compactHeadControls{gap:5px;padding:7px}
+.raceHeadStatus.compactHeadControls .consolePill{width:38px;height:38px;flex:0 0 38px;padding:0;justify-content:center;gap:0;border-radius:7px;cursor:pointer}
+.raceHeadStatus.compactHeadControls .consolePill>span{display:none!important}
+.raceHeadStatus.compactHeadControls .consolePill svg{width:18px;height:18px}
+.raceHeadStatus.compactHeadControls .squareConsoleBtn{width:38px;height:38px;flex:0 0 38px}
+.skipPill{border-color:color-mix(in srgb,var(--amber) 50%,var(--console-line))!important;background:var(--amber2)!important;color:var(--amber)!important}
+.skipPill:hover{border-color:var(--amber)!important;background:color-mix(in srgb,var(--amber2) 78%,var(--panel))!important}
+.cancelPill{border-color:color-mix(in srgb,var(--red) 46%,var(--console-line))!important;background:var(--red2)!important;color:var(--red)!important}
+.cancelPill:hover{border-color:var(--red)!important;background:color-mix(in srgb,var(--red2) 78%,var(--panel))!important}
+.layoutLabToggle{border-color:color-mix(in srgb,var(--blue) 48%,var(--console-line))!important;color:var(--blue)!important;background:var(--blue2)!important}
+.quickHeadButton:hover{background:var(--console-panel2)!important}
+html[data-theme="light"] .quickPanelDrawer{background:var(--panel);border-color:var(--line);box-shadow:0 24px 80px rgba(44,77,120,.18)}
+html[data-theme="light"] .quickPanelHead{border-color:var(--line)}
+html[data-theme="light"] .quickPanelHint{background:var(--panel2);border-color:var(--line);color:var(--muted)}
+@media(max-width:1400px){
+ .raceConsoleHeader{grid-template-columns:minmax(175px,220px) minmax(0,1fr) auto}
+ .raceHeadInfo{grid-template-columns:minmax(120px,1.1fr) minmax(90px,.65fr) minmax(125px,.9fr) 98px}
+ .headCell{padding:7px 9px;gap:7px}.headCell b{font-size:14px}.headClock b{font-size:20px}
+}
+@media(max-width:900px){
+ .raceHeadStatus.compactHeadControls .consolePill,.raceHeadStatus.compactHeadControls .squareConsoleBtn{display:flex!important;width:34px!important;height:34px!important;flex-basis:34px!important;padding:0!important;justify-content:center}
+}
+/* Portrait Track Day: timer + percentage ring stay visible, service widgets remain collapsed below it. */
+@media (orientation:portrait) and (max-width:900px){
+ .trackCockpit{grid-template-rows:58px 64px minmax(0,1fr) 116px 40px}
+ .trackCockpit .trackMainGrid{display:flex!important;flex-direction:column;gap:4px;min-height:0;overflow:hidden}
+ .trackCockpit .trackSidePanel{order:1;display:grid!important;grid-template-columns:1fr 1fr;grid-template-rows:104px auto;gap:4px;overflow:visible;min-height:0}
+ .trackCockpit .trackTimerCard{display:grid!important;grid-column:1/-1;grid-row:1;min-height:104px;height:104px;grid-template-columns:minmax(0,1fr) 76px;padding:9px 12px;order:initial}
+ .trackCockpit .trackTimerCard strong{font-size:45px;margin:2px 0}.trackCockpit .trackTimerCard .timerCaption{font-size:12px}.trackCockpit .trackTimerCard small{font-size:9px}
+ .trackCockpit .trackTimerCard .timerRing{width:68px;height:68px}.trackCockpit .trackTimerCard .timerRing:before{inset:6px}
+ .trackCockpit .trackSidePanel .refWidget{grid-row:2;min-width:0}.trackCockpit .trackSidePanel .refWidgetHead{min-height:36px;height:36px;padding:0 7px}.trackCockpit .trackSidePanel .refWidgetHead b{font-size:9px}.trackCockpit .trackSidePanel .refWidgetIcon{width:15px;height:15px}.trackCockpit .trackSidePanel .widgetHeadRight em{font-size:6.5px;padding:2px 4px}
+ .trackCockpit .trackPositions{order:2;flex:1 1 auto;min-height:0;height:auto;grid-template-rows:42px minmax(0,1fr) 26px}
+}
+@media (orientation:portrait) and (max-width:430px){
+ .trackCockpit{grid-template-rows:54px 92px minmax(0,1fr) 112px 38px}
+ .trackCockpit .trackSidePanel{grid-template-rows:92px auto}
+ .trackCockpit .trackTimerCard{height:92px;min-height:92px;grid-template-columns:minmax(0,1fr) 62px;padding:7px 9px}
+ .trackCockpit .trackTimerCard strong{font-size:39px}.trackCockpit .trackTimerCard .timerRing{width:56px;height:56px}
+ .trackCockpit .trackSidePanel .refWidgetHead{height:34px;min-height:34px}
+}
+</style>
 </head>
 <body>
 <div id="runtimeError" style="display:none;position:fixed;z-index:9999;left:12px;right:12px;top:12px;background:#5c1015;color:#fff;border:1px solid #d64149;padding:14px;border-radius:8px;font:14px/1.45 Segoe UI,sans-serif"></div>
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.20 TEST</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.21 TEST</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -1662,14 +1706,16 @@ ensureTrackDayState(state.trackDay);(state.trackDays||[]).forEach(ensureTrackDay
 
 function persistTrackDays(){save(KEYS.trackDays,state.trackDays||[]);save(KEYS.activeTrackDay,state.trackDay||null);}
 function newTrackDayDraft(){
-  return {id:uid('trackday'),name:`Track Day · ${new Date().toLocaleDateString('ru-RU')}`,date:new Date().toISOString().slice(0,10),durationMin:30,pitTimeoutSec:120,pilotIds:state.pilotDb.map(p=>p.id),pilots:[],status:'setup',createdAt:new Date().toISOString(),startedAtEpoch:null,finishedAtEpoch:null,elapsedFinalMs:null,live:{},unknown:{},lastPass:'',note:''};
+  return {id:uid('trackday'),name:`Track Day · ${new Date().toLocaleDateString('ru-RU')}`,date:new Date().toISOString().slice(0,10),durationMin:30,pitTimeoutSec:120,minLapSec:Math.max(1,Math.min(60,Number(state.settings.minLapSec||2))),pilotIds:state.pilotDb.map(p=>p.id),pilots:[],status:'setup',createdAt:new Date().toISOString(),startedAtEpoch:null,finishedAtEpoch:null,elapsedFinalMs:null,live:{},unknown:{},lastPass:'',note:''};
 }
 function trackPilot(td,id){return (td?.pilots||[]).find(p=>String(p.id)===String(id))||state.pilotDb.find(p=>String(p.id)===String(id));}
 function trackElapsed(td=state.trackDay){if(!td)return 0;if(Number.isFinite(td.elapsedFinalMs))return td.elapsedFinalMs;if(td.status!=='active'||!td.startedAtEpoch)return 0;return Math.max(0,Date.now()-td.startedAtEpoch);}
 function trackRemaining(td=state.trackDay){return Math.max(0,(Number(td?.durationMin||0)*60000)-trackElapsed(td));}
 function blankTrackLive(){return{laps:0,bestLapMs:Infinity,lastLapMs:null,lastDeviceMs:null,lastElapsedAtPass:null,startSeen:false,startSeenAtMs:null,lapTimes:[],status:'READY',pitCount:0,totalPitMs:0,lastPitDurationMs:null,pitStartedAtElapsedMs:null,pitOutAtElapsedMs:null,pitOutUntilEpoch:0,pitEvents:[]};}
-function ensureTrackDayState(td){if(!td)return td;td.live=td.live||{};td.unknown=td.unknown||{};if(td.pitTimeoutSec===undefined||td.pitTimeoutSec===null||Number.isNaN(Number(td.pitTimeoutSec)))td.pitTimeoutSec=120;td.pitTimeoutSec=Math.max(0,Number(td.pitTimeoutSec));(td.pilots||[]).forEach(p=>{const l=td.live[p.id]||(td.live[p.id]=blankTrackLive());l.lapTimes=Array.isArray(l.lapTimes)?l.lapTimes.filter(Number.isFinite):[];l.laps=l.lapTimes.length||Number(l.laps||0);const sm=lapSummary({lapTimes:l.lapTimes});l.bestLapMs=sm.best??(Number.isFinite(l.bestLapMs)?l.bestLapMs:Infinity);if(l.lastLapMs==null&&l.lapTimes.length)l.lastLapMs=l.lapTimes[l.lapTimes.length-1];l.pitCount=Math.max(0,Number(l.pitCount||0));l.totalPitMs=Math.max(0,Number(l.totalPitMs||0));l.pitEvents=Array.isArray(l.pitEvents)?l.pitEvents:[];l.pitOutUntilEpoch=Math.max(0,Number(l.pitOutUntilEpoch||0));});return td;}
+function ensureTrackDayState(td){if(!td)return td;td.live=td.live||{};td.unknown=td.unknown||{};if(td.pitTimeoutSec===undefined||td.pitTimeoutSec===null||Number.isNaN(Number(td.pitTimeoutSec)))td.pitTimeoutSec=120;td.pitTimeoutSec=Math.max(0,Number(td.pitTimeoutSec));if(td.minLapSec===undefined||td.minLapSec===null||Number.isNaN(Number(td.minLapSec)))td.minLapSec=Math.max(1,Math.min(60,Number(state.settings.minLapSec||2)));td.minLapSec=Math.max(1,Math.min(60,Number(td.minLapSec)));(td.pilots||[]).forEach(p=>{const l=td.live[p.id]||(td.live[p.id]=blankTrackLive());l.lapTimes=Array.isArray(l.lapTimes)?l.lapTimes.filter(Number.isFinite):[];l.laps=l.lapTimes.length||Number(l.laps||0);const sm=lapSummary({lapTimes:l.lapTimes});l.bestLapMs=sm.best??(Number.isFinite(l.bestLapMs)?l.bestLapMs:Infinity);if(l.lastLapMs==null&&l.lapTimes.length)l.lastLapMs=l.lapTimes[l.lapTimes.length-1];l.pitCount=Math.max(0,Number(l.pitCount||0));l.totalPitMs=Math.max(0,Number(l.totalPitMs||0));l.pitEvents=Array.isArray(l.pitEvents)?l.pitEvents:[];l.pitOutUntilEpoch=Math.max(0,Number(l.pitOutUntilEpoch||0));});return td;}
 function trackPitTimeoutMs(td=state.trackDay){const sec=Number(td?.pitTimeoutSec||0);return sec>0?sec*1000:0;}
+function trackMinLapSec(td=state.trackDay){return Math.max(1,Math.min(60,Number(td?.minLapSec||state.settings.minLapSec||2)));}
+function trackMinLapMs(td=state.trackDay){return trackMinLapSec(td)*1000;}
 function trackPitTimeoutLabel(td=state.trackDay){const sec=Number(td?.pitTimeoutSec||0);if(sec<=0)return'Выкл.';if(sec%60===0)return`${sec/60} мин`;return`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;}
 function trackPitTotalMs(l,td=state.trackDay){let total=Math.max(0,Number(l?.totalPitMs||0));if(l?.status==='PIT'&&Number.isFinite(l.pitStartedAtElapsedMs))total+=Math.max(0,trackElapsed(td)-l.pitStartedAtElapsedMs);return total;}
 function trackLiveDisplay(l){if(!l?.startSeen)return{text:'ОЖИДАЕМ',cls:''};if(l.status==='PIT')return{text:'PIT',cls:'pit'};if(l.status==='PIT_OUT'&&Date.now()<Number(l.pitOutUntilEpoch||0))return{text:'PIT OUT',cls:'pitout'};if((l.laps||0)===0)return{text:'ЗАСЕЧКА ✓',cls:'ok'};return{text:'НА ТРАССЕ',cls:'ok'};}
@@ -1722,7 +1768,7 @@ function homeView(){
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
-   :`<div class="heroMini"><b>4.0.20 TEST · TRACK DAY MOBILE</b><span>Responsive Track Day cockpit · portrait / landscape</span></div>`;
+   :`<div class="heroMini"><b>4.0.21 TEST · MOBILE CONTROL FIX</b><span>Compact controls · Track Day timing guard · portrait timer</span></div>`;
  return `<section class="page homePage">
  <div class="heroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат</h2></div></div>
@@ -1753,8 +1799,9 @@ function trackDaySetupView(){
     <div class="field"><label>Дата</label><input id="trackDate" type="date" value="${esc(td.date||new Date().toISOString().slice(0,10))}"></div>
     <div class="field"><label>Продолжительность</label><select id="trackDuration">${[10,30,60,120].map(n=>`<option value="${n}" ${Number(td.durationMin)===n?'selected':''}>${n} минут</option>`).join('')}</select></div>
     <div class="field"><label>PIT при отсутствии прохода</label><select id="trackPitTimeout">${[[60,'1 минута'],[90,'1:30'],[120,'2 минуты'],[180,'3 минуты'],[0,'Выключено']].map(([v,t])=>`<option value="${v}" ${Number(td.pitTimeoutSec)===v?'selected':''}>${t}</option>`).join('')}</select></div>
+    <div class="field"><label>Минимальное время круга, сек</label><input id="trackMinLapSec" type="number" min="1" max="60" step="1" value="${trackMinLapSec(td)}"></div>
     <div class="field"><label>Режим LapWiz</label><input value="Free Practice · непрерывная регистрация" disabled></div>
-   </div><div class="trackInfoNote">Первый проход пилота фиксирует транспондер и точку начала. Со второго прохода считаются полноценные круги. Если пилот не появляется на засечке дольше выбранного PIT-таймаута, незавершённый круг сбрасывается и статус меняется на PIT. Первый проход после возвращения = PIT OUT и новая точка отсчёта.</div></article>
+   </div><div class="trackInfoNote">Первый проход пилота фиксирует транспондер и точку начала. Со второго прохода считаются полноценные круги. Проходы быстрее выбранного минимального времени круга игнорируются как ложные/повторные и не создают круг. Если пилот не появляется на засечке дольше выбранного PIT-таймаута, незавершённый круг сбрасывается и статус меняется на PIT. Первый проход после возвращения = PIT OUT и новая точка отсчёта.</div></article>
    <article class="card"><div class="pageHeader compactHeader"><div><div class="sectionLabel">УЧАСТНИКИ</div><h2>Кто едет сегодня</h2></div><span class="badge">${selected.size} выбрано</span></div>
     <div class="trackPilotPicker">${state.pilotDb.length?state.pilotDb.map(p=>`<label class="trackPilotCheck"><input type="checkbox" data-track-pilot="${p.id}" ${selected.has(p.id)?'checked':''}><span class="avatar">${nameInitials(p.name)}</span><span><b>${esc(p.name)}</b><small>${esc(p.club||'Без клуба')} · ID ${esc(p.transponder||'—')}</small></span></label>`).join(''):`<div class="empty">В общей базе пока нет пилотов. Сначала добавьте их в разделе «Пилоты».</div>`}</div>
     <div class="btnRow" style="margin-top:14px"><button class="btn secondary" data-track-action="select-all">Выбрать всех</button><button class="btn primary" data-track-action="start" ${state.pilotDb.length?'':'disabled'}>Запустить практику</button></div>
@@ -1765,7 +1812,7 @@ function trackDaySetupView(){
   </section>`;
 }
 
-function trackDayHeader(td){return `<header class="raceConsoleHeader"><button class="raceBrand" data-track-action="home"><strong>LEGION <i>RX</i></strong><small>Track Day · Free Practice</small></button><div class="raceHeadInfo"><div class="headCell"><span>${raceSvg('timer')}</span><div><b>${esc(td.name)}</b><small>СЕССИЯ</small></div></div><div class="headCell"><span>${raceSvg('users')}</span><div><b>${td.pilots?.length||0}</b><small>ПИЛОТОВ</small></div></div><div class="headCell"><span>${raceSvg('clock')}</span><div><b>${td.durationMin} мин</b><small>ЛИМИТ · PIT ${trackPitTimeoutLabel(td)}</small></div></div><div class="headClock"><b id="trackClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><div class="raceHeadStatus"><button class="consolePill ${lapwiz.connected?'ok':''}" data-track-action="lap-connect" ${lapwiz.connected?'disabled':''}>${raceSvg('bluetooth')}<span>${lapwiz.connected?'LapWiz подключён':'Подключить LapWiz'}</span></button><span class="consolePill ${td.status==='active'?'live':'neutral'}">${raceSvg('play')}<span>${td.status==='active'?'Практика идёт':'Сессия завершена'}</span></span><button class="squareConsoleBtn" data-track-action="setup" title="Track Day">${raceSvg('settings')}</button></div></header>`;}
+function trackDayHeader(td){return `<header class="raceConsoleHeader"><button class="raceBrand" data-track-action="home"><strong>LEGION <i>RX</i></strong><small>Track Day · Free Practice</small></button><div class="raceHeadInfo"><div class="headCell"><span>${raceSvg('timer')}</span><div><b>${esc(td.name)}</b><small>СЕССИЯ</small></div></div><div class="headCell"><span>${raceSvg('users')}</span><div><b>${td.pilots?.length||0}</b><small>ПИЛОТОВ</small></div></div><div class="headCell"><span>${raceSvg('clock')}</span><div><b>${td.durationMin} мин</b><small>ЛИМИТ · MIN ${trackMinLapSec(td)}с · PIT ${trackPitTimeoutLabel(td)}</small></div></div><div class="headClock"><b id="trackClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><div class="raceHeadStatus compactHeadControls"><button class="consolePill ${lapwiz.connected?'ok':''}" data-track-toggle-widget="trackLapwiz" title="LapWiz · ${lapwiz.connected?'подключён':'не подключён'}">${raceSvg('bluetooth')}<span>${lapwiz.connected?'LapWiz подключён':'LapWiz'}</span></button><button class="consolePill ${td.status==='active'?'live':'disabled'}" data-track-toggle-widget="trackRules" title="${td.status==='active'?'Практика идёт':'Сессия завершена'}">${raceSvg('play')}<span>${td.status==='active'?'Практика идёт':'Сессия завершена'}</span></button><button class="squareConsoleBtn" data-track-action="setup" title="Настройки Track Day">${raceSvg('settings')}</button></div></header>`;}
 function trackDayPilotRows(td){
  const ranked=rankTrackPilots(td);
  return `<div class="trackPilotRow trackHeader"><span>POS</span><span>ПИЛОТ</span><span>КРУГИ</span><span>ЛУЧШИЙ</span><span>ПОСЛЕДНИЙ</span><span>СТАТУС</span></div>${ranked.map((p,i)=>{const l=td.live?.[p.id]||blankTrackLive(),ds=trackLiveDisplay(l);return `<button class="trackPilotRow ${i===0&&l.laps>0?'trackLeader':''}" data-pilot-stats="${p.id}" data-stats-context="track"><span class="trackPos">${i+1}</span><span><b>${esc(p.name)}</b><small class="trackPilotSub ${ds.cls}">ID ${esc(p.transponder||'—')} · ${ds.text}</small></span><strong>${l.laps||0}</strong><span class="trackBestCell">${fmtMs(l.bestLapMs)}</span><span>${fmtMs(l.lastLapMs)}</span><span class="trackStatus ${ds.cls}">${ds.text}</span></button>`;}).join('')}`;
@@ -1775,7 +1822,7 @@ function trackLapwizWidget(){
  return widgetShell('trackLapwiz','LAPWIZ','bluetooth',`<div class="kvList"><div><span>Устройство</span><b class="accentGreen">${esc(lapwiz.device?.name||'—')}</b></div><div><span>Bluetooth</span><b>${lapwiz.connected?'стабильно':'не подключён'}</b></div><div><span>Режим</span><b>${mode}</b></div><div><span>Звук прохода</span><b>${state.settings.lapSound?'ВКЛ':'ВЫКЛ'}</b></div></div><div class="widgetActions">${lapwiz.connected?`<button class="miniAction" data-action="lap-disconnect">Отключить</button>`:`<button class="miniAction primary" data-track-action="lap-connect">Подключить</button>`}</div>`,{badge:lapwiz.connected?'ONLINE':'OFFLINE'});
 }
 function trackRulesWidget(td){
- return widgetShell('trackRules','КАК СЧИТАЕМ','chart',`<div class="kvList"><div><span>Сортировка</span><b>по количеству кругов</b></div><div><span>При равенстве</span><b>по лучшему кругу</b></div><div><span>Первый проход</span><b>точка отсчёта</b></div><div><span>PIT timeout</span><b>${trackPitTimeoutLabel(td)}</b></div></div>`);
+ return widgetShell('trackRules','КАК СЧИТАЕМ','chart',`<div class="kvList"><div><span>Сортировка</span><b>по количеству кругов</b></div><div><span>При равенстве</span><b>по лучшему кругу</b></div><div><span>Первый проход</span><b>точка отсчёта</b></div><div><span>Мин. круг</span><b>${trackMinLapSec(td)} сек</b></div><div><span>PIT timeout</span><b>${trackPitTimeoutLabel(td)}</b></div></div>`);
 }
 function trackDayCockpitView(){
  const td=ensureTrackDayState(state.trackDay);if(!td)return `<section class="page"><div class="card"><h2>Нет активного Track Day</h2><button class="btn primary" data-track-action="setup">К настройке</button></div></section>`;
@@ -1805,10 +1852,10 @@ function updateTrackDayDynamic(){const td=state.trackDay;if(!td)return;const ela
 async function startTrackDay(){
  if(state.session&&['warmup','countdown','running','finishing','paused'].includes(state.session.phase))return toast('Сначала завершите текущий RallyCross-заезд');
  const td=state.trackDay||newTrackDayDraft(),chosen=$$('[data-track-pilot]:checked').map(x=>x.dataset.trackPilot);if(chosen.length<1)return toast('Выберите хотя бы одного пилота');
- td.name=$('#trackName')?.value.trim()||'Track Day';td.date=$('#trackDate')?.value||new Date().toISOString().slice(0,10);td.durationMin=Number($('#trackDuration')?.value)||30;td.pitTimeoutSec=Math.max(0,Number($('#trackPitTimeout')?.value??td.pitTimeoutSec??120));td.pilotIds=chosen;td.pilots=chosen.map((id,i)=>{const p=state.pilotDb.find(x=>x.id===id);return p?{id:p.id,name:p.name,club:p.club||'',city:p.city||'',transponder:String(p.transponder||''),registrationOrder:i+1}:null;}).filter(Boolean);
+ td.name=$('#trackName')?.value.trim()||'Track Day';td.date=$('#trackDate')?.value||new Date().toISOString().slice(0,10);td.durationMin=Number($('#trackDuration')?.value)||30;td.pitTimeoutSec=Math.max(0,Number($('#trackPitTimeout')?.value??td.pitTimeoutSec??120));td.minLapSec=Math.max(1,Math.min(60,Number($('#trackMinLapSec')?.value??td.minLapSec??state.settings.minLapSec??2)));td.pilotIds=chosen;td.pilots=chosen.map((id,i)=>{const p=state.pilotDb.find(x=>x.id===id);return p?{id:p.id,name:p.name,club:p.club||'',city:p.city||'',transponder:String(p.transponder||''),registrationOrder:i+1}:null;}).filter(Boolean);
  if(!td.pilots.length)return toast('Не удалось сформировать участников');
  if(!await ensureRaceAudioFromGesture())return;
- try{if(lapwiz.connected){if(lapwiz.running)await lapwiz.stop();await lapwiz.start({mode:'practice',limitType:'time',durationMin:960,targetLaps:0,minLapSec:Number(state.settings.minLapSec||2)});}}catch(e){toast(`LapWiz: ${e.message}`);return;}
+ try{if(lapwiz.connected){if(lapwiz.running)await lapwiz.stop();await lapwiz.start({mode:'practice',limitType:'time',durationMin:960,targetLaps:0,minLapSec:trackMinLapSec(td)});}}catch(e){toast(`LapWiz: ${e.message}`);return;}
  td.status='active';td.startedAtEpoch=Date.now();td.finishedAtEpoch=null;td.elapsedFinalMs=null;td.live=Object.fromEntries(td.pilots.map(p=>[p.id,blankTrackLive()]));td.unknown={};td.lastPass='Сессия запущена · ожидаем транспондеры';state.trackDay=td;persistTrackDays();nav('trackDayCockpit');
 }
 async function finishTrackDay(reason='Сессия завершена'){
@@ -1818,12 +1865,15 @@ async function finishTrackDay(reason='Сессия завершена'){
 function processTrackPass(transponder,deviceMs=null,source='MANUAL'){
  const td=ensureTrackDayState(state.trackDay);if(!td||td.status!=='active')return;const p=(td.pilots||[]).find(x=>String(x.transponder)===String(transponder));
  if(!p){td.unknown[transponder]=(td.unknown[transponder]||0)+1;if(source==='LAPWIZ')lapwiz.unknownBeep();td.lastPass=`Неизвестный ID ${transponder}`;persistTrackDays();updateTrackDayDynamic();return;}
- if(source==='LAPWIZ'&&state.settings.lapSound)announcer.playBleep();const l=td.live[p.id]||blankTrackLive(),elapsed=trackElapsed(td);
- if(!l.startSeen){l.startSeen=true;l.startSeenAtMs=elapsed;l.lastElapsedAtPass=elapsed;l.lastDeviceMs=Number.isFinite(deviceMs)?deviceMs:null;l.status='SEEN';td.live[p.id]=l;td.lastPass=`${p.name} · ЗАСЕЧКА ✓`;persistTrackDays();updateTrackDayDynamic();return;}
+ const l=td.live[p.id]||blankTrackLive(),elapsed=trackElapsed(td);
+ const acceptedBleep=()=>{if(source==='LAPWIZ'&&state.settings.lapSound)announcer.playBleep();};
+ if(!l.startSeen){l.startSeen=true;l.startSeenAtMs=elapsed;l.lastElapsedAtPass=elapsed;l.lastDeviceMs=Number.isFinite(deviceMs)?deviceMs:null;l.status='SEEN';td.live[p.id]=l;td.lastPass=`${p.name} · ЗАСЕЧКА ✓`;acceptedBleep();persistTrackDays();updateTrackDayDynamic();return;}
  // Safety: check PIT timeout here too, so a late pass can never become a giant lap between UI ticker updates.
  if(l.status!=='PIT')enterTrackPit(td,p,l,elapsed);
- if(l.status==='PIT'){exitTrackPit(td,p,l,elapsed,deviceMs);persistTrackDays();updateTrackDayDynamic();return;}
- let lapMs=null;if(Number.isFinite(deviceMs)&&Number.isFinite(l.lastDeviceMs)&&deviceMs>l.lastDeviceMs)lapMs=deviceMs-l.lastDeviceMs;if(!Number.isFinite(lapMs)||lapMs<=0)lapMs=elapsed-(Number.isFinite(l.lastElapsedAtPass)?l.lastElapsedAtPass:elapsed);if(Number.isFinite(deviceMs))l.lastDeviceMs=deviceMs;l.lastElapsedAtPass=elapsed;l.lastLapMs=lapMs;l.lapTimes=lapArray(l);l.lapTimes.push(lapMs);l.laps=l.lapTimes.length;l.bestLapMs=Math.min(l.bestLapMs,lapMs);l.status='RACING';l.pitOutUntilEpoch=0;td.live[p.id]=l;td.lastPass=`${p.name} · круг ${l.laps} · ${fmtMs(lapMs)}`;persistTrackDays();updateTrackDayDynamic();
+ if(l.status==='PIT'){exitTrackPit(td,p,l,elapsed,deviceMs);acceptedBleep();persistTrackDays();updateTrackDayDynamic();return;}
+ let lapMs=null;if(Number.isFinite(deviceMs)&&Number.isFinite(l.lastDeviceMs)&&deviceMs>l.lastDeviceMs)lapMs=deviceMs-l.lastDeviceMs;if(!Number.isFinite(lapMs)||lapMs<=0)lapMs=elapsed-(Number.isFinite(l.lastElapsedAtPass)?l.lastElapsedAtPass:elapsed);
+ const minLapMs=trackMinLapMs(td);if(Number.isFinite(lapMs)&&lapMs>0&&lapMs<minLapMs){td.lastPass=`${p.name} · ${fmtMs(lapMs)} < ${trackMinLapSec(td)}с · проход отклонён`;persistTrackDays();updateTrackDayDynamic();return;}
+ if(Number.isFinite(deviceMs))l.lastDeviceMs=deviceMs;l.lastElapsedAtPass=elapsed;l.lastLapMs=lapMs;l.lapTimes=lapArray(l);l.lapTimes.push(lapMs);l.laps=l.lapTimes.length;l.bestLapMs=Math.min(l.bestLapMs,lapMs);l.status='RACING';l.pitOutUntilEpoch=0;td.live[p.id]=l;td.lastPass=`${p.name} · круг ${l.laps} · ${fmtMs(lapMs)}`;acceptedBleep();persistTrackDays();updateTrackDayDynamic();
 }
 
 function blankLive(){return{laps:0,bestLapMs:Infinity,lastLapMs:null,lastPassPerf:null,lastDeviceMs:null,lastElapsedAtPass:null,elapsedMs:0,finished:false,finishedAt:null,status:'READY',startSeen:false,startSeenAtMs:null,lapTimes:[]};}
@@ -1891,8 +1941,9 @@ async function handleAction(action,button){if(action==='start-session'&&state.tr
 
 function bind415PilotStats(){if(state._pilotStatsDelegated)return;state._pilotStatsDelegated=true;document.addEventListener('click',e=>{const b=e.target.closest?.('[data-pilot-stats]');if(!b)return;pilotLapStatsModal(b.dataset.pilotStats,b.dataset.statsContext||'race',b.dataset.trackId||b.dataset.eventKey||'');});}
 function bind415(){
-  $$('[data-track-action]').forEach(b=>b.onclick=async()=>{const a=b.dataset.trackAction;if(a==='open')return nav(state.trackDay?.status==='active'?'trackDayCockpit':'trackDaySetup');if(a==='open-active')return nav('trackDayCockpit');if(a==='home')return nav('home');if(a==='setup'){if(state.trackDay?.status==='active')return toast('Сначала завершите текущую Track Day сессию');state.trackDay=newTrackDayDraft();persistTrackDays();return nav('trackDaySetup');}if(a==='select-all'){$$('[data-track-pilot]').forEach(x=>x.checked=true);return;}if(a==='start')return startTrackDay();if(a==='finish'){if(confirm('Завершить Track Day сейчас?'))return finishTrackDay('Сессия завершена судьёй');return;}if(a==='report')return trackDayReportModal(state.trackDay);if(a==='clear-active'){state.trackDay=null;persistTrackDays();return nav('trackDaySetup');}if(a==='lap-connect'){try{await ensureRaceAudioFromGesture();await lapwiz.connect();if(state.trackDay?.status==='active'&&!lapwiz.running)await lapwiz.start({mode:'practice',limitType:'time',durationMin:960,targetLaps:0,minLapSec:Number(state.settings.minLapSec||2)});toast('LapWiz подключён');render();}catch(e){toast(e.message);}return;}});
+  $$('[data-track-action]').forEach(b=>b.onclick=async()=>{const a=b.dataset.trackAction;if(a==='open')return nav(state.trackDay?.status==='active'?'trackDayCockpit':'trackDaySetup');if(a==='open-active')return nav('trackDayCockpit');if(a==='home')return nav('home');if(a==='setup'){if(state.trackDay?.status==='active')return toast('Сначала завершите текущую Track Day сессию');state.trackDay=newTrackDayDraft();persistTrackDays();return nav('trackDaySetup');}if(a==='select-all'){$$('[data-track-pilot]').forEach(x=>x.checked=true);return;}if(a==='start')return startTrackDay();if(a==='finish'){if(confirm('Завершить Track Day сейчас?'))return finishTrackDay('Сессия завершена судьёй');return;}if(a==='report')return trackDayReportModal(state.trackDay);if(a==='clear-active'){state.trackDay=null;persistTrackDays();return nav('trackDaySetup');}if(a==='lap-connect'){try{await ensureRaceAudioFromGesture();await lapwiz.connect();if(state.trackDay?.status==='active'&&!lapwiz.running)await lapwiz.start({mode:'practice',limitType:'time',durationMin:960,targetLaps:0,minLapSec:trackMinLapSec(state.trackDay)});toast('LapWiz подключён');render();}catch(e){toast(e.message);}return;}});
   $$('[data-track-report]').forEach(b=>b.onclick=()=>trackDayReportModal((state.trackDays||[]).find(x=>x.id===b.dataset.trackReport)));
+  $$('[data-track-toggle-widget]').forEach(b=>b.onclick=()=>{const k=b.dataset.trackToggleWidget;if(!k)return;state.widgetCollapsed[k]=!state.widgetCollapsed[k];render();});
   $$('[data-track-delete]').forEach(b=>b.onclick=()=>{if(!confirm('Удалить этот Track Day отчёт?'))return;state.trackDays=state.trackDays.filter(x=>x.id!==b.dataset.trackDelete);persistTrackDays();render();});
   $$('[data-race-skip-current]').forEach(b=>b.onclick=()=>quickSkipCurrentRace());$$('[data-race-manage]').forEach(b=>b.onclick=()=>raceManageModal());bind415PilotStats();
 }
@@ -1916,7 +1967,7 @@ function quickPanelDrawer(race,ev,pilots,session,done){
   return `<div class="quickPanelOverlay"><button class="quickPanelBackdrop" data-quick-panel-close="1" aria-label="Закрыть"></button><aside class="quickPanelDrawer"><div class="quickPanelHead"><div><small>БЫСТРАЯ ПАНЕЛЬ</small><b>${title}</b></div><button class="squareConsoleBtn" data-quick-panel-close="1">×</button></div><div class="quickPanelBody">${body}</div></aside></div>`;
 }
 
-function cockpitHeader(race,ev,s){return `<header class="raceConsoleHeader" data-layout-panel="header"><button class="raceBrand" data-action="home"><strong>LEGION <i>RX</i></strong><small>RallyCross · Live Heat</small></button><div class="raceHeadInfo"><div class="headCell"><span>${raceSvg('trophy')}</span><div><b>${esc(race.eventName)}</b><small>СОБЫТИЕ</small></div></div><div class="headCell"><span>${raceSvg('flag')}</span><div><b>RallyCross</b><small>КЛАСС</small></div></div><button class="headCell quickHeadButton" data-quick-panel="next" title="Следующий заезд и результаты"><span>${raceSvg('flag')}</span><div><b>${esc(eventShortLabel(ev))}</b><small>ЗАЕЗД</small></div></button><div class="headClock"><b id="cockpitClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><div class="raceHeadStatus"><button class="consolePill quickPanelBtn ${lapwiz.connected?'ok':''}" data-quick-panel="lapwiz">${raceSvg('bluetooth')}<span>${lapwiz.connected?'LapWiz подключён':'LapWiz'}</span></button><button class="consolePill quickPanelBtn ${phaseClass(s)}" data-quick-panel="status">${raceSvg('play')}<span>${phaseLabel(s)}</span></button><button class="consolePill quickPanelBtn ${state.settings.announcerEnabled?'ok':'disabled'}" data-quick-panel="announcer">${raceSvg('mic')}<span>${state.settings.announcerEnabled?'Диктор: ВКЛ':'Диктор: ВЫКЛ'}</span></button><button class="consolePill managePill skipPill" data-race-skip-current="1" title="Пропустить текущий заезд">${raceSvg('next')}<span>Пропустить</span></button><button class="consolePill managePill cancelPill" data-race-manage="open" title="Отмена заездов и завершение соревнования">${raceSvg('list')}<span>Отмена / завершение</span></button><button class="squareConsoleBtn layoutLabToggle" data-layout-lab-toggle="1" title="Layout Lab">${raceSvg('list')}</button><button class="squareConsoleBtn" data-action="open-settings" title="Настройки">${raceSvg('settings')}</button></div></header>`;}
+function cockpitHeader(race,ev,s){return `<header class="raceConsoleHeader" data-layout-panel="header"><button class="raceBrand" data-action="home"><strong>LEGION <i>RX</i></strong><small>RallyCross · Live Heat</small></button><div class="raceHeadInfo"><div class="headCell"><span>${raceSvg('trophy')}</span><div><b>${esc(race.eventName)}</b><small>СОБЫТИЕ</small></div></div><div class="headCell"><span>${raceSvg('flag')}</span><div><b>RallyCross</b><small>КЛАСС</small></div></div><button class="headCell quickHeadButton" data-quick-panel="next" title="Следующий заезд и результаты"><span>${raceSvg('flag')}</span><div><b>${esc(eventShortLabel(ev))}</b><small>ЗАЕЗД</small></div></button><div class="headClock"><b id="cockpitClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><div class="raceHeadStatus compactHeadControls"><button class="consolePill quickPanelBtn ${lapwiz.connected?'ok':''}" data-quick-panel="lapwiz" title="LapWiz · ${lapwiz.connected?'подключён':'не подключён'}">${raceSvg('bluetooth')}<span>LapWiz</span></button><button class="consolePill quickPanelBtn ${phaseClass(s)}" data-quick-panel="status" title="${phaseLabel(s)}">${raceSvg('play')}<span>${phaseLabel(s)}</span></button><button class="consolePill quickPanelBtn ${state.settings.announcerEnabled?'ok':'disabled'}" data-quick-panel="announcer" title="${state.settings.announcerEnabled?'Диктор включён':'Диктор выключен'}">${raceSvg('mic')}<span>Диктор</span></button><button class="consolePill managePill skipPill" data-race-skip-current="1" title="Пропустить текущий заезд">${raceSvg('next')}<span>Пропустить</span></button><button class="consolePill managePill cancelPill" data-race-manage="open" title="Отмена заездов и завершение соревнования">${raceSvg('list')}<span>Отмена / завершение</span></button><button class="squareConsoleBtn layoutLabToggle" data-layout-lab-toggle="1" title="Layout Lab">${raceSvg('list')}</button><button class="squareConsoleBtn" data-action="open-settings" title="Настройки">${raceSvg('settings')}</button></div></header>`;}
 
 function cockpitView(){
  if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
