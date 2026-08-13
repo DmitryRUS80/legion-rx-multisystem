@@ -1,6 +1,6 @@
-## Legion RX 4.0.14 Alpha — Clean Mobile Audio
+## Legion RX 4.0.16 Alpha — Track Day PIT
 
-# Legion RX 4.0.10 Alpha — Warmup Voice
+# Базовая линия: 4.0.10 Alpha — Warmup Voice
 
 Основа: 4.0.8 Announcer Start.
 
@@ -25,3 +25,21 @@
 Главная проверка 4.0.10 — убедиться на реальном LapWiz, что одна сессия Free Practice стабильно переживает прогрев → HORN → весь заезд без STOP/START на старте.
 
 Web Bluetooth: Chrome на Android/Windows + HTTPS (например GitHub Pages).
+
+
+### 4.0.15 additions
+- Track Day / Free Practice 10–120 min with separate reports.
+- Per-pilot lap history: best / average / worst and every lap time.
+- Cockpit race management: skip heats, shorten qualifying, finish competition early.
+- Built directly on the working 4.0.14 mobile-audio base.
+
+
+### 4.0.16 additions
+- Track Day PIT timeout: 1:00 / 1:30 / 2:00 / 3:00 / Off.
+- Automatic PIT after inactivity; incomplete lap is discarded.
+- First pass after PIT = PIT OUT / new timing reference; next pass = normal lap.
+- PIT count and pit time are stored in Track Day statistics.
+- Built directly on 4.0.15 without changes to RallyCross, LapWiz Core, or audio architecture.
+
+## 4.0.17 Alpha
+В RallyCross на пульте теперь есть отдельные быстрые кнопки «Пропустить» и «Отмена / завершение». Первая отменяет только текущий заезд после подтверждения, вторая открывает расширенное управление программой соревнования.
