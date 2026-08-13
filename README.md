@@ -66,3 +66,10 @@ Web Bluetooth: Chrome на Android/Windows + HTTPS (например GitHub Page
 
 ## 4.0.21 TEST — Mobile Control Fix
 Compact theme-aware header controls, portrait Track Day main timer/ring, and 1–60 s Track Day minimum-lap filter.
+
+
+## 4.0.22 TEST — Pilot Cards & Flags
+- Страна пилота хранится в общей базе и показывается флагом.
+- Клуб `LegionRX` получает фирменную подпись LEGION RX.
+- Строки пилотов в RallyCross и Track Day увеличены и остаются адаптивными.
+- Исторические профили без страны продолжают работать без миграции.
