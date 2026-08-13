@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.17 Alpha</title>
+<title>Legion RX 4.0.18 TEST · Layout Lab</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -281,13 +281,55 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 @media(max-width:720px){.raceHeadStatus .skipPill,.raceHeadStatus .cancelPill{display:flex!important;width:38px!important;height:38px!important;padding:0!important;justify-content:center}.raceHeadStatus .skipPill span,.raceHeadStatus .cancelPill span{display:none!important}.disciplineGrid415{grid-template-columns:1fr}.trackHeroStrip{grid-template-columns:1fr 1fr;margin:0 8px 8px}.trackBestHero{grid-column:1/-1;grid-row:1}.trackBestHero strong{font-size:17px}.trackMainGrid{padding:0 8px 8px}.trackSidePanel{grid-template-columns:1fr}.trackTimerCard{display:none}.trackPilotRow{grid-template-columns:42px minmax(120px,1fr) 48px 82px 82px;padding:12px 9px;gap:6px}.trackPilotRow>*:nth-child(6){display:none}.trackPilotRow.trackHeader span:nth-child(6){display:none}.trackPilotRow{font-size:11px}.trackPos{font-size:22px}.trackControls{grid-template-columns:repeat(3,1fr)!important}.lapSummaryGrid{grid-template-columns:repeat(2,1fr)}.trackReportPilot{grid-template-columns:34px minmax(130px,1fr) 90px}.trackReportPilot>span:nth-child(4),.trackReportPilot>span:nth-child(5){display:none}.manageInline{flex-direction:column}.manageCards section>.btn+.btn{margin:8px 0 0}.managePill span{display:none}.managePill{padding:8px!important}}
 </style>
 
+
+<style id="layoutLab418Styles">
+/* 4.0.18 TEST — cleaner cockpit + movable/resizable Layout Lab */
+.liveCard .btn.primary,.heroStatus .liveCard .btn.primary{color:#fff!important;text-shadow:0 1px 1px rgba(0,0,0,.18)}
+.raceGrid.raceGridClean{grid-template-columns:minmax(0,1.85fr) minmax(300px,.72fr)}
+.raceGridClean .cleanCenterStack{display:flex;min-height:0;overflow:visible}
+.raceGridClean .cleanCenterStack .timerCard{flex:1;min-height:0;height:100%}
+.quickHeadButton{border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}
+.quickHeadButton:hover{background:#11191f}
+.raceHeadStatus .consolePill.quickPanelBtn{cursor:pointer}
+.raceHeadStatus .consolePill.quickPanelBtn:hover{border-color:#48606d;color:#e7edf0}
+.layoutLabToggle{border-color:#2267aa!important;color:#7fc0ff!important;background:#0d2238!important}
+.quickPanelOverlay{position:fixed;inset:0;z-index:620;display:grid;grid-template-columns:1fr minmax(330px,430px)}
+.quickPanelBackdrop{grid-column:1/-1;grid-row:1;border:0;background:rgba(0,0,0,.56);backdrop-filter:blur(2px)}
+.quickPanelDrawer{grid-column:2;grid-row:1;z-index:2;margin:8px;background:#0b1115;border:1px solid var(--console-line);border-radius:10px;box-shadow:0 24px 80px rgba(0,0,0,.55);display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden}
+.quickPanelHead{height:58px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--console-line)}
+.quickPanelHead>div{display:grid;gap:2px}.quickPanelHead small{font-size:9px;color:var(--console-blue);font-weight:900;letter-spacing:.12em}.quickPanelHead b{font-size:18px}.quickPanelBody{padding:10px;overflow:auto;display:grid;align-content:start;gap:10px}.quickPanelBody .refWidget{width:100%}.quickPanelBody .refWidget.collapsed .refWidgetBody{display:block!important}.quickPanelBody .refWidgetHead .widgetChevron{display:none}
+.quickPanelHint{padding:11px 12px;border:1px solid var(--console-line);border-radius:7px;background:#0f171d;color:#8e9aa1;font-size:11px;line-height:1.5}
+/* Layout Lab canvas */
+body.layoutLabActive .raceCockpit{display:block!important;position:relative!important;overflow:hidden!important;padding:0!important;gap:0!important}
+body.layoutLabActive .raceGrid,body.layoutLabActive .raceCenterStack{display:contents!important}
+body.layoutLabActive [data-layout-panel]{position:absolute!important;margin:0!important;box-sizing:border-box!important;overflow:hidden!important;z-index:20}
+body.layoutLabActive [data-layout-panel]::after{content:"";position:absolute;inset:0;pointer-events:none;border:1px dashed rgba(75,160,255,.6);border-radius:inherit;z-index:70}
+.layoutLabHandle,.layoutLabResize{display:none}
+body.layoutLabActive .layoutLabHandle{display:flex;position:absolute;left:5px;top:5px;height:26px;padding:0 8px;border-radius:5px;background:rgba(9,28,46,.94);border:1px solid #2b77bd;color:#9ed1ff;align-items:center;gap:6px;font:800 9px var(--rx-ui-font);letter-spacing:.05em;z-index:90;cursor:grab;touch-action:none;user-select:none;box-shadow:0 4px 15px rgba(0,0,0,.35)}
+body.layoutLabActive .layoutLabHandle:active{cursor:grabbing}
+body.layoutLabActive .layoutLabResize{display:block;position:absolute;right:3px;bottom:3px;width:27px;height:27px;border-right:3px solid #46a2ff;border-bottom:3px solid #46a2ff;border-radius:0 0 6px 0;z-index:91;cursor:nwse-resize;touch-action:none}
+#layoutLabToolbar{display:none;position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:900;background:rgba(8,14,19,.96);border:1px solid #31516a;border-radius:9px;padding:7px;box-shadow:0 20px 60px rgba(0,0,0,.55);gap:6px;align-items:center;white-space:nowrap}
+body.layoutLabActive #layoutLabToolbar{display:flex}
+#layoutLabToolbar strong{font:900 11px var(--rx-ui-font);color:#75bcff;padding:0 7px}#layoutLabToolbar button{height:34px;border:1px solid #33444f;background:#121c23;color:#d8e0e5;border-radius:6px;padding:0 10px;font:800 10px var(--rx-ui-font);cursor:pointer}#layoutLabToolbar button:hover{border-color:#407bad}#layoutLabToolbar .danger{color:#ff9ca2;border-color:#68343a}
+.layoutLabActive .racePositions,.layoutLabActive .timerCard,.layoutLabActive .raceConsoleHeader,.layoutLabActive .eventFlow,.layoutLabActive .raceControls,.layoutLabActive .modeStrip{min-width:140px;min-height:48px}
+@media(max-width:900px){
+ .raceGrid.raceGridClean{grid-template-columns:1fr;grid-template-rows:122px minmax(0,1fr)}
+ .raceGridClean .cleanCenterStack{display:contents}.raceGridClean .cleanCenterStack .timerCard{grid-row:1;height:auto}.raceGridClean .racePositions{grid-row:2}
+ .quickPanelOverlay{grid-template-columns:1fr;align-items:end}.quickPanelDrawer{grid-column:1;margin:6px;max-height:78dvh;border-radius:12px}.quickPanelBackdrop{grid-column:1}
+ .raceHeadStatus .quickPanelBtn{display:flex!important;width:38px!important;height:38px!important;padding:0!important;justify-content:center}.raceHeadStatus .quickPanelBtn span{display:none!important}
+ .layoutLabToggle{display:grid!important}
+ #layoutLabToolbar{max-width:calc(100% - 12px);overflow:auto;left:6px;right:6px;transform:none;justify-content:flex-start}
+}
+@media(max-width:420px){.raceGrid.raceGridClean{grid-template-rows:108px minmax(0,1fr)}.raceHeadStatus{gap:3px!important;padding:3px!important}.raceHeadStatus .quickPanelBtn,.raceHeadStatus .skipPill,.raceHeadStatus .cancelPill,.raceHeadStatus .squareConsoleBtn{width:32px!important;height:32px!important;padding:0!important}.raceBrand{padding-left:7px!important;padding-right:5px!important}.raceBrand strong{font-size:18px!important}}
+</style>
+
 </head>
 <body>
 <div id="runtimeError" style="display:none;position:fixed;z-index:9999;left:12px;right:12px;top:12px;background:#5c1015;color:#fff;border:1px solid #d64149;padding:14px;border-radius:8px;font:14px/1.45 Segoe UI,sans-serif"></div>
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.17 ALPHA</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.18 TEST</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -1606,7 +1648,7 @@ function homeView(){
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
-   :`<div class="heroMini"><b>4.0.17 ALPHA</b><span>RallyCross + Track Day</span></div>`;
+   :`<div class="heroMini"><b>4.0.18 TEST · LAYOUT LAB</b><span>Clean cockpit · movable layout</span></div>`;
  return `<section class="page homePage">
  <div class="heroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат</h2></div></div>
@@ -1762,6 +1804,61 @@ function bind415(){
   $$('[data-race-skip-current]').forEach(b=>b.onclick=()=>quickSkipCurrentRace());$$('[data-race-manage]').forEach(b=>b.onclick=()=>raceManageModal());bind415PilotStats();
 }
 /* ===== /4.0.17 ===== */
+
+
+/* ===== Legion RX 4.0.18 TEST · Clean Cockpit / Layout Lab ===== */
+const LAYOUT_LAB_KEY='legionrx4_layout_lab_v1';
+state.quickPanel='';
+state.layoutLabActive=false;
+state.layoutLabZ=100;
+
+function quickPanelDrawer(race,ev,pilots,session,done){
+  const kind=state.quickPanel;if(!kind)return'';
+  let title='ПАНЕЛЬ',body='';
+  if(kind==='lapwiz'){title='LAPWIZ';body=`<div class="quickPanelHint">Подключение, режим и состояние засечки. Открывается только по запросу и больше не занимает рабочую поверхность.</div>${lapwizWidget()}`;}
+  else if(kind==='announcer'){title='ДИКТОР';body=`<div class="quickPanelHint">Стартовый сценарий, голос и звук прохождения.</div>${announcerWidget()}`;}
+  else if(kind==='status'){title='СОСТОЯНИЕ ЗАЕЗДА';body=`${done?widgetShell('statsQuick','СОРЕВНОВАНИЕ','trophy',compactFinalProtocol(race),{badge:'ФИНИШ'}):statsWidget(race,ev,pilots,session)}${automationWidget()}`;}
+  else if(kind==='next'){title='ХОД СОРЕВНОВАНИЯ';body=`${nextWidget(race,ev)}${done?widgetShell('resultsQuick','ИТОГ','trophy',compactFinalProtocol(race),{badge:'ГОТОВО'}):resultsWidget(race,ev,pilots,session)}`;}
+  else return'';
+  return `<div class="quickPanelOverlay"><button class="quickPanelBackdrop" data-quick-panel-close="1" aria-label="Закрыть"></button><aside class="quickPanelDrawer"><div class="quickPanelHead"><div><small>БЫСТРАЯ ПАНЕЛЬ</small><b>${title}</b></div><button class="squareConsoleBtn" data-quick-panel-close="1">×</button></div><div class="quickPanelBody">${body}</div></aside></div>`;
+}
+
+function cockpitHeader(race,ev,s){return `<header class="raceConsoleHeader" data-layout-panel="header"><button class="raceBrand" data-action="home"><strong>LEGION <i>RX</i></strong><small>RallyCross · Live Heat</small></button><div class="raceHeadInfo"><div class="headCell"><span>${raceSvg('trophy')}</span><div><b>${esc(race.eventName)}</b><small>СОБЫТИЕ</small></div></div><div class="headCell"><span>${raceSvg('flag')}</span><div><b>RallyCross</b><small>КЛАСС</small></div></div><button class="headCell quickHeadButton" data-quick-panel="next" title="Следующий заезд и результаты"><span>${raceSvg('flag')}</span><div><b>${esc(eventShortLabel(ev))}</b><small>ЗАЕЗД</small></div></button><div class="headClock"><b id="cockpitClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><div class="raceHeadStatus"><button class="consolePill quickPanelBtn ${lapwiz.connected?'ok':''}" data-quick-panel="lapwiz">${raceSvg('bluetooth')}<span>${lapwiz.connected?'LapWiz подключён':'LapWiz'}</span></button><button class="consolePill quickPanelBtn ${phaseClass(s)}" data-quick-panel="status">${raceSvg('play')}<span>${phaseLabel(s)}</span></button><button class="consolePill quickPanelBtn ${state.settings.announcerEnabled?'ok':'disabled'}" data-quick-panel="announcer">${raceSvg('mic')}<span>${state.settings.announcerEnabled?'Диктор: ВКЛ':'Диктор: ВЫКЛ'}</span></button><button class="consolePill managePill skipPill" data-race-skip-current="1" title="Пропустить текущий заезд">${raceSvg('next')}<span>Пропустить</span></button><button class="consolePill managePill cancelPill" data-race-manage="open" title="Отмена заездов и завершение соревнования">${raceSvg('list')}<span>Отмена / завершение</span></button><button class="squareConsoleBtn layoutLabToggle" data-layout-lab-toggle="1" title="Layout Lab">${raceSvg('list')}</button><button class="squareConsoleBtn" data-action="open-settings" title="Настройки">${raceSvg('settings')}</button></div></header>`;}
+
+function cockpitView(){
+ if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
+ const race=state.race,ev=currentEvent(race),events=eventList(race),session=ensureSession(ev),pilots=ev?liveRanking(getEventPilots(race,ev),session):[],done=race.stage==='finished',tie=race.stage==='tie';
+ const flow=eventFlowStrip(race,events,ev).replace('class="eventFlow"','class="eventFlow" data-layout-panel="flow"');
+ if(tie)return `<section class="raceCockpit">${cockpitHeader(race,ev,session)}${flow}<div class="tieConsole">${tieWidget(race)}</div><div class="raceControls" data-layout-panel="controls">${controlButtons(false,session,true)}</div>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,session,done)}</section>`;
+ return `<section class="raceCockpit">${cockpitHeader(race,ev,session)}${flow}<main class="raceGrid raceGridClean"><section class="racePositions" data-layout-panel="positions"><div class="positionsTitle"><div>${raceSvg('trophy')}<h2>ТЕКУЩИЕ ПОЗИЦИИ</h2></div><div class="positionsActions"><button class="tableTopBtn" data-action="race-results">${raceSvg('chart')}<span>Таблицы</span></button></div></div><div class="pilotBoardTable">${done?finalProtocolTable(race):pilotTable(pilots,session)}</div><div class="positionsFooter"><span>${raceSvg('chart')} Лучший круг: <b id="bestHeatLap">${bestHeatLapText(pilots,session)}</b></span><span>Последний проход: <b id="lastPassLine">${esc(session?.lastPass||'—')}</b></span></div></section><div class="raceCenterStack cleanCenterStack"><section class="timerCard" data-layout-panel="timer"><div><span class="timerCaption">${timerCaption(session,ev)}</span><strong id="mainTimer">${done?'00:00':displayTimer(session,ev)}</strong><small id="timerSubline">${ev?timerSubline(session,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="timerRing" style="--progress:${timerProgress(session,ev)}"><span>${Math.round(timerProgress(session,ev))}%</span></div></section></div></main><div class="raceControls" data-layout-panel="controls">${controlButtons(done,session,false)}</div><div class="modeStrip" data-layout-panel="modes"><button class="modeActive">${raceSvg('flag')}<span>РАЛЛИ-КРОСС</span></button><button disabled>${raceSvg('flag')}<span>РАЛЛИ-СПРИНТ</span><em>СКОРО</em></button><button disabled>${raceSvg('car')}<span>КЛАССИЧЕСКАЯ RC-ГОНКА</span><em>СКОРО</em></button><button data-track-action="open">${raceSvg('timer')}<span>TRACK DAY</span><em>PRACTICE</em></button></div>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,session,done)}</section>`;
+}
+
+function getLayoutLabData(){try{return JSON.parse(localStorage.getItem(LAYOUT_LAB_KEY)||'{}')||{};}catch{return{};}}
+function saveLayoutLabData(data){localStorage.setItem(LAYOUT_LAB_KEY,JSON.stringify(data));}
+function layoutPanelName(id){return({header:'ШАПКА',flow:'ХОД ГОНКИ',positions:'ПИЛОТЫ',timer:'ТАЙМЕР',controls:'КНОПКИ',modes:'РЕЖИМЫ'})[id]||id.toUpperCase();}
+function captureLayoutLab(){const root=document.querySelector('.raceCockpit');if(!root)return{};const rr=root.getBoundingClientRect(),out={};root.querySelectorAll('[data-layout-panel]').forEach(el=>{const r=el.getBoundingClientRect(),id=el.dataset.layoutPanel;if(!id||rr.width<=0||rr.height<=0)return;out[id]={x:(r.left-rr.left)/rr.width,y:(r.top-rr.top)/rr.height,w:r.width/rr.width,h:r.height/rr.height};});return out;}
+function applyLayoutLabData(){if(!state.layoutLabActive)return;const root=document.querySelector('.raceCockpit');if(!root)return;const data=getLayoutLabData(),rr=root.getBoundingClientRect();root.querySelectorAll('[data-layout-panel]').forEach(el=>{const d=data[el.dataset.layoutPanel];if(!d)return;el.style.left=`${d.x*rr.width}px`;el.style.top=`${d.y*rr.height}px`;el.style.width=`${d.w*rr.width}px`;el.style.height=`${d.h*rr.height}px`;});}
+function storeLayoutPanel(el){const root=document.querySelector('.raceCockpit');if(!root||!el)return;const rr=root.getBoundingClientRect(),r=el.getBoundingClientRect(),all=getLayoutLabData();all[el.dataset.layoutPanel]={x:Math.max(0,(r.left-rr.left)/rr.width),y:Math.max(0,(r.top-rr.top)/rr.height),w:Math.min(1,r.width/rr.width),h:Math.min(1,r.height/rr.height)};saveLayoutLabData(all);}
+function ensureLayoutLabToolbar(){let t=document.querySelector('#layoutLabToolbar');if(t)return t;t=document.createElement('div');t.id='layoutLabToolbar';t.innerHTML=`<strong>LAYOUT LAB</strong><button data-layout-tool="copy">Копировать схему</button><button data-layout-tool="reset">Сбросить</button><button data-layout-tool="exit">Готово</button>`;document.body.appendChild(t);return t;}
+function decorateLayoutPanels(){const root=document.querySelector('.raceCockpit');if(!root)return;root.querySelectorAll('[data-layout-panel]').forEach(el=>{if(!el.querySelector(':scope > .layoutLabHandle')){const h=document.createElement('div');h.className='layoutLabHandle';h.dataset.layoutDrag='1';h.innerHTML=`↕ ${layoutPanelName(el.dataset.layoutPanel)}`;el.appendChild(h);}if(!el.querySelector(':scope > .layoutLabResize')){const r=document.createElement('div');r.className='layoutLabResize';r.dataset.layoutResize='1';el.appendChild(r);}});ensureLayoutLabToolbar();}
+function enterLayoutLab(){const root=document.querySelector('.raceCockpit');if(!root)return;let data=getLayoutLabData();if(!Object.keys(data).length){data=captureLayoutLab();saveLayoutLabData(data);}state.layoutLabActive=true;document.body.classList.add('layoutLabActive');decorateLayoutPanels();requestAnimationFrame(applyLayoutLabData);toast('Layout Lab: тащите блок за синюю плашку, размер — за угол');}
+function exitLayoutLab(){state.layoutLabActive=false;document.body.classList.remove('layoutLabActive');render();}
+function resetLayoutLab(){localStorage.removeItem(LAYOUT_LAB_KEY);state.layoutLabActive=false;document.body.classList.remove('layoutLabActive');render();toast('Макет сброшен к исходному');}
+function layoutPointerStart(e,mode){if(!state.layoutLabActive)return;const el=e.target.closest('[data-layout-panel]'),root=document.querySelector('.raceCockpit');if(!el||!root)return;e.preventDefault();e.stopPropagation();el.style.zIndex=String(++state.layoutLabZ);const rr=root.getBoundingClientRect(),er=el.getBoundingClientRect(),sx=e.clientX,sy=e.clientY,start={x:er.left-rr.left,y:er.top-rr.top,w:er.width,h:er.height};const minW=el.dataset.layoutPanel==='header'?320:150,minH=el.dataset.layoutPanel==='positions'?160:48;const move=ev=>{const dx=ev.clientX-sx,dy=ev.clientY-sy;if(mode==='drag'){const x=Math.max(0,Math.min(rr.width-er.width,start.x+dx)),y=Math.max(0,Math.min(rr.height-er.height,start.y+dy));el.style.left=x+'px';el.style.top=y+'px';}else{const w=Math.max(minW,Math.min(rr.width-start.x,start.w+dx)),h=Math.max(minH,Math.min(rr.height-start.y,start.h+dy));el.style.width=w+'px';el.style.height=h+'px';}};const up=()=>{window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',up);storeLayoutPanel(el);};window.addEventListener('pointermove',move);window.addEventListener('pointerup',up,{once:true});}
+function setupLayoutLabAfterRender(){if(state.view!=='cockpit'){document.body.classList.remove('layoutLabActive');return;}decorateLayoutPanels();if(state.layoutLabActive){document.body.classList.add('layoutLabActive');requestAnimationFrame(applyLayoutLabData);}}
+
+const bind415_417=bind415;
+bind415=function(){bind415_417();setupLayoutLabAfterRender();};
+
+document.addEventListener('click',e=>{
+ const qp=e.target.closest?.('[data-quick-panel]');if(qp){state.quickPanel=qp.dataset.quickPanel||'';render();return;}
+ if(e.target.closest?.('[data-quick-panel-close]')){state.quickPanel='';render();return;}
+ if(e.target.closest?.('[data-layout-lab-toggle]')){state.layoutLabActive?exitLayoutLab():enterLayoutLab();return;}
+ const tool=e.target.closest?.('[data-layout-tool]');if(tool){const a=tool.dataset.layoutTool;if(a==='exit')return exitLayoutLab();if(a==='reset')return resetLayoutLab();if(a==='copy'){const txt=JSON.stringify(getLayoutLabData(),null,2);navigator.clipboard?.writeText(txt).then(()=>toast('Схема Layout Lab скопирована')).catch(()=>toast('Не удалось скопировать — сделайте скрин'));return;}}
+});
+document.addEventListener('pointerdown',e=>{if(e.target.closest?.('[data-layout-drag]'))return layoutPointerStart(e,'drag');if(e.target.closest?.('[data-layout-resize]'))return layoutPointerStart(e,'resize');});
+window.addEventListener('resize',()=>{if(state.layoutLabActive)requestAnimationFrame(applyLayoutLabData);});
+/* ===== /4.0.18 TEST ===== */
 
 
 lapwiz.addEventListener('pass',e=>processPass(e.detail.transponder,e.detail.deviceMs,'LAPWIZ'));lapwiz.addEventListener('status',()=>updateHeader());
