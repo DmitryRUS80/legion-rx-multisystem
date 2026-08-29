@@ -1,6 +1,6 @@
 {
-  "name": "Legion RX 4.0.22 Test Pilot Cards & Flags",
-  "short_name": "Legion RX",
+  "name": "Legion RX 4.0.23 Test Offline Audio Ready",
+  "short_name": "Legion RX 4.0.23",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

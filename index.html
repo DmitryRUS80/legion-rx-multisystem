@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.22 TEST</title>
+<title>Legion RX 4.0.23 TEST</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -270,6 +270,7 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 
 /* 4.0.14 — explicit mobile audio activation. Required for reliable iOS/Android scheduled audio. */
 .audioGate{position:fixed;inset:0;z-index:10000;background:rgba(4,8,14,.86);backdrop-filter:blur(12px);display:grid;place-items:center;padding:22px}.audioGate.hidden{display:none}.audioGateCard{width:min(420px,100%);background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 28px 90px rgba(0,0,0,.55);padding:24px;text-align:center}.audioGateIcon{width:58px;height:58px;border-radius:16px;margin:0 auto 14px;display:grid;place-items:center;background:var(--blue2);border:1px solid rgba(42,139,255,.35);font-size:29px}.audioGateCard h2{margin:0 0 7px;font-size:22px}.audioGateCard p{margin:0 0 18px;color:var(--muted);line-height:1.45}.audioGateBtn{width:100%;min-height:56px;border:0;border-radius:12px;background:var(--blue);color:white;font:inherit;font-weight:900;font-size:15px;cursor:pointer}.audioGateBtn:disabled{opacity:.55;cursor:wait}.audioGateState{display:block;margin-top:10px;min-height:18px;color:var(--muted);font-size:12px}.audioGateState.ok{color:var(--green)}.audioGateState.err{color:#ff6d78}.audioStatusPill{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;font-size:12px;font-weight:850}.audioStatusPill i{width:8px;height:8px;border-radius:50%;background:#e1a32f}.audioStatusPill.ready i{background:var(--green)}
+.offlineReadyBox{display:flex;align-items:center;justify-content:center;gap:9px;margin:0 0 14px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);font-size:12px;font-weight:900;letter-spacing:.02em}.offlineReadyBox i{width:9px;height:9px;border-radius:50%;background:#e1a32f;box-shadow:0 0 0 4px color-mix(in srgb,#e1a32f 15%,transparent)}.offlineReadyBox.ready{color:var(--green);border-color:color-mix(in srgb,var(--green) 36%,var(--line));background:color-mix(in srgb,var(--green2) 70%,var(--panel))}.offlineReadyBox.ready i{background:var(--green);box-shadow:0 0 0 4px color-mix(in srgb,var(--green) 14%,transparent)}.offlineReadyBox.error{color:#ff6d78;border-color:color-mix(in srgb,#ff6d78 36%,var(--line));background:color-mix(in srgb,#5c1015 42%,var(--panel))}.offlineReadyBox.error i{background:#ff6d78;box-shadow:0 0 0 4px color-mix(in srgb,#ff6d78 14%,transparent)}.offlineReadyBox.preparing{color:var(--blue)}.offlineReadyBox.preparing i{background:var(--blue);animation:offlinePulse 1s ease-in-out infinite}.offlineMeta{display:block;margin-top:7px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:0}.offlineProgress{height:6px;border-radius:999px;overflow:hidden;background:var(--line);margin:9px 0 0}.offlineProgress>span{display:block;height:100%;width:0;background:var(--blue);transition:width .18s ease}.offlineStatusLine{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}.offlineStatusLine .audioStatusPill{margin-top:0}@keyframes offlinePulse{0%,100%{opacity:.45;transform:scale(.82)}50%{opacity:1;transform:scale(1.08)}}
 </style>
 
 <style id="trackDay415Styles">
@@ -444,6 +445,7 @@ html[data-theme="light"] .quickPanelHint{background:var(--panel2);border-color:v
 
 <style id="pilotCards422Styles">
 /* 4.0.22 TEST — country flags, LegionRX club easter egg, larger adaptive pilot rows. */
+/* 4.0.23 TEST — verified offline package, persistent readiness status, safer audio startup. */
 .pilotNameLine{display:inline-flex;align-items:center;gap:.42em;min-width:0;max-width:100%;vertical-align:middle}.pilotNameLine>span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.countryFlag{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:.92em;line-height:1;flex:none;filter:saturate(.94)}
 .legionClubMark{display:inline-flex;align-items:baseline;gap:.22em;font-weight:950;font-style:italic;letter-spacing:.035em;color:color-mix(in srgb,var(--text) 76%,var(--muted));white-space:nowrap}.legionClubMark i{font-style:italic;color:#ef2d35}.metaDot{display:inline-block;margin:0 .38em;color:var(--muted)}
 .pilotProfileGrid{display:grid;gap:10px}.pilotProfileCard{display:grid;grid-template-columns:62px minmax(0,1fr) auto;align-items:center;gap:14px;padding:16px 17px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--panel);box-shadow:var(--shadow)}.pilotProfileAvatar{width:58px;height:58px;border-radius:14px;background:var(--blue2);color:var(--blue);display:grid;place-items:center;font-size:28px;font-weight:950;overflow:hidden}.pilotProfileMain{min-width:0;display:grid;gap:4px}.pilotProfileName{font:900 22px var(--rx-display-font);min-width:0}.pilotProfileClub{font-size:14px;min-height:19px}.pilotProfileClub .legionClubMark{font-size:17px}.pilotProfileMeta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:11px}.pilotProfileMeta span+span:before{content:"·";margin-right:8px}.pilotProfileActions{display:flex;gap:8px;align-items:center}.subtleDanger{background:var(--red2)!important;color:var(--red)!important;border:1px solid color-mix(in srgb,var(--red) 30%,var(--line))!important}.pilotEasterHint{margin-top:12px;padding:9px 11px;border:1px dashed var(--line);border-radius:var(--radius-input);background:var(--panel2);color:var(--muted);font-size:11px}.pilotEasterHint b{color:var(--text)}
@@ -471,7 +473,7 @@ html[data-theme="light"] .quickPanelHint{background:var(--panel2);border-color:v
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.22 TEST</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.23 TEST</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -488,9 +490,10 @@ html[data-theme="light"] .quickPanelHint{background:var(--panel2);border-color:v
   <div class="audioGateCard">
     <div class="audioGateIcon">🔊</div>
     <h2 id="audioGateTitle">Звук Legion RX</h2>
-    <p>iPhone и Android требуют одно касание, прежде чем приложение сможет автоматически озвучивать прогрев, отсчёт, HORN и проходы транспондеров.</p>
-    <button id="audioGateBtn" class="audioGateBtn" type="button">ВКЛЮЧИТЬ ЗВУК</button>
-    <span id="audioGateState" class="audioGateState">Нажмите один раз после запуска приложения</span>
+    <p>Перед работой Legion RX проверяет, что приложение и весь звуковой пакет физически сохранены на планшете. После этого интернет на трассе не нужен.</p>
+    <div id="audioOfflineState" class="offlineReadyBox preparing"><i></i><span><b>ПРОВЕРЯЮ OFFLINE-ПАКЕТ…</b><small class="offlineMeta" id="audioOfflineMeta">0 / 27 файлов</small><span class="offlineProgress"><span id="audioOfflineProgress"></span></span></span></div>
+    <button id="audioGateBtn" class="audioGateBtn" type="button" disabled>ПРОВЕРКА OFFLINE…</button>
+    <span id="audioGateState" class="audioGateState">После проверки нажмите один раз, чтобы активировать звук</span>
   </div>
 </div>
 <div id="legionAudioHost" aria-hidden="true" style="position:fixed;width:1px;height:1px;overflow:hidden;opacity:.001;pointer-events:none"></div>
@@ -625,6 +628,89 @@ class LapWizCore extends EventTarget{
   beep(ok=true){if(!this.sound)return;const ctx=this.ensureAudio();if(!ctx)return;const tone=(freq,dur,vol,delay=0)=>{const t=ctx.currentTime+delay,o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+dur+.02);};if(ok)tone(1250,.065,.18);else{tone(430,.09,.15);tone(330,.11,.13,.11);}}
   unknownBeep(){this.beep(false);}
 }
+
+const LEGION_APP_VERSION='4.0.23';
+const LEGION_OFFLINE_CACHE='legion-rx-4-0-23-test-offline-audio-1';
+const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v423';
+const LEGION_OFFLINE_ASSETS=[
+  './','./index.html','./manifest.webmanifest',
+  './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
+  './audio/voice/prestart_10.wav','./audio/voice/good_race.wav',
+  ...Array.from({length:10},(_,i)=>`./audio/voice/countdown_${String(i+1).padStart(2,'0')}.wav`),
+  './audio/voice/warmup_01.wav','./audio/voice/warmup_02.wav','./audio/voice/warmup_03.wav','./audio/voice/warmup_04.wav','./audio/voice/warmup_05.wav','./audio/voice/warmup_30.wav',
+  './audio/system/start_race.mp3','./audio/system/bleep.mp3','./audio/system/silence.wav'
+];
+
+class OfflineReadyManager extends EventTarget{
+  constructor(){
+    super();this.ready=false;this.preparing=false;this.checked=false;this.completed=0;this.total=LEGION_OFFLINE_ASSETS.length;this.missing=[];this.failed=[];this.lastError='';
+  }
+  emit(){this.dispatchEvent(new CustomEvent('status',{detail:this.snapshot()}));}
+  snapshot(){return {ready:this.ready,preparing:this.preparing,checked:this.checked,completed:this.completed,total:this.total,missing:[...this.missing],failed:[...this.failed],lastError:this.lastError,version:LEGION_APP_VERSION};}
+  async open(){if(!('caches'in window))throw new Error('Cache Storage недоступен');return caches.open(LEGION_OFFLINE_CACHE);}
+  async check(){
+    this.checked=false;this.lastError='';this.failed=[];this.completed=0;
+    try{
+      const cache=await this.open(),missing=[];
+      for(const url of LEGION_OFFLINE_ASSETS){const hit=await cache.match(url,{ignoreSearch:true});if(hit)this.completed++;else missing.push(url);}
+      this.missing=missing;this.ready=missing.length===0;this.checked=true;
+      if(this.ready){try{localStorage.setItem(LEGION_OFFLINE_MARKER,JSON.stringify({version:LEGION_APP_VERSION,ready:true,at:new Date().toISOString()}));}catch{}this.cleanupOldCaches();}
+      this.emit();return this.ready;
+    }catch(e){this.ready=false;this.checked=true;this.lastError=String(e?.message||e);this.emit();return false;}
+  }
+  async validate(url,response){
+    if(!response||!response.ok)throw new Error(`HTTP ${response?.status||0}`);
+    const type=(response.headers.get('content-type')||'').toLowerCase();
+    const isBinary=/\.(wav|mp3|png)$/i.test(url);
+    if(isBinary&&type.includes('text/html'))throw new Error('Вместо файла получен HTML');
+    if(/\.(wav|mp3)$/i.test(url)){const blob=await response.clone().blob();if(blob.size<1000)throw new Error('Аудиофайл пустой или повреждён');}
+    return true;
+  }
+  async prepare({force=false}={}){
+    if(this.preparing)return false;
+    if(this.ready&&!force)return true;
+    this.preparing=true;this.ready=false;this.checked=true;this.completed=0;this.failed=[];this.lastError='';this.emit();
+    try{
+      const cache=await this.open();
+      for(const url of LEGION_OFFLINE_ASSETS){
+        try{
+          let hit=!force?await cache.match(url,{ignoreSearch:true}):null;
+          if(!hit){
+            const response=await fetch(url,{cache:'reload'});await this.validate(url,response);await cache.put(url,response.clone());
+          }
+          this.completed++;
+        }catch(e){this.failed.push({url,error:String(e?.message||e)});}
+        this.emit();
+      }
+      this.missing=[];
+      for(const url of LEGION_OFFLINE_ASSETS){if(!(await cache.match(url,{ignoreSearch:true})))this.missing.push(url);}
+      this.ready=this.missing.length===0&&this.failed.length===0;
+      if(this.ready){
+        try{localStorage.setItem(LEGION_OFFLINE_MARKER,JSON.stringify({version:LEGION_APP_VERSION,ready:true,at:new Date().toISOString()}));}catch{}
+        this.cleanupOldCaches();
+      }else{
+        this.lastError=this.failed.length?`${this.failed.length} файл(ов) не удалось сохранить`:`Не хватает ${this.missing.length} файл(ов)`;
+      }
+    }catch(e){this.lastError=String(e?.message||e);this.ready=false;}
+    this.preparing=false;this.checked=true;this.emit();return this.ready;
+  }
+  async init(){
+    const ok=await this.check();if(ok)return true;
+    // Первая загрузка версии: пробуем подготовить пакет автоматически.
+    // Если сети нет, валидные файлы могут быть взяты через предыдущий service worker cache.
+    return this.prepare();
+  }
+  cleanupOldCaches(){
+    try{navigator.serviceWorker?.controller?.postMessage({type:'OFFLINE_READY_CLEANUP',cache:LEGION_OFFLINE_CACHE});}catch{}
+  }
+  label(){
+    if(this.ready)return `OFFLINE READY ✓ · ${this.total}/${this.total}`;
+    if(this.preparing)return `ПОДГОТОВКА OFFLINE · ${Math.min(this.completed,this.total)}/${this.total}`;
+    if(this.checked)return `OFFLINE НЕ ГОТОВ · ${Math.min(this.completed,this.total)}/${this.total}`;
+    return 'ПРОВЕРЯЮ OFFLINE…';
+  }
+}
+const offlineReady=new OfflineReadyManager();
 
 const ANNOUNCER_AUDIO={
   prestart10:'./audio/voice/prestart_10.wav',
@@ -828,17 +914,43 @@ const announcer=new AnnouncerEngine();
 announcer.enabled=state.settings.announcerEnabled;
 announcer.startMode=state.settings.startVoiceMode;
 
+function updateOfflineReadyUi(){
+  const snap=offlineReady.snapshot(),pct=snap.total?Math.round((Math.min(snap.completed,snap.total)/snap.total)*100):0;
+  const box=document.getElementById('audioOfflineState'),meta=document.getElementById('audioOfflineMeta'),bar=document.getElementById('audioOfflineProgress'),btn=document.getElementById('audioGateBtn');
+  if(box){box.className=`offlineReadyBox ${snap.ready?'ready':snap.preparing?'preparing':snap.checked?'error':'preparing'}`;const b=box.querySelector('b');if(b)b.textContent=snap.ready?'OFFLINE READY ✓':snap.preparing?'ПОДГОТОВКА OFFLINE…':snap.checked?'OFFLINE НЕ ГОТОВ':'ПРОВЕРЯЮ OFFLINE-ПАКЕТ…';}
+  if(meta)meta.textContent=snap.ready?`${snap.total}/${snap.total} файлов · приложение и звук сохранены на планшете`:`${Math.min(snap.completed,snap.total)} / ${snap.total} файлов${snap.lastError?` · ${snap.lastError}`:''}`;
+  if(bar)bar.style.width=`${pct}%`;
+  if(btn&&!announcer.unlockPromise){
+    btn.disabled=Boolean(snap.preparing);
+    btn.textContent=snap.ready?'ВКЛЮЧИТЬ ЗВУК':snap.preparing?'ПОДГОТОВКА OFFLINE…':'ПОВТОРИТЬ ПОДГОТОВКУ';
+  }
+  document.querySelectorAll('[data-offline-ready]').forEach(el=>{
+    el.className=`offlineReadyBox ${snap.ready?'ready':snap.preparing?'preparing':snap.checked?'error':'preparing'}`;
+    const b=el.querySelector('b');if(b)b.textContent=snap.ready?'OFFLINE READY ✓':snap.preparing?'ПОДГОТОВКА OFFLINE…':'OFFLINE НЕ ГОТОВ';
+    const sm=el.querySelector('.offlineMeta');if(sm)sm.textContent=snap.ready?`${snap.total}/${snap.total} файлов · можно работать без интернета`:`${Math.min(snap.completed,snap.total)}/${snap.total} файлов${snap.lastError?` · ${snap.lastError}`:''}`;
+  });
+}
 function setupAudioGate(){
   const gate=document.getElementById('audioGate'),btn=document.getElementById('audioGateBtn');
   if(!gate||!btn)return;
+  offlineReady.addEventListener('status',updateOfflineReadyUi);
   btn.onclick=async()=>{
+    if(!offlineReady.ready){
+      const ok=await offlineReady.prepare();updateOfflineReadyUi();
+      if(!ok){announcer.setGate(`Offline-пакет не готов. ${offlineReady.lastError||'Подключитесь к интернету и повторите.'}`,'err');toast('OFFLINE не готов');return;}
+      // После асинхронной загрузки браузер уже потерял user activation. Нужен ещё один осознанный тап.
+      announcer.setGate('OFFLINE READY ✓ · Теперь нажмите «Включить звук»','ok');updateOfflineReadyUi();return;
+    }
     const ok=await announcer.unlockFromGesture({confirmation:true});
-    if(ok)toast('Звук Legion RX готов');
+    if(ok)toast('OFFLINE READY ✓ · Звук готов');
+    updateOfflineReadyUi();
   };
   if(!state.settings.announcerEnabled&&!state.settings.lapSound)gate.classList.add('hidden');
+  updateOfflineReadyUi();
 }
 async function ensureRaceAudioFromGesture(){
   if(!state.settings.announcerEnabled&&!state.settings.lapSound)return true;
+  if(!offlineReady.ready){announcer.showGate('OFFLINE-пакет не готов. Подключитесь к сети и подготовьте приложение до старта.');toast('OFFLINE не готов');return false;}
   if(announcer.unlocked)return true;
   const ok=await announcer.unlockFromGesture({confirmation:false});
   if(!ok){announcer.showGate('Без активации звука автоматический старт будет без диктора/HORN.');toast('Нужно включить звук');}
@@ -919,7 +1031,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.10 ALPHA</b><span>Reference UI · RallyCross активен</span></div>`}</div>
+   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.23 TEST</b><span>Offline Audio Ready · RallyCross активен</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
@@ -1126,7 +1238,7 @@ function settingsView(){return `<section class="page"><div class="pageHeader"><d
  <article class="card settingGroup"><h3>${uiIcon('settings','widgetIcon')} Интерфейс</h3><div class="toggleRow"><span>Тёмная тема</span><input class="toggle" id="darkToggle" type="checkbox" ${state.settings.theme==='dark'?'checked':''}></div><div class="field" style="margin-top:12px"><label>Язык интерфейса</label><select id="langSelect"><option value="ru" ${state.settings.lang==='ru'?'selected':''}>Русский</option><option value="en" ${state.settings.lang==='en'?'selected':''}>English</option></select></div><p>Светлая тема применяется и к пульту гонки.</p></article>
  <article class="card settingGroup designLabCard"><h3>${uiIcon('settings','widgetIcon')} Design Lab</h3><p>Живая настройка геометрии интерфейса без правки CSS.</p><div class="designLabSample"><span></span><span></span><span></span></div><button class="btn primary" data-action="open-design-lab">Открыть Design Lab</button></article>
  <article class="card settingGroup"><h3>${uiIcon('bluetooth','widgetIcon')} LapWiz</h3><div class="toggleRow"><span>Блип при принятом проходе</span><input class="toggle" id="soundToggle" type="checkbox" ${state.settings.lapSound?'checked':''}></div><div class="field" style="margin-top:12px"><label>Минимальное время круга, сек</label><input id="settingsMinLap" type="number" min="1" max="60" value="${state.settings.minLapSec}"></div><div class="btnRow" style="margin-top:12px">${lapwiz.connected?`<button class="btn secondary" data-action="lap-disconnect">Отключить LapWiz</button>`:`<button class="btn primary" data-action="lap-connect">Подключить LapWiz</button>`}<button class="btn secondary" data-action="test-bleep">Тест Bleep</button></div><p>Твой Bleep звучит только на валидном проходе зарегистрированного транспондера.</p></article>
- <article class="card settingGroup"><h3>${uiIcon('mic','widgetIcon')} Диктор · старт</h3><div class="toggleRow"><span>Озвучка старта</span><input class="toggle" id="announcerToggle" type="checkbox" ${state.settings.announcerEnabled?'checked':''}></div><div class="field" style="margin-top:12px"><label>Сценарий старта</label><select id="startVoiceMode"><option value="full" ${state.settings.startVoiceMode==='full'?'selected':''}>Полный — «До старта 10 секунд» → 10…5 → «Хорошей гонки» → HORN</option><option value="compact" ${state.settings.startVoiceMode==='compact'?'selected':''}>Короткий — «Хорошей гонки» → 9…1 → HORN</option></select></div><div class="field" style="margin-top:12px"><label>Прогрев / проверка транспондеров, мин</label><select id="settingsWarmupMinutes">${[5,4,3,2,1].map(n=>`<option value="${n}" ${Number(state.settings.warmupMinutes||2)===n?'selected':''}>${n} мин</option>`).join('')}</select></div><div class="field" style="margin-top:12px"><label>Финальный отсчёт перед стартом, сек</label><input id="settingsCountdown" type="number" min="1" max="10" value="${state.settings.countdownSec}"></div><p>Прогрев — общее время до HORN. Финальный отсчёт входит в выбранные минуты. LapWiz в этот период работает в Free Practice и проверяет транспондеры.</p><div class="audioStatusPill ${announcer.unlocked?'ready':''}"><i></i>${announcer.unlocked?'ЗВУК ГОТОВ':'ЗВУК НУЖНО ВКЛЮЧИТЬ'}</div><div class="btnRow"><button class="btn primary" data-action="audio-enable">Включить звук</button><button class="btn secondary" data-action="test-good-race">Тест «Хорошей гонки»</button><button class="btn secondary" data-action="test-start-horn">Тест HORN</button></div></article>
+ <article class="card settingGroup"><h3>${uiIcon('mic','widgetIcon')} Диктор · старт</h3><div class="toggleRow"><span>Озвучка старта</span><input class="toggle" id="announcerToggle" type="checkbox" ${state.settings.announcerEnabled?'checked':''}></div><div class="field" style="margin-top:12px"><label>Сценарий старта</label><select id="startVoiceMode"><option value="full" ${state.settings.startVoiceMode==='full'?'selected':''}>Полный — «До старта 10 секунд» → 10…5 → «Хорошей гонки» → HORN</option><option value="compact" ${state.settings.startVoiceMode==='compact'?'selected':''}>Короткий — «Хорошей гонки» → 9…1 → HORN</option></select></div><div class="field" style="margin-top:12px"><label>Прогрев / проверка транспондеров, мин</label><select id="settingsWarmupMinutes">${[5,4,3,2,1].map(n=>`<option value="${n}" ${Number(state.settings.warmupMinutes||2)===n?'selected':''}>${n} мин</option>`).join('')}</select></div><div class="field" style="margin-top:12px"><label>Финальный отсчёт перед стартом, сек</label><input id="settingsCountdown" type="number" min="1" max="10" value="${state.settings.countdownSec}"></div><p>Прогрев — общее время до HORN. Финальный отсчёт входит в выбранные минуты. LapWiz в этот период работает в Free Practice и проверяет транспондеры.</p><div class="offlineStatusLine"><div class="audioStatusPill ${announcer.unlocked?'ready':''}"><i></i>${announcer.unlocked?'ЗВУК ГОТОВ':'ЗВУК НУЖНО ВКЛЮЧИТЬ'}</div></div><div class="offlineReadyBox ${offlineReady.ready?'ready':offlineReady.preparing?'preparing':'error'}" data-offline-ready><i></i><span><b>${offlineReady.ready?'OFFLINE READY ✓':offlineReady.preparing?'ПОДГОТОВКА OFFLINE…':'OFFLINE НЕ ГОТОВ'}</b><small class="offlineMeta">${offlineReady.ready?`${offlineReady.total}/${offlineReady.total} файлов · можно работать без интернета`:`${Math.min(offlineReady.completed,offlineReady.total)}/${offlineReady.total} файлов`}</small></span></div><div class="btnRow"><button class="btn primary" data-action="audio-enable">Включить звук</button><button class="btn secondary" data-action="offline-prepare">Проверить / подготовить OFFLINE</button><button class="btn secondary" data-action="test-good-race">Тест «Хорошей гонки»</button><button class="btn secondary" data-action="test-start-horn">Тест HORN</button></div></article>
  <article class="card settingGroup"><h3>${uiIcon('flag','widgetIcon')} Заезды по умолчанию</h3><div class="formatRuleGrid compactRules">
   <section class="ruleBox"><div class="ruleBoxHead"><b>Квалификация</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsQLimit"><option value="time" ${state.settings.qualificationLimitType==='time'?'selected':''}>По времени</option><option value="laps" ${state.settings.qualificationLimitType==='laps'?'selected':''}>По кругам</option></select></div><div class="field"><label>Минуты</label><input id="settingsQMin" type="number" value="${state.settings.qualificationMinutes}"></div><div class="field"><label>Круги</label><input id="settingsQLaps" type="number" value="${state.settings.qualificationLaps}"></div></div></section>
   <section class="ruleBox"><div class="ruleBoxHead"><b>Финалы / LCQ</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsFLimit"><option value="laps" ${state.settings.finalLimitType==='laps'?'selected':''}>По кругам</option><option value="time" ${state.settings.finalLimitType==='time'?'selected':''}>По времени</option></select></div><div class="field"><label>Круги</label><input id="settingsFLaps" type="number" value="${state.settings.finalLaps}"></div><div class="field"><label>Минуты</label><input id="settingsFMin" type="number" value="${state.settings.finalMinutes}"></div></div></section>
@@ -1171,7 +1283,8 @@ async function legacyHandleAction(action){
  if(action==='toggle-results'){state.resultsOpen=!state.resultsOpen;state.widgetCollapsed.results=!state.resultsOpen;return render();}if(action==='start-session'){if(!await ensureRaceAudioFromGesture())return;return beginCountdown();}if(action==='pause-session')return togglePause();if(action==='add-minute')return addMinute();if(action==='manual-pass-picker')return manualPassPicker();if(action==='next-event')return quickNextEvent();if(action==='finish-session')return finishSession();if(action==='stop-session')return stopSession();if(action==='save-event-result')return saveCurrentEventResult();
  if(action==='lap-connect'){try{await ensureRaceAudioFromGesture();lapwiz.ensureAudio();await lapwiz.connect();toast('LapWiz подключён');updateHeader();render();}catch(e){toast(e.message);}return;}if(action==='lap-disconnect'){await lapwiz.disconnect();toast('LapWiz отключён');updateHeader();render();return;}
  if(action==='new-db-pilot')return pilotModal();if(action==='new-champ')return championshipModal();if(action==='new-champ-stage')return champStageModal();if(action==='champ-add-pilots')return champPilotPicker();if(action==='back-champs')return nav('championships');if(action==='save-champ-settings')return saveChampionshipSettings();if(action==='open-design-lab')return openDesignLab();
- if(action==='audio-enable'){const ok=await announcer.unlockFromGesture({confirmation:true});if(ok)toast('Звук готов');return;}
+ if(action==='audio-enable'){if(!offlineReady.ready){toast('Сначала подготовьте OFFLINE');return announcer.showGate('OFFLINE-пакет не готов. Подготовьте его при наличии интернета.');}const ok=await announcer.unlockFromGesture({confirmation:true});if(ok)toast('OFFLINE READY ✓ · Звук готов');updateOfflineReadyUi();return;}
+ if(action==='offline-prepare'){const ok=await offlineReady.prepare();updateOfflineReadyUi();render();toast(ok?'OFFLINE READY ✓':'OFFLINE не готов — проверьте интернет');return;}
  if(action==='test-good-race'){if(!await ensureRaceAudioFromGesture())return;announcer.play('goodRace',{wait:false,force:true});return;}
  if(action==='test-start-horn'){if(!await ensureRaceAudioFromGesture())return;announcer.play('startRace',{wait:false,force:true});return;}
  if(action==='test-bleep'){if(!await ensureRaceAudioFromGesture())return;announcer.playBleep({force:true});return;}
@@ -1413,19 +1526,10 @@ function minuteWords(n){return n===1?'одна минута':n===2?'две ми�
 function announceWarmupMinute(n,initial=false){
   const text=`До старта ${minuteWords(n)}.`;
   announcer.play(`warmup_${n}`,{wait:false});
-  // В присланном voice-pack отдельной записанной фразы приглашения нет.
-  // Пока произносим только приглашение системным голосом после штатной минутной отметки.
-  if(initial){
-    const invite='Участникам заезда просьба выехать на трассу для проверки транспондеров.';
-    const a=announcer.getAudio(`warmup_${n}`);
-    const delay=Math.max(900,Math.round(((Number(a?.duration)||1.5)+0.12)*1000));
-    const sid=setTimeout(()=>{
-      if(state.session&&['warmup','countdown'].includes(state.session.phase))announcer.speakText(invite);
-    },delay);
-    state.prestartTimers.push(sid);
-    if(state.session)state.session.announcerLine=`${text} ${invite}`;
-  }else if(state.session)state.session.announcerLine=text;
-  logEvent(`Диктор: ${initial?`${text} Участникам заезда просьба выехать на трассу для проверки транспондеров.`:text}`);
+  // 4.0.23: системный SpeechSynthesis в предстартовом сценарии отключён.
+  // OFFLINE READY гарантирует только наш проверенный локальный voice-pack; приглашение вернём отдельной записью Oksana.
+  if(state.session)state.session.announcerLine=text;
+  logEvent(`Диктор: ${text}`);
 }
 function announceWarmup30(){
   const text='До старта тридцать секунд.';
@@ -1792,7 +1896,7 @@ function homeView(){
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
-   :`<div class="heroMini"><b>4.0.22 TEST · PILOT CARDS & FLAGS</b><span>Pilot country flags · LegionRX club mark · larger adaptive driver rows</span></div>`;
+   :`<div class="heroMini"><b>4.0.23 TEST · OFFLINE AUDIO READY</b><span>Full offline package check · audio cache verification · safer PWA startup</span></div>`;
  return `<section class="page homePage">
  <div class="heroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат</h2></div></div>
@@ -2077,15 +2181,17 @@ function controlButtons(done,s,tie=false){
 
 
 lapwiz.addEventListener('pass',e=>processPass(e.detail.transponder,e.detail.deviceMs,'LAPWIZ'));lapwiz.addEventListener('status',()=>updateHeader());
-announcer.preload();setupAudioGate();
+announcer.ensurePlayers();setupAudioGate();
+function registerLegionServiceWorker(){if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>{reg.update().catch(()=>{});}).catch(e=>console.warn('Legion RX SW:',e));}
+offlineReady.init().then(ok=>{if(ok)announcer.preload();updateOfflineReadyUi();if(ok)console.info('Legion RX OFFLINE READY',offlineReady.snapshot());else console.warn('Legion RX offline package incomplete',offlineReady.snapshot());}).finally(registerLegionServiceWorker);
 window.addEventListener('pointerdown',()=>{lapwiz.ensureAudio();},{once:true});
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&!announcer.unlocked&&(state.settings.announcerEnabled||state.settings.lapSound))announcer.showGate('После возврата в приложение проверьте звук одним касанием.');});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){offlineReady.check().then(updateOfflineReadyUi);if(!announcer.unlocked&&(state.settings.announcerEnabled||state.settings.lapSound))announcer.showGate(offlineReady.ready?'OFFLINE READY ✓ · После возврата включите звук одним касанием.':'OFFLINE-пакет требует проверки.');}});
 window.addEventListener('beforeunload',()=>persistAll());
 
 $('#designQuickBtn')?.addEventListener('click',openDesignLab);
 if(storedSettings.visualPreset!=='race-console-v1')save(KEYS.settings,state.settings);
 applySettings();render();
-if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
 </script>
 </body>
 </html>
