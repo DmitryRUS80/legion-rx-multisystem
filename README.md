@@ -81,3 +81,6 @@ Compact theme-aware header controls, portrait Track Day main timer/ring, and 1�
 - Убрана подмена отсутствующего WAV/MP3 страницей `index.html` в Service Worker.
 - Системная SpeechSynthesis-фраза приглашения на трассу временно отключена: предстартовый сценарий больше не зависит от сетевого/системного TTS. Она вернётся только отдельной проверенной записью Oksana.
 - Генерация голосов пилотов и новые динамические объявления в эту сборку не входят.
+
+## 4.0.24 TEST — Audio Offline Hotfix
+Исправляет Android Chrome `NotSupportedError` при `OFFLINE READY 27/27`: бинарные ресурсы теперь валидируются по сигнатуре, аудио проигрывается из локальных Blob URL, а service worker поддерживает byte-range ответы для media.
