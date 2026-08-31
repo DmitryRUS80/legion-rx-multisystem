@@ -87,3 +87,8 @@ Compact theme-aware header controls, portrait Track Day main timer/ring, and 1�
 
 ## 4.0.25 TEST — RallyCross Cockpit
 Главный горизонтальный пульт RallyCross переведён на новый approved layout: крупные строки пилотов, BEST/AVG/LAPS, большой timer/ring, компактное верхнее управление и скрытые quick panels. Dark/Light поддерживаются одной адаптивной схемой. Track Day и LapWiz/audio core не менялись.
+
+
+## 4.0.26 TEST — RallyCross Cockpit Fit
+
+Точечная подгонка правой колонки RallyCross под реальную высоту Android landscape: основные кнопки и таймер сохраняют размер, вторичные раскрываемые строки уменьшены по высоте.
