@@ -1,6 +1,6 @@
 {
-  "name": "Legion RX 4.0.23 Test Offline Audio Ready",
-  "short_name": "Legion RX 4.0.23",
+  "name": "Legion RX 4.0.25 Test RallyCross Cockpit",
+  "short_name": "Legion RX 4.0.25",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
