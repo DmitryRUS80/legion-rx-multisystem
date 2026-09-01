@@ -1,3 +1,7 @@
+# Legion RX 4.0.28 TEST — Readable Adaptive Cockpit
+
+Главная тестовая сборка RallyCross с readability-first адаптацией: телефон portrait, планшет landscape, FullHD/2K desktop, Dark/Light. Нижняя полоса пульта теперь содержит ход гонки, текущий заезд, следующий заезд и результаты; дубли LapWiz/Диктор снизу убраны. Спортивная логика, LapWiz Core, Track Day/PIT и Offline Audio не менялись.
+
 ## Legion RX 4.0.16 Alpha — Track Day PIT
 
 # Базовая линия: 4.0.10 Alpha — Warmup Voice
@@ -93,5 +97,5 @@ Compact theme-aware header controls, portrait Track Day main timer/ring, and 1�
 
 Точечная подгонка правой колонки RallyCross под реальную высоту Android landscape: основные кнопки и таймер сохраняют размер, вторичные раскрываемые строки уменьшены по высоте.
 
-## 4.0.27 TEST — Adaptive Cockpit
+## 4.0.28 TEST — Readable Adaptive Cockpit
 RallyCross cockpit получил универсальную адаптацию для phone portrait, tablet/desktop landscape и больших Full HD/2K экранов. Критические элементы остаются на месте, список пилотов скроллится независимо, а размеры интерфейса fluid-scale через CSS clamp()/viewport breakpoints. Нижнее дублирование LapWiz/диктора/результатов убрано; оставлена только строка следующего заезда.

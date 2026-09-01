@@ -1,6 +1,6 @@
 {
-  "name": "Legion RX 4.0.27 Test Adaptive Cockpit",
-  "short_name": "Legion RX 4.0.27",
+  "name": "Legion RX 4.0.28 Test Readable Adaptive Cockpit",
+  "short_name": "Legion RX 4.0.28",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
