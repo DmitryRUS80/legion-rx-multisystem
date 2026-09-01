@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.28 TEST</title>
+<title>Legion RX 4.0.29 TEST</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -469,7 +469,7 @@ html[data-theme="light"] .quickPanelHint{background:var(--panel2);border-color:v
 </style>
 
 <style id="rally425Styles">
-/* ===== Legion RX 4.0.28 TEST · RallyCross Cockpit ===== */
+/* ===== Legion RX 4.0.29 TEST · RallyCross Cockpit ===== */
 .rallyCockpit425{
  --r425-bg:#05090c;--r425-panel:#0b1116;--r425-panel2:#0f171d;--r425-panel3:#121d26;
  --r425-line:#22303a;--r425-line-soft:#18242d;--r425-text:#eef3f6;--r425-muted:#788691;
@@ -543,7 +543,7 @@ html[data-theme="light"] .r425QuickRow{color:#33445a}html[data-theme="light"] .r
 </style>
 
 <style id="rally427AdaptiveStyles">
-/* ===== Legion RX 4.0.28 TEST · Adaptive RallyCross Cockpit ===== */
+/* ===== Legion RX 4.0.29 TEST · Adaptive RallyCross Cockpit ===== */
 /* Fluid scale: one cockpit geometry from 1024-class tablets to FullHD/2K desktops. */
 .rallyCockpit425{
  --r427-gap:clamp(6px,.55vw,12px);
@@ -690,7 +690,7 @@ html[data-theme="light"] .r425QuickRow{color:#33445a}html[data-theme="light"] .r
 }
 /* ===== /4.0.27 legacy adaptive base ===== */
 
-/* ===== Legion RX 4.0.28 TEST · Readable Adaptive Cockpit ===== */
+/* ===== Legion RX 4.0.29 TEST · Readable Adaptive Cockpit ===== */
 /* The cockpit gets a real footer row: race flow / current / next / results. */
 .rallyCockpit425{
  --r428-footer:clamp(42px,3.2vw,58px);
@@ -755,7 +755,77 @@ html[data-theme="light"] .r428RaceStrip{background:#fff;border-color:var(--r425-
 @media (orientation:landscape) and (max-width:900px){
  .rallyCockpit425{grid-template-rows:50px minmax(0,1fr) 32px!important;--r428-footer:32px!important}.rally425Main{grid-template-columns:minmax(0,1.5fr) minmax(255px,.82fr)}.r425Side{grid-template-rows:minmax(112px,.9fr) minmax(128px,1fr)!important}.r425TimerCaption{font-size:11px}.r425TimerMain strong#mainTimer{font-size:38px}.r425TimerMain small{font-size:7px}.r425TimerMetrics span{font-size:6px}.r425TimerMetrics b{font-size:10px}.r425Positions .pilotNameCell .name{font-size:12px!important}.r425Positions .pilotNameCell .sub{font-size:7px}.r425Metric.best:before,.r425Metric.avg:before{font-size:6.5px!important}.r425Metric strong{font-size:9px}.r425Laps{font-size:10px}.r425Gap{font-size:8px}.r425StatusChip{font-size:7px}.r425Control span b{font-size:8.5px}.r428RaceStrip{grid-template-columns:.8fr 1fr 1fr .8fr}.r428StripCell{padding:0 5px;gap:4px}.r428StripCell small{display:none}.r428StripCell b{font-size:8px}.r428StripCell svg{width:13px;height:13px}
 }
-/* ===== /4.0.28 TEST ===== */
+/* ===== /4.0.29 TEST ===== */
+</style>
+
+
+<style id="rally429ReadableHotfix">
+/* ===== Legion RX 4.0.29 TEST · READABILITY + MOBILE AUDIO HOTFIX ===== */
+/* Primary values get a real readability floor. Secondary wording is removed before type gets tiny. */
+.r429MobileStats{display:none}
+
+/* Desktop / tablet: keep the approved cockpit proportions but use the pixels that are actually available. */
+@media (orientation:landscape) and (min-width:901px){
+ .rallyCockpit425{--r428-footer:clamp(50px,3.5vw,64px)}
+ .r425Positions .pilotRow:not(.header){min-height:clamp(62px,4.05vw,78px)!important}
+ .r425Positions .pilotRow.header{font-size:clamp(11px,.62vw,13px)!important;min-height:clamp(36px,2.3vw,44px)}
+ .r425Positions .pilotNameCell .name{font-size:clamp(20px,1.24vw,28px)!important}
+ .r425Positions .pilotNameCell .sub{font-size:clamp(11px,.62vw,13px)!important;color:color-mix(in srgb,var(--r425-muted) 92%,var(--r425-text))}
+ .r425Metric strong{font-size:clamp(17px,1.03vw,23px)!important}.r425Laps{font-size:clamp(17px,1vw,22px)!important}.r425Gap{font-size:clamp(15px,.88vw,20px)!important}.r425StatusChip{font-size:clamp(11px,.64vw,14px)!important;padding:6px 9px}
+ .r425TimerMain small{font-size:clamp(11px,.64vw,14px)!important}.r425TimerMetrics span{font-size:clamp(11px,.60vw,13px)!important}.r425TimerMetrics b{font-size:clamp(18px,1.02vw,24px)!important}
+ .r425ControlTitle{font-size:clamp(12px,.72vw,15px)!important}.r425Control span b{font-size:clamp(14px,.86vw,19px)!important}.r425Control span small{font-size:clamp(10px,.57vw,12px)!important}
+ .r428StripCell small{font-size:clamp(10px,.56vw,12px)!important}.r428StripCell b{font-size:clamp(13px,.8vw,18px)!important}
+ .r425PositionsFooter{font-size:clamp(10px,.6vw,13px)!important}
+}
+@media (orientation:landscape) and (min-width:901px) and (max-height:800px){
+ .rallyCockpit425{--r428-footer:48px!important;--r427-head:62px!important}
+ .r425Positions .pilotRow:not(.header){min-height:59px!important}.r425Positions .pilotNameCell .name{font-size:20px!important}.r425Positions .pilotNameCell .sub{font-size:10.5px!important}.r425Metric strong{font-size:17px!important}.r425Laps{font-size:17px!important}.r425Gap{font-size:15px!important}.r425StatusChip{font-size:11.5px!important}
+ .r425TimerMetrics span{font-size:10.5px!important}.r425TimerMetrics b{font-size:17.5px!important}.r425Control span b{font-size:14px!important}.r425Control span small{font-size:10px!important}.r428StripCell small{font-size:9.5px!important}.r428StripCell b{font-size:12.5px!important}
+}
+
+/* PHONE PORTRAIT — approved structure: header -> timer/ring -> pilots -> controls -> race strip. */
+@media (orientation:portrait) and (max-width:900px){
+ body.cockpitMode #viewHost{overflow:hidden!important}
+ .rallyCockpit425{--r427-gap:6px!important;--r427-head:62px!important;--r428-footer:58px!important;padding:6px!important;gap:6px!important;grid-template-rows:62px minmax(0,1fr) 58px!important}
+ .rally425Header{grid-template-columns:minmax(112px,1fr) auto!important}.rally425Header .raceBrand{padding:5px 9px!important}.rally425Header .raceBrand strong{font-size:clamp(20px,5.3vw,24px)!important}
+ .r425TopActions{gap:3px!important;padding:4px!important}.r425TopBtn,.r425TopBtn.iconOnly{width:clamp(32px,8.2vw,38px)!important;min-width:clamp(32px,8.2vw,38px)!important}.r425TopBtn svg{width:clamp(16px,4.2vw,19px)!important;height:clamp(16px,4.2vw,19px)!important}
+ .rally425Main{grid-template-rows:auto minmax(0,1fr) auto!important;gap:6px!important}
+ .r425TimerCard{grid-row:1!important;height:clamp(178px,22dvh,208px)!important}
+ .r425TimerMain{grid-template-columns:minmax(0,1fr) clamp(94px,25vw,116px)!important;padding:11px 13px 7px!important;gap:10px!important}.r425TimerCaption{font-size:clamp(17px,4.5vw,21px)!important}.r425TimerMain strong#mainTimer{font-size:clamp(58px,15.8vw,76px)!important}.r425TimerMain small{font-size:clamp(10px,2.55vw,12px)!important;margin-top:7px!important}.r425Ring{width:clamp(92px,24vw,112px)!important;height:clamp(92px,24vw,112px)!important}.r425RingInner b{font-size:clamp(26px,7vw,34px)!important}.r425RingInner small{font-size:clamp(9px,2.25vw,11px)!important}
+ .r425TimerMetrics{min-height:52px!important}.r425TimerMetrics>div{padding:7px 8px!important}.r425TimerMetrics span{font-size:clamp(10px,2.45vw,12px)!important;letter-spacing:.01em!important}.r425TimerMetrics b{font-size:clamp(15px,3.8vw,18px)!important;margin-top:3px!important}
+ .r425Positions{grid-row:2!important;grid-template-rows:48px minmax(0,1fr)!important}.r425PositionsHead{padding:0 11px!important}.r425PositionsHead h2{font-size:clamp(20px,5.1vw,24px)!important}.r425PositionsHead svg{width:20px!important;height:20px!important}.r425PositionsHead span{font-size:11px!important}.r425PositionsHead span b{font-size:14px!important}
+ .r425Positions .pilotRow.header{grid-template-columns:44px minmax(0,1fr) 52px 76px!important;min-height:34px!important;padding:0 7px!important;gap:6px!important;font-size:10.5px!important}.r425Positions .pilotRow.header span:nth-child(3),.r425Positions .pilotRow.header span:nth-child(4),.r425Positions .pilotRow.header span:nth-child(6){display:none!important}.r425Positions .pilotRow.header span:nth-child(1){grid-column:1}.r425Positions .pilotRow.header span:nth-child(2){grid-column:2}.r425Positions .pilotRow.header span:nth-child(5){grid-column:3}.r425Positions .pilotRow.header span:nth-child(7){grid-column:4}
+ .r425Positions .pilotRow:not(.header){grid-template-columns:44px minmax(0,1fr) 52px 76px!important;grid-template-rows:auto auto!important;grid-template-areas:'pos pilot laps status' 'pos mobile mobile mobile'!important;gap:5px 6px!important;min-height:76px!important;padding:7px!important}
+ .r425Positions .pilotRow .pos{grid-area:pos!important;margin:-7px 0 -7px -7px!important;font-size:clamp(27px,7vw,32px)!important}.r425Positions .pilotNameCell{grid-area:pilot!important;min-width:0}.r425Positions .pilotNameCell .name{font-size:clamp(20px,5.25vw,24px)!important;line-height:1!important}.r425Positions .pilotNameCell .sub{font-size:clamp(10px,2.55vw,12px)!important;margin-top:4px!important;color:color-mix(in srgb,var(--r425-muted) 94%,var(--r425-text))!important}.r425Positions .countryFlag{font-size:clamp(16px,4vw,19px)!important}
+ .r425Positions .r425Metric.best,.r425Positions .r425Metric.avg,.r425Positions .r425Gap{display:none!important}.r429MobileStats{grid-area:mobile;display:flex;align-items:center;gap:clamp(10px,3.2vw,18px);min-width:0;overflow:hidden}.r429MobileStats span{display:flex;align-items:baseline;gap:5px;min-width:0;white-space:nowrap}.r429MobileStats i{font-style:normal;color:var(--r425-muted);font:900 clamp(10px,2.55vw,12px) var(--rx-display-font);letter-spacing:.025em}.r429MobileStats b{font:850 clamp(14.5px,3.7vw,17px) var(--rx-display-font);font-variant-numeric:tabular-nums;color:#cbd5db}.r429MobileStats span:first-child b{color:var(--r425-green)}.r429MobileStats .slowText{color:var(--r425-amber)!important}
+ .r425Laps{grid-area:laps!important;font-size:clamp(16px,4.1vw,19px)!important;justify-self:center}.r425StatusChip{grid-area:status!important;font-size:clamp(10px,2.65vw,12px)!important;padding:5px 7px!important;max-width:76px!important;justify-self:end!important}
+ .r425ControlCard{grid-row:3!important;height:clamp(156px,18.5dvh,180px)!important;padding:7px!important;grid-template-rows:20px minmax(0,1fr)!important;gap:5px!important}.r425ControlTitle{font-size:12px!important;line-height:20px!important}.r425Controls{gap:6px!important}.r425Control{padding:6px!important;gap:6px!important}.r425Control svg{width:clamp(25px,6.5vw,30px)!important;height:clamp(25px,6.5vw,30px)!important}.r425Control span b{font-size:clamp(14px,3.65vw,17px)!important}.r425Control span small{font-size:clamp(9px,2.35vw,11px)!important;line-height:1.05!important}
+ .r428RaceStrip{height:58px!important;grid-template-columns:.84fr .94fr .94fr 1.18fr!important}.r428StripCell{gap:5px!important;padding:0 6px!important;justify-content:center!important}.r428StripCell svg{width:18px!important;height:18px!important}.r428StripCell small{font-size:9.5px!important;letter-spacing:.02em!important}.r428StripCell b{font-size:clamp(11.5px,3vw,14px)!important}.r428Flow span small{font-size:9px!important}.r428Results small{display:none!important}
+ .r425Positions.r428CompactPilots .pilotRow:not(.header){min-height:66px!important;padding-top:5px!important;padding-bottom:5px!important}.r425Positions.r428CompactPilots .pilotNameCell .name{font-size:19px!important}.r425Positions.r428CompactPilots .pilotNameCell .sub{font-size:10px!important}.r425Positions.r428CompactPilots .r429MobileStats b{font-size:14px!important}
+ .r425Positions.r428DensePilots .pilotRow:not(.header){min-height:57px!important;padding-top:4px!important;padding-bottom:4px!important}.r425Positions.r428DensePilots .pilotNameCell .name{font-size:18px!important}.r425Positions.r428DensePilots .pilotNameCell .sub{display:none!important}.r425Positions.r428DensePilots .r429MobileStats{gap:9px!important}.r425Positions.r428DensePilots .r429MobileStats i{font-size:9px!important}.r425Positions.r428DensePilots .r429MobileStats b{font-size:13px!important}.r425Positions.r428DensePilots .r425Laps{font-size:15px!important}.r425Positions.r428DensePilots .r425StatusChip{font-size:9.5px!important;padding:4px 5px!important}
+}
+
+/* Short phone screens: free vertical space by shrinking cards/padding, not the primary typography. */
+@media (orientation:portrait) and (max-width:900px) and (max-height:880px){
+ .r425TimerCard{height:160px!important}.r425ControlCard{height:138px!important}.r425Positions{grid-template-rows:44px minmax(0,1fr)!important}.r425Positions .pilotRow.header{min-height:30px!important}
+ .r425Positions[data-pilot-count="5"] .pilotRow:not(.header){min-height:58px!important;padding-top:4px!important;padding-bottom:4px!important}.r425Positions[data-pilot-count="5"] .pilotNameCell .name{font-size:19px!important}.r425Positions[data-pilot-count="5"] .pilotNameCell .sub{display:none!important}.r425Positions[data-pilot-count="5"] .r429MobileStats b{font-size:14px!important}
+ .r425Positions[data-pilot-count="6"] .pilotRow:not(.header){min-height:51px!important;padding-top:3px!important;padding-bottom:3px!important}.r425Positions[data-pilot-count="6"] .pilotNameCell .name{font-size:18px!important}.r425Positions[data-pilot-count="6"] .pilotNameCell .sub{display:none!important}.r425Positions[data-pilot-count="6"] .r429MobileStats{gap:8px!important}.r425Positions[data-pilot-count="6"] .r429MobileStats i{font-size:9px!important}.r425Positions[data-pilot-count="6"] .r429MobileStats b{font-size:13px!important}.r425Positions[data-pilot-count="6"] .r425StatusChip{font-size:9.5px!important;padding:4px 5px!important}
+}
+@media (orientation:portrait) and (max-width:380px){
+ .rallyCockpit425{--r427-head:58px!important;--r428-footer:54px!important;grid-template-rows:58px minmax(0,1fr) 54px!important;padding:5px!important;gap:5px!important}.rally425Header{grid-template-columns:minmax(94px,1fr) auto!important}.rally425Header .raceBrand strong{font-size:18px!important}.r425TopActions{gap:2px!important;padding:3px!important}.r425TopBtn,.r425TopBtn.iconOnly{width:29px!important;min-width:29px!important}.r425TopBtn svg{width:15px!important;height:15px!important}
+ .r425TimerCard{height:170px!important}.r425TimerMain strong#mainTimer{font-size:54px!important}.r425TimerCaption{font-size:16px!important}.r425Ring{width:88px!important;height:88px!important}.r425TimerMetrics span{font-size:9px!important}.r425TimerMetrics b{font-size:14px!important}
+ .r425Positions .pilotRow:not(.header){grid-template-columns:40px minmax(0,1fr) 48px 70px!important;min-height:72px!important;padding:6px!important}.r425Positions .pilotRow.header{grid-template-columns:40px minmax(0,1fr) 48px 70px!important}.r425Positions .pilotNameCell .name{font-size:18px!important}.r425Positions .pilotNameCell .sub{font-size:9.5px!important}.r429MobileStats{gap:8px!important}.r429MobileStats i{font-size:9px!important}.r429MobileStats b{font-size:13px!important}.r425Laps{font-size:15px!important}.r425StatusChip{font-size:9.5px!important;max-width:70px!important}
+ .r425ControlCard{height:150px!important}.r425Control span b{font-size:13px!important}.r425Control span small{font-size:9px!important}.r428StripCell small{display:none!important}.r428StripCell b{font-size:11px!important}.r428StripCell svg{width:16px!important;height:16px!important}
+ .r425Positions.r428DensePilots .pilotRow:not(.header){min-height:55px!important}.r425Positions.r428DensePilots .pilotNameCell .name{font-size:17px!important}.r425Positions.r428DensePilots .r429MobileStats b{font-size:12px!important}
+}
+
+/* Landscape phones: don't make a miniature desktop. Keep readable values and let secondary text disappear. */
+@media (orientation:landscape) and (max-width:900px){
+ .rallyCockpit425{grid-template-rows:54px minmax(0,1fr) 38px!important;--r428-footer:38px!important}.rally425Header .raceBrand strong{font-size:18px!important}.r425TopBtn,.r425TopBtn.iconOnly{width:31px!important;min-width:31px!important}.r425TopBtn svg{width:15px!important;height:15px!important}
+ .r425TimerCaption{font-size:13px!important}.r425TimerMain strong#mainTimer{font-size:44px!important}.r425TimerMain small{font-size:8.5px!important}.r425TimerMetrics span{font-size:8px!important}.r425TimerMetrics b{font-size:13px!important}.r425RingInner small{font-size:7px!important}
+ .r425Positions .pilotNameCell .name{font-size:14px!important}.r425Positions .pilotNameCell .sub{font-size:8px!important}.r425Metric.best:before,.r425Metric.avg:before{font-size:8px!important}.r425Metric strong{font-size:11px!important}.r425Laps{font-size:12px!important}.r425Gap{font-size:10px!important}.r425StatusChip{font-size:8.5px!important}.r425Control span b{font-size:10.5px!important}.r428StripCell b{font-size:10px!important}
+}
+/* ===== /4.0.29 TEST ===== */
 </style>
 
 </head>
@@ -764,7 +834,7 @@ html[data-theme="light"] .r428RaceStrip{background:#fff;border-color:var(--r425-
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.28 TEST</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.29 TEST</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -781,7 +851,7 @@ html[data-theme="light"] .r428RaceStrip{background:#fff;border-color:var(--r425-
   <div class="audioGateCard">
     <div class="audioGateIcon">🔊</div>
     <h2 id="audioGateTitle">Звук Legion RX</h2>
-    <p>Перед работой Legion RX проверяет, что приложение и весь звуковой пакет физически сохранены на планшете. После этого интернет на трассе не нужен.</p>
+    <p>Перед работой Legion RX проверяет, что приложение и весь звуковой пакет физически сохранены на устройстве. После этого интернет на трассе не нужен.</p>
     <div id="audioOfflineState" class="offlineReadyBox preparing"><i></i><span><b>ПРОВЕРЯЮ OFFLINE-ПАКЕТ…</b><small class="offlineMeta" id="audioOfflineMeta">0 / 27 файлов</small><span class="offlineProgress"><span id="audioOfflineProgress"></span></span></span></div>
     <button id="audioGateBtn" class="audioGateBtn" type="button" disabled>ПРОВЕРКА OFFLINE…</button>
     <span id="audioGateState" class="audioGateState">После проверки нажмите один раз, чтобы активировать звук</span>
@@ -920,8 +990,8 @@ class LapWizCore extends EventTarget{
   unknownBeep(){this.beep(false);}
 }
 
-const LEGION_APP_VERSION='4.0.27';
-const LEGION_OFFLINE_CACHE='legion-rx-4-0-28-test-readable-adaptive-1';
+const LEGION_APP_VERSION='4.0.29';
+const LEGION_OFFLINE_CACHE='legion-rx-4-0-29-test-readable-mobile-audio-1';
 const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v425';
 const LEGION_OFFLINE_ASSETS=[
   './','./index.html','./manifest.webmanifest',
@@ -1086,7 +1156,7 @@ class AnnouncerEngine extends EventTarget{
           const blob=new Blob([buf],{type:this.audioMime(raw)});
           next.set(raw,URL.createObjectURL(blob));
         }
-        this.clearLocalAudioUrls();this.localAudioUrls=next;this.localAudioReady=true;this.lastError='';return true;
+        this.clearLocalAudioUrls();this.localAudioUrls=next;this.localAudioReady=true;this.lastError='';this.prepareUnlockSources();return true;
       }catch(e){
         this.clearLocalAudioUrls();this.lastError=String(e?.message||e);console.warn('Legion RX local audio hydrate:',e);return false;
       }finally{this.localAudioLoading=null;updateOfflineReadyUi?.();}
@@ -1102,7 +1172,25 @@ class AnnouncerEngine extends EventTarget{
   }
   ensurePlayers(){
     if(!this.mainPlayer)this.mainPlayer=this.createPlayer('main');
-    if(!this.bleepPool.length)this.bleepPool=Array.from({length:8},(_,i)=>this.createPlayer(`bleep-${i+1}`));
+    // Один отдельный BLEEP-канал достаточно: сам сигнал короче минимального круга,
+    // зато iOS/Safari не приходится одновременно разблокировать восемь media elements.
+    if(!this.bleepPool.length)this.bleepPool=[this.createPlayer('bleep-1')];
+  }
+  prepareUnlockSources(){
+    this.ensurePlayers();
+    const silence=this.localAudioUrls.get('./audio/system/silence.wav')||'./audio/system/silence.wav';
+    const bleep=this.localAudioUrls.get(ANNOUNCER_AUDIO.bleep)||ANNOUNCER_AUDIO.bleep;
+    const prep=(a,key,src,volume)=>{
+      if(!a||!src)return;
+      try{
+        if(a.dataset.legionUnlockSrc!==src){
+          a.pause();a.src=src;a.dataset.legionUnlockSrc=src;a.dataset.legionKey=key;a.preload='auto';a.load();
+        }
+        a.volume=volume;a.playbackRate=1;
+      }catch{}
+    };
+    prep(this.mainPlayer,'unlock-silence',silence,.01);
+    prep(this.bleepPool[0],'bleep',bleep,1);
   }
   getAudio(key){
     if(this.preloadCache.has(key))return this.preloadCache.get(key);
@@ -1129,39 +1217,36 @@ class AnnouncerEngine extends EventTarget{
   async unlockFromGesture({confirmation=true}={}){
     if(this.unlocked)return true;
     if(this.unlockPromise)return this.unlockPromise;
-    this.ensurePlayers();this.preload();
+    this.ensurePlayers();
+    this.prepareUnlockSources();
     const btn=document.getElementById('audioGateBtn');if(btn)btn.disabled=true;
     this.setGate('Включаю аудиоканал…','');
-    const silence=this.localAudioUrls.get('./audio/system/silence.wav')||'./audio/system/silence.wav';
-    const players=[this.mainPlayer,...this.bleepPool];
-    const plays=[];
-    // ВАЖНО: все play() вызываются синхронно внутри одного пользовательского жеста.
-    // Никакого await до вызова play(), иначе Safari теряет user activation.
-    for(const a of players){
+    const main=this.mainPlayer,bleep=this.bleepPool[0];
+    // На iOS user activation очень короткая. Поэтому в самом tap только ДВА play():
+    // постоянный VOICE/HORN-канал + постоянный BLEEP-канал. Никаких preload/load/await между ними.
+    const start=(a,volume)=>{
       try{
-        a.pause();a.src=silence;a.volume=.01;a.playbackRate=1;a.currentTime=0;a.load();
-        const pr=a.play();plays.push(Promise.resolve(pr).then(()=>true).catch(e=>({error:e})));
-      }catch(e){plays.push(Promise.resolve({error:e}));}
-    }
-    this.unlockPromise=Promise.all(plays).then(async results=>{
-      let ok=0;let firstError='';
-      results.forEach((r,i)=>{if(r===true)ok++;else if(!firstError)firstError=String(r?.error||'play() rejected');try{players[i].pause();players[i].currentTime=0;}catch{}});
-      // main + хотя бы 1 канал BLEEP достаточны; остальные могут быть повторно активированы позже.
-      this.unlocked=ok>=2;
-      this.lastError=this.unlocked?'':(firstError||`Разблокировано ${ok}/${players.length}`);
-      this.unlockPromise=null;
-      if(btn)btn.disabled=false;
+        a.volume=volume;a.playbackRate=1;try{a.currentTime=0;}catch{}
+        const pr=a.play();
+        return Promise.resolve(pr).then(()=>({ok:true})).catch(error=>({ok:false,error}));
+      }catch(error){return Promise.resolve({ok:false,error});}
+    };
+    const pMain=start(main,.01);
+    const pBleep=start(bleep,confirmation?1:.01);
+    this.unlockPromise=Promise.all([pMain,pBleep]).then(results=>{
+      const mainOk=Boolean(results[0]?.ok),bleepOk=Boolean(results[1]?.ok);
+      const errors=results.filter(x=>!x?.ok).map(x=>x?.error).filter(Boolean);
+      // Не обрываем только что начатый play() мгновенным pause(): это и давало AbortError на Safari.
+      setTimeout(()=>{try{main.pause();main.currentTime=0;}catch{}if(!confirmation){try{bleep.pause();bleep.currentTime=0;}catch{}}},180);
+      this.unlocked=mainOk&&bleepOk;
+      this.lastError=this.unlocked?'':String(errors[0]?.name||errors[0]?.message||errors[0]||`VOICE ${mainOk?'OK':'ERR'} / BLEEP ${bleepOk?'OK':'ERR'}`);
+      this.unlockPromise=null;if(btn)btn.disabled=false;
       if(this.unlocked){
-        this.setGate('Звук готов','ok');
-        document.getElementById('audioGate')?.classList.add('hidden');
-        // Короткое слышимое подтверждение уже после успешной активации.
-        if(confirmation){try{await this.playBleep({force:true});}catch{}}
-        this.emit({message:'Звук готов',audioReady:true});
-        return true;
+        this.setGate('Звук готов','ok');document.getElementById('audioGate')?.classList.add('hidden');
+        this.emit({message:'Звук готов',audioReady:true});return true;
       }
       this.setGate(`Не удалось включить звук: ${this.lastError}`,'err');
-      this.emit({message:'Ошибка активации звука',error:this.lastError,audioReady:false});
-      return false;
+      this.emit({message:'Ошибка активации звука',error:this.lastError,audioReady:false});return false;
     });
     return this.unlockPromise;
   }
@@ -1171,7 +1256,13 @@ class AnnouncerEngine extends EventTarget{
     a.src=src;a.dataset.legionKey=key;a.load();
   }
   markBlocked(key,e){
-    this.unlocked=false;this.lastError=String(e?.name||e||'Audio blocked');
+    const name=String(e?.name||'');
+    if(name==='AbortError'){
+      // Safari выдаёт AbortError, если предыдущий play() был технически прерван сменой позиции/источника.
+      // Это НЕ означает, что пользователь запретил звук, поэтому не сбрасываем рабочий unlock.
+      console.warn('Legion RX audio transient abort:',key,e);return;
+    }
+    this.unlocked=false;this.lastError=String(name||e||'Audio blocked');
     this.showGate(`Звук был заблокирован системой. Нажмите «Включить звук» ещё раз. (${this.lastError})`);
     this.emit({message:`Ошибка аудио: ${key}`,error:String(e),audioReady:false});
   }
@@ -1262,7 +1353,7 @@ function updateOfflineReadyUi(){
   const snap=offlineReady.snapshot(),pct=snap.total?Math.round((Math.min(snap.completed,snap.total)/snap.total)*100):0;
   const box=document.getElementById('audioOfflineState'),meta=document.getElementById('audioOfflineMeta'),bar=document.getElementById('audioOfflineProgress'),btn=document.getElementById('audioGateBtn');
   if(box){box.className=`offlineReadyBox ${snap.ready?'ready':snap.preparing?'preparing':snap.checked?'error':'preparing'}`;const b=box.querySelector('b');if(b)b.textContent=snap.ready?'OFFLINE READY ✓':snap.preparing?'ПОДГОТОВКА OFFLINE…':snap.checked?'OFFLINE НЕ ГОТОВ':'ПРОВЕРЯЮ OFFLINE-ПАКЕТ…';}
-  if(meta)meta.textContent=snap.ready?`${snap.total}/${snap.total} файлов · приложение и звук сохранены на планшете`:`${Math.min(snap.completed,snap.total)} / ${snap.total} файлов${snap.lastError?` · ${snap.lastError}`:''}`;
+  if(meta)meta.textContent=snap.ready?`${snap.total}/${snap.total} файлов · приложение и звук сохранены на устройстве`:`${Math.min(snap.completed,snap.total)} / ${snap.total} файлов${snap.lastError?` · ${snap.lastError}`:''}`;
   if(bar)bar.style.width=`${pct}%`;
   if(btn&&!announcer.unlockPromise){
     const audioHydrating=Boolean(snap.ready&&!announcer.localAudioReady);
@@ -1379,7 +1470,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.28 TEST</b><span>Readable Adaptive Cockpit · телефон / планшет / ПК</span></div>`}</div>
+   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.29 TEST</b><span>Readable Adaptive Cockpit · телефон / планшет / ПК</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
@@ -2244,7 +2335,7 @@ function homeView(){
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
-   :`<div class="heroMini"><b>4.0.28 TEST · READABLE ADAPTIVE COCKPIT</b><span>Phone portrait · Tablet landscape · Desktop / 2K · Dark / Light</span></div>`;
+   :`<div class="heroMini"><b>4.0.29 TEST · READABLE ADAPTIVE COCKPIT</b><span>Phone portrait · Tablet landscape · Desktop / 2K · Dark / Light</span></div>`;
  return `<section class="page homePage">
  <div class="heroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат</h2></div></div>
@@ -2569,7 +2660,7 @@ applySettings();render();
 
 
 
-/* ===== Legion RX 4.0.28 TEST · Adaptive RallyCross Cockpit implementation ===== */
+/* ===== Legion RX 4.0.29 TEST · Adaptive RallyCross Cockpit implementation ===== */
 function r425Date(value){if(!value)return'';const p=String(value).split('-');return p.length===3?`${p[2]}.${p[1]}.${p[0]}`:String(value);}
 function r425LapAvg(l){return lapSummary(l).avg;}
 function r425GlobalBest(pilots,session){let best=Infinity;for(const p of pilots){const v=session?.live?.[p.id]?.bestLapMs;if(Number.isFinite(v))best=Math.min(best,v);}return Number.isFinite(best)?best:null;}
@@ -2590,7 +2681,7 @@ function pilotTable(pilots,session){
  const pre=['warmup','countdown'].includes(session?.phase),globalBest=r425GlobalBest(pilots,session),rule=currentEvent(state.race)?eventRule(state.race,currentEvent(state.race)):null,leaderLaps=pilots[0]?(session?.live?.[pilots[0].id]?.laps||0):0;
  return `<div class="pilotRow header"><span>ПОЗ</span><span>ПИЛОТ</span><span>BEST</span><span>AVG</span><span>КРУГИ</span><span>ОТСТАВАНИЕ</span><span>СТАТУС</span></div>`+pilots.map((p,i)=>{
    const l=session?.live?.[p.id]||blankLive(),st=r425PilotState(session,l,p.id,i,pre,leaderLaps),gap=pre||i===0?'—':gapText(pilots,session,p,i),avg=r425LapAvg(l),pace=r425Pace(l.bestLapMs,globalBest),slow=Number.isFinite(globalBest)&&Number.isFinite(l.bestLapMs)&&l.bestLapMs>globalBest*1.035,key=String(p.id).replace(/[^a-zA-Z0-9_-]/g,'_'),club=pilotClubName(p),target=rule?.limitType==='laps'?rule.targetLaps:null;
-   return `<div class="pilotRow clickablePilot ${i===0&&l.laps>0?'leader':''} ${l.finished?'finished':''}" data-pilot-stats="${p.id}" data-stats-context="race" style="view-transition-name:pilot_${key}"><div class="pos">${i+1}</div><div class="pilotNameCell"><div class="name">${pilotNameMarkup(p)}</div><div class="sub">${club?clubMarkup(club,'')+'<span class="metaDot">·</span>':''}ID ${esc(p.transponder||'—')}</div></div><div class="r425Metric best ${slow?'slow':''}"><strong>${fmtMs(l.bestLapMs)}</strong><span class="r425PaceTrack" style="--pace:${pace}%"><i></i></span></div><div class="r425Metric avg"><strong>${fmtMs(avg)}</strong><span class="r425PaceTrack" style="--pace:${pace}%"><i></i></span></div><b class="r425Laps">${l.laps||0}${target?` / ${target}`:''}</b><span class="r425Gap">${gap}</span><span class="r425StatusChip ${st.cls}">${st.text}</span></div>`;
+   return `<div class="pilotRow clickablePilot ${i===0&&l.laps>0?'leader':''} ${l.finished?'finished':''}" data-pilot-stats="${p.id}" data-stats-context="race" style="view-transition-name:pilot_${key}"><div class="pos">${i+1}</div><div class="pilotNameCell"><div class="name">${pilotNameMarkup(p)}</div><div class="sub">${club?clubMarkup(club,'')+'<span class="metaDot">·</span>':''}ID ${esc(p.transponder||'—')}</div></div><div class="r425Metric best ${slow?'slow':''}"><strong>${fmtMs(l.bestLapMs)}</strong><span class="r425PaceTrack" style="--pace:${pace}%"><i></i></span></div><div class="r425Metric avg"><strong>${fmtMs(avg)}</strong><span class="r425PaceTrack" style="--pace:${pace}%"><i></i></span></div><div class="r429MobileStats"><span><i>BEST</i><b class="${slow?'slowText':''}">${fmtMs(l.bestLapMs)}</b></span><span><i>AVG</i><b>${fmtMs(avg)}</b></span><span><i>ОТСТ.</i><b>${gap}</b></span></div><b class="r425Laps">${l.laps||0}${target?` / ${target}`:''}</b><span class="r425Gap">${gap}</span><span class="r425StatusChip ${st.cls}">${st.text}</span></div>`;
  }).join('');
 }
 function r425RingData(race,ev,pilots,s){
@@ -2646,7 +2737,7 @@ function updateDynamicCockpit(){
  const best=$('#bestHeatLap');if(best&&ev)best.textContent=bestHeatLapText(ranked,s);const lp=$('#lastPassLine');if(lp)lp.textContent=s?.lastPass||'—';
  const statsEls=$$('.statsWidgetContent');if(statsEls.length&&ev&&s){let html;if(['warmup','countdown'].includes(s.phase)){html=`<div><span>ОБНАРУЖЕНО</span><b>${warmupSeenCount(s)} / ${ranked.length}</b></div><div><span>РЕЖИМ LAPWIZ</span><b>FREE PRACTICE</b></div><div><span>ПОСЛЕДНИЙ ПРОХОД</span><b>${esc(s.lastPass||'—')}</b></div><div><span>ДО СТАРТА</span><b>${displayTimer(s,ev)}</b></div>`;}else{const leader=ranked[0],ll=leader?s.live?.[leader.id]:null,target=eventRule(state.race,ev).targetLaps||'—';html=`<div><span>ЛИДЕР</span><b>${esc(leader?.name||'—')}</b></div><div><span>КРУГИ ЛИДЕРА</span><b>${ll?.laps||0}${target!=='—'?` / ${target}`:''}</b></div><div><span>ПОСЛЕДНИЙ ПРОХОД</span><b>${esc(s.lastPass||'—')}</b></div><div><span>ПИЛОТОВ</span><b>${ranked.length}</b></div>`;}statsEls.forEach(el=>el.innerHTML=html);}
 }
-/* ===== /4.0.28 TEST ===== */
+/* ===== /4.0.29 TEST ===== */
 
 </script>
 </body>

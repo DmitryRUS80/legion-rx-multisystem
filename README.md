@@ -1,4 +1,4 @@
-# Legion RX 4.0.28 TEST — Readable Adaptive Cockpit
+# Legion RX 4.0.29 TEST — Readability + Mobile Audio Hotfix
 
 Главная тестовая сборка RallyCross с readability-first адаптацией: телефон portrait, планшет landscape, FullHD/2K desktop, Dark/Light. Нижняя полоса пульта теперь содержит ход гонки, текущий заезд, следующий заезд и результаты; дубли LapWiz/Диктор снизу убраны. Спортивная логика, LapWiz Core, Track Day/PIT и Offline Audio не менялись.
 
