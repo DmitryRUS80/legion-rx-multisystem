@@ -1,6 +1,6 @@
 {
-  "name": "Legion RX 4.0.26 Test RallyCross Cockpit Fit",
-  "short_name": "Legion RX 4.0.26",
+  "name": "Legion RX 4.0.27 Test Adaptive Cockpit",
+  "short_name": "Legion RX 4.0.27",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
