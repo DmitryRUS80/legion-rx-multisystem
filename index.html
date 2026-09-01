@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.28 TEST</title>
+<title>Legion RX 4.0.32 TEST</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -469,7 +469,7 @@ html[data-theme="light"] .quickPanelHint{background:var(--panel2);border-color:v
 </style>
 
 <style id="rally425Styles">
-/* ===== Legion RX 4.0.28 TEST · RallyCross Cockpit ===== */
+/* ===== Legion RX 4.0.31 TEST · RallyCross Cockpit ===== */
 .rallyCockpit425{
  --r425-bg:#05090c;--r425-panel:#0b1116;--r425-panel2:#0f171d;--r425-panel3:#121d26;
  --r425-line:#22303a;--r425-line-soft:#18242d;--r425-text:#eef3f6;--r425-muted:#788691;
@@ -542,229 +542,216 @@ html[data-theme="light"] .r425QuickRow{color:#33445a}html[data-theme="light"] .r
 /* ===== /4.0.26 ===== */
 </style>
 
-<style id="rally427AdaptiveStyles">
-/* ===== Legion RX 4.0.28 TEST · Adaptive RallyCross Cockpit ===== */
-/* Fluid scale: one cockpit geometry from 1024-class tablets to FullHD/2K desktops. */
+
+
+
+
+
+
+
+<style id="rally431FinalCockpit">
+/* ===== Legion RX 4.0.31 TEST · FINAL COCKPIT GEOMETRY =====
+   Approved sketch is the geometry reference. Keep information readable;
+   remove decoration/containers before shrinking typography. */
 .rallyCockpit425{
- --r427-gap:clamp(6px,.55vw,12px);
- --r427-head:clamp(60px,4.7vw,86px);
- padding:var(--r427-gap);gap:var(--r427-gap);grid-template-rows:var(--r427-head) minmax(0,1fr);min-height:0
-}
-.rally425Header{grid-template-columns:clamp(180px,14.5vw,285px) minmax(0,1fr) auto;border-radius:clamp(8px,.6vw,13px)}
-.rally425Header .raceBrand{padding:clamp(6px,.65vw,12px) clamp(12px,1.2vw,24px)}
-.rally425Header .raceBrand strong{font-size:clamp(23px,1.6vw,35px)}
-.rally425Header .raceBrand small{font-size:clamp(8px,.55vw,12px)}
-.r425HeaderMeta{grid-template-columns:minmax(clamp(135px,11vw,230px),1.35fr) minmax(clamp(82px,7vw,135px),.68fr) minmax(clamp(118px,10vw,210px),.9fr) clamp(88px,7.5vw,140px)}
-.r425MetaCell{padding:clamp(6px,.55vw,11px) clamp(8px,.75vw,15px);gap:clamp(6px,.5vw,10px)}
-.r425MetaCell svg{width:clamp(17px,1.15vw,24px);height:clamp(17px,1.15vw,24px)}
-.r425MetaCell b{font-size:clamp(13px,.95vw,20px)}
-.r425MetaCell small,.r425Clock small{font-size:clamp(7px,.48vw,10px)}
-.r425Clock b{font-size:clamp(19px,1.35vw,28px)}
-.r425TopActions{padding:clamp(4px,.45vw,8px);gap:clamp(3px,.32vw,6px)}
-.r425TopBtn{width:clamp(42px,3.4vw,68px);min-width:clamp(40px,3.15vw,62px);border-radius:clamp(6px,.48vw,9px)}
-.r425TopBtn.iconOnly{width:clamp(38px,2.6vw,50px);min-width:clamp(38px,2.6vw,50px)}
-.r425TopBtn svg{width:clamp(16px,1.05vw,22px);height:clamp(16px,1.05vw,22px)}
-.r425TopBtn b{font-size:clamp(7.5px,.53vw,10.5px)}
-.r425TopBtn small{font-size:clamp(6px,.40vw,8px)}
-
-.rally425Main{grid-template-columns:minmax(0,1.68fr) clamp(340px,31.5vw,620px);gap:var(--r427-gap)}
-.r425Positions{grid-template-rows:clamp(46px,3.3vw,64px) minmax(0,1fr) clamp(28px,2.1vw,38px);border-radius:clamp(8px,.6vw,13px)}
-.r425PositionsHead{padding:0 clamp(11px,.9vw,18px)}
-.r425PositionsHead svg{width:clamp(18px,1.15vw,24px);height:clamp(18px,1.15vw,24px)}
-.r425PositionsHead h2{font-size:clamp(18px,1.25vw,27px)}
-.r425PositionsHead span{font-size:clamp(9px,.6vw,12px)}
-.r425PositionsHead span b{font-size:clamp(12px,.78vw,16px)}
-.r425Positions .pilotRow{grid-template-columns:clamp(48px,3.25vw,68px) minmax(clamp(155px,13vw,285px),1.55fr) minmax(clamp(88px,7.1vw,150px),.78fr) minmax(clamp(88px,7.1vw,150px),.78fr) clamp(62px,5.1vw,100px) clamp(72px,6vw,116px) clamp(80px,6.5vw,128px);gap:clamp(6px,.55vw,11px);min-height:clamp(56px,4.1vw,86px);padding:0 clamp(8px,.7vw,13px);font-size:clamp(12px,.82vw,17px)}
-.r425Positions .pilotRow.header{min-height:clamp(32px,2.35vw,44px);font-size:clamp(7.5px,.51vw,10.5px)}
-.r425Positions .pilotRow .pos{margin-left:calc(-1 * clamp(8px,.7vw,13px));font-size:clamp(22px,1.72vw,36px)}
-.r425Positions .pilotNameCell .name{font-size:clamp(16px,1.15vw,25px)}
-.r425Positions .pilotNameCell .sub{font-size:clamp(7px,.5vw,10px);margin-top:clamp(2px,.25vw,5px)}
-.r425Positions .countryFlag{font-size:clamp(13px,.9vw,19px)}
-.r425Positions .legionClubMark{font-size:clamp(7px,.48vw,10px)}
-.r425Metric strong{font-size:clamp(13px,.95vw,20px)}
-.r425PaceTrack{height:clamp(3px,.25vw,5px)}
-.r425Laps{font-size:clamp(13px,.95vw,20px)}
-.r425Gap{font-size:clamp(11px,.82vw,17px)}
-.r425StatusChip{font-size:clamp(8px,.55vw,11px);padding:clamp(4px,.32vw,6px) clamp(6px,.5vw,10px)}
-.r425PositionsFooter{padding:0 clamp(10px,.8vw,16px);font-size:clamp(8px,.55vw,11px)}
-
-/* Right column: timer + controls + ONE useful row. No duplicated LapWiz/announcer/results. */
-.r425Side{grid-template-rows:auto auto minmax(0,1fr);gap:var(--r427-gap);overflow:hidden}.r425TimerCard{height:clamp(220px,30vh,330px)}.r425ControlCard{height:clamp(220px,32vh,340px)}
-.r425TimerCard,.r425ControlCard{border-radius:clamp(8px,.6vw,13px)}
-.r425TimerMain{grid-template-columns:minmax(0,1fr) clamp(102px,8.5vw,165px);padding:clamp(10px,.9vw,20px) clamp(12px,1vw,22px) clamp(7px,.6vw,12px)}
-.r425TimerCaption{font-size:clamp(14px,1.05vw,22px)}
-.r425TimerMain strong#mainTimer{font-size:clamp(58px,4.8vw,104px)}
-.r425TimerMain small{font-size:clamp(8px,.56vw,12px);margin-top:clamp(6px,.55vw,12px)}
-.r425Ring{width:clamp(98px,8.1vw,160px);height:clamp(98px,8.1vw,160px)}
-.r425RingInner b{font-size:clamp(25px,2vw,42px)}
-.r425RingInner small{font-size:clamp(7px,.48vw,10px)!important}
-.r425TimerMetrics{min-height:clamp(50px,4.2vh,70px)}
-.r425TimerMetrics>div{padding:clamp(6px,.52vw,10px) clamp(8px,.7vw,14px)}
-.r425TimerMetrics span{font-size:clamp(6.5px,.43vw,9px)}
-.r425TimerMetrics b{font-size:clamp(13px,.92vw,19px)}
-.r425ControlCard{padding:clamp(7px,.62vw,12px);grid-template-rows:clamp(17px,1.3vw,24px) minmax(0,1fr);gap:clamp(5px,.45vw,9px)}
-.r425ControlTitle{font-size:clamp(9px,.65vw,13px)}
-.r425Controls{gap:clamp(5px,.5vw,9px)}
-.r425Control{gap:clamp(5px,.55vw,11px);padding:clamp(5px,.55vw,10px);font-size:clamp(10px,.78vw,15px)}
-.r425Control svg{width:clamp(20px,1.55vw,31px);height:clamp(20px,1.55vw,31px)}
-.r425Control span b{font-size:clamp(10px,.78vw,15px)}
-.r425Control span small{font-size:clamp(6.5px,.45vw,9px)}
-.r425QuickStack{display:grid;grid-template-columns:1fr;grid-auto-rows:1fr;gap:0;min-height:0;overflow:hidden;align-self:end;height:clamp(34px,3.1vh,46px)}
-.r425QuickRow{min-height:0;height:100%;border-radius:clamp(6px,.45vw,9px);grid-template-columns:clamp(17px,1.15vw,23px) minmax(0,1fr) auto clamp(13px,.9vw,18px);padding:0 clamp(8px,.7vw,13px)}
-.r425QuickRow b{font-size:clamp(9px,.63vw,13px)}
-.r425QuickRow em{font-size:clamp(7px,.48vw,10px)}
-
-/* Large desktop: use the available pixels instead of leaving tablet-sized typography floating in a 2K viewport. */
-@media (min-width:1700px) and (min-height:850px){
- .rally425Main{grid-template-columns:minmax(0,1.72fr) clamp(500px,31vw,650px)}
- .r425Positions .pilotRow{min-height:clamp(68px,4.0vw,88px)}
- .r425Positions .pilotNameCell .name{font-size:clamp(21px,1.12vw,27px)}
- .r425Side{grid-template-rows:minmax(260px,.95fr) minmax(270px,.9fr) 44px}
+  --r431-gap:clamp(6px,.52vw,11px);
+  --r431-head:clamp(60px,4.45vw,80px);
+  --r431-footer:clamp(46px,3.25vw,60px);
+  padding:var(--r431-gap)!important;
+  gap:var(--r431-gap)!important;
+  grid-template-rows:var(--r431-head) minmax(0,1fr) var(--r431-footer)!important;
+  min-height:0!important;
 }
 
-@media (orientation:landscape) and (min-width:901px) and (max-width:1050px){
- .r425HeaderMeta .r425MetaCell:first-child{display:none}
- .r425HeaderMeta{grid-template-columns:clamp(82px,9vw,100px) minmax(120px,1fr) clamp(82px,9vw,96px)}
- .r425TopBtn b,.r425TopBtn small{display:none}.r425TopBtn{width:40px;min-width:40px}.r425TopBtn.iconOnly{width:38px;min-width:38px}
+/* Practical shell: only actual controls and timer are cards. */
+.rally425Header{
+  grid-template-columns:clamp(190px,14vw,270px) minmax(0,1fr) auto!important;
+  border:0!important;border-radius:0!important;background:transparent!important;
+  box-shadow:none!important;overflow:visible!important;
+}
+.rally425Header .raceBrand{border-right:1px solid var(--r425-line)!important;padding:clamp(5px,.55vw,10px) clamp(10px,1vw,20px)!important}
+.rally425Header .raceBrand strong{font-size:clamp(24px,1.55vw,34px)!important;white-space:nowrap!important;letter-spacing:.01em!important}
+.rally425Header .raceBrand small{font-size:clamp(8px,.5vw,11px)!important}
+.r425HeaderMeta{grid-template-columns:minmax(clamp(145px,10.5vw,220px),1.3fr) minmax(clamp(85px,6.5vw,125px),.65fr) minmax(clamp(125px,9.2vw,190px),.9fr) clamp(90px,6.8vw,130px)!important}
+.r425MetaCell{padding:clamp(5px,.48vw,9px) clamp(8px,.68vw,14px)!important;gap:clamp(6px,.45vw,9px)!important}
+.r425MetaCell svg{width:clamp(17px,1vw,22px)!important;height:clamp(17px,1vw,22px)!important}.r425MetaCell b{font-size:clamp(14px,.92vw,19px)!important}.r425MetaCell small,.r425Clock small{font-size:clamp(7px,.44vw,9px)!important}.r425Clock b{font-size:clamp(20px,1.28vw,27px)!important}
+.r425TopActions{padding:clamp(3px,.38vw,7px)!important;gap:clamp(3px,.28vw,5px)!important}
+.r425TopBtn{width:clamp(42px,3.25vw,64px)!important;min-width:clamp(40px,3vw,58px)!important;border-radius:8px!important}
+.r425TopBtn.iconOnly{width:clamp(38px,2.45vw,48px)!important;min-width:clamp(38px,2.45vw,48px)!important}.r425TopBtn svg{width:clamp(17px,1.05vw,21px)!important;height:clamp(17px,1.05vw,21px)!important}.r425TopBtn b{font-size:clamp(8px,.5vw,10px)!important}.r425TopBtn small{font-size:clamp(6.5px,.38vw,8px)!important}
+
+.rally425Main{grid-template-columns:minmax(0,1.68fr) clamp(350px,31.5vw,610px)!important;gap:var(--r431-gap)!important;min-height:0!important;overflow:hidden!important}
+.r425Positions{
+  border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;
+  grid-template-rows:clamp(48px,3.1vw,62px) minmax(0,1fr)!important;overflow:hidden!important;
+}
+.r425PositionsFooter{display:none!important}
+.r425PositionsHead{padding:0 clamp(8px,.72vw,15px)!important;border-bottom:1px solid var(--r425-line)!important}
+.r425PositionsHead h2{font-size:clamp(19px,1.25vw,27px)!important;letter-spacing:.02em!important}.r425PositionsHead svg{width:clamp(19px,1.12vw,24px)!important;height:clamp(19px,1.12vw,24px)!important}.r425PositionsHead span{font-size:clamp(10px,.58vw,12px)!important}.r425PositionsHead span b{font-size:clamp(13px,.76vw,16px)!important}
+.r425Positions .pilotBoardTable{background:transparent!important;padding:0!important;overflow:auto!important}
+.r425Positions .pilotRow{background:transparent!important;border-bottom:1px solid var(--r425-line-soft)!important;border-radius:0!important;box-shadow:none!important}
+.r425Positions .pilotRow.leader{background:linear-gradient(90deg,rgba(22,134,255,.10),transparent 68%)!important}
+.r425Positions .pilotRow:not(.header){grid-template-columns:clamp(50px,3.25vw,68px) minmax(clamp(170px,13vw,290px),1.55fr) minmax(clamp(95px,7vw,145px),.78fr) minmax(clamp(95px,7vw,145px),.78fr) clamp(64px,4.9vw,98px) clamp(74px,5.7vw,112px) clamp(84px,6.2vw,124px)!important;gap:clamp(7px,.52vw,10px)!important;min-height:clamp(62px,4.05vw,82px)!important;padding:0 clamp(8px,.65vw,12px)!important}
+.r425Positions .pilotRow.header{grid-template-columns:clamp(50px,3.25vw,68px) minmax(clamp(170px,13vw,290px),1.55fr) minmax(clamp(95px,7vw,145px),.78fr) minmax(clamp(95px,7vw,145px),.78fr) clamp(64px,4.9vw,98px) clamp(74px,5.7vw,112px) clamp(84px,6.2vw,124px)!important;gap:clamp(7px,.52vw,10px)!important;min-height:clamp(34px,2.2vw,42px)!important;padding:0 clamp(8px,.65vw,12px)!important;font-size:clamp(10px,.56vw,12px)!important;letter-spacing:.025em!important;background:transparent!important}
+.r425Positions .pilotRow .pos{margin-left:calc(-1 * clamp(8px,.65vw,12px))!important;font-size:clamp(25px,1.7vw,35px)!important}.r425Positions .pilotNameCell .name{font-size:clamp(20px,1.2vw,28px)!important;line-height:1!important;letter-spacing:0!important}.r425Positions .pilotNameCell .sub{font-size:clamp(10px,.56vw,12px)!important;margin-top:4px!important}.r425Positions .countryFlag{font-size:clamp(16px,.9vw,20px)!important}.r425Metric strong{font-size:clamp(17px,.98vw,22px)!important}.r425Laps{font-size:clamp(17px,.96vw,22px)!important}.r425Gap{font-size:clamp(15px,.83vw,19px)!important}.r425StatusChip{font-size:clamp(10.5px,.6vw,13px)!important;padding:5px 8px!important}
+
+.r425Side{grid-template-rows:minmax(0,.95fr) minmax(0,1fr)!important;gap:var(--r431-gap)!important;overflow:hidden!important}
+.r425TimerCard{height:auto!important;min-height:0!important;border-radius:11px!important}
+.r425TimerMain{grid-template-columns:minmax(0,1fr) clamp(108px,8.3vw,158px)!important;padding:clamp(11px,.8vw,18px) clamp(13px,.95vw,21px) clamp(7px,.55vw,11px)!important;gap:clamp(8px,.55vw,12px)!important}.r425TimerCaption{font-size:clamp(17px,1.03vw,23px)!important;letter-spacing:.025em!important}.r425TimerMain strong#mainTimer{font-size:clamp(66px,4.8vw,104px)!important;letter-spacing:-.035em!important}.r425TimerMain small{font-size:clamp(10px,.58vw,13px)!important;margin-top:8px!important}.r425Ring{width:clamp(104px,7.9vw,152px)!important;height:clamp(104px,7.9vw,152px)!important}.r425RingInner b{font-size:clamp(28px,1.95vw,40px)!important}.r425RingInner small{font-size:clamp(8.5px,.48vw,10px)!important}.r425TimerMetrics{min-height:clamp(54px,4.4vh,72px)!important}.r425TimerMetrics>div{padding:clamp(6px,.5vw,10px) clamp(8px,.66vw,13px)!important}.r425TimerMetrics span{font-size:clamp(9px,.49vw,11px)!important;letter-spacing:.015em!important}.r425TimerMetrics b{font-size:clamp(17px,.95vw,22px)!important}
+.r425ControlCard{height:auto!important;min-height:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;grid-template-rows:clamp(20px,1.35vw,26px) minmax(0,1fr)!important;gap:clamp(5px,.42vw,8px)!important}.r425ControlTitle{font-size:clamp(11px,.66vw,14px)!important;letter-spacing:.025em!important}.r425Controls{gap:clamp(6px,.5vw,9px)!important}.r425Control{border-radius:9px!important;padding:clamp(5px,.5vw,9px)!important;gap:clamp(6px,.5vw,10px)!important}.r425Control svg{width:clamp(23px,1.5vw,30px)!important;height:clamp(23px,1.5vw,30px)!important}.r425Control span b{font-size:clamp(14px,.83vw,18px)!important;letter-spacing:0!important}.r425Control span small{font-size:clamp(9px,.5vw,11px)!important}
+
+/* Race strip is information, not another card. */
+.r428RaceStrip{min-width:0;display:grid;grid-template-columns:minmax(135px,.82fr) minmax(155px,.92fr) minmax(155px,.92fr) minmax(150px,1fr);align-items:stretch;border:0!important;border-top:1px solid var(--r425-line)!important;border-bottom:1px solid var(--r425-line)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:hidden!important}
+.r428StripCell{min-width:0;border:0!important;border-right:1px solid var(--r425-line)!important;background:transparent!important;color:var(--r425-text);display:flex;align-items:center;justify-content:center;gap:clamp(7px,.55vw,11px);padding:0 clamp(8px,.7vw,14px);font-family:var(--rx-display-font);text-align:left;cursor:pointer}.r428StripCell:last-child{border-right:0!important}.r428StripCell svg{width:clamp(18px,1.12vw,23px);height:clamp(18px,1.12vw,23px);color:var(--r425-blue);flex:none}.r428StripCell span{min-width:0;display:grid;gap:1px}.r428StripCell small{font-size:clamp(9px,.52vw,11px);font-weight:850;letter-spacing:.025em;color:var(--r425-muted);white-space:nowrap}.r428StripCell b{font-size:clamp(12px,.76vw,16px);font-weight:900;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.r428Flow b{color:var(--r425-green)}.r428Next b{color:#6db5ff}.r428Results b{color:var(--r425-blue)}
+.r429MobileStats{display:none}
+
+html[data-theme="light"] .rally425Header,html[data-theme="light"] .r425Positions,html[data-theme="light"] .r425ControlCard,html[data-theme="light"] .r428RaceStrip{background:transparent!important;border-radius:0!important;box-shadow:none!important}
+html[data-theme="light"] .r425Positions .pilotBoardTable,html[data-theme="light"] .r425Positions .pilotRow.header{background:transparent!important}
+
+/* Tablet / low landscape: reclaim padding and row height only; keep data readable. */
+@media (orientation:landscape) and (min-width:901px) and (max-height:800px){
+ .rallyCockpit425{--r431-head:60px!important;--r431-footer:44px!important;--r431-gap:6px!important}
+ .rally425Header{grid-template-columns:190px minmax(0,1fr) auto!important}.rally425Header .raceBrand strong{font-size:25px!important}.r425MetaCell b{font-size:14px!important}.r425TopBtn{width:48px!important;min-width:44px!important}.r425TopBtn.iconOnly{width:39px!important;min-width:39px!important}.r425TopBtn b{font-size:8px!important}.r425TopBtn small{font-size:6.5px!important}
+ .rally425Main{grid-template-columns:minmax(0,1.7fr) minmax(330px,.9fr)!important;gap:6px!important}
+ .r425Positions{grid-template-rows:44px minmax(0,1fr)!important}.r425PositionsHead h2{font-size:18px!important}.r425Positions .pilotRow:not(.header){min-height:55px!important}.r425Positions .pilotNameCell .name{font-size:18.5px!important}.r425Positions .pilotNameCell .sub{font-size:9px!important}.r425Metric strong{font-size:15.5px!important}.r425Laps{font-size:15.5px!important}.r425Gap{font-size:13px!important}.r425StatusChip{font-size:9.5px!important;padding:4px 6px!important}
+ .r425TimerMain{padding:8px 11px 5px!important}.r425TimerCaption{font-size:15px!important}.r425TimerMain strong#mainTimer{font-size:62px!important}.r425TimerMain small{font-size:9.5px!important}.r425Ring{width:96px!important;height:96px!important}.r425RingInner b{font-size:26px!important}.r425TimerMetrics{min-height:48px!important}.r425TimerMetrics>div{padding:5px 7px!important}.r425TimerMetrics span{font-size:8.5px!important}.r425TimerMetrics b{font-size:15px!important}
+ .r425ControlCard{grid-template-rows:18px minmax(0,1fr)!important;gap:4px!important}.r425ControlTitle{font-size:10px!important}.r425Controls{gap:5px!important}.r425Control{padding:4px 5px!important;gap:5px!important}.r425Control svg{width:20px!important;height:20px!important}.r425Control span b{font-size:12.5px!important}.r425Control span small{font-size:8.5px!important}.r428StripCell small{font-size:8px!important}.r428StripCell b{font-size:11px!important}.r428StripCell svg{width:16px!important;height:16px!important}
 }
 
-/* Low landscape viewports: preserve big controls, compress only spacing/support text. */
-@media (orientation:landscape) and (min-width:901px) and (max-height:780px){
- .rallyCockpit425{--r427-gap:6px;--r427-head:60px}
- .r425Side{grid-template-rows:auto auto minmax(0,1fr);gap:6px}.r425TimerCard{height:218px}.r425ControlCard{height:238px}.r425QuickStack{height:34px}
- .r425TimerMain{padding-top:8px;padding-bottom:5px}
- .r425TimerMetrics{min-height:48px}
- .r425TimerMetrics>div{padding:5px 8px}
- .r425ControlCard{padding:6px;grid-template-rows:16px minmax(0,1fr);gap:4px}
- .r425ControlTitle{font-size:9px;line-height:16px}
- .r425Controls{gap:5px}.r425Control{padding:4px 5px}
+/* Large desktop: deliberately scale up; never leave a tablet-sized UI floating in 2K. */
+@media (min-width:1600px) and (min-height:850px){
+ .rallyCockpit425{--r431-head:clamp(76px,4.5vw,92px);--r431-footer:clamp(58px,3.2vw,68px)}
+ .rally425Header .raceBrand strong{font-size:clamp(31px,1.7vw,38px)!important}.r425MetaCell b{font-size:clamp(18px,1vw,22px)!important}.r425Clock b{font-size:clamp(26px,1.4vw,31px)!important}
+ .r425Positions .pilotRow:not(.header){min-height:clamp(74px,4vw,90px)!important}.r425Positions .pilotNameCell .name{font-size:clamp(25px,1.35vw,31px)!important}.r425Positions .pilotNameCell .sub{font-size:12px!important}.r425Metric strong{font-size:clamp(20px,1.08vw,25px)!important}.r425Laps{font-size:clamp(20px,1.06vw,24px)!important}.r425Gap{font-size:clamp(17px,.9vw,21px)!important}.r425StatusChip{font-size:clamp(12px,.66vw,15px)!important}
+ .r425TimerMain strong#mainTimer{font-size:clamp(90px,5vw,120px)!important}.r425TimerCaption{font-size:clamp(22px,1.15vw,27px)!important}.r425TimerMetrics span{font-size:12px!important}.r425TimerMetrics b{font-size:clamp(21px,1.1vw,26px)!important}.r425Control span b{font-size:clamp(17px,.92vw,21px)!important}.r425Control span small{font-size:12px!important}.r428StripCell b{font-size:clamp(16px,.85vw,19px)!important}.r428StripCell small{font-size:12px!important}
 }
 
-/* Compact landscape phones: keep the same two-column idea, but rows become two-line cards. */
-@media (orientation:landscape) and (max-width:900px){
- body.cockpitMode #viewHost{overflow:hidden!important}
- .rallyCockpit425{height:100dvh;min-height:0;overflow:hidden;--r427-head:50px;--r427-gap:4px;padding:4px}
- .rally425Header{position:relative;top:auto;grid-template-columns:minmax(92px,1fr) auto}
- .r425HeaderMeta{display:none}.rally425Header .raceBrand{padding:4px 7px}.rally425Header .raceBrand strong{font-size:17px}.rally425Header .raceBrand small{display:none}
- .r425TopActions{padding:3px;gap:2px}.r425TopBtn,.r425TopBtn.iconOnly{display:flex!important;width:29px;min-width:29px;border-radius:6px}.r425TopBtn b,.r425TopBtn small{display:none!important}.r425TopBtn svg{width:14px;height:14px}
- .rally425Main{grid-template-columns:minmax(0,1.55fr) minmax(250px,.8fr);gap:4px;overflow:hidden}
- .r425Side{grid-row:auto;display:grid;grid-template-rows:118px 132px minmax(0,1fr);gap:4px;overflow:hidden}.r425TimerCard{height:118px}.r425ControlCard{height:132px}.r425QuickStack{height:28px}
- .r425TimerMain{grid-template-columns:minmax(0,1fr) 64px;padding:5px 7px 3px}.r425TimerCaption{font-size:10px}.r425TimerMain strong#mainTimer{font-size:36px}.r425TimerMain small{font-size:6.5px;margin-top:4px}.r425Ring{width:60px;height:60px}.r425Ring:before{inset:6px}.r425RingInner b{font-size:17px}.r425RingInner small{font-size:5.5px!important;margin-top:2px!important}.r425TimerMetrics{min-height:31px}.r425TimerMetrics>div{padding:3px 4px}.r425TimerMetrics span{font-size:5px}.r425TimerMetrics b{font-size:9px;margin-top:1px}
- .r425ControlCard{min-height:0;padding:4px;grid-template-rows:12px minmax(0,1fr);gap:3px}.r425ControlTitle{font-size:7px;line-height:12px}.r425Controls{gap:3px}.r425Control{min-height:0;padding:3px;gap:3px}.r425Control svg{width:15px;height:15px}.r425Control span b{font-size:7.5px}.r425Control span small{display:none}
- .r425QuickRow{padding:0 5px;grid-template-columns:13px minmax(0,1fr) auto 10px;gap:3px}.r425QuickRow>svg:first-child{width:12px;height:12px}.r425QuickRow b{font-size:7px}.r425QuickRow em{font-size:6px}.r425QuickRow .widgetChevron{width:9px;height:9px}
- .r425Positions{grid-row:auto;min-height:0;grid-template-rows:32px minmax(0,1fr)}.r425PositionsFooter{display:none}.r425PositionsHead{padding:0 7px}.r425PositionsHead h2{font-size:13px}.r425PositionsHead svg{width:14px;height:14px}.r425PositionsHead span{font-size:7px}
- .r425Positions .pilotRow:not(.header){min-width:0!important;grid-template-columns:30px minmax(0,1fr) 42px 55px;grid-template-rows:1fr 1fr;grid-template-areas:'pos pilot laps status' 'pos best avg gap';gap:1px 5px;min-height:52px;padding:3px 5px}
- .r425Positions .pilotRow.header{min-width:0!important;grid-template-columns:30px minmax(0,1fr) 42px 55px;min-height:25px;padding:0 5px;gap:5px}.r425Positions .pilotRow.header span:nth-child(3),.r425Positions .pilotRow.header span:nth-child(4),.r425Positions .pilotRow.header span:nth-child(6){display:none}.r425Positions .pilotRow.header span:nth-child(1){grid-column:1}.r425Positions .pilotRow.header span:nth-child(2){grid-column:2}.r425Positions .pilotRow.header span:nth-child(5){grid-column:3}.r425Positions .pilotRow.header span:nth-child(7){grid-column:4}
- .r425Positions .pilotRow .pos{grid-area:pos;margin:-3px 0 -3px -5px;font-size:18px}.r425Positions .pilotNameCell{grid-area:pilot}.r425Positions .pilotNameCell .name{font-size:11px!important}.r425Positions .pilotNameCell .sub{font-size:5.5px;margin-top:1px}.r425Metric.best{grid-area:best}.r425Metric.avg{grid-area:avg}.r425Metric{display:flex;align-items:center;gap:3px}.r425Metric.best:before{content:'BEST';color:var(--r425-muted);font-size:5px;font-weight:900}.r425Metric.avg:before{content:'AVG';color:var(--r425-muted);font-size:5px;font-weight:900}.r425Metric strong{font-size:8px}.r425PaceTrack{display:none}.r425Laps{grid-area:laps;font-size:9px}.r425Gap{grid-area:gap;font-size:7px}.r425StatusChip{grid-area:status;font-size:6px;padding:2px 3px;justify-self:start}
-}
-
-/* PHONE / PORTRAIT: header -> timer+ring -> pilots -> all race controls -> next heat. */
+/* PHONE PORTRAIT — direct translation of the approved dark sketch. */
 @media (orientation:portrait) and (max-width:900px){
  body.cockpitMode #viewHost{overflow:hidden!important}
- .rallyCockpit425{height:100dvh;min-height:0;overflow:hidden;--r427-gap:5px;--r427-head:56px;padding:5px;grid-template-rows:56px minmax(0,1fr)}
- .rally425Header{position:relative;top:auto;z-index:40;grid-template-columns:minmax(88px,1fr) auto;border-radius:8px;overflow:hidden}
- .r425HeaderMeta{display:none}.rally425Header .raceBrand{padding:4px 7px;border-right:1px solid var(--r425-line)}.rally425Header .raceBrand strong{font-size:clamp(16px,4.8vw,21px)}.rally425Header .raceBrand small{display:none}
- .r425TopActions{padding:3px;gap:2px;min-width:0}.r425TopBtn,.r425TopBtn.iconOnly{display:flex!important;width:clamp(27px,7.6vw,34px);min-width:clamp(27px,7.6vw,34px);height:auto;border-radius:6px;padding:0}.r425TopBtn b,.r425TopBtn small{display:none!important}.r425TopBtn svg{width:clamp(13px,3.8vw,17px);height:clamp(13px,3.8vw,17px)}
- .rally425Main{min-height:0;display:grid;grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr) auto 34px;gap:5px;overflow:hidden}
- .r425Side{display:contents}
- .r425TimerCard{grid-column:1;grid-row:1;min-height:0;height:clamp(138px,20dvh,165px);border-radius:9px}
- .r425TimerMain{grid-template-columns:minmax(0,1fr) clamp(70px,21vw,94px);gap:7px;padding:8px 10px 5px}.r425TimerCaption{font-size:clamp(11px,3vw,14px)}.r425TimerMain strong#mainTimer{font-size:clamp(42px,13vw,60px);margin-top:2px}.r425TimerMain small{font-size:clamp(6.5px,1.9vw,8px);margin-top:5px}.r425Ring{width:clamp(68px,20vw,90px);height:clamp(68px,20vw,90px)}.r425Ring:before{inset:7px}.r425RingInner b{font-size:clamp(18px,5.7vw,25px)}.r425RingInner small{font-size:clamp(5.5px,1.6vw,7px)!important;margin-top:2px!important}
- .r425TimerMetrics{min-height:38px}.r425TimerMetrics>div{padding:4px 6px}.r425TimerMetrics span{font-size:clamp(5.2px,1.35vw,6.5px)}.r425TimerMetrics b{font-size:clamp(10px,2.9vw,13px);margin-top:2px}
- .r425Positions{grid-column:1;grid-row:2;min-height:0!important;grid-template-rows:40px minmax(0,1fr);border-radius:9px}.r425PositionsFooter{display:none}.r425PositionsHead{padding:0 9px}.r425PositionsHead h2{font-size:clamp(15px,4.2vw,18px)}.r425PositionsHead svg{width:17px;height:17px}.r425PositionsHead span{font-size:8px}.r425PositionsHead span b{font-size:10px}
- .r425Positions .pilotBoardTable{overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
- .r425Positions .pilotRow:not(.header){min-width:0!important;grid-template-columns:36px minmax(0,1fr) 48px 62px;grid-template-rows:1fr 1fr;grid-template-areas:'pos pilot laps status' 'pos best avg gap';gap:2px 6px;min-height:clamp(64px,9.2dvh,78px)!important;padding:4px 6px}
- .r425Positions .pilotRow.header{min-width:0!important;grid-template-columns:36px minmax(0,1fr) 48px 62px;min-height:28px;padding:0 6px;gap:6px;font-size:7px}.r425Positions .pilotRow.header span:nth-child(3),.r425Positions .pilotRow.header span:nth-child(4),.r425Positions .pilotRow.header span:nth-child(6){display:none}.r425Positions .pilotRow.header span:nth-child(1){grid-column:1}.r425Positions .pilotRow.header span:nth-child(2){grid-column:2}.r425Positions .pilotRow.header span:nth-child(5){grid-column:3}.r425Positions .pilotRow.header span:nth-child(7){grid-column:4}
- .r425Positions .pilotRow .pos{grid-area:pos;margin:-4px 0 -4px -6px;font-size:clamp(20px,6vw,26px)}.r425Positions .pilotNameCell{grid-area:pilot}.r425Positions .pilotNameCell .name{font-size:clamp(14px,4vw,17px)!important}.r425Positions .pilotNameCell .sub{font-size:clamp(6px,1.7vw,7.5px);margin-top:2px}.r425Positions .countryFlag{font-size:clamp(11px,3.1vw,14px)}
- .r425Metric.best{grid-area:best}.r425Metric.avg{grid-area:avg}.r425Metric{display:flex;align-items:center;gap:4px;min-width:0}.r425Metric.best:before{content:'BEST';color:var(--r425-muted);font-size:6px;font-weight:900}.r425Metric.avg:before{content:'AVG';color:var(--r425-muted);font-size:6px;font-weight:900}.r425Metric strong{font-size:clamp(9px,2.5vw,11px)}.r425PaceTrack{display:none}.r425Laps{grid-area:laps;font-size:clamp(10px,2.8vw,12px)}.r425Gap{grid-area:gap;font-size:clamp(8px,2.2vw,10px)}.r425StatusChip{grid-area:status;font-size:clamp(6.5px,1.9vw,8px);padding:3px 4px;justify-self:start;max-width:62px}
- .r425ControlCard{grid-column:1;grid-row:3;min-height:0!important;height:clamp(128px,18dvh,155px);padding:6px;border-radius:9px;grid-template-rows:15px minmax(0,1fr);gap:4px}.r425ControlTitle{font-size:8px;line-height:15px}.r425Controls{gap:5px}.r425Control{min-height:0!important;padding:4px;gap:4px;border-radius:7px}.r425Control svg{width:clamp(18px,5vw,22px);height:clamp(18px,5vw,22px)}.r425Control span b{font-size:clamp(9px,2.55vw,11px)}.r425Control span small{font-size:clamp(5.5px,1.55vw,7px)}
- .r425QuickStack{grid-column:1;grid-row:4;height:34px}.r425QuickRow{height:34px;padding:0 8px;grid-template-columns:17px minmax(0,1fr) auto 13px}.r425QuickRow>svg:first-child{width:15px;height:15px}.r425QuickRow b{font-size:8px}.r425QuickRow em{font-size:6.5px}.r425QuickRow .widgetChevron{width:11px;height:11px}
- .quickPanelOverlay{z-index:900}.quickPanelDrawer{width:min(92vw,440px);max-height:88dvh}
+ .rallyCockpit425{
+   --r431-gap:5px!important;--r431-head:clamp(54px,7.2dvh,62px)!important;--r431-footer:clamp(48px,6.4dvh,58px)!important;
+   height:100dvh!important;min-height:0!important;padding:5px!important;gap:5px!important;
+   grid-template-rows:var(--r431-head) minmax(0,1fr) var(--r431-footer)!important;overflow:hidden!important
+ }
+ .rally425Header{position:relative!important;top:auto!important;z-index:40!important;grid-template-columns:clamp(96px,28vw,122px) minmax(0,1fr)!important;min-width:0!important;align-items:stretch!important}
+ .r425HeaderMeta{display:none!important}.rally425Header .raceBrand{border:0!important;padding:4px 6px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;min-width:0!important}.rally425Header .raceBrand strong{display:flex!important;align-items:baseline!important;gap:.18em!important;white-space:nowrap!important;font-size:clamp(20px,5.4vw,24px)!important;line-height:1!important;letter-spacing:0!important}.rally425Header .raceBrand small{display:none!important}
+ .r425TopActions{min-width:0!important;padding:3px 0!important;gap:clamp(2px,.75vw,4px)!important;justify-content:flex-end!important;overflow:hidden!important}
+ .r425TopBtn,.r425TopBtn.iconOnly{display:flex!important;width:clamp(31px,8.25vw,39px)!important;min-width:clamp(31px,8.25vw,39px)!important;height:100%!important;min-height:0!important;border-radius:8px!important;padding:0!important}.r425TopBtn b,.r425TopBtn small{display:none!important}.r425TopBtn svg{width:clamp(16px,4.4vw,20px)!important;height:clamp(16px,4.4vw,20px)!important}
+
+ .rally425Main{display:grid!important;grid-template-columns:1fr!important;grid-template-rows:clamp(176px,22dvh,214px) minmax(0,1fr) clamp(148px,18.7dvh,178px)!important;gap:6px!important;overflow:hidden!important;min-height:0!important}.r425Side{display:contents!important}
+
+ /* Timer remains the only large information card. */
+ .r425TimerCard{grid-column:1!important;grid-row:1!important;height:auto!important;min-height:0!important;border-radius:11px!important;overflow:hidden!important}
+ .r425TimerMain{grid-template-columns:minmax(0,1fr) clamp(92px,25vw,122px)!important;padding:11px 13px 7px!important;gap:9px!important}.r425TimerCaption{font-size:clamp(17px,4.6vw,22px)!important;line-height:1!important;letter-spacing:.015em!important}.r425TimerMain strong#mainTimer{font-size:clamp(60px,16vw,84px)!important;line-height:.9!important;letter-spacing:-.035em!important;margin-top:5px!important}.r425TimerMain small{font-size:clamp(9.5px,2.45vw,11.5px)!important;line-height:1.15!important;margin-top:8px!important}.r425Ring{width:clamp(90px,24vw,116px)!important;height:clamp(90px,24vw,116px)!important}.r425Ring:before{inset:8px!important}.r425RingInner b{font-size:clamp(25px,6.8vw,33px)!important}.r425RingInner small{font-size:clamp(8.5px,2.15vw,10px)!important;margin-top:3px!important}.r425TimerMetrics{min-height:50px!important}.r425TimerMetrics>div{padding:6px 7px!important}.r425TimerMetrics span{font-size:clamp(9px,2.25vw,10.5px)!important;line-height:1!important;letter-spacing:.005em!important}.r425TimerMetrics b{font-size:clamp(15px,3.9vw,18px)!important;line-height:1!important;margin-top:5px!important}
+
+ /* Participants are a title + clean horizontal rows. No surrounding card. */
+ .r425Positions{grid-column:1!important;grid-row:2!important;min-height:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;grid-template-rows:clamp(42px,5.4dvh,50px) minmax(0,1fr)!important;overflow:hidden!important}
+ .r425PositionsHead{padding:0 8px!important;border-bottom:1px solid var(--r425-line)!important}.r425PositionsHead>div{gap:7px!important}.r425PositionsHead h2{font-size:clamp(20px,5.3vw,25px)!important;line-height:1!important;letter-spacing:.012em!important}.r425PositionsHead svg{width:20px!important;height:20px!important}.r425PositionsHead span{font-size:clamp(10px,2.5vw,12px)!important}.r425PositionsHead span b{font-size:clamp(13px,3.2vw,15px)!important}
+ .r425Positions .pilotBoardTable{background:transparent!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;scrollbar-width:thin!important;padding:0!important}
+ .r425Positions .pilotRow.header{display:none!important}
+ .r425Positions .pilotRow:not(.header){
+   min-width:0!important;grid-template-columns:clamp(44px,11.7vw,54px) minmax(0,1fr) clamp(46px,12vw,58px) clamp(68px,18vw,88px)!important;
+   grid-template-rows:auto auto!important;grid-template-areas:'pos pilot laps status' 'pos mobile mobile gap'!important;
+   gap:4px 7px!important;min-height:clamp(74px,9.4dvh,86px)!important;padding:7px 8px!important;
+   border-bottom:1px solid var(--r425-line-soft)!important;background:transparent!important
+ }
+ .r425Positions .pilotRow.leader{background:linear-gradient(90deg,rgba(22,134,255,.10),transparent 72%)!important}
+ .r425Positions .pilotRow .pos{grid-area:pos!important;margin:-7px 0 -7px -8px!important;border-radius:0 9px 9px 0!important;font-size:clamp(28px,7.4vw,34px)!important}
+ .r425Positions .pilotNameCell{grid-area:pilot!important;min-width:0!important;align-self:center!important}.r425Positions .pilotNameCell .name{font-size:clamp(21px,5.55vw,28px)!important;line-height:1!important;font-weight:900!important;letter-spacing:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.r425Positions .pilotNameCell .sub{display:none!important}.r425Positions .countryFlag{font-size:clamp(17px,4.5vw,21px)!important}
+ .r425Positions .r425Metric.best,.r425Positions .r425Metric.avg{display:none!important}.r429MobileStats{grid-area:mobile!important;display:flex!important;align-items:baseline!important;gap:clamp(12px,3.6vw,19px)!important;min-width:0!important;overflow:visible!important}.r429MobileStats span{display:flex!important;align-items:baseline!important;gap:5px!important;white-space:nowrap!important}.r429MobileStats span:nth-child(3){display:none!important}.r429MobileStats i{font-style:normal!important;color:var(--r425-muted)!important;font:900 clamp(10.5px,2.75vw,12.5px) var(--rx-display-font)!important;letter-spacing:.015em!important}.r429MobileStats b{font:900 clamp(14px,3.7vw,17px) var(--rx-display-font)!important;font-variant-numeric:tabular-nums!important;color:#cbd5db!important}.r429MobileStats span:first-child b{color:var(--r425-green)!important}.r429MobileStats .slowText{color:var(--r425-amber)!important}
+ .r425Laps{grid-area:laps!important;font-size:clamp(16px,4.2vw,19px)!important;justify-self:center!important;align-self:center!important}.r425Gap{display:block!important;grid-area:gap!important;font-size:clamp(12px,3.15vw,15px)!important;font-weight:850!important;justify-self:end!important;align-self:center!important;white-space:nowrap!important}.r425StatusChip{grid-area:status!important;font-size:clamp(10px,2.6vw,12px)!important;padding:5px 7px!important;max-width:88px!important;justify-self:end!important;align-self:center!important}
+ /* Number of pilots affects only vertical padding, never type size. */
+ .r425Positions[data-pilot-count="5"] .pilotRow:not(.header){min-height:clamp(64px,7.5dvh,72px)!important;padding-top:5px!important;padding-bottom:5px!important}.r425Positions[data-pilot-count="6"] .pilotRow:not(.header){min-height:clamp(58px,7dvh,68px)!important;padding-top:4px!important;padding-bottom:4px!important}
+ .r425Positions[data-pilot-count="7"] .pilotRow:not(.header),.r425Positions[data-pilot-count="8"] .pilotRow:not(.header),.r425Positions[data-pilot-count="9"] .pilotRow:not(.header){min-height:68px!important;padding-top:5px!important;padding-bottom:5px!important}
+ .r425Positions.r428CompactPilots .pilotRow:not(.header),.r425Positions.r428DensePilots .pilotRow:not(.header){font-size:inherit!important}.r425Positions.r428CompactPilots .pilotNameCell .name,.r425Positions.r428DensePilots .pilotNameCell .name{font-size:clamp(21px,5.55vw,28px)!important}.r425Positions.r428CompactPilots .r429MobileStats b,.r425Positions.r428DensePilots .r429MobileStats b{font-size:clamp(14px,3.7vw,17px)!important}.r425Positions.r428DensePilots .r425Laps{font-size:clamp(16px,4.2vw,19px)!important}.r425Positions.r428DensePilots .r425StatusChip{font-size:clamp(10px,2.6vw,12px)!important;padding:5px 7px!important}
+
+ /* Control wrapper disappears; six actual buttons remain cards. */
+ .r425ControlCard{grid-column:1!important;grid-row:3!important;height:auto!important;min-height:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;padding:0 2px!important;grid-template-rows:clamp(18px,2.5dvh,22px) minmax(0,1fr)!important;gap:5px!important}.r425ControlTitle{font-size:clamp(11px,2.8vw,13px)!important;line-height:1!important;letter-spacing:.015em!important;padding-left:2px!important}.r425Controls{gap:6px!important}.r425Control{padding:5px!important;gap:5px!important;border-radius:9px!important}.r425Control svg{width:clamp(23px,6vw,29px)!important;height:clamp(23px,6vw,29px)!important}.r425Control span b{font-size:clamp(13px,3.4vw,16px)!important;line-height:1!important;letter-spacing:0!important}.r425Control span small{font-size:clamp(8.5px,2.2vw,10px)!important;line-height:1!important;margin-top:3px!important}
+
+ /* Footer is a thin information rail, not a card. */
+ .r428RaceStrip{height:auto!important;grid-template-columns:.88fr .9fr .9fr 1.12fr!important;border:0!important;border-top:1px solid var(--r425-line)!important;border-bottom:1px solid var(--r425-line)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}.r428StripCell{gap:4px!important;padding:0 4px!important;justify-content:center!important}.r428StripCell svg{width:clamp(16px,4.2vw,19px)!important;height:clamp(16px,4.2vw,19px)!important}.r428StripCell small{font-size:clamp(8px,2.05vw,9.5px)!important;letter-spacing:.01em!important}.r428StripCell b{font-size:clamp(10.5px,2.8vw,13px)!important}.r428Results small{display:none!important}
+
+ html[data-theme="light"] .r425Positions,html[data-theme="light"] .r425ControlCard,html[data-theme="light"] .rally425Header,html[data-theme="light"] .r428RaceStrip{background:transparent!important;box-shadow:none!important}
+ html[data-theme="light"] .r425Positions .pilotBoardTable{background:transparent!important}
 }
 
-/* Very narrow phones: every status/action icon remains available in the top strip. */
-@media (orientation:portrait) and (max-width:370px){
- .rallyCockpit425{padding:4px;--r427-gap:4px;grid-template-rows:52px minmax(0,1fr)}
- .rally425Header{grid-template-columns:minmax(78px,1fr) auto}.rally425Header .raceBrand{padding-left:5px;padding-right:4px}.rally425Header .raceBrand strong{font-size:15px}.r425TopActions{gap:1px;padding:2px}.r425TopBtn,.r425TopBtn.iconOnly{width:26px;min-width:26px}.r425TopBtn svg{width:12.5px;height:12.5px}
- .rally425Main{gap:4px;grid-template-rows:auto minmax(0,1fr) auto 31px}.r425TimerCard{height:132px}.r425ControlCard{height:122px}.r425QuickStack,.r425QuickRow{height:31px}
- .r425Positions .pilotRow:not(.header){grid-template-columns:33px minmax(0,1fr) 44px 57px;gap:2px 4px;min-height:62px!important}.r425Positions .pilotRow.header{grid-template-columns:33px minmax(0,1fr) 44px 57px;gap:4px}
-}
-/* ===== /4.0.27 legacy adaptive base ===== */
-
-/* ===== Legion RX 4.0.28 TEST · Readable Adaptive Cockpit ===== */
-/* The cockpit gets a real footer row: race flow / current / next / results. */
-.rallyCockpit425{
- --r428-footer:clamp(42px,3.2vw,58px);
- grid-template-rows:var(--r427-head) minmax(0,1fr) var(--r428-footer)!important;
-}
-.r425Side{grid-template-rows:minmax(0,.92fr) minmax(0,1fr)!important;gap:var(--r427-gap);overflow:hidden}
-.r425TimerCard,.r425ControlCard{height:auto!important;min-height:0!important}
-.r425QuickStack{display:none!important}
-
-.r428RaceStrip{min-width:0;display:grid;grid-template-columns:minmax(155px,.8fr) minmax(190px,1fr) minmax(190px,1fr) minmax(155px,.82fr);align-items:stretch;border:1px solid var(--r425-line);border-radius:10px;background:var(--r425-panel);overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.14)}
-.r428StripCell{min-width:0;border:0;border-right:1px solid var(--r425-line);background:transparent;color:var(--r425-text);display:flex;align-items:center;justify-content:flex-start;gap:10px;padding:0 clamp(10px,.8vw,17px);font-family:var(--rx-display-font);text-align:left;cursor:pointer}.r428StripCell:last-child{border-right:0}.r428StripCell svg{width:clamp(18px,1.15vw,24px);height:clamp(18px,1.15vw,24px);color:var(--r425-blue);flex:none}.r428StripCell span{min-width:0;display:grid;gap:2px}.r428StripCell small{font-size:clamp(8px,.52vw,11px);font-weight:850;letter-spacing:.055em;color:var(--r425-muted);white-space:nowrap}.r428StripCell b{font-size:clamp(11px,.76vw,16px);font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.r428Flow b{color:var(--r425-green)}.r428Next b{color:#6db5ff}.r428Results{justify-content:center}.r428Results b{color:var(--r425-blue)}.r428StripCell:hover{background:var(--r425-panel2)}
-html[data-theme="light"] .r428RaceStrip{background:#fff;border-color:var(--r425-line);box-shadow:0 6px 18px rgba(58,88,125,.05)}html[data-theme="light"] .r428StripCell{border-color:var(--r425-line);color:var(--r425-text)}
-
-/* Readability floor: main data never collapses into micro-text. */
-.r425Positions .pilotRow{font-size:clamp(14px,.83vw,19px)}
-.r425Positions .pilotRow.header{font-size:clamp(10px,.56vw,12px);letter-spacing:.035em}
-.r425Positions .pilotNameCell .name{font-size:clamp(18px,1.17vw,29px);line-height:1.02}
-.r425Positions .pilotNameCell .sub{font-size:clamp(10px,.56vw,12px);line-height:1.1;color:color-mix(in srgb,var(--r425-muted) 88%,var(--r425-text));margin-top:4px}
-.r425Positions .legionClubMark{font-size:inherit}.r425Positions .countryFlag{font-size:clamp(15px,.9vw,21px)}
-.r425Metric strong{font-size:clamp(15px,.97vw,23px)}.r425Laps{font-size:clamp(15px,.97vw,22px)}.r425Gap{font-size:clamp(13px,.82vw,19px)}.r425StatusChip{font-size:clamp(10px,.58vw,13px);padding:5px 8px}
-.r425TimerCaption{font-size:clamp(16px,1.05vw,24px)}.r425TimerMain strong#mainTimer{font-size:clamp(64px,4.9vw,112px)}.r425TimerMain small{font-size:clamp(10px,.6vw,13px);color:color-mix(in srgb,var(--r425-muted) 86%,var(--r425-text))}.r425RingInner small{font-size:clamp(9px,.52vw,12px)!important}.r425TimerMetrics span{font-size:clamp(9px,.50vw,11px);line-height:1.15}.r425TimerMetrics b{font-size:clamp(16px,.95vw,22px)}
-.r425ControlTitle{font-size:clamp(11px,.67vw,14px)}.r425Control span b{font-size:clamp(12px,.8vw,17px)}.r425Control span small{font-size:clamp(9px,.5vw,11px)}
-
-/* Tablet / low landscape: reclaim space through padding, never through microscopic type. */
-@media (orientation:landscape) and (min-width:901px) and (max-height:780px){
- .rallyCockpit425{--r428-footer:40px!important;--r427-gap:6px;--r427-head:60px}
- .r425Side{grid-template-rows:minmax(205px,.92fr) minmax(220px,1fr)!important;gap:6px}
- .r425TimerMain{padding:8px 11px 5px}.r425TimerMain strong#mainTimer{font-size:clamp(58px,5vw,72px)}.r425TimerCaption{font-size:15px}.r425TimerMetrics span{font-size:8.5px}.r425TimerMetrics b{font-size:15px}
- .r425ControlCard{padding:6px;grid-template-rows:18px minmax(0,1fr);gap:4px}.r425ControlTitle{font-size:10.5px}.r425Control span b{font-size:11.5px}.r425Control span small{font-size:8.5px}
- .r425Positions .pilotNameCell .name{font-size:17px}.r425Positions .pilotNameCell .sub{font-size:9px}.r425Metric strong{font-size:14px}.r425Laps{font-size:14px}.r425Gap{font-size:12px}.r425StatusChip{font-size:9px}
- .r428StripCell{gap:7px;padding:0 9px}.r428StripCell small{font-size:7.5px}.r428StripCell b{font-size:10.5px}.r428StripCell svg{width:16px;height:16px}
+/* 390-class phones: fit 3–4 pilots without shrinking the data. */
+@media (orientation:portrait) and (max-width:400px){
+ .rallyCockpit425{--r431-head:56px!important;--r431-footer:50px!important;padding:4px!important;gap:4px!important}
+ .rally425Header{grid-template-columns:100px minmax(0,1fr)!important}.rally425Header .raceBrand strong{font-size:21px!important}.r425TopActions{gap:2px!important}.r425TopBtn,.r425TopBtn.iconOnly{width:32px!important;min-width:32px!important;border-radius:7px!important}.r425TopBtn svg{width:16px!important;height:16px!important}
+ .rally425Main{grid-template-rows:184px minmax(0,1fr) 150px!important;gap:5px!important}
+ .r425TimerMain{grid-template-columns:minmax(0,1fr) 96px!important;padding:10px 11px 6px!important}.r425TimerCaption{font-size:17px!important}.r425TimerMain strong#mainTimer{font-size:62px!important}.r425TimerMain small{font-size:9.5px!important;margin-top:6px!important}.r425Ring{width:92px!important;height:92px!important}.r425RingInner b{font-size:26px!important}.r425RingInner small{font-size:8.5px!important}.r425TimerMetrics{min-height:49px!important}.r425TimerMetrics>div{padding:5px 6px!important}.r425TimerMetrics span{font-size:8.5px!important}.r425TimerMetrics b{font-size:15px!important}
+ .r425Positions{grid-template-rows:43px minmax(0,1fr)!important}.r425PositionsHead h2{font-size:20px!important}.r425PositionsHead span{font-size:10px!important}.r425Positions .pilotRow:not(.header){grid-template-columns:44px minmax(0,1fr) 44px 72px!important;min-height:72px!important;padding:6px!important;gap:3px 6px!important}.r425Positions .pilotRow .pos{margin:-6px 0 -6px -6px!important;font-size:28px!important}.r425Positions .pilotNameCell .name,.r425Positions.r428CompactPilots .pilotNameCell .name,.r425Positions.r428DensePilots .pilotNameCell .name{font-size:21px!important}.r425Positions .countryFlag{font-size:17px!important}.r429MobileStats{gap:10px!important}.r429MobileStats i{font-size:10px!important}.r429MobileStats b,.r425Positions.r428CompactPilots .r429MobileStats b,.r425Positions.r428DensePilots .r429MobileStats b{font-size:14px!important}.r425Laps,.r425Positions.r428DensePilots .r425Laps{font-size:16px!important}.r425Gap{font-size:12px!important}.r425StatusChip,.r425Positions.r428DensePilots .r425StatusChip{font-size:10px!important;padding:5px 6px!important;max-width:72px!important}
+ .r425Positions[data-pilot-count="5"] .pilotRow:not(.header){min-height:58px!important}.r425Positions[data-pilot-count="6"] .pilotRow:not(.header){min-height:54px!important}.r425Positions[data-pilot-count="7"] .pilotRow:not(.header),.r425Positions[data-pilot-count="8"] .pilotRow:not(.header),.r425Positions[data-pilot-count="9"] .pilotRow:not(.header){min-height:64px!important}
+ .r425ControlCard{grid-template-rows:18px minmax(0,1fr)!important}.r425ControlTitle{font-size:11px!important}.r425Control svg{width:23px!important;height:23px!important}.r425Control span b{font-size:13px!important}.r425Control span small{font-size:8.5px!important}.r428StripCell svg{width:16px!important;height:16px!important}.r428StripCell small{font-size:7.5px!important}.r428StripCell b{font-size:11.5px!important}
 }
 
-/* Phone portrait follows the approved dark concept: header -> timer/ring -> pilots -> controls -> race strip. */
-@media (orientation:portrait) and (max-width:900px){
- .rallyCockpit425{--r428-footer:44px!important;grid-template-rows:56px minmax(0,1fr) 44px!important;overflow:hidden}
- .rally425Main{grid-template-rows:auto minmax(0,1fr) auto!important;gap:5px;overflow:hidden}
- .r425TimerCard{grid-row:1!important;height:clamp(150px,19dvh,176px)!important}.r425Positions{grid-row:2!important}.r425ControlCard{grid-row:3!important;height:clamp(136px,17dvh,158px)!important}.r425QuickStack{display:none!important}
- .r425TimerMain{grid-template-columns:minmax(0,1fr) clamp(78px,22vw,98px);padding:9px 11px 5px}.r425TimerCaption{font-size:clamp(14px,3.5vw,17px)}.r425TimerMain strong#mainTimer{font-size:clamp(50px,14vw,64px)}.r425TimerMain small{font-size:clamp(9px,2.25vw,10.5px);margin-top:5px}.r425Ring{width:clamp(76px,21vw,94px);height:clamp(76px,21vw,94px)}.r425RingInner b{font-size:clamp(21px,6vw,28px)}.r425RingInner small{font-size:8px!important}
- .r425TimerMetrics{min-height:42px}.r425TimerMetrics>div{padding:5px 6px}.r425TimerMetrics span{font-size:clamp(7.5px,1.85vw,9px)}.r425TimerMetrics b{font-size:clamp(13px,3.4vw,16px)}
- .r425Positions{grid-template-rows:42px minmax(0,1fr)!important}.r425PositionsHead h2{font-size:clamp(17px,4.5vw,20px)}.r425PositionsHead span{font-size:10px}.r425PositionsHead span b{font-size:12px}
- .r425Positions .pilotRow:not(.header){grid-template-columns:40px minmax(0,1fr) 54px 70px;grid-template-rows:1fr 1fr;grid-template-areas:'pos pilot laps status' 'pos best avg gap';gap:3px 7px;min-height:clamp(60px,7.5dvh,72px)!important;padding:5px 7px}
- .r425Positions .pilotRow.header{grid-template-columns:40px minmax(0,1fr) 54px 70px;min-height:30px;padding:0 7px;gap:7px;font-size:9px}
- .r425Positions .pilotRow .pos{margin:-5px 0 -5px -7px;font-size:clamp(22px,6vw,28px)}.r425Positions .pilotNameCell .name{font-size:clamp(16px,4.3vw,19px)!important}.r425Positions .pilotNameCell .sub{font-size:clamp(9px,2.25vw,10px);margin-top:2px}.r425Positions .countryFlag{font-size:14px}
- .r425Metric{gap:5px}.r425Metric.best:before,.r425Metric.avg:before{font-size:9px!important;letter-spacing:.02em}.r425Metric strong{font-size:clamp(11px,2.9vw,13px)}.r425Laps{font-size:clamp(12px,3.1vw,14px)}.r425Gap{font-size:clamp(10px,2.6vw,12px)}.r425StatusChip{font-size:clamp(9px,2.3vw,10px);padding:4px 5px;max-width:70px}
- .r425ControlTitle{font-size:10px}.r425Control span b{font-size:clamp(11px,2.9vw,13px)}.r425Control span small{font-size:clamp(8px,2vw,9px)}.r425Control svg{width:clamp(20px,5.2vw,24px);height:clamp(20px,5.2vw,24px)}
- .r428RaceStrip{grid-template-columns:.82fr 1fr 1fr .92fr;border-radius:8px}.r428StripCell{justify-content:center;gap:4px;padding:0 4px}.r428StripCell svg{width:15px;height:15px}.r428StripCell small{font-size:7px}.r428StripCell b{font-size:9.5px}.r428Flow span small{font-size:6.5px}.r428Flow span small:after{content:''}
+/* Very short phones: free height from timer/control spacing, not from pilot text. */
+@media (orientation:portrait) and (max-width:900px) and (max-height:760px){
+ .rally425Main{grid-template-rows:168px minmax(0,1fr) 140px!important}.r425TimerMain strong#mainTimer{font-size:56px!important}.r425Ring{width:86px!important;height:86px!important}.r425TimerMetrics{min-height:44px!important}.r425Positions .pilotRow:not(.header){min-height:66px!important}.r425Controls{gap:4px!important}.r425Control span small{display:none!important}
 }
 
-/* 6–7 pilots: gently condense rows before allowing internal scrolling. */
-@media (orientation:portrait) and (max-width:900px){
- .r425Positions.r428CompactPilots .pilotRow:not(.header){min-height:55px!important;padding-top:3px;padding-bottom:3px}.r425Positions.r428CompactPilots .pilotNameCell .name{font-size:15.5px!important}.r425Positions.r428CompactPilots .pilotNameCell .sub{font-size:8.5px}.r425Positions.r428CompactPilots .r425Metric strong{font-size:11px}
- .r425Positions.r428DensePilots .pilotRow:not(.header){min-height:49px!important;padding-top:2px;padding-bottom:2px}.r425Positions.r428DensePilots .pilotNameCell .name{font-size:14.5px!important}.r425Positions.r428DensePilots .pilotNameCell .sub{display:none}.r425Positions.r428DensePilots .r425Metric.best:before,.r425Positions.r428DensePilots .r425Metric.avg:before{font-size:8px!important}.r425Positions.r428DensePilots .r425Metric strong{font-size:10.5px}.r425Positions.r428DensePilots .r425Laps{font-size:12px}.r425Positions.r428DensePilots .r425Gap{font-size:10px}.r425Positions.r428DensePilots .r425StatusChip{font-size:8.5px;padding:3px 4px}
-}
-
-/* Narrow phones: secondary wording disappears before primary values shrink. */
-@media (orientation:portrait) and (max-width:370px){
- .rallyCockpit425{grid-template-rows:52px minmax(0,1fr) 40px!important;--r428-footer:40px!important}.r425TimerCard{height:142px!important}.r425ControlCard{height:130px!important}.r425TimerMain strong#mainTimer{font-size:46px}.r425TimerMetrics span{font-size:7px}.r425TimerMetrics b{font-size:12px}.r425Positions .pilotNameCell .name{font-size:15px!important}.r425Positions .pilotNameCell .sub{font-size:8px}.r428StripCell small{display:none}.r428StripCell b{font-size:9px}
-}
-
-/* Compact landscape phones: readability is still the floor. */
+/* Phone landscape is secondary but remains usable/readable. */
 @media (orientation:landscape) and (max-width:900px){
- .rallyCockpit425{grid-template-rows:50px minmax(0,1fr) 32px!important;--r428-footer:32px!important}.rally425Main{grid-template-columns:minmax(0,1.5fr) minmax(255px,.82fr)}.r425Side{grid-template-rows:minmax(112px,.9fr) minmax(128px,1fr)!important}.r425TimerCaption{font-size:11px}.r425TimerMain strong#mainTimer{font-size:38px}.r425TimerMain small{font-size:7px}.r425TimerMetrics span{font-size:6px}.r425TimerMetrics b{font-size:10px}.r425Positions .pilotNameCell .name{font-size:12px!important}.r425Positions .pilotNameCell .sub{font-size:7px}.r425Metric.best:before,.r425Metric.avg:before{font-size:6.5px!important}.r425Metric strong{font-size:9px}.r425Laps{font-size:10px}.r425Gap{font-size:8px}.r425StatusChip{font-size:7px}.r425Control span b{font-size:8.5px}.r428RaceStrip{grid-template-columns:.8fr 1fr 1fr .8fr}.r428StripCell{padding:0 5px;gap:4px}.r428StripCell small{display:none}.r428StripCell b{font-size:8px}.r428StripCell svg{width:13px;height:13px}
+ body.cockpitMode #viewHost{overflow:hidden!important}.rallyCockpit425{--r431-head:48px!important;--r431-footer:32px!important;--r431-gap:4px!important;padding:4px!important;gap:4px!important;grid-template-rows:48px minmax(0,1fr) 32px!important}.rally425Header{grid-template-columns:105px minmax(0,1fr)!important}.r425HeaderMeta{display:none!important}.rally425Header .raceBrand{border:0!important;padding:3px 6px!important}.rally425Header .raceBrand strong{font-size:18px!important}.rally425Header .raceBrand small{display:none!important}.r425TopActions{gap:2px!important;padding:2px 0!important}.r425TopBtn,.r425TopBtn.iconOnly{width:30px!important;min-width:30px!important}.r425TopBtn b,.r425TopBtn small{display:none!important}.r425TopBtn svg{width:15px!important;height:15px!important}
+ .rally425Main{grid-template-columns:minmax(0,1.55fr) minmax(250px,.8fr)!important;gap:4px!important}.r425Positions{grid-template-rows:32px minmax(0,1fr)!important}.r425PositionsHead h2{font-size:14px!important}.r425PositionsHead svg{width:14px!important;height:14px!important}.r425Positions .pilotRow.header{display:none!important}.r425Positions .pilotRow:not(.header){grid-template-columns:36px minmax(0,1fr) 44px 58px!important;grid-template-rows:auto auto!important;grid-template-areas:'pos pilot laps status' 'pos mobile mobile gap'!important;min-height:54px!important;padding:3px 5px!important;gap:2px 5px!important}.r425Positions .pilotRow .pos{margin:-3px 0 -3px -5px!important;font-size:19px!important}.r425Positions .pilotNameCell .name{font-size:13px!important}.r425Positions .pilotNameCell .sub{display:none!important}.r425Positions .r425Metric.best,.r425Positions .r425Metric.avg{display:none!important}.r429MobileStats{grid-area:mobile!important;display:flex!important;gap:8px!important}.r429MobileStats span:nth-child(3){display:none!important}.r429MobileStats i{font-size:7px!important}.r429MobileStats b{font-size:9px!important}.r425Laps{grid-area:laps!important;font-size:10px!important}.r425Gap{grid-area:gap!important;font-size:8px!important}.r425StatusChip{grid-area:status!important;font-size:7px!important;padding:2px 4px!important}
+ .r425Side{grid-template-rows:minmax(116px,.92fr) minmax(126px,1fr)!important;gap:4px!important}.r425TimerMain{grid-template-columns:minmax(0,1fr) 64px!important;padding:5px 7px 3px!important}.r425TimerCaption{font-size:11px!important}.r425TimerMain strong#mainTimer{font-size:39px!important}.r425TimerMain small{font-size:7px!important;margin-top:3px!important}.r425Ring{width:60px!important;height:60px!important}.r425RingInner b{font-size:18px!important}.r425RingInner small{font-size:6px!important}.r425TimerMetrics{min-height:31px!important}.r425TimerMetrics>div{padding:3px 4px!important}.r425TimerMetrics span{font-size:5.5px!important}.r425TimerMetrics b{font-size:9px!important}.r425ControlCard{grid-template-rows:12px minmax(0,1fr)!important;gap:3px!important}.r425ControlTitle{font-size:7px!important}.r425Controls{gap:3px!important}.r425Control{padding:2px!important;gap:3px!important}.r425Control svg{width:15px!important;height:15px!important}.r425Control span b{font-size:8px!important}.r425Control span small{display:none!important}.r428StripCell small{display:none!important}.r428StripCell b{font-size:8px!important}.r428StripCell svg{width:13px!important;height:13px!important}
 }
-/* ===== /4.0.28 TEST ===== */
+/* 4.0.32 — compact cockpit based on the annotated phone reference. */
+.rallyCockpit425{grid-template-rows:58px minmax(0,1fr)}
+.rally425Header{grid-template-columns:210px minmax(0,1fr) auto}
+.r425Positions{grid-template-rows:44px minmax(0,1fr) 30px}
+.r425PositionsHead{padding:0 12px}.r425PositionsHead h2{font-size:18px}.r425PositionsHead svg{width:19px;height:19px}
+.r425Positions .pilotRow{grid-template-columns:54px minmax(180px,1.65fr) minmax(98px,.82fr) minmax(98px,.82fr) 70px 92px;min-height:58px}
+.r425Positions .pilotRow,.r425Positions .pilotRow:not(.header),.r425Positions .pilotRow.header{grid-template-columns:54px minmax(180px,1.65fr) minmax(98px,.82fr) minmax(98px,.82fr) 70px 92px!important}
+.r425Positions .pilotRow.header{min-height:30px!important}
+.r425RaceMetric{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:2px;font-variant-numeric:tabular-nums}
+.r425RaceMetric strong{font:850 18px/1 var(--rx-display-font);white-space:nowrap;color:#eef3f6}
+.r425RaceMetric small{font:850 7px/1 var(--rx-ui-font);letter-spacing:.07em;color:#6f7d86}
+.r425RaceMetric.best strong{color:var(--r425-green)}
+.r425RaceMetric.laps strong{font-size:20px}
+.r425TimerMetrics{grid-template-columns:1fr;min-height:48px}.r425TimerMetrics>div{border-right:0;padding:7px 12px}
+html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="light"] .r425RaceMetric.best strong{color:var(--r425-green)}
+@media(max-width:1300px){.rallyCockpit425{grid-template-rows:56px minmax(0,1fr)}.rally425Header{grid-template-columns:185px minmax(0,1fr) auto}.r425Positions{grid-template-rows:42px minmax(0,1fr) 28px}.r425Positions .pilotRow{grid-template-columns:48px minmax(145px,1.5fr) 88px 88px 62px 82px;min-height:54px}.r425RaceMetric strong{font-size:16px}.r425RaceMetric.laps strong{font-size:18px}}
+@media(max-width:620px){
+ .rallyCockpit425{grid-template-rows:48px minmax(0,1fr)}
+ .rally425Header{grid-template-columns:minmax(122px,1fr) auto}.rally425Header .raceBrand{padding:4px 9px}.rally425Header .raceBrand strong{font-size:19px}
+ .r425TopActions{padding:3px;gap:3px}.r425TopBtn{width:38px;min-width:38px;border-radius:6px}.r425TopBtn svg{width:17px;height:17px}.r425TopBtn.iconOnly{width:36px;min-width:36px}
+ .r425Positions{grid-template-rows:40px minmax(0,1fr) 24px}.r425PositionsHead{padding:0 8px}.r425PositionsHead h2{font-size:15px}.r425PositionsHead span{font-size:8px}
+ .rally425Main{grid-template-rows:clamp(154px,19dvh,180px) minmax(0,1fr) clamp(140px,17.5dvh,166px)!important}
+ .r425Positions{grid-template-rows:36px minmax(0,1fr)!important}
+ .r425Positions .pilotRow,.r425Positions .pilotRow:not(.header),.r425Positions .pilotRow.header{min-width:0!important;grid-template-columns:42px minmax(104px,1.28fr) minmax(67px,.8fr) minmax(67px,.8fr) 45px 70px!important;grid-template-rows:1fr!important;grid-template-areas:none!important;gap:4px!important;min-height:58px!important;padding:0 6px!important}
+ .r425Positions .pilotRow.header{display:grid!important;min-height:24px!important;font-size:6.5px!important}.r425Positions .pilotRow .pos{grid-area:auto!important;margin:0 0 0 -6px!important;font-size:21px}
+ .r425Positions .pilotNameCell .name{font-size:17px}.r425RaceMetric strong{font-size:16px}.r425RaceMetric.laps strong{font-size:17px}.r425RaceMetric small{font-size:6px}
+ .r425StatusChip{font-size:7.5px;padding:5px 6px}
+}
+@media(max-width:430px){
+ .rallyCockpit425{padding:4px;gap:4px;grid-template-rows:46px minmax(0,1fr)}
+ .rally425Header{grid-template-columns:minmax(112px,1fr) auto}.r425TopBtn{width:34px;min-width:34px}.r425TopBtn.iconOnly{width:32px;min-width:32px}
+ .r425Positions{grid-template-rows:37px minmax(0,1fr) 22px}.r425PositionsHead h2{font-size:14px}.r425PositionsHead svg{width:16px;height:16px}
+ .r425Positions .pilotRow,.r425Positions .pilotRow:not(.header),.r425Positions .pilotRow.header{grid-template-columns:38px minmax(88px,1.18fr) 61px 61px 39px 61px!important;grid-template-rows:1fr!important;grid-template-areas:none!important;min-height:55px!important;gap:3px!important;padding:0 5px!important}
+ .r425Positions .pilotRow .pos{margin-left:-5px;font-size:19px}.r425Positions .pilotNameCell .name{font-size:15px}
+ .r425RaceMetric strong{font-size:14px}.r425RaceMetric.laps strong{font-size:16px}.r425StatusChip{font-size:6.5px;padding:4px}
+}
+@media (orientation:portrait) and (max-width:900px){
+ .rallyCockpit425{--r431-head:48px!important}
+ .r425PositionsHead{height:auto!important}.r425PositionsHead h2{font-size:15px!important}.r425PositionsHead svg{width:17px!important;height:17px!important}
+ .r425Positions .pilotNameCell{grid-area:auto!important}.r425Positions .pilotNameCell .name{font-size:clamp(15px,4.2vw,18px)!important}
+ .r425RaceMetric{display:flex!important;grid-area:auto!important;align-self:center!important}.r425RaceMetric strong{font-size:clamp(14px,3.8vw,17px)!important}.r425RaceMetric.laps strong{font-size:clamp(16px,4.2vw,19px)!important}
+ .r425StatusChip{grid-area:auto!important;justify-self:start!important;align-self:center!important}
+ .r429MobileStats,.r425Laps,.r425Gap{display:none!important}
+ .r425TimerMetrics{grid-template-columns:1fr!important;min-height:42px!important}.r425TimerMetrics>div{border-right:0!important}
+}
+/* ===== /4.0.32 TEST ===== */
+
 </style>
-
 </head>
 <body>
 <div id="runtimeError" style="display:none;position:fixed;z-index:9999;left:12px;right:12px;top:12px;background:#5c1015;color:#fff;border:1px solid #d64149;padding:14px;border-radius:8px;font:14px/1.45 Segoe UI,sans-serif"></div>
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.28 TEST</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.32 TEST</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -781,7 +768,7 @@ html[data-theme="light"] .r428RaceStrip{background:#fff;border-color:var(--r425-
   <div class="audioGateCard">
     <div class="audioGateIcon">🔊</div>
     <h2 id="audioGateTitle">Звук Legion RX</h2>
-    <p>Перед работой Legion RX проверяет, что приложение и весь звуковой пакет физически сохранены на планшете. После этого интернет на трассе не нужен.</p>
+    <p>Перед работой Legion RX проверяет, что приложение и весь звуковой пакет физически сохранены на устройстве. После этого интернет на трассе не нужен.</p>
     <div id="audioOfflineState" class="offlineReadyBox preparing"><i></i><span><b>ПРОВЕРЯЮ OFFLINE-ПАКЕТ…</b><small class="offlineMeta" id="audioOfflineMeta">0 / 27 файлов</small><span class="offlineProgress"><span id="audioOfflineProgress"></span></span></span></div>
     <button id="audioGateBtn" class="audioGateBtn" type="button" disabled>ПРОВЕРКА OFFLINE…</button>
     <span id="audioGateState" class="audioGateState">После проверки нажмите один раз, чтобы активировать звук</span>
@@ -920,8 +907,8 @@ class LapWizCore extends EventTarget{
   unknownBeep(){this.beep(false);}
 }
 
-const LEGION_APP_VERSION='4.0.27';
-const LEGION_OFFLINE_CACHE='legion-rx-4-0-28-test-readable-adaptive-1';
+const LEGION_APP_VERSION='4.0.32';
+const LEGION_OFFLINE_CACHE='legion-rx-4-0-32-test-compact-cockpit';
 const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v425';
 const LEGION_OFFLINE_ASSETS=[
   './','./index.html','./manifest.webmanifest',
@@ -1086,7 +1073,7 @@ class AnnouncerEngine extends EventTarget{
           const blob=new Blob([buf],{type:this.audioMime(raw)});
           next.set(raw,URL.createObjectURL(blob));
         }
-        this.clearLocalAudioUrls();this.localAudioUrls=next;this.localAudioReady=true;this.lastError='';return true;
+        this.clearLocalAudioUrls();this.localAudioUrls=next;this.localAudioReady=true;this.lastError='';this.prepareUnlockSources();return true;
       }catch(e){
         this.clearLocalAudioUrls();this.lastError=String(e?.message||e);console.warn('Legion RX local audio hydrate:',e);return false;
       }finally{this.localAudioLoading=null;updateOfflineReadyUi?.();}
@@ -1102,7 +1089,25 @@ class AnnouncerEngine extends EventTarget{
   }
   ensurePlayers(){
     if(!this.mainPlayer)this.mainPlayer=this.createPlayer('main');
-    if(!this.bleepPool.length)this.bleepPool=Array.from({length:8},(_,i)=>this.createPlayer(`bleep-${i+1}`));
+    // Один отдельный BLEEP-канал достаточно: сам сигнал короче минимального круга,
+    // зато iOS/Safari не приходится одновременно разблокировать восемь media elements.
+    if(!this.bleepPool.length)this.bleepPool=[this.createPlayer('bleep-1')];
+  }
+  prepareUnlockSources(){
+    this.ensurePlayers();
+    const silence=this.localAudioUrls.get('./audio/system/silence.wav')||'./audio/system/silence.wav';
+    const bleep=this.localAudioUrls.get(ANNOUNCER_AUDIO.bleep)||ANNOUNCER_AUDIO.bleep;
+    const prep=(a,key,src,volume)=>{
+      if(!a||!src)return;
+      try{
+        if(a.dataset.legionUnlockSrc!==src){
+          a.pause();a.src=src;a.dataset.legionUnlockSrc=src;a.dataset.legionKey=key;a.preload='auto';a.load();
+        }
+        a.volume=volume;a.playbackRate=1;
+      }catch{}
+    };
+    prep(this.mainPlayer,'unlock-silence',silence,.01);
+    prep(this.bleepPool[0],'bleep',bleep,1);
   }
   getAudio(key){
     if(this.preloadCache.has(key))return this.preloadCache.get(key);
@@ -1129,39 +1134,36 @@ class AnnouncerEngine extends EventTarget{
   async unlockFromGesture({confirmation=true}={}){
     if(this.unlocked)return true;
     if(this.unlockPromise)return this.unlockPromise;
-    this.ensurePlayers();this.preload();
+    this.ensurePlayers();
+    this.prepareUnlockSources();
     const btn=document.getElementById('audioGateBtn');if(btn)btn.disabled=true;
     this.setGate('Включаю аудиоканал…','');
-    const silence=this.localAudioUrls.get('./audio/system/silence.wav')||'./audio/system/silence.wav';
-    const players=[this.mainPlayer,...this.bleepPool];
-    const plays=[];
-    // ВАЖНО: все play() вызываются синхронно внутри одного пользовательского жеста.
-    // Никакого await до вызова play(), иначе Safari теряет user activation.
-    for(const a of players){
+    const main=this.mainPlayer,bleep=this.bleepPool[0];
+    // На iOS user activation очень короткая. Поэтому в самом tap только ДВА play():
+    // постоянный VOICE/HORN-канал + постоянный BLEEP-канал. Никаких preload/load/await между ними.
+    const start=(a,volume)=>{
       try{
-        a.pause();a.src=silence;a.volume=.01;a.playbackRate=1;a.currentTime=0;a.load();
-        const pr=a.play();plays.push(Promise.resolve(pr).then(()=>true).catch(e=>({error:e})));
-      }catch(e){plays.push(Promise.resolve({error:e}));}
-    }
-    this.unlockPromise=Promise.all(plays).then(async results=>{
-      let ok=0;let firstError='';
-      results.forEach((r,i)=>{if(r===true)ok++;else if(!firstError)firstError=String(r?.error||'play() rejected');try{players[i].pause();players[i].currentTime=0;}catch{}});
-      // main + хотя бы 1 канал BLEEP достаточны; остальные могут быть повторно активированы позже.
-      this.unlocked=ok>=2;
-      this.lastError=this.unlocked?'':(firstError||`Разблокировано ${ok}/${players.length}`);
-      this.unlockPromise=null;
-      if(btn)btn.disabled=false;
+        a.volume=volume;a.playbackRate=1;try{a.currentTime=0;}catch{}
+        const pr=a.play();
+        return Promise.resolve(pr).then(()=>({ok:true})).catch(error=>({ok:false,error}));
+      }catch(error){return Promise.resolve({ok:false,error});}
+    };
+    const pMain=start(main,.01);
+    const pBleep=start(bleep,confirmation?1:.01);
+    this.unlockPromise=Promise.all([pMain,pBleep]).then(results=>{
+      const mainOk=Boolean(results[0]?.ok),bleepOk=Boolean(results[1]?.ok);
+      const errors=results.filter(x=>!x?.ok).map(x=>x?.error).filter(Boolean);
+      // Не обрываем только что начатый play() мгновенным pause(): это и давало AbortError на Safari.
+      setTimeout(()=>{try{main.pause();main.currentTime=0;}catch{}if(!confirmation){try{bleep.pause();bleep.currentTime=0;}catch{}}},180);
+      this.unlocked=mainOk&&bleepOk;
+      this.lastError=this.unlocked?'':String(errors[0]?.name||errors[0]?.message||errors[0]||`VOICE ${mainOk?'OK':'ERR'} / BLEEP ${bleepOk?'OK':'ERR'}`);
+      this.unlockPromise=null;if(btn)btn.disabled=false;
       if(this.unlocked){
-        this.setGate('Звук готов','ok');
-        document.getElementById('audioGate')?.classList.add('hidden');
-        // Короткое слышимое подтверждение уже после успешной активации.
-        if(confirmation){try{await this.playBleep({force:true});}catch{}}
-        this.emit({message:'Звук готов',audioReady:true});
-        return true;
+        this.setGate('Звук готов','ok');document.getElementById('audioGate')?.classList.add('hidden');
+        this.emit({message:'Звук готов',audioReady:true});return true;
       }
       this.setGate(`Не удалось включить звук: ${this.lastError}`,'err');
-      this.emit({message:'Ошибка активации звука',error:this.lastError,audioReady:false});
-      return false;
+      this.emit({message:'Ошибка активации звука',error:this.lastError,audioReady:false});return false;
     });
     return this.unlockPromise;
   }
@@ -1171,7 +1173,13 @@ class AnnouncerEngine extends EventTarget{
     a.src=src;a.dataset.legionKey=key;a.load();
   }
   markBlocked(key,e){
-    this.unlocked=false;this.lastError=String(e?.name||e||'Audio blocked');
+    const name=String(e?.name||'');
+    if(name==='AbortError'){
+      // Safari выдаёт AbortError, если предыдущий play() был технически прерван сменой позиции/источника.
+      // Это НЕ означает, что пользователь запретил звук, поэтому не сбрасываем рабочий unlock.
+      console.warn('Legion RX audio transient abort:',key,e);return;
+    }
+    this.unlocked=false;this.lastError=String(name||e||'Audio blocked');
     this.showGate(`Звук был заблокирован системой. Нажмите «Включить звук» ещё раз. (${this.lastError})`);
     this.emit({message:`Ошибка аудио: ${key}`,error:String(e),audioReady:false});
   }
@@ -1262,7 +1270,7 @@ function updateOfflineReadyUi(){
   const snap=offlineReady.snapshot(),pct=snap.total?Math.round((Math.min(snap.completed,snap.total)/snap.total)*100):0;
   const box=document.getElementById('audioOfflineState'),meta=document.getElementById('audioOfflineMeta'),bar=document.getElementById('audioOfflineProgress'),btn=document.getElementById('audioGateBtn');
   if(box){box.className=`offlineReadyBox ${snap.ready?'ready':snap.preparing?'preparing':snap.checked?'error':'preparing'}`;const b=box.querySelector('b');if(b)b.textContent=snap.ready?'OFFLINE READY ✓':snap.preparing?'ПОДГОТОВКА OFFLINE…':snap.checked?'OFFLINE НЕ ГОТОВ':'ПРОВЕРЯЮ OFFLINE-ПАКЕТ…';}
-  if(meta)meta.textContent=snap.ready?`${snap.total}/${snap.total} файлов · приложение и звук сохранены на планшете`:`${Math.min(snap.completed,snap.total)} / ${snap.total} файлов${snap.lastError?` · ${snap.lastError}`:''}`;
+  if(meta)meta.textContent=snap.ready?`${snap.total}/${snap.total} файлов · приложение и звук сохранены на устройстве`:`${Math.min(snap.completed,snap.total)} / ${snap.total} файлов${snap.lastError?` · ${snap.lastError}`:''}`;
   if(bar)bar.style.width=`${pct}%`;
   if(btn&&!announcer.unlockPromise){
     const audioHydrating=Boolean(snap.ready&&!announcer.localAudioReady);
@@ -1379,7 +1387,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.28 TEST</b><span>Readable Adaptive Cockpit · телефон / планшет / ПК</span></div>`}</div>
+   <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.32 TEST</b><span>Compact cockpit · phone / tablet / desktop</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
@@ -2244,7 +2252,7 @@ function homeView(){
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
-   :`<div class="heroMini"><b>4.0.28 TEST · READABLE ADAPTIVE COCKPIT</b><span>Phone portrait · Tablet landscape · Desktop / 2K · Dark / Light</span></div>`;
+   :`<div class="heroMini"><b>4.0.31 TEST · SKETCH REBUILD · READABLE UI</b><span>Phone portrait · Tablet landscape · Desktop / 2K · Dark / Light</span></div>`;
  return `<section class="page homePage">
  <div class="heroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат</h2></div></div>
@@ -2569,7 +2577,7 @@ applySettings();render();
 
 
 
-/* ===== Legion RX 4.0.28 TEST · Adaptive RallyCross Cockpit implementation ===== */
+/* ===== Legion RX 4.0.31 TEST · Adaptive RallyCross Cockpit implementation ===== */
 function r425Date(value){if(!value)return'';const p=String(value).split('-');return p.length===3?`${p[2]}.${p[1]}.${p[0]}`:String(value);}
 function r425LapAvg(l){return lapSummary(l).avg;}
 function r425GlobalBest(pilots,session){let best=Infinity;for(const p of pilots){const v=session?.live?.[p.id]?.bestLapMs;if(Number.isFinite(v))best=Math.min(best,v);}return Number.isFinite(best)?best:null;}
@@ -2588,9 +2596,9 @@ function r425PilotState(session,l,pilotId,index,pre,leaderLaps=0){
 }
 function pilotTable(pilots,session){
  const pre=['warmup','countdown'].includes(session?.phase),globalBest=r425GlobalBest(pilots,session),rule=currentEvent(state.race)?eventRule(state.race,currentEvent(state.race)):null,leaderLaps=pilots[0]?(session?.live?.[pilots[0].id]?.laps||0):0;
- return `<div class="pilotRow header"><span>ПОЗ</span><span>ПИЛОТ</span><span>BEST</span><span>AVG</span><span>КРУГИ</span><span>ОТСТАВАНИЕ</span><span>СТАТУС</span></div>`+pilots.map((p,i)=>{
-   const l=session?.live?.[p.id]||blankLive(),st=r425PilotState(session,l,p.id,i,pre,leaderLaps),gap=pre||i===0?'—':gapText(pilots,session,p,i),avg=r425LapAvg(l),pace=r425Pace(l.bestLapMs,globalBest),slow=Number.isFinite(globalBest)&&Number.isFinite(l.bestLapMs)&&l.bestLapMs>globalBest*1.035,key=String(p.id).replace(/[^a-zA-Z0-9_-]/g,'_'),club=pilotClubName(p),target=rule?.limitType==='laps'?rule.targetLaps:null;
-   return `<div class="pilotRow clickablePilot ${i===0&&l.laps>0?'leader':''} ${l.finished?'finished':''}" data-pilot-stats="${p.id}" data-stats-context="race" style="view-transition-name:pilot_${key}"><div class="pos">${i+1}</div><div class="pilotNameCell"><div class="name">${pilotNameMarkup(p)}</div><div class="sub">${club?clubMarkup(club,'')+'<span class="metaDot">·</span>':''}ID ${esc(p.transponder||'—')}</div></div><div class="r425Metric best ${slow?'slow':''}"><strong>${fmtMs(l.bestLapMs)}</strong><span class="r425PaceTrack" style="--pace:${pace}%"><i></i></span></div><div class="r425Metric avg"><strong>${fmtMs(avg)}</strong><span class="r425PaceTrack" style="--pace:${pace}%"><i></i></span></div><b class="r425Laps">${l.laps||0}${target?` / ${target}`:''}</b><span class="r425Gap">${gap}</span><span class="r425StatusChip ${st.cls}">${st.text}</span></div>`;
+ return `<div class="pilotRow header"><span>ПОЗ</span><span>ПИЛОТ</span><span>ЛУЧШИЙ</span><span>ПОСЛЕДНИЙ</span><span>КРУГИ</span><span>СТАТУС</span></div>`+pilots.map((p,i)=>{
+   const l=session?.live?.[p.id]||blankLive(),st=r425PilotState(session,l,p.id,i,pre,leaderLaps),slow=Number.isFinite(globalBest)&&Number.isFinite(l.bestLapMs)&&l.bestLapMs>globalBest*1.035,key=String(p.id).replace(/[^a-zA-Z0-9_-]/g,'_'),target=rule?.limitType==='laps'?rule.targetLaps:null;
+   return `<div class="pilotRow clickablePilot ${i===0&&l.laps>0?'leader':''} ${l.finished?'finished':''}" data-pilot-stats="${p.id}" data-stats-context="race" style="view-transition-name:pilot_${key}"><div class="pos">${i+1}</div><div class="pilotNameCell"><div class="name">${pilotNameMarkup(p)}</div></div><div class="r425RaceMetric best ${slow?'slow':''}"><strong>${fmtMs(l.bestLapMs)}</strong><small>BEST</small></div><div class="r425RaceMetric last"><strong>${fmtMs(l.lastLapMs)}</strong><small>ПОСЛЕДНИЙ</small></div><div class="r425RaceMetric laps"><strong>${l.laps||0}${target?`/${target}`:''}</strong><small>КРУГИ</small></div><span class="r425StatusChip ${st.cls}">${st.text}</span></div>`;
  }).join('');
 }
 function r425RingData(race,ev,pilots,s){
@@ -2633,7 +2641,7 @@ function cockpitView(){
  if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
  const race=state.race,ev=currentEvent(race),events=eventList(race),session=ensureSession(ev),pilots=ev?liveRanking(getEventPilots(race,ev),session):[],done=race.stage==='finished',tie=race.stage==='tie',ring=r425RingData(race,ev,pilots,session),stats=r425TimerStats(race,ev,pilots,session),progress=timerProgress(session,ev);
  if(tie)return `<section class="raceCockpit rallyCockpit425">${r425Header(race,ev,session)}<main class="rally425Main"><div class="r425Tie">${tieWidget(race)}</div></main>${r428RaceStrip(race,ev,session)}${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,session,done)}</section>`;
- return `<section class="raceCockpit rallyCockpit425">${r425Header(race,ev,session)}<main class="rally425Main"><section class="r425Positions ${pilots.length>=8?'r428DensePilots':pilots.length>=6?'r428CompactPilots':''}" data-pilot-count="${pilots.length}" data-layout-panel="positions"><div class="r425PositionsHead"><div>${raceSvg('trophy')}<h2>${done?'ИТОГОВЫЕ ПОЗИЦИИ':'УЧАСТНИКИ ЗАЕЗДА'}</h2></div><span>Всего: <b>${pilots.length||race.pilots?.length||0}</b></span></div><div class="pilotBoardTable">${done?finalProtocolTable(race):pilotTable(pilots,session)}</div><div class="r425PositionsFooter"><span>${raceSvg('chart')} Лучший круг: <b id="bestHeatLap">${bestHeatLapText(pilots,session)}</b></span><span>Последний проход: <b id="lastPassLine">${esc(session?.lastPass||'—')}</b></span></div></section><aside class="r425Side"><section class="r425TimerCard" data-layout-panel="timer"><div class="r425TimerMain"><div><span class="r425TimerCaption">${timerCaption(session,ev)}</span><strong id="mainTimer">${done?'00:00':displayTimer(session,ev)}</strong><small id="timerSubline">${ev?timerSubline(session,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="r425Ring" style="--progress:${progress}"><div class="r425RingInner"><b id="r425RingMain">${ring.main}</b><small id="r425RingSub">${ring.sub}</small></div></div></div><div class="r425TimerMetrics"><div class="accent"><span>BEST ЛИДЕРА</span><b id="r425LeaderBest">${stats.best}</b></div><div><span>AVG ЛИДЕРА</span><b id="r425LeaderAvg">${stats.avg}</b></div><div><span>КРУГИ ЛИДЕРА</span><b id="r425LeaderLaps">${stats.laps}</b></div></div></section><section class="r425ControlCard"><div class="r425ControlTitle">УПРАВЛЕНИЕ ЗАЕЗДОМ</div>${r425ControlGrid(done,session,false)}</section></aside></main>${r428RaceStrip(race,ev,session)}${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,session,done)}</section>`;
+ return `<section class="raceCockpit rallyCockpit425">${r425Header(race,ev,session)}<main class="rally425Main"><section class="r425Positions" data-pilot-count="${pilots.length}" data-layout-panel="positions"><div class="r425PositionsHead"><div>${raceSvg('trophy')}<h2>${done?'ИТОГОВЫЕ ПОЗИЦИИ':'УЧАСТНИКИ ЗАЕЗДА'}</h2></div><span>Всего: <b>${pilots.length||race.pilots?.length||0}</b></span></div><div class="pilotBoardTable">${done?finalProtocolTable(race):pilotTable(pilots,session)}</div><div class="r425PositionsFooter"><span>${raceSvg('chart')} Лучший круг: <b id="bestHeatLap">${bestHeatLapText(pilots,session)}</b></span><span>Последний проход: <b id="lastPassLine">${esc(session?.lastPass||'—')}</b></span></div></section><aside class="r425Side"><section class="r425TimerCard" data-layout-panel="timer"><div class="r425TimerMain"><div><span class="r425TimerCaption">${timerCaption(session,ev)}</span><strong id="mainTimer">${done?'00:00':displayTimer(session,ev)}</strong><small id="timerSubline">${ev?timerSubline(session,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="r425Ring" style="--progress:${progress}"><div class="r425RingInner"><b id="r425RingMain">${ring.main}</b><small id="r425RingSub">${ring.sub}</small></div></div></div><div class="r425TimerMetrics"><div class="accent"><span>BEST ЛИДЕРА</span><b id="r425LeaderBest">${stats.best}</b></div></div></section><section class="r425ControlCard"><div class="r425ControlTitle">УПРАВЛЕНИЕ ЗАЕЗДОМ</div>${r425ControlGrid(done,session,false)}</section></aside></main>${r428RaceStrip(race,ev,session)}${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,session,done)}</section>`;
 }
 function updateDynamicCockpit(){
  const ev=currentEvent(state.race),s=state.session,timer=$('#mainTimer');if(timer)timer.textContent=displayTimer(s,ev);
@@ -2646,7 +2654,7 @@ function updateDynamicCockpit(){
  const best=$('#bestHeatLap');if(best&&ev)best.textContent=bestHeatLapText(ranked,s);const lp=$('#lastPassLine');if(lp)lp.textContent=s?.lastPass||'—';
  const statsEls=$$('.statsWidgetContent');if(statsEls.length&&ev&&s){let html;if(['warmup','countdown'].includes(s.phase)){html=`<div><span>ОБНАРУЖЕНО</span><b>${warmupSeenCount(s)} / ${ranked.length}</b></div><div><span>РЕЖИМ LAPWIZ</span><b>FREE PRACTICE</b></div><div><span>ПОСЛЕДНИЙ ПРОХОД</span><b>${esc(s.lastPass||'—')}</b></div><div><span>ДО СТАРТА</span><b>${displayTimer(s,ev)}</b></div>`;}else{const leader=ranked[0],ll=leader?s.live?.[leader.id]:null,target=eventRule(state.race,ev).targetLaps||'—';html=`<div><span>ЛИДЕР</span><b>${esc(leader?.name||'—')}</b></div><div><span>КРУГИ ЛИДЕРА</span><b>${ll?.laps||0}${target!=='—'?` / ${target}`:''}</b></div><div><span>ПОСЛЕДНИЙ ПРОХОД</span><b>${esc(s.lastPass||'—')}</b></div><div><span>ПИЛОТОВ</span><b>${ranked.length}</b></div>`;}statsEls.forEach(el=>el.innerHTML=html);}
 }
-/* ===== /4.0.28 TEST ===== */
+/* ===== /4.0.31 TEST ===== */
 
 </script>
 </body>
