@@ -1,4 +1,4 @@
-const CACHE='legion-rx-4-0-29-test-readable-mobile-audio-1';
+const CACHE='legion-rx-4-0-30-test-portrait-match-1';
 const ASSETS=[
   './','./index.html','./manifest.webmanifest',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
