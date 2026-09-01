@@ -1,4 +1,4 @@
-const CACHE='legion-rx-4-0-35-test-race-announcer';
+const CACHE='legion-rx-4-0-36-test-race-announcer';
 const ASSETS=[
   './','./index.html','./manifest.webmanifest',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
