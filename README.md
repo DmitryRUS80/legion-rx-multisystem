@@ -1,6 +1,6 @@
-# Legion RX 4.0.43 UI TEST
+# Legion RX 4.0.44 UI TEST
 
-This is an isolated RallyCross UI test rebuilt from the approved dark reference sketch. Pilot metrics now remain on one clean line without duplicated captions below the values; only the pilot identity uses a second line for team and transponder ID. Existing race, LapWiz and announcer logic is preserved.
+This is an isolated RallyCross UI test rebuilt from the approved dark reference sketch. Pilot metrics remain on one clean line and use the same visual height as the capital letters in the pilot name. Existing race, LapWiz and announcer logic is preserved.
 
 All 249 pilot country flags are stored in one offline PNG atlas instead of hundreds of separate SVG files. They render consistently on Windows, Android and iOS, and Russia remains the first country in the pilot selector. The GitHub deployment package contains only current runtime files.
 
