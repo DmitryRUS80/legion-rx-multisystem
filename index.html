@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.36 TEST</title>
+<title>Legion RX 4.0.37 TEST</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -743,6 +743,25 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
  .r429MobileStats,.r425Laps,.r425Gap{display:none!important}
  .r425TimerMetrics{grid-template-columns:1fr!important;min-height:42px!important}.r425TimerMetrics>div{border-right:0!important}
 }
+
+/* 4.0.37 — отдельный пульт для телефона в горизонтальной ориентации. */
+@media (orientation:landscape) and (max-width:950px) and (max-height:600px){
+ body.cockpitMode #viewHost{overflow:hidden!important}
+ .rallyCockpit425{height:100dvh!important;min-height:0!important;overflow:hidden!important;padding:4px max(4px,env(safe-area-inset-right)) 4px max(4px,env(safe-area-inset-left))!important;gap:4px!important;grid-template-rows:44px minmax(0,1fr) 30px!important}
+ .rally425Header{position:static!important;grid-template-columns:92px minmax(0,1fr)!important;min-height:0!important;border-radius:7px!important}
+ .rally425Header .raceBrand{padding:3px 6px!important;border:0!important}.rally425Header .raceBrand strong{font-size:17px!important}.rally425Header .raceBrand small,.r425HeaderMeta{display:none!important}
+ .r425TopActions{justify-content:flex-end!important;gap:2px!important;padding:2px!important;overflow:hidden!important}.r425TopBtn,.r425TopBtn.iconOnly{width:28px!important;min-width:28px!important;height:38px!important;padding:0!important;border-radius:6px!important}.r425TopBtn svg{width:15px!important;height:15px!important}.r425TopBtn b,.r425TopBtn small{display:none!important}
+ .rally425Main{display:grid!important;grid-template-columns:minmax(0,1.62fr) minmax(250px,.82fr)!important;grid-template-rows:minmax(0,1fr)!important;gap:4px!important;min-height:0!important;overflow:hidden!important}
+ .r425Positions{grid-column:1!important;grid-row:1!important;min-height:0!important;grid-template-rows:30px minmax(0,1fr)!important;border-radius:8px!important;overflow:hidden!important}.r425PositionsFooter{display:none!important}.r425PositionsHead{height:auto!important;padding:0 8px!important}.r425PositionsHead h2{font-size:14px!important}.r425PositionsHead svg{width:15px!important;height:15px!important}.r425PositionsHead span{font-size:8px!important}.r425PositionsHead span b{font-size:10px!important}
+ .r425Positions .pilotBoardTable{min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important}.r425Positions .pilotRow.header{display:none!important}
+ .r425Positions .pilotRow:not(.header){min-width:0!important;grid-template-columns:35px minmax(92px,1fr) 48px 62px!important;grid-template-rows:1fr 1fr!important;grid-template-areas:'pos pilot laps status' 'pos best last status'!important;min-height:52px!important;padding:3px 5px!important;gap:1px 5px!important}
+ .r425Positions .pilotRow .pos{grid-area:pos!important;margin:-3px 0 -3px -5px!important;font-size:20px!important}.r425Positions .pilotNameCell{grid-area:pilot!important;min-width:0!important}.r425Positions .pilotNameCell .name{font-size:14px!important;line-height:1!important}.r425Positions .pilotNameCell .sub{display:none!important}.r425Positions .countryFlag{font-size:12px!important}
+ .r425Positions .r425RaceMetric.best{grid-area:best!important;display:flex!important}.r425Positions .r425RaceMetric.last{grid-area:last!important;display:flex!important}.r425Positions .r425RaceMetric.laps{grid-area:laps!important;display:flex!important}.r425RaceMetric strong,.r425RaceMetric.laps strong{font-size:11px!important}.r425RaceMetric small{font-size:5.5px!important}.r425StatusChip{grid-area:status!important;justify-self:stretch!important;text-align:center!important;font-size:6.5px!important;padding:3px!important;white-space:normal!important;line-height:1.05!important}.r429MobileStats,.r425Laps,.r425Gap{display:none!important}
+ .r425Side{grid-column:2!important;grid-row:1!important;display:grid!important;grid-template-rows:minmax(104px,.82fr) minmax(142px,1.18fr)!important;gap:4px!important;min-height:0!important;overflow:hidden!important}
+ .r425TimerCard{min-height:0!important;border-radius:8px!important;overflow:hidden!important}.r425TimerMain{grid-template-columns:minmax(0,1fr) 58px!important;padding:5px 7px 3px!important}.r425TimerCaption{font-size:11px!important}.r425TimerMain strong#mainTimer{font-size:38px!important;line-height:.88!important}.r425TimerMain small{font-size:7px!important;margin-top:3px!important}.r425Ring{width:55px!important;height:55px!important}.r425RingInner b{font-size:17px!important}.r425RingInner small{font-size:5.5px!important}.r425TimerMetrics{min-height:27px!important}.r425TimerMetrics>div{padding:3px 6px!important}.r425TimerMetrics span{font-size:5.5px!important}.r425TimerMetrics b{font-size:9px!important}
+ .r425ControlCard{min-height:0!important;padding:4px!important;grid-template-rows:11px minmax(0,1fr)!important;gap:3px!important;border-radius:8px!important}.r425ControlTitle{font-size:7px!important;line-height:11px!important}.r425Controls{grid-template-columns:repeat(3,1fr)!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:3px!important}.r425Control{min-height:0!important;padding:2px!important;gap:3px!important;border-radius:6px!important}.r425Control svg{width:16px!important;height:16px!important}.r425Control span b{font-size:8px!important;line-height:1!important}.r425Control span small{display:none!important}
+ .r428RaceStrip{height:auto!important;min-height:0!important;grid-template-columns:.85fr .9fr .9fr 1.05fr!important}.r428StripCell{gap:3px!important;padding:0 3px!important}.r428StripCell svg{width:12px!important;height:12px!important}.r428StripCell small{display:none!important}.r428StripCell b{font-size:8px!important}
+}
 /* ===== /4.0.32 TEST ===== */
 
 </style>
@@ -752,7 +771,7 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.36 TEST</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.37 TEST</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -908,9 +927,9 @@ class LapWizCore extends EventTarget{
   unknownBeep(){this.beep(false);}
 }
 
-const LEGION_APP_VERSION='4.0.36';
-const LEGION_OFFLINE_CACHE='legion-rx-4-0-36-test-race-announcer';
-const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v436';
+const LEGION_APP_VERSION='4.0.37';
+const LEGION_OFFLINE_CACHE='legion-rx-4-0-37-test-ios-audio-landscape';
+const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v437';
 const LEGION_OFFLINE_ASSETS=[
   './','./index.html','./manifest.webmanifest',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
@@ -1051,6 +1070,8 @@ class AnnouncerEngine extends EventTarget{
     this.localAudioUrls=new Map(); // object URL из Cache Storage: проигрывание не зависит от media fetch/service worker
     this.localAudioReady=false;
     this.localAudioLoading=null;
+    this.needsRecovery=false;
+    this.interruptionReason='';
   }
   emit(detail){this.dispatchEvent(new CustomEvent('status',{detail}));}
   rawAssetUrl(key){
@@ -1096,6 +1117,16 @@ class AnnouncerEngine extends EventTarget{
     // зато iOS/Safari не приходится одновременно разблокировать восемь media elements.
     if(!this.bleepPool.length)this.bleepPool=[this.createPlayer('bleep-1')];
   }
+  discardPlayers(){
+    const players=[this.mainPlayer,...this.bleepPool].filter(Boolean);
+    for(const a of players){try{a.pause();a.removeAttribute('src');a.load();a.remove();}catch{}}
+    this.mainPlayer=null;this.bleepPool=[];this.bleepIndex=0;this.unlockPromise=null;
+  }
+  invalidateAudioSession(reason='ios-interruption'){
+    this.unlocked=false;this.needsRecovery=true;this.interruptionReason=reason;this.token++;
+    try{this.stopVoice();for(const a of this.bleepPool){a.pause();a.currentTime=0;}}catch{}
+    this.emit({message:'Аудиосессия требует повторного запуска',audioReady:false,interrupted:true,reason});
+  }
   prepareUnlockSources(){
     this.ensurePlayers();
     const silence=this.localAudioUrls.get('./audio/system/silence.wav')||'./audio/system/silence.wav';
@@ -1135,8 +1166,9 @@ class AnnouncerEngine extends EventTarget{
     this.setGate(message,this.lastError?'err':'');
   }
   async unlockFromGesture({confirmation=true}={}){
-    if(this.unlocked)return true;
+    if(this.unlocked&&!this.needsRecovery)return true;
     if(this.unlockPromise)return this.unlockPromise;
+    if(this.needsRecovery)this.discardPlayers();
     this.ensurePlayers();
     this.prepareUnlockSources();
     const btn=document.getElementById('audioGateBtn');if(btn)btn.disabled=true;
@@ -1162,6 +1194,7 @@ class AnnouncerEngine extends EventTarget{
       this.lastError=this.unlocked?'':String(errors[0]?.name||errors[0]?.message||errors[0]||`VOICE ${mainOk?'OK':'ERR'} / BLEEP ${bleepOk?'OK':'ERR'}`);
       this.unlockPromise=null;if(btn)btn.disabled=false;
       if(this.unlocked){
+        this.needsRecovery=false;this.interruptionReason='';
         this.setGate('Звук готов','ok');document.getElementById('audioGate')?.classList.add('hidden');
         this.emit({message:'Звук готов',audioReady:true});return true;
       }
@@ -1413,7 +1446,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-  <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.36 TEST</b><span>Race Announcer · fully offline</span></div>`}</div>
+  <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.37 TEST</b><span>iOS Audio Recovery · Phone Landscape</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
@@ -2577,7 +2610,19 @@ async function bootOfflineAudio(){
 }
 bootOfflineAudio();
 window.addEventListener('pointerdown',()=>{lapwiz.ensureAudio();},{once:true});
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){offlineReady.check().then(updateOfflineReadyUi);if(!announcer.unlocked&&(state.settings.announcerEnabled||state.settings.lapSound))announcer.showGate(offlineReady.ready?'OFFLINE READY ✓ · После возврата включите звук одним касанием.':'OFFLINE-пакет требует проверки.');}});
+const LEGION_IS_IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+function legionAudioNeedsRecovery(){return Boolean(state.settings.announcerEnabled||state.settings.lapSound);}
+function invalidateLegionAudio(reason){if(LEGION_IS_IOS&&legionAudioNeedsRecovery())announcer.invalidateAudioSession(reason);}
+function requestLegionAudioRecovery(reason){
+ if(!LEGION_IS_IOS||!legionAudioNeedsRecovery())return;
+ if(!announcer.needsRecovery)announcer.invalidateAudioSession(reason);
+ offlineReady.check().then(updateOfflineReadyUi);
+ announcer.showGate(offlineReady.ready?'Звук iPhone нужно восстановить одним касанием.':'OFFLINE-пакет требует проверки.');
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')invalidateLegionAudio('visibility-hidden');else if(LEGION_IS_IOS)requestLegionAudioRecovery('visibility-visible');else offlineReady.check().then(updateOfflineReadyUi);});
+window.addEventListener('pagehide',()=>invalidateLegionAudio('pagehide'));
+window.addEventListener('pageshow',e=>{if(e.persisted||announcer.needsRecovery)requestLegionAudioRecovery('pageshow');});
+window.addEventListener('focus',()=>{if(announcer.needsRecovery)requestLegionAudioRecovery('focus');});
 window.addEventListener('beforeunload',()=>persistAll());
 
 $('#designQuickBtn')?.addEventListener('click',openDesignLab);
