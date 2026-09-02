@@ -1,4 +1,6 @@
-# Legion RX 4.0.38 TEST
+# Legion RX 4.0.40 TEST
+
+All 249 pilot country flags are stored in one offline PNG atlas instead of hundreds of separate SVG files. They render consistently on Windows, Android and iOS, and Russia remains the first country in the pilot selector. The GitHub deployment package contains only current runtime files.
 
 Local Pilot Voice: MP3, WAV or OGG recordings of pilot names are loaded in the pilot profile and stored offline in IndexedDB by permanent pilot ID. No account, API, payment, server or internet connection is required.
 

@@ -1,4 +1,4 @@
-const CACHE='legion-rx-4-0-38-test-landscape-pilot-row';
+const CACHE='legion-rx-4-0-40-test-flag-atlas-clean-deploy';
 const ASSETS=[
   './','./index.html','./manifest.webmanifest',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
@@ -6,13 +6,15 @@ const ASSETS=[
   './audio/voice/countdown_01.wav','./audio/voice/countdown_02.wav','./audio/voice/countdown_03.wav','./audio/voice/countdown_04.wav','./audio/voice/countdown_05.wav','./audio/voice/countdown_06.wav','./audio/voice/countdown_07.wav','./audio/voice/countdown_08.wav','./audio/voice/countdown_09.wav','./audio/voice/countdown_10.wav',
   './audio/voice/warmup_01.wav','./audio/voice/warmup_02.wav','./audio/voice/warmup_03.wav','./audio/voice/warmup_04.wav','./audio/voice/warmup_05.wav','./audio/voice/warmup_30.wav',
   './audio/voice/events/time_expired.wav','./audio/voice/events/all_pilots_finished.wav','./audio/voice/events/one_minute_left.wav','./audio/voice/events/heat_finished.wav','./audio/voice/events/race_stopped.wav','./audio/voice/events/pilot_finished.wav','./audio/voice/events/call_to_start.wav','./audio/voice/events/unknown_transponder.wav','./audio/voice/events/new_best_lap.wav','./audio/voice/events/finish_current_lap.wav','./audio/voice/events/heat_results.wav','./audio/voice/events/lapwiz_disconnected.wav',
-  './audio/system/start_race.mp3','./audio/system/bleep.mp3','./audio/system/silence.wav'
+  './audio/system/start_race.mp3','./audio/system/bleep.mp3','./audio/system/silence.wav',
+  './flags/flags-atlas.png'
 ];
 
 function mimeFor(path){
   if(/\.mp3$/i.test(path))return'audio/mpeg';
   if(/\.wav$/i.test(path))return'audio/wav';
   if(/\.png$/i.test(path))return'image/png';
+  if(/\.svg$/i.test(path))return'image/svg+xml';
   return'';
 }
 
@@ -21,7 +23,7 @@ async function putAsset(cache,url){
     const response=await fetch(url,{cache:'reload'});
     if(!response||!response.ok)return false;
     const type=(response.headers.get('content-type')||'').toLowerCase();
-    if(/\.(wav|mp3|png)$/i.test(url)&&type.includes('text/html'))return false;
+    if(/\.(wav|mp3|png|svg)$/i.test(url)&&type.includes('text/html'))return false;
     await cache.put(url,response.clone());
     return true;
   }catch{return false;}
@@ -74,7 +76,10 @@ async function cachedOrNetworkFull(request){
 self.addEventListener('install',event=>{
   event.waitUntil((async()=>{
     const cache=await caches.open(CACHE);
-    for(const url of ASSETS){if(!(await cache.match(url,{ignoreSearch:true})))await putAsset(cache,url);}
+    for(let i=0;i<ASSETS.length;i+=12){
+      const batch=ASSETS.slice(i,i+12);
+      await Promise.all(batch.map(async url=>{if(!(await cache.match(url,{ignoreSearch:true})))await putAsset(cache,url);}));
+    }
     await self.skipWaiting();
   })());
 });
@@ -94,7 +99,7 @@ self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   const request=event.request,url=new URL(request.url);
   if(url.origin!==self.location.origin)return;
-  const isAudio=url.pathname.includes('/audio/'),isIcon=url.pathname.includes('/icons/');
+  const isAudio=url.pathname.includes('/audio/'),isIcon=url.pathname.includes('/icons/')||url.pathname.includes('/flags/');
 
   if(isAudio){
     event.respondWith((async()=>{

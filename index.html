@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.38 TEST</title>
+<title>Legion RX 4.0.40 TEST</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -446,7 +446,7 @@ html[data-theme="light"] .quickPanelHint{background:var(--panel2);border-color:v
 <style id="pilotCards422Styles">
 /* 4.0.22 TEST — country flags, LegionRX club easter egg, larger adaptive pilot rows. */
 /* 4.0.23 TEST — verified offline package, persistent readiness status, safer audio startup. */
-.pilotNameLine{display:inline-flex;align-items:center;gap:.42em;min-width:0;max-width:100%;vertical-align:middle}.pilotNameLine>span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.countryFlag{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:.92em;line-height:1;flex:none;filter:saturate(.94)}
+.pilotNameLine{display:inline-flex;align-items:center;gap:.42em;min-width:0;max-width:100%;vertical-align:middle}.pilotNameLine>span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.countryFlag{position:relative;display:inline-grid;place-items:center;width:1.42em;height:1.02em;box-sizing:border-box;overflow:hidden;flex:none;border:1px solid color-mix(in srgb,var(--text) 20%,transparent);border-radius:.18em;background:#18222b;color:#aebbc5;font:800 .42em/1 var(--font);letter-spacing:.02em;box-shadow:0 1px 2px #0005;filter:saturate(.92)}.countryFlag:before{content:"";position:absolute;inset:0;background-image:url('./flags/flags-atlas.png');background-position:var(--country-flag-position,0 0);background-size:1600% 1600%;background-repeat:no-repeat}
 .legionClubMark{display:inline-flex;align-items:baseline;gap:.22em;font-weight:950;font-style:italic;letter-spacing:.035em;color:color-mix(in srgb,var(--text) 76%,var(--muted));white-space:nowrap}.legionClubMark i{font-style:italic;color:#ef2d35}.metaDot{display:inline-block;margin:0 .38em;color:var(--muted)}
 .pilotProfileGrid{display:grid;gap:10px}.pilotProfileCard{display:grid;grid-template-columns:62px minmax(0,1fr) auto;align-items:center;gap:14px;padding:16px 17px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--panel);box-shadow:var(--shadow)}.pilotProfileAvatar{width:58px;height:58px;border-radius:14px;background:var(--blue2);color:var(--blue);display:grid;place-items:center;font-size:28px;font-weight:950;overflow:hidden}.pilotProfileMain{min-width:0;display:grid;gap:4px}.pilotProfileName{font:900 22px var(--rx-display-font);min-width:0}.pilotProfileClub{font-size:14px;min-height:19px}.pilotProfileClub .legionClubMark{font-size:17px}.pilotProfileMeta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:11px}.pilotProfileMeta span+span:before{content:"·";margin-right:8px}.pilotProfileActions{display:flex;gap:8px;align-items:center}.subtleDanger{background:var(--red2)!important;color:var(--red)!important;border:1px solid color-mix(in srgb,var(--red) 30%,var(--line))!important}.pilotEasterHint{margin-top:12px;padding:9px 11px;border:1px dashed var(--line);border-radius:var(--radius-input);background:var(--panel2);color:var(--muted);font-size:11px}.pilotEasterHint b{color:var(--text)}
 /* Desktop / tablet race rows: a little taller and easier to scan. */
@@ -772,7 +772,7 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.38 TEST</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.40 TEST</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -928,9 +928,10 @@ class LapWizCore extends EventTarget{
   unknownBeep(){this.beep(false);}
 }
 
-const LEGION_APP_VERSION='4.0.38';
-const LEGION_OFFLINE_CACHE='legion-rx-4-0-38-test-landscape-pilot-row';
-const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v438';
+const LEGION_APP_VERSION='4.0.40';
+const LEGION_OFFLINE_CACHE='legion-rx-4-0-40-test-flag-atlas-clean-deploy';
+const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v440';
+const LEGION_FLAG_CODES=`AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW`.split(/\s+/);
 const LEGION_OFFLINE_ASSETS=[
   './','./index.html','./manifest.webmanifest',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
@@ -938,7 +939,8 @@ const LEGION_OFFLINE_ASSETS=[
   ...Array.from({length:10},(_,i)=>`./audio/voice/countdown_${String(i+1).padStart(2,'0')}.wav`),
   './audio/voice/warmup_01.wav','./audio/voice/warmup_02.wav','./audio/voice/warmup_03.wav','./audio/voice/warmup_04.wav','./audio/voice/warmup_05.wav','./audio/voice/warmup_30.wav',
   './audio/voice/events/one_minute_left.wav','./audio/voice/events/call_to_start.wav','./audio/voice/events/new_best_lap.wav','./audio/voice/events/pilot_finished.wav','./audio/voice/events/heat_results.wav','./audio/voice/events/time_expired.wav','./audio/voice/events/finish_current_lap.wav','./audio/voice/events/all_pilots_finished.wav','./audio/voice/events/heat_finished.wav','./audio/voice/events/race_stopped.wav','./audio/voice/events/unknown_transponder.wav','./audio/voice/events/lapwiz_disconnected.wav',
-  './audio/system/start_race.mp3','./audio/system/bleep.mp3','./audio/system/silence.wav'
+  './audio/system/start_race.mp3','./audio/system/bleep.mp3','./audio/system/silence.wav',
+  './flags/flags-atlas.png'
 ];
 
 class OfflineReadyManager extends EventTarget{
@@ -967,7 +969,7 @@ class OfflineReadyManager extends EventTarget{
   async validate(url,response){
     if(!response||!response.ok)throw new Error(`HTTP ${response?.status||0}`);
     const type=(response.headers.get('content-type')||'').toLowerCase();
-    const isBinary=/\.(wav|mp3|png)$/i.test(url);
+    const isBinary=/\.(wav|mp3|png|svg)$/i.test(url);
     if(isBinary&&type.includes('text/html'))throw new Error('Вместо файла получен HTML');
     if(isBinary){
       const buf=await response.clone().arrayBuffer(),u=new Uint8Array(buf);
@@ -983,6 +985,10 @@ class OfflineReadyManager extends EventTarget{
       if(/\.png$/i.test(url)){
         const png=u.length>=8&&u[0]===0x89&&u[1]===0x50&&u[2]===0x4e&&u[3]===0x47&&u[4]===0x0d&&u[5]===0x0a&&u[6]===0x1a&&u[7]===0x0a;
         if(!png)throw new Error('Некорректный PNG');
+      }
+      if(/\.svg$/i.test(url)){
+        const svg=new TextDecoder().decode(u.slice(0,Math.min(u.length,1024)));
+        if(!/<svg[\s>]/i.test(svg))throw new Error('Некорректный SVG');
       }
     }
     return true;
@@ -1382,17 +1388,17 @@ function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('sh
 function fmtMs(ms){if(!Number.isFinite(ms))return'—';const s=Math.max(0,ms)/1000,m=Math.floor(s/60),sec=Math.floor(s%60),cs=Math.floor((s-Math.floor(s))*100);return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}.${String(cs).padStart(2,'0')}`;}
 function fmtClock(ms){if(!Number.isFinite(ms))return'00:00';const t=Math.ceil(Math.max(0,ms)/1000),m=Math.floor(t/60),s=t%60;return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}
 function nameInitials(name=''){return name.split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase()||'RX';}
-const COUNTRY_CODES=`AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW`.split(/\s+/);
+const COUNTRY_CODES=['RU',...LEGION_FLAG_CODES.filter(code=>code!=='RU')];
 let _regionNames=null;
-function countryFlag(code=''){code=String(code||'').toUpperCase();return /^[A-Z]{2}$/.test(code)?String.fromCodePoint(...[...code].map(c=>127397+c.charCodeAt(0))):'';}
+function countryFlag(code=''){code=String(code||'').toUpperCase();const index=LEGION_FLAG_CODES.indexOf(code);if(index<0)return'';const x=(index%16)*100/15,y=Math.floor(index/16)*100/15;return`${x.toFixed(5)}% ${y.toFixed(5)}%`;}
 function countryName(code=''){code=String(code||'').toUpperCase();if(!code)return'';try{_regionNames||=new Intl.DisplayNames(['ru'],{type:'region'});return _regionNames.of(code)||code;}catch{return code;}}
-function countryOptions(selected=''){const sel=String(selected||'').toUpperCase();return `<option value="">— Не указана —</option>`+COUNTRY_CODES.map(c=>`<option value="${c}" ${c===sel?'selected':''}>${countryFlag(c)} ${esc(countryName(c))}</option>`).join('');}
+function countryOptions(selected=''){const sel=String(selected||'').toUpperCase();return `<option value="">— Не указана —</option>`+COUNTRY_CODES.map(c=>`<option value="${c}" ${c===sel?'selected':''}>${esc(countryName(c))}</option>`).join('');}
 function profileForPilot(p){if(!p)return null;return state.pilotDb.find(x=>String(x.id)===String(p.profileId||p.id))||null;}
 function pilotCountryCode(p){return String(p?.country||profileForPilot(p)?.country||'').toUpperCase();}
 function pilotClubName(p){return String(p?.club||profileForPilot(p)?.club||'');}
 function isLegionRXClub(club=''){return String(club||'').toLowerCase().replace(/[^a-zа-яё0-9]+/gi,'')==='legionrx';}
 function clubMarkup(club='',fallback='Без клуба'){return isLegionRXClub(club)?`<span class="legionClubMark">LEGION <i>RX</i></span>`:esc(club||fallback);}
-function pilotNameMarkup(p){const flag=countryFlag(pilotCountryCode(p));return `<span class="pilotNameLine">${flag?`<span class="countryFlag" title="${esc(countryName(pilotCountryCode(p)))}">${flag}</span>`:''}<span>${esc(p?.name||'—')}</span></span>`;}
+function pilotNameMarkup(p){const code=pilotCountryCode(p),flag=countryFlag(code);return `<span class="pilotNameLine">${flag?`<span class="countryFlag" style="--country-flag-position:${flag}" title="${esc(countryName(code))}" role="img" aria-label="${esc(countryName(code))}">${esc(code)}</span>`:''}<span>${esc(p?.name||'—')}</span></span>`;}
 function pilotMetaMarkup(p,{showId=true}={}){const club=pilotClubName(p),city=p?.city||profileForPilot(p)?.city||'';const chunks=[];if(club)chunks.push(clubMarkup(club,''));if(city)chunks.push(esc(city));if(showId)chunks.push(`ID ${esc(p?.transponder||'—')}`);return chunks.filter(Boolean).join('<span class="metaDot">·</span>');}
 function uiIcon(name,cls='uiIcon'){
  const paths={
@@ -1447,7 +1453,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-  <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.38 TEST</b><span>Landscape Pilot Row · iOS Audio Recovery</span></div>`}</div>
+  <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.40 TEST</b><span>Flag Atlas · Clean GitHub Deploy</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
@@ -1659,7 +1665,7 @@ function settingsView(){return `<section class="page"><div class="pageHeader"><d
   <section class="ruleBox"><div class="ruleBoxHead"><b>Квалификация</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsQLimit"><option value="time" ${state.settings.qualificationLimitType==='time'?'selected':''}>По времени</option><option value="laps" ${state.settings.qualificationLimitType==='laps'?'selected':''}>По кругам</option></select></div><div class="field"><label>Минуты</label><input id="settingsQMin" type="number" value="${state.settings.qualificationMinutes}"></div><div class="field"><label>Круги</label><input id="settingsQLaps" type="number" value="${state.settings.qualificationLaps}"></div></div></section>
   <section class="ruleBox"><div class="ruleBoxHead"><b>Финалы / LCQ</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsFLimit"><option value="laps" ${state.settings.finalLimitType==='laps'?'selected':''}>По кругам</option><option value="time" ${state.settings.finalLimitType==='time'?'selected':''}>По времени</option></select></div><div class="field"><label>Круги</label><input id="settingsFLaps" type="number" value="${state.settings.finalLaps}"></div><div class="field"><label>Минуты</label><input id="settingsFMin" type="number" value="${state.settings.finalMinutes}"></div></div></section>
  </div><button class="btn primary" style="margin-top:12px" data-action="save-settings">Сохранить настройки</button></article>
- <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.10 Alpha</b></p><p>Общий Announcer Engine подключён поверх спортивных модулей. Прогрев перед заездом использует записанные WAV минутных отметок и 30 секунд; LapWiz работает в Free Practice, проверяет транспондеры и без перезапуска переходит в гоночную логику. Финишный диктор — следующий слой.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
+ <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.40 TEST</b></p><p>Общий Announcer Engine подключён поверх спортивных модулей. Прогрев перед заездом использует записанные WAV минутных отметок и 30 секунд; LapWiz работает в Free Practice, проверяет транспондеры и без перезапуска переходит в гоночную логику. Финишный диктор — следующий слой.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
  </div></section>`;}
 
 function bindView(){
@@ -2295,7 +2301,7 @@ function homeView(){
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
-   :`<div class="heroMini"><b>4.0.31 TEST · SKETCH REBUILD · READABLE UI</b><span>Phone portrait · Tablet landscape · Desktop / 2K · Dark / Light</span></div>`;
+   :`<div class="heroMini"><b>4.0.40 TEST · FLAG ATLAS</b><span>Phone portrait · Tablet landscape · Desktop / 2K · Dark / Light</span></div>`;
  return `<section class="page homePage">
  <div class="heroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат</h2></div></div>

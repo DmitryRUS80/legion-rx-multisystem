@@ -1,6 +1,6 @@
 {
-  "name": "Legion RX 4.0.31 Test Sketch Rebuild",
-  "short_name": "Legion RX 4.0.31",
+  "name": "Legion RX 4.0.40 Test",
+  "short_name": "Legion RX 4.0.40",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
