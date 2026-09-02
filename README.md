@@ -1,4 +1,4 @@
-# Legion RX 4.0.37 TEST
+# Legion RX 4.0.38 TEST
 
 Local Pilot Voice: MP3, WAV or OGG recordings of pilot names are loaded in the pilot profile and stored offline in IndexedDB by permanent pilot ID. No account, API, payment, server or internet connection is required.
 

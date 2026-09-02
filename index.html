@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.37 TEST</title>
+<title>Legion RX 4.0.38 TEST</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -744,7 +744,7 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
  .r425TimerMetrics{grid-template-columns:1fr!important;min-height:42px!important}.r425TimerMetrics>div{border-right:0!important}
 }
 
-/* 4.0.37 — отдельный пульт для телефона в горизонтальной ориентации. */
+/* 4.0.38 — телефон landscape: карточка пилота в одну строку, как в portrait. */
 @media (orientation:landscape) and (max-width:950px) and (max-height:600px){
  body.cockpitMode #viewHost{overflow:hidden!important}
  .rallyCockpit425{height:100dvh!important;min-height:0!important;overflow:hidden!important;padding:4px max(4px,env(safe-area-inset-right)) 4px max(4px,env(safe-area-inset-left))!important;gap:4px!important;grid-template-rows:44px minmax(0,1fr) 30px!important}
@@ -753,10 +753,11 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
  .r425TopActions{justify-content:flex-end!important;gap:2px!important;padding:2px!important;overflow:hidden!important}.r425TopBtn,.r425TopBtn.iconOnly{width:28px!important;min-width:28px!important;height:38px!important;padding:0!important;border-radius:6px!important}.r425TopBtn svg{width:15px!important;height:15px!important}.r425TopBtn b,.r425TopBtn small{display:none!important}
  .rally425Main{display:grid!important;grid-template-columns:minmax(0,1.62fr) minmax(250px,.82fr)!important;grid-template-rows:minmax(0,1fr)!important;gap:4px!important;min-height:0!important;overflow:hidden!important}
  .r425Positions{grid-column:1!important;grid-row:1!important;min-height:0!important;grid-template-rows:30px minmax(0,1fr)!important;border-radius:8px!important;overflow:hidden!important}.r425PositionsFooter{display:none!important}.r425PositionsHead{height:auto!important;padding:0 8px!important}.r425PositionsHead h2{font-size:14px!important}.r425PositionsHead svg{width:15px!important;height:15px!important}.r425PositionsHead span{font-size:8px!important}.r425PositionsHead span b{font-size:10px!important}
- .r425Positions .pilotBoardTable{min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important}.r425Positions .pilotRow.header{display:none!important}
- .r425Positions .pilotRow:not(.header){min-width:0!important;grid-template-columns:35px minmax(92px,1fr) 48px 62px!important;grid-template-rows:1fr 1fr!important;grid-template-areas:'pos pilot laps status' 'pos best last status'!important;min-height:52px!important;padding:3px 5px!important;gap:1px 5px!important}
- .r425Positions .pilotRow .pos{grid-area:pos!important;margin:-3px 0 -3px -5px!important;font-size:20px!important}.r425Positions .pilotNameCell{grid-area:pilot!important;min-width:0!important}.r425Positions .pilotNameCell .name{font-size:14px!important;line-height:1!important}.r425Positions .pilotNameCell .sub{display:none!important}.r425Positions .countryFlag{font-size:12px!important}
- .r425Positions .r425RaceMetric.best{grid-area:best!important;display:flex!important}.r425Positions .r425RaceMetric.last{grid-area:last!important;display:flex!important}.r425Positions .r425RaceMetric.laps{grid-area:laps!important;display:flex!important}.r425RaceMetric strong,.r425RaceMetric.laps strong{font-size:11px!important}.r425RaceMetric small{font-size:5.5px!important}.r425StatusChip{grid-area:status!important;justify-self:stretch!important;text-align:center!important;font-size:6.5px!important;padding:3px!important;white-space:normal!important;line-height:1.05!important}.r429MobileStats,.r425Laps,.r425Gap{display:none!important}
+ .r425Positions .pilotBoardTable{min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important}.r425Positions .pilotRow.header{display:grid!important;min-height:22px!important;font-size:6.5px!important}
+ .r425Positions .pilotRow,.r425Positions .pilotRow:not(.header),.r425Positions .pilotRow.header{min-width:0!important;grid-template-columns:35px minmax(96px,1.25fr) minmax(64px,.72fr) minmax(64px,.72fr) 43px 58px!important;grid-template-rows:1fr!important;grid-template-areas:none!important;padding:0 5px!important;gap:4px!important}
+ .r425Positions .pilotRow:not(.header){min-height:49px!important}
+ .r425Positions .pilotRow .pos{grid-area:auto!important;margin:0 0 0 -5px!important;font-size:23px!important}.r425Positions .pilotNameCell{grid-area:auto!important;min-width:0!important}.r425Positions .pilotNameCell .name{font-size:16px!important;line-height:1!important}.r425Positions .pilotNameCell .sub{display:none!important}.r425Positions .countryFlag{font-size:13px!important}
+ .r425Positions .r425RaceMetric.best,.r425Positions .r425RaceMetric.last,.r425Positions .r425RaceMetric.laps{grid-area:auto!important;display:flex!important}.r425RaceMetric strong{font-size:15px!important}.r425RaceMetric.laps strong{font-size:17px!important}.r425RaceMetric small{font-size:6px!important}.r425StatusChip{grid-area:auto!important;justify-self:stretch!important;text-align:center!important;font-size:7.5px!important;padding:4px 3px!important;white-space:normal!important;line-height:1.05!important}.r429MobileStats,.r425Laps,.r425Gap{display:none!important}
  .r425Side{grid-column:2!important;grid-row:1!important;display:grid!important;grid-template-rows:minmax(104px,.82fr) minmax(142px,1.18fr)!important;gap:4px!important;min-height:0!important;overflow:hidden!important}
  .r425TimerCard{min-height:0!important;border-radius:8px!important;overflow:hidden!important}.r425TimerMain{grid-template-columns:minmax(0,1fr) 58px!important;padding:5px 7px 3px!important}.r425TimerCaption{font-size:11px!important}.r425TimerMain strong#mainTimer{font-size:38px!important;line-height:.88!important}.r425TimerMain small{font-size:7px!important;margin-top:3px!important}.r425Ring{width:55px!important;height:55px!important}.r425RingInner b{font-size:17px!important}.r425RingInner small{font-size:5.5px!important}.r425TimerMetrics{min-height:27px!important}.r425TimerMetrics>div{padding:3px 6px!important}.r425TimerMetrics span{font-size:5.5px!important}.r425TimerMetrics b{font-size:9px!important}
  .r425ControlCard{min-height:0!important;padding:4px!important;grid-template-rows:11px minmax(0,1fr)!important;gap:3px!important;border-radius:8px!important}.r425ControlTitle{font-size:7px!important;line-height:11px!important}.r425Controls{grid-template-columns:repeat(3,1fr)!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:3px!important}.r425Control{min-height:0!important;padding:2px!important;gap:3px!important;border-radius:6px!important}.r425Control svg{width:16px!important;height:16px!important}.r425Control span b{font-size:8px!important;line-height:1!important}.r425Control span small{display:none!important}
@@ -771,7 +772,7 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.37 TEST</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.38 TEST</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -927,9 +928,9 @@ class LapWizCore extends EventTarget{
   unknownBeep(){this.beep(false);}
 }
 
-const LEGION_APP_VERSION='4.0.37';
-const LEGION_OFFLINE_CACHE='legion-rx-4-0-37-test-ios-audio-landscape';
-const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v437';
+const LEGION_APP_VERSION='4.0.38';
+const LEGION_OFFLINE_CACHE='legion-rx-4-0-38-test-landscape-pilot-row';
+const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v438';
 const LEGION_OFFLINE_ASSETS=[
   './','./index.html','./manifest.webmanifest',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
@@ -1446,7 +1447,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-  <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.37 TEST</b><span>iOS Audio Recovery · Phone Landscape</span></div>`}</div>
+  <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.38 TEST</b><span>Landscape Pilot Row · iOS Audio Recovery</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
