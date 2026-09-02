@@ -1,4 +1,4 @@
-LEGION RX 4.0.42 UI TEST — RALLYCROSS REFERENCE REBUILD
+LEGION RX 4.0.43 UI TEST — CLEAN RALLYCROSS PILOT ROW
 
 1. В настройках события → «Перед стартом» задайте:
    - прогрев 1–5 минут;
