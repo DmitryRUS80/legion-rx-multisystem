@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.40 TEST</title>
+<title>Legion RX 4.0.41 TEST</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -765,6 +765,43 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
 }
 /* ===== /4.0.32 TEST ===== */
 
+/* 4.0.41 — Free Practice cockpit: pilots left, timer and controls right. */
+.trackCockpit441{height:100dvh!important;min-height:0!important;overflow:hidden!important;padding:8px!important;gap:8px!important;grid-template-rows:76px minmax(0,1fr) 56px!important}
+.trackCockpit441 .trackMainGrid441{display:grid!important;grid-template-columns:minmax(0,1.72fr) minmax(310px,.72fr)!important;grid-template-rows:minmax(0,1fr)!important;gap:8px!important;padding:0!important;min-height:0!important;overflow:hidden!important}
+.trackCockpit441 .trackPositions{grid-column:1!important;grid-row:1!important;min-height:0!important;height:100%!important;overflow:hidden!important}
+.trackCockpit441 .trackControlPanel441{grid-column:2!important;grid-row:1!important;display:grid!important;grid-template-columns:1fr!important;grid-template-rows:minmax(150px,.72fr) minmax(238px,1.28fr)!important;gap:8px!important;min-height:0!important;overflow:hidden!important}
+.trackCockpit441 .trackTimerCard{display:grid!important;grid-column:1!important;grid-row:1!important;min-height:0!important;height:100%!important;margin:0!important}
+.trackControlCard441{grid-column:1;grid-row:2;min-height:0;display:grid;grid-template-rows:28px minmax(0,1fr);gap:6px;padding:8px;border:1px solid var(--console-line);border-radius:var(--radius-card);background:var(--console-panel);box-shadow:var(--shadow);overflow:hidden}
+.trackControlTitle441{display:flex;align-items:center;padding:0 3px;color:var(--console-muted);font:900 9px var(--rx-ui-font);letter-spacing:.11em}
+.trackCockpit441 .trackControls441{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;gap:6px!important;min-height:0!important;height:auto!important}
+.trackCockpit441 .trackControls441 .consoleControl{min-height:0!important;height:auto!important;padding:6px!important}
+.trackCockpit441 .modeStrip{min-height:0!important}
+@media(max-width:1200px){
+ .trackCockpit441{padding:6px!important;gap:6px!important;grid-template-rows:58px minmax(0,1fr) 40px!important}
+ .trackCockpit441 .trackMainGrid441{grid-template-columns:minmax(0,1.62fr) minmax(280px,.78fr)!important;gap:6px!important}
+ .trackCockpit441 .trackControlPanel441{grid-template-rows:minmax(118px,.72fr) minmax(190px,1.28fr)!important;gap:6px!important}
+ .trackControlCard441{grid-template-rows:20px minmax(0,1fr);gap:4px;padding:5px;border-radius:8px}.trackControlTitle441{font-size:7px}
+ .trackCockpit441 .trackControls441{gap:4px!important}.trackCockpit441 .trackControls441 .consoleControl{font-size:9px!important;gap:4px!important;padding:3px!important}.trackCockpit441 .trackControls441 .consoleControl svg{width:17px!important;height:17px!important}
+}
+@media (orientation:landscape) and (max-width:950px) and (max-height:600px){
+ .trackCockpit441{padding:4px max(4px,env(safe-area-inset-right)) 4px max(4px,env(safe-area-inset-left))!important;gap:4px!important;grid-template-rows:44px minmax(0,1fr) 30px!important}
+ .trackCockpit441 .trackMainGrid441{display:grid!important;grid-template-columns:minmax(0,1.62fr) minmax(250px,.82fr)!important;grid-template-rows:minmax(0,1fr)!important;gap:4px!important}
+ .trackCockpit441 .trackControlPanel441{display:grid!important;grid-template-rows:minmax(104px,.78fr) minmax(142px,1.22fr)!important;gap:4px!important}
+ .trackCockpit441 .trackTimerCard{display:grid!important;padding:6px 8px!important;grid-template-columns:minmax(0,1fr) 58px!important}.trackCockpit441 .trackTimerCard strong{font-size:38px!important}.trackCockpit441 .trackTimerCard .timerRing{width:55px!important;height:55px!important}
+ .trackControlCard441{grid-template-rows:11px minmax(0,1fr);gap:3px;padding:4px;border-radius:8px}.trackControlTitle441{font-size:7px;line-height:11px}
+ .trackCockpit441 .trackControls441{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:3px!important}.trackCockpit441 .trackControls441 .consoleControl{font-size:8px!important;gap:3px!important;padding:2px!important;border-radius:6px!important}.trackCockpit441 .trackControls441 .consoleControl svg{width:16px!important;height:16px!important}
+}
+@media (orientation:portrait) and (max-width:720px){
+ .trackCockpit441{padding:4px!important;gap:4px!important;grid-template-rows:54px minmax(0,1fr) 38px!important}
+ .trackCockpit441 .trackMainGrid441{display:grid!important;grid-template-columns:1fr!important;grid-template-rows:96px minmax(0,1fr) 112px!important;gap:4px!important;overflow:hidden!important}
+ .trackCockpit441 .trackControlPanel441{display:contents!important}
+ .trackCockpit441 .trackTimerCard{display:grid!important;grid-column:1!important;grid-row:1!important;height:96px!important;min-height:96px!important;padding:7px 9px!important}
+ .trackCockpit441 .trackPositions{grid-column:1!important;grid-row:2!important;height:auto!important;min-height:0!important}
+ .trackCockpit441 .trackControlCard441{grid-column:1!important;grid-row:3!important;grid-template-rows:0 minmax(0,1fr);gap:0;padding:4px!important}
+ .trackCockpit441 .trackControlTitle441{display:none}
+ .trackCockpit441 .trackControls441{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:4px!important}.trackCockpit441 .trackControls441 .consoleControl{font-size:9px!important}
+}
+
 </style>
 </head>
 <body>
@@ -772,7 +809,7 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.40 TEST</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.41 TEST</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -928,9 +965,9 @@ class LapWizCore extends EventTarget{
   unknownBeep(){this.beep(false);}
 }
 
-const LEGION_APP_VERSION='4.0.40';
-const LEGION_OFFLINE_CACHE='legion-rx-4-0-40-test-flag-atlas-clean-deploy';
-const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v440';
+const LEGION_APP_VERSION='4.0.41';
+const LEGION_OFFLINE_CACHE='legion-rx-4-0-41-test-free-practice-cockpit';
+const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v441';
 const LEGION_FLAG_CODES=`AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW`.split(/\s+/);
 const LEGION_OFFLINE_ASSETS=[
   './','./index.html','./manifest.webmanifest',
@@ -1453,7 +1490,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-  <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.40 TEST</b><span>Flag Atlas · Clean GitHub Deploy</span></div>`}</div>
+  <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.41 TEST</b><span>Free Practice Cockpit · Clean Layout</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
@@ -1665,7 +1702,7 @@ function settingsView(){return `<section class="page"><div class="pageHeader"><d
   <section class="ruleBox"><div class="ruleBoxHead"><b>Квалификация</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsQLimit"><option value="time" ${state.settings.qualificationLimitType==='time'?'selected':''}>По времени</option><option value="laps" ${state.settings.qualificationLimitType==='laps'?'selected':''}>По кругам</option></select></div><div class="field"><label>Минуты</label><input id="settingsQMin" type="number" value="${state.settings.qualificationMinutes}"></div><div class="field"><label>Круги</label><input id="settingsQLaps" type="number" value="${state.settings.qualificationLaps}"></div></div></section>
   <section class="ruleBox"><div class="ruleBoxHead"><b>Финалы / LCQ</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsFLimit"><option value="laps" ${state.settings.finalLimitType==='laps'?'selected':''}>По кругам</option><option value="time" ${state.settings.finalLimitType==='time'?'selected':''}>По времени</option></select></div><div class="field"><label>Круги</label><input id="settingsFLaps" type="number" value="${state.settings.finalLaps}"></div><div class="field"><label>Минуты</label><input id="settingsFMin" type="number" value="${state.settings.finalMinutes}"></div></div></section>
  </div><button class="btn primary" style="margin-top:12px" data-action="save-settings">Сохранить настройки</button></article>
- <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.40 TEST</b></p><p>Общий Announcer Engine подключён поверх спортивных модулей. Прогрев перед заездом использует записанные WAV минутных отметок и 30 секунд; LapWiz работает в Free Practice, проверяет транспондеры и без перезапуска переходит в гоночную логику. Финишный диктор — следующий слой.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
+ <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.41 TEST</b></p><p>Общий Announcer Engine подключён поверх спортивных модулей. Прогрев перед заездом использует записанные WAV минутных отметок и 30 секунд; LapWiz работает в Free Practice, проверяет транспондеры и без перезапуска переходит в гоночную логику. Финишный диктор — следующий слой.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
  </div></section>`;}
 
 function bindView(){
@@ -2301,7 +2338,7 @@ function homeView(){
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
-   :`<div class="heroMini"><b>4.0.40 TEST · FLAG ATLAS</b><span>Phone portrait · Tablet landscape · Desktop / 2K · Dark / Light</span></div>`;
+   :`<div class="heroMini"><b>4.0.41 TEST · FREE PRACTICE COCKPIT</b><span>Phone portrait · Tablet landscape · Desktop / 2K · Dark / Light</span></div>`;
  return `<section class="page homePage">
  <div class="heroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат</h2></div></div>
@@ -2345,37 +2382,27 @@ function trackDaySetupView(){
   </section>`;
 }
 
-function trackDayHeader(td){return `<header class="raceConsoleHeader"><button class="raceBrand" data-track-action="home"><strong>LEGION <i>RX</i></strong><small>Track Day · Free Practice</small></button><div class="raceHeadInfo"><div class="headCell"><span>${raceSvg('timer')}</span><div><b>${esc(td.name)}</b><small>СЕССИЯ</small></div></div><div class="headCell"><span>${raceSvg('users')}</span><div><b>${td.pilots?.length||0}</b><small>ПИЛОТОВ</small></div></div><div class="headCell"><span>${raceSvg('clock')}</span><div><b>${td.durationMin} мин</b><small>ЛИМИТ · MIN ${trackMinLapSec(td)}с · PIT ${trackPitTimeoutLabel(td)}</small></div></div><div class="headClock"><b id="trackClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><div class="raceHeadStatus compactHeadControls"><button class="consolePill ${lapwiz.connected?'ok':''}" data-track-toggle-widget="trackLapwiz" title="LapWiz · ${lapwiz.connected?'подключён':'не подключён'}">${raceSvg('bluetooth')}<span>${lapwiz.connected?'LapWiz подключён':'LapWiz'}</span></button><button class="consolePill ${td.status==='active'?'live':'disabled'}" data-track-toggle-widget="trackRules" title="${td.status==='active'?'Практика идёт':'Сессия завершена'}">${raceSvg('play')}<span>${td.status==='active'?'Практика идёт':'Сессия завершена'}</span></button><button class="squareConsoleBtn" data-track-action="setup" title="Настройки Track Day">${raceSvg('settings')}</button></div></header>`;}
+function trackDayHeader(td){const lapAction=lapwiz.connected?'data-action="lap-disconnect"':'data-track-action="lap-connect"';return `<header class="raceConsoleHeader"><button class="raceBrand" data-track-action="home"><strong>LEGION <i>RX</i></strong><small>Track Day · Free Practice</small></button><div class="raceHeadInfo"><div class="headCell"><span>${raceSvg('timer')}</span><div><b>${esc(td.name)}</b><small>СЕССИЯ</small></div></div><div class="headCell"><span>${raceSvg('users')}</span><div><b>${td.pilots?.length||0}</b><small>ПИЛОТОВ</small></div></div><div class="headCell"><span>${raceSvg('clock')}</span><div><b>${td.durationMin} мин</b><small>ЛИМИТ · MIN ${trackMinLapSec(td)}с · PIT ${trackPitTimeoutLabel(td)}</small></div></div><div class="headClock"><b id="trackClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><div class="raceHeadStatus compactHeadControls"><button class="consolePill ${lapwiz.connected?'ok':''}" ${lapAction} title="${lapwiz.connected?'Отключить':'Подключить'} LapWiz">${raceSvg('bluetooth')}<span>${lapwiz.connected?'LapWiz подключён':'Подключить LapWiz'}</span></button><span class="consolePill ${td.status==='active'?'live':'disabled'}" title="${td.status==='active'?'Практика идёт':'Сессия завершена'}">${raceSvg('play')}<span>${td.status==='active'?'Практика идёт':'Сессия завершена'}</span></span><button class="squareConsoleBtn" data-track-action="setup" title="Настройки Track Day">${raceSvg('settings')}</button></div></header>`;}
 function trackDayPilotRows(td){
  const ranked=rankTrackPilots(td);
  return `<div class="trackPilotRow trackHeader"><span>POS</span><span>ПИЛОТ</span><span>КРУГИ</span><span>ЛУЧШИЙ</span><span>ПОСЛЕДНИЙ</span><span>СТАТУС</span></div>${ranked.map((p,i)=>{const l=td.live?.[p.id]||blankTrackLive(),ds=trackLiveDisplay(l);return `<button class="trackPilotRow ${i===0&&l.laps>0?'trackLeader':''}" data-pilot-stats="${p.id}" data-stats-context="track"><span class="trackPos">${i+1}</span><span class="trackPilotIdentity"><b>${pilotNameMarkup(p)}</b><small class="trackPilotSub ${ds.cls}">${pilotClubName(p)?clubMarkup(pilotClubName(p),''):''}${pilotClubName(p)?'<span class="metaDot">·</span>':''}ID ${esc(p.transponder||'—')} · ${ds.text}</small></span><strong>${l.laps||0}</strong><span class="trackBestCell">${fmtMs(l.bestLapMs)}</span><span>${fmtMs(l.lastLapMs)}</span><span class="trackStatus ${ds.cls}">${ds.text}</span></button>`;}).join('')}`;
 }
-function trackLapwizWidget(){
- const mode=lapwiz.running?(lapwiz.currentMode==='practice'?'FREE PRACTICE':'RUNNING'):'STOPPED';
- return widgetShell('trackLapwiz','LAPWIZ','bluetooth',`<div class="kvList"><div><span>Устройство</span><b class="accentGreen">${esc(lapwiz.device?.name||'—')}</b></div><div><span>Bluetooth</span><b>${lapwiz.connected?'стабильно':'не подключён'}</b></div><div><span>Режим</span><b>${mode}</b></div><div><span>Звук прохода</span><b>${state.settings.lapSound?'ВКЛ':'ВЫКЛ'}</b></div></div><div class="widgetActions">${lapwiz.connected?`<button class="miniAction" data-action="lap-disconnect">Отключить</button>`:`<button class="miniAction primary" data-track-action="lap-connect">Подключить</button>`}</div>`,{badge:lapwiz.connected?'ONLINE':'OFFLINE'});
-}
-function trackRulesWidget(td){
- return widgetShell('trackRules','КАК СЧИТАЕМ','chart',`<div class="kvList"><div><span>Сортировка</span><b>по количеству кругов</b></div><div><span>При равенстве</span><b>по лучшему кругу</b></div><div><span>Первый проход</span><b>точка отсчёта</b></div><div><span>Мин. круг</span><b>${trackMinLapSec(td)} сек</b></div><div><span>PIT timeout</span><b>${trackPitTimeoutLabel(td)}</b></div></div>`);
+function trackDayControlButtons(td){
+ const lapButton=lapwiz.connected?`<button class="consoleControl" data-action="lap-disconnect">${raceSvg('bluetooth')}<span>ОТКЛЮЧИТЬ LAPWIZ</span></button>`:`<button class="consoleControl primarySoft" data-track-action="lap-connect">${raceSvg('bluetooth')}<span>ПОДКЛЮЧИТЬ LAPWIZ</span></button>`;
+ if(td.status==='active')return `<button class="consoleControl primarySoft" data-track-action="report">${raceSvg('chart')}<span>СТАТИСТИКА</span></button><button class="consoleControl" disabled>${raceSvg('pause')}<span>ПАУЗА</span></button>${lapButton}<button class="consoleControl primary" data-track-action="setup">${raceSvg('settings')}<span>НАСТРОЙКА</span></button><button class="consoleControl" data-track-action="home">${raceSvg('home')}<span>ГЛАВНАЯ</span></button><button class="consoleControl danger" data-track-action="finish">${raceSvg('stop')}<span>ЗАВЕРШИТЬ</span></button>`;
+ return `<button class="consoleControl" data-track-action="home">${raceSvg('home')}<span>ГЛАВНАЯ</span></button><button class="consoleControl" data-track-action="setup">${raceSvg('settings')}<span>НОВАЯ СЕССИЯ</span></button><button class="consoleControl primary" data-track-action="report">${raceSvg('chart')}<span>ОТЧЁТ</span></button>${lapButton}<button class="consoleControl" disabled>${raceSvg('timer')}<span>СЕССИЯ ЗАВЕРШЕНА</span></button><button class="consoleControl danger" data-track-action="clear-active">${raceSvg('stop')}<span>ЗАКРЫТЬ</span></button>`;
 }
 function trackDayCockpitView(){
  const td=ensureTrackDayState(state.trackDay);if(!td)return `<section class="page"><div class="card"><h2>Нет активного Track Day</h2><button class="btn primary" data-track-action="setup">К настройке</button></div></section>`;
- const best=trackBest(td),elapsed=trackElapsed(td),remaining=trackRemaining(td),total=Math.max(1,Number(td.durationMin||1)*60000),progress=Math.max(0,Math.min(100,remaining/total*100));
- return `<section class="raceCockpit trackCockpit">${trackDayHeader(td)}
- <div class="trackHeroStrip">
-   <div class="trackLimitHero"><span>ЛИМИТ СЕССИИ</span><b>${fmtClock(total)}</b></div>
-   <div><span>ПРОШЛО</span><b id="trackElapsed">${fmtClock(elapsed)}</b></div>
-   <div class="trackBestHero"><span>ЛУЧШИЙ КРУГ</span><strong id="trackBestHero">${best?`${esc(best.pilot.name)} · ${fmtMs(best.ms)}`:'—'}</strong></div>
-   <div><span>ОСТАЛОСЬ</span><b id="trackRemaining">${fmtClock(remaining)}</b></div>
- </div>
- <main class="trackMainGrid">
+ const elapsed=trackElapsed(td),remaining=trackRemaining(td),total=Math.max(1,Number(td.durationMin||1)*60000),progress=Math.max(0,Math.min(100,remaining/total*100));
+ return `<section class="raceCockpit trackCockpit trackCockpit441">${trackDayHeader(td)}
+ <main class="trackMainGrid trackMainGrid441">
    <section class="racePositions trackPositions"><div class="positionsTitle"><div>${raceSvg('trophy')}<h2>СВОБОДНАЯ ПРАКТИКА</h2></div><div class="positionsActions"><span class="badge">по кругам</span></div></div><div id="trackPilotBoard" class="trackPilotBoard">${trackDayPilotRows(td)}</div><div class="positionsFooter"><span>${raceSvg('chart')} Всего кругов: <b id="trackLapTotal">${Object.values(td.live||{}).reduce((s,l)=>s+Number(l.laps||0),0)}</b></span><span>Последний проход: <b id="trackLastPass">${esc(td.lastPass||'—')}</b></span></div></section>
-   <aside class="trackSidePanel">
+   <aside class="trackControlPanel441">
      <section class="timerCard trackTimerCard"><div><span class="timerCaption">${td.status==='active'?'ДО КОНЦА СЕССИИ':'СЕССИЯ ЗАВЕРШЕНА'}</span><strong id="trackMainTimer">${td.status==='active'?fmtClock(remaining):fmtClock(td.elapsedFinalMs||elapsed)}</strong><small>${td.durationMin} минут · Free Practice</small></div><div class="timerRing" id="trackTimerRing" style="--progress:${progress}"><span>${Math.round(progress)}%</span></div></section>
-     ${trackLapwizWidget()}
-     ${trackRulesWidget(td)}
+     <section class="trackControlCard441"><div class="trackControlTitle441">УПРАВЛЕНИЕ ПРАКТИКОЙ</div><div class="raceControls trackControls trackControls441">${trackDayControlButtons(td)}</div></section>
    </aside>
  </main>
- <div class="raceControls trackControls">${td.status==='active'?`<button class="consoleControl primarySoft" data-track-action="report">${raceSvg('chart')}<span>СТАТИСТИКА</span></button><button class="consoleControl" disabled>${raceSvg('pause')}<span>ПАУЗА</span></button><button class="consoleControl" disabled>${raceSvg('plusClock')}<span>+ ВРЕМЯ</span></button><button class="consoleControl primary" data-track-action="setup">${raceSvg('settings')}<span>НАСТРОЙКА</span></button><button class="consoleControl" data-track-action="home">${raceSvg('home')}<span>ГЛАВНАЯ</span></button><button class="consoleControl danger" data-track-action="finish">${raceSvg('stop')}<span>ЗАВЕРШИТЬ</span></button>`:`<button class="consoleControl" data-track-action="home">${raceSvg('home')}<span>ГЛАВНАЯ</span></button><button class="consoleControl" data-track-action="setup">${raceSvg('settings')}<span>НОВАЯ СЕССИЯ</span></button><button class="consoleControl primary" data-track-action="report">${raceSvg('chart')}<span>ОТЧЁТ</span></button><button class="consoleControl" disabled>${raceSvg('pause')}<span>—</span></button><button class="consoleControl" disabled>${raceSvg('timer')}<span>—</span></button><button class="consoleControl danger" data-track-action="clear-active">${raceSvg('stop')}<span>ЗАКРЫТЬ</span></button>`}</div>
  <div class="modeStrip"><button>${raceSvg('flag')}<span>РАЛЛИ-КРОСС</span></button><button disabled>${raceSvg('flag')}<span>РАЛЛИ-СПРИНТ</span><em>СКОРО</em></button><button disabled>${raceSvg('car')}<span>КЛАССИЧЕСКАЯ RC-ГОНКА</span><em>СКОРО</em></button><button class="modeActive">${raceSvg('timer')}<span>TRACK DAY</span><em>PRACTICE</em></button></div></section>`;
 }
 
@@ -2476,7 +2503,6 @@ function bind415PilotStats(){if(state._pilotStatsDelegated)return;state._pilotSt
 function bind415(){
   $$('[data-track-action]').forEach(b=>b.onclick=async()=>{const a=b.dataset.trackAction;if(a==='open')return nav(state.trackDay?.status==='active'?'trackDayCockpit':'trackDaySetup');if(a==='open-active')return nav('trackDayCockpit');if(a==='home')return nav('home');if(a==='setup'){if(state.trackDay?.status==='active')return toast('Сначала завершите текущую Track Day сессию');state.trackDay=newTrackDayDraft();persistTrackDays();return nav('trackDaySetup');}if(a==='select-all'){$$('[data-track-pilot]').forEach(x=>x.checked=true);return;}if(a==='start')return startTrackDay();if(a==='finish'){if(confirm('Завершить Track Day сейчас?'))return finishTrackDay('Сессия завершена судьёй');return;}if(a==='report')return trackDayReportModal(state.trackDay);if(a==='clear-active'){state.trackDay=null;persistTrackDays();return nav('trackDaySetup');}if(a==='lap-connect'){try{await ensureRaceAudioFromGesture();await lapwiz.connect();if(state.trackDay?.status==='active'&&!lapwiz.running)await lapwiz.start({mode:'practice',limitType:'time',durationMin:960,targetLaps:0,minLapSec:trackMinLapSec(state.trackDay)});toast('LapWiz подключён');render();}catch(e){toast(e.message);}return;}});
   $$('[data-track-report]').forEach(b=>b.onclick=()=>trackDayReportModal((state.trackDays||[]).find(x=>x.id===b.dataset.trackReport)));
-  $$('[data-track-toggle-widget]').forEach(b=>b.onclick=()=>{const k=b.dataset.trackToggleWidget;if(!k)return;state.widgetCollapsed[k]=!state.widgetCollapsed[k];render();});
   $$('[data-track-delete]').forEach(b=>b.onclick=()=>{if(!confirm('Удалить этот Track Day отчёт?'))return;state.trackDays=state.trackDays.filter(x=>x.id!==b.dataset.trackDelete);persistTrackDays();render();});
   $$('[data-race-skip-current]').forEach(b=>b.onclick=()=>quickSkipCurrentRace());$$('[data-race-manage]').forEach(b=>b.onclick=()=>raceManageModal());bind415PilotStats();
 }

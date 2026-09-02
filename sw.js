@@ -1,4 +1,4 @@
-const CACHE='legion-rx-4-0-40-test-flag-atlas-clean-deploy';
+const CACHE='legion-rx-4-0-41-test-free-practice-cockpit';
 const ASSETS=[
   './','./index.html','./manifest.webmanifest',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',

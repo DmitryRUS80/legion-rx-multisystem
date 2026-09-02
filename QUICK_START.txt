@@ -1,4 +1,4 @@
-LEGION RX 4.0.40 TEST — START / OFFLINE / FLAG ATLAS
+LEGION RX 4.0.41 TEST — FREE PRACTICE COCKPIT
 
 1. В настройках события → «Перед стартом» задайте:
    - прогрев 1–5 минут;
