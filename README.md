@@ -1,6 +1,6 @@
-# Legion RX 4.0.41 TEST
+# Legion RX 4.0.42 UI TEST
 
-The Free Practice cockpit now follows the RallyCross structure: one participant board on the left and the session timer plus controls on the right. Duplicate summary and rules/LapWiz widgets were removed from the cockpit while Track Day timing, PIT, lap validation and LapWiz behavior remain unchanged.
+This is an isolated RallyCross UI test rebuilt from the approved dark reference sketch. The cockpit now uses a new namespaced layout for the top status block, complete pilot table, timer and lap ring, 3×2 controls and bottom information strip. Existing race, LapWiz and announcer logic is preserved.
 
 All 249 pilot country flags are stored in one offline PNG atlas instead of hundreds of separate SVG files. They render consistently on Windows, Android and iOS, and Russia remains the first country in the pilot selector. The GitHub deployment package contains only current runtime files.
 
