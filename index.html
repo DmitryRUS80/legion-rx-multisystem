@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.0.47 UI TEST</title>
+<title>Legion RX 4.0.42 UI TEST</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -803,14 +803,14 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
 }
 
 </style>
-<link rel="stylesheet" href="ui-rally-4.0.47.css" />
+<link rel="stylesheet" href="ui-rally-4.0.42.css" />
 </head>
 <body>
 <div id="runtimeError" style="display:none;position:fixed;z-index:9999;left:12px;right:12px;top:12px;background:#5c1015;color:#fff;border:1px solid #d64149;padding:14px;border-radius:8px;font:14px/1.45 Segoe UI,sans-serif"></div>
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.47 UI TEST</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.0.42 UI TEST</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -966,14 +966,13 @@ class LapWizCore extends EventTarget{
   unknownBeep(){this.beep(false);}
 }
 
-const LEGION_APP_VERSION='4.0.47';
-const LEGION_OFFLINE_CACHE='legion-rx-4-0-47-ui-lab-native';
-const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v447';
+const LEGION_APP_VERSION='4.0.42';
+const LEGION_OFFLINE_CACHE='legion-rx-4-0-42-ui-test-rallycross-rebuild';
+const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v442';
 const LEGION_FLAG_CODES=`AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW`.split(/\s+/);
 const LEGION_OFFLINE_ASSETS=[
-  './','./index.html','./manifest.webmanifest','./ui-rally-4.0.47.css',
+  './','./index.html','./manifest.webmanifest','./ui-rally-4.0.42.css',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
-  './fonts/LegionNarrow-Regular.otf','./fonts/LegionNarrow-Bold.otf','./fonts/LICENSE.txt',
   './audio/voice/prestart_10.wav','./audio/voice/good_race.wav',
   ...Array.from({length:10},(_,i)=>`./audio/voice/countdown_${String(i+1).padStart(2,'0')}.wav`),
   './audio/voice/warmup_01.wav','./audio/voice/warmup_02.wav','./audio/voice/warmup_03.wav','./audio/voice/warmup_04.wav','./audio/voice/warmup_05.wav','./audio/voice/warmup_30.wav',
@@ -1493,7 +1492,7 @@ function homeView(){
  return `<section class="page homePage">
  <div class="heroPanel">
    <div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований: пилоты, заезды, результаты и LapWiz — в одном интерфейсе.</p></div>
-  <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.47 UI TEST</b><span>RallyCross · UI Lab Native</span></div>`}</div>
+  <div class="heroStatus">${race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`:`<div class="heroMini"><b>4.0.42 UI TEST</b><span>RallyCross · Reference Sketch Rebuild</span></div>`}</div>
  </div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат соревнования</h2></div></div>
  <div class="disciplineGrid">
@@ -1705,7 +1704,7 @@ function settingsView(){return `<section class="page"><div class="pageHeader"><d
   <section class="ruleBox"><div class="ruleBoxHead"><b>Квалификация</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsQLimit"><option value="time" ${state.settings.qualificationLimitType==='time'?'selected':''}>По времени</option><option value="laps" ${state.settings.qualificationLimitType==='laps'?'selected':''}>По кругам</option></select></div><div class="field"><label>Минуты</label><input id="settingsQMin" type="number" value="${state.settings.qualificationMinutes}"></div><div class="field"><label>Круги</label><input id="settingsQLaps" type="number" value="${state.settings.qualificationLaps}"></div></div></section>
   <section class="ruleBox"><div class="ruleBoxHead"><b>Финалы / LCQ</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsFLimit"><option value="laps" ${state.settings.finalLimitType==='laps'?'selected':''}>По кругам</option><option value="time" ${state.settings.finalLimitType==='time'?'selected':''}>По времени</option></select></div><div class="field"><label>Круги</label><input id="settingsFLaps" type="number" value="${state.settings.finalLaps}"></div><div class="field"><label>Минуты</label><input id="settingsFMin" type="number" value="${state.settings.finalMinutes}"></div></div></section>
  </div><button class="btn primary" style="margin-top:12px" data-action="save-settings">Сохранить настройки</button></article>
- <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.47 UI TEST</b></p><p>Пульт RallyCross использует нативную DOM-структуру Legion RX UI Lab: одни и те же блоки, сетка, размеры и адаптивные профили. Спортивная логика, LapWiz и диктор сохранены без изменений.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
+ <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.0.42 UI TEST</b></p><p>Тестовая сборка нового интерфейса RallyCross по утверждённому эскизу. Спортивная логика, LapWiz и диктор сохранены без изменений.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
  </div></section>`;}
 
 function bindView(){
@@ -2341,7 +2340,7 @@ function homeView(){
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
-   :`<div class="heroMini"><b>4.0.47 UI TEST · UI LAB NATIVE</b><span>Same editor DOM and CSS · Race logic unchanged</span></div>`;
+   :`<div class="heroMini"><b>4.0.42 UI TEST · RALLYCROSS REBUILD</b><span>Reference sketch · New isolated markup · Race logic unchanged</span></div>`;
  return `<section class="page homePage">
  <div class="heroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат</h2></div></div>
@@ -2746,36 +2745,28 @@ function updateDynamicCockpit(){
 }
 /* ===== /4.0.31 TEST ===== */
 
-/* ===== Legion RX 4.0.47 UI TEST · Native UI Lab structure ===== */
+/* ===== Legion RX 4.0.42 UI TEST · RallyCross reference rebuild ===== */
 function rx42PhaseClass(s){
  const cls=phaseClass(s);
  return cls==='live'?'ok':cls==='warn'?'danger':'blue';
 }
-function rx45RingMarkup(value){
- const text=String(value??'—'),parts=text.match(/^(\d+)\s*\/\s*(\d+)$/);
- return parts?`${parts[1]}<small class="rx45RingSuffix">/${parts[2]}</small>`:esc(text);
-}
-function rx47PilotIdentity(p){
- const code=pilotCountryCode(p),flag=countryFlag(code),club=pilotClubName(p),meta=[club?clubMarkup(club,''):'',`ID ${esc(p?.transponder||'—')}`].filter(Boolean).join('<span class="metaDot">·</span>');
- return `<div class="rx42PilotIdentity">${flag?`<span class="countryFlag rx42Flag" style="--country-flag-position:${flag}" title="${esc(countryName(code))}" role="img" aria-label="${esc(countryName(code))}">${esc(code)}</span>`:''}<div class="rx42PilotText"><div class="rx42PilotName">${esc(p?.name||'—')}</div><div class="rx42PilotSub">${meta}</div></div></div>`;
-}
 function rx42PilotTable(pilots,session){
  const pre=['warmup','countdown'].includes(session?.phase),globalBest=r425GlobalBest(pilots,session),rule=currentEvent(state.race)?eventRule(state.race,currentEvent(state.race)):null,leaderLaps=pilots[0]?(session?.live?.[pilots[0].id]?.laps||0):0;
- return pilots.map((p,i)=>{
+ return `<div class="rx42PilotRow header"><span>ПОЗ</span><span>ПИЛОТ<small>КЛУБ · ID ТРАНСПОНДЕРА</small></span><span>BEST<small>ЛУЧШИЙ КРУГ</small></span><span>AVG<small>СРЕДНИЙ КРУГ</small></span><span>КРУГИ</span><span>ОТСТАВАНИЕ</span><span>СТАТУС</span></div>`+pilots.map((p,i)=>{
    const l=session?.live?.[p.id]||blankLive(),st=r425PilotState(session,l,p.id,i,pre,leaderLaps),slow=Number.isFinite(globalBest)&&Number.isFinite(l.bestLapMs)&&l.bestLapMs>globalBest*1.035,key=String(p.id).replace(/[^a-zA-Z0-9_-]/g,'_'),target=rule?.limitType==='laps'?rule.targetLaps:null,club=pilotClubName(p),gap=pre?'—':gapText(pilots,session,p,i),avg=r425LapAvg(l);
-   return `<div class="rx42PilotRow clickablePilot ${i===0&&l.laps>0?'leader':''} ${l.finished?'finished':''}" data-pilot-stats="${p.id}" data-stats-context="race" style="view-transition-name:rx42_pilot_${key}"><div class="rx42Pos">${i+1}</div>${rx47PilotIdentity(p)}<div class="rx42Metric best ${slow?'slow':''}">${fmtMs(l.bestLapMs)}</div><div class="rx42Metric avg">${fmtMs(avg)}</div><div class="rx42Metric laps">${l.laps||0}${target?` / ${target}`:''}</div><div class="rx42Gap">${gap}</div><span class="rx42Status ${st.cls}">${st.text}</span></div>`;
+   return `<div class="rx42PilotRow clickablePilot ${i===0&&l.laps>0?'leader':''} ${l.finished?'finished':''}" data-pilot-stats="${p.id}" data-stats-context="race" style="view-transition-name:rx42_pilot_${key}"><div class="rx42Pos">${i+1}</div><div class="rx42PilotIdentity"><div class="rx42PilotName">${pilotNameMarkup(p)}</div><div class="rx42PilotSub">${club?clubMarkup(club,'')+'<span class="metaDot">·</span>':''}ID ${esc(p.transponder||'—')}</div></div><div class="rx42Metric best ${slow?'slow':''}"><strong>${fmtMs(l.bestLapMs)}</strong><small>BEST</small></div><div class="rx42Metric avg"><strong>${fmtMs(avg)}</strong><small>СРЕДНИЙ</small></div><div class="rx42Metric laps"><strong>${l.laps||0}${target?` / ${target}`:''}</strong><small>КРУГИ</small></div><div class="rx42Gap">${gap}</div><span class="rx42Status ${st.cls}">${st.text}</span></div>`;
  }).join('');
 }
 function rx42FinalProtocolTable(race){
  if(!race.finalProtocol?.length)return'<div class="empty">Финальный протокол ещё не сформирован.</div>';
- return race.finalProtocol.map(r=>{const p=getPilot(race,r.pilotId);return `<div class="rx42PilotRow"><div class="rx42Pos">${r.place}</div>${rx47PilotIdentity(p)}<div class="rx42Metric best">${r.eventPoints}</div><div class="rx42ProtocolSource">${esc(r.source)}</div><span class="rx42Status blue">${esc(r.status||'FIN')}</span></div>`;}).join('');
+ return `<div class="rx42PilotRow header"><span>ПОЗ</span><span>ПИЛОТ<small>КЛУБ · ID ТРАНСПОНДЕРА</small></span><span>ОЧКИ</span><span style="grid-column:4/7">ИСТОЧНИК РЕЗУЛЬТАТА</span><span>СТАТУС</span></div>`+race.finalProtocol.map(r=>{const p=getPilot(race,r.pilotId),club=pilotClubName(p);return `<div class="rx42PilotRow"><div class="rx42Pos">${r.place}</div><div class="rx42PilotIdentity"><div class="rx42PilotName">${pilotNameMarkup(p)}</div><div class="rx42PilotSub">${club?clubMarkup(club,'')+'<span class="metaDot">·</span>':''}ID ${esc(p?.transponder||'—')}</div></div><div class="rx42Metric best"><strong>${r.eventPoints}</strong><small>ОЧКИ</small></div><div class="rx42ProtocolSource">${esc(r.source)}</div><span class="rx42Status blue">${esc(r.status||'FIN')}</span></div>`;}).join('');
 }
 function rx42TopButton(cls,attrs,icon,title='',sub=''){
- return `<button class="rx42TopButton ${cls||''} ${title?'':'iconOnly'}" ${attrs||''}>${raceSvg(icon)}${title?`<small>${title}</small>`:''}</button>`;
+ return `<button class="rx42TopButton ${cls||''} ${title?'':'iconOnly'}" ${attrs||''}>${raceSvg(icon)}${title?`<span><b>${title}</b>${sub?`<small>${sub}</small>`:''}</span>`:''}</button>`;
 }
 function rx42Header(race,ev,s){
  const phase=phaseLabel(s),phaseSmall=['warmup','countdown'].includes(s?.phase)?displayTimer(s,ev):phase,nextDate=r425Date(race.eventDate)||r425Date(new Date().toISOString().slice(0,10));
- return `<header class="rx42Top rx42Panel"><button class="rx42Brand" data-action="home"><strong>LEGION <i>RX</i></strong></button><div class="rx42Event">${raceSvg('trophy')}<div><b>${esc(race.eventName)} · ${nextDate}</b><small>КЛАСС: ${esc(race.className||'Rally-10')} · ${esc(eventShortLabel(ev))}</small></div></div><div class="rx42Clock">${raceSvg('clock')}<div><b id="cockpitClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><nav class="rx42TopActions">${rx42TopButton('','data-quick-panel="lapwiz" title="Bluetooth / LapWiz"','bluetooth','BLUETOOTH')}${rx42TopButton(lapwiz.connected?'ok':'','data-quick-panel="lapwiz" title="LapWiz"','wave','LAPWIZ',lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE')}${rx42TopButton(state.settings.announcerEnabled?'ok':'','data-quick-panel="announcer" title="Диктор"','mic','ДИКТОР',state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ')}${rx42TopButton(rx42PhaseClass(s),'data-quick-panel="status" title="Состояние заезда"','flag',['warmup','countdown'].includes(s?.phase)?'РАЗМИНКА':'СТАТУС',phaseSmall)}${rx42TopButton('','data-race-skip-current="1" title="Пропустить текущий заезд"','next','ПРОПУСТИТЬ','ЗАЕЗД')}${rx42TopButton('danger','data-race-manage="open" title="Завершение и отмена"','stop','ЗАВЕРШИТЬ','СОБЫТИЕ')}${rx42TopButton('','data-action="open-settings" title="Настройки"','settings','НАСТРОЙКИ')}${rx42TopButton('','data-quick-panel="menu" title="Меню"','list','МЕНЮ')}</nav></header>`;
+ return `<header class="rx42Top"><section class="rx42TopInfo"><button class="rx42Brand" data-action="home"><strong>LEGION <i>RX</i></strong><small>RallyCross · Live Heat</small></button><div class="rx42Event"><b>${esc(race.eventName)} · ${nextDate}</b><small><span>КЛАСС: ${esc(race.className||'Rally-10')}</span><i>•</i><span>${esc(eventShortLabel(ev))}</span></small></div><div class="rx42Clock"><b id="cockpitClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></section><nav class="rx42TopActions">${rx42TopButton('','data-quick-panel="lapwiz" title="Bluetooth / LapWiz"','bluetooth')}${rx42TopButton(lapwiz.connected?'ok':'','data-quick-panel="lapwiz" title="LapWiz"','wave','LAPWIZ',lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE')}${rx42TopButton(state.settings.announcerEnabled?'ok':'','data-quick-panel="announcer" title="Диктор"','mic','ДИКТОР',state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ')}${rx42TopButton(rx42PhaseClass(s),'data-quick-panel="status" title="Состояние заезда"','flag',['warmup','countdown'].includes(s?.phase)?'РАЗМИНКА':'СТАТУС',phaseSmall)}${rx42TopButton('','data-race-skip-current="1" title="Пропустить текущий заезд"','next','ПРОПУСТИТЬ','ЗАЕЗД')}${rx42TopButton('danger','data-race-manage="open" title="Завершение и отмена"','stop','ЗАВЕРШИТЬ','СОБЫТИЕ')}${rx42TopButton('','data-action="open-settings" title="Настройки"','settings','НАСТРОЙКИ')}${rx42TopButton('','data-quick-panel="menu" title="Меню"','list','МЕНЮ')}</nav></header>`;
 }
 function rx42ControlButton(cls,attrs,icon,title,sub=''){
  return `<button class="rx42Control ${cls||''}" ${attrs||''}>${raceSvg(icon)}<span><b>${title}</b>${sub?`<small>${sub}</small>`:''}</span></button>`;
@@ -2795,13 +2786,7 @@ function cockpitView(){
  if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
  const race=state.race,ev=currentEvent(race),events=eventList(race),session=ensureSession(ev),pilots=ev?liveRanking(getEventPilots(race,ev),session):[],done=race.stage==='finished',tie=race.stage==='tie',ring=r425RingData(race,ev,pilots,session),stats=r425TimerStats(race,ev,pilots,session),progress=timerProgress(session,ev),leader=pilots[0],leaderName=leader?.name||'—';
  if(tie)return `<section class="raceCockpit rx42Cockpit">${rx42Header(race,ev,session)}<main class="rx42Main"><div class="rx42Tie">${tieWidget(race)}</div></main>${rx42Footer(race,ev,session)}${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,session,done)}</section>`;
- const columns=`<div class="rx42Columns"><span>ПОЗ</span><span>ПИЛОТ</span><span>BEST</span><span>AVG</span><span>КРУГИ</span><span>ОТСТАВАНИЕ</span><span>СТАТУС</span></div>`;
- return `<section class="raceCockpit rx42Cockpit">${rx42Header(race,ev,session)}<main class="rx42Main"><section class="rx42Roster rx42Panel" data-pilot-count="${pilots.length}"><div class="rx42RosterHead"><div class="rx42RosterTitle">${raceSvg('trophy')}<h2>${done?'ИТОГОВЫЕ ПОЗИЦИИ':'УЧАСТНИКИ ЗАЕЗДА'}</h2></div><span class="rx42RosterCount">ВСЕГО: <b>${pilots.length||race.pilots?.length||0}</b></span></div>${columns}<div class="rx42Table">${done?rx42FinalProtocolTable(race):rx42PilotTable(pilots,session)}</div></section><aside class="rx42Side"><section class="rx42Timer rx42Panel"><div class="rx42TimerCopy"><span class="rx42TimerCaption">${timerCaption(session,ev)}</span><strong class="rx42TimerValue" id="mainTimer">${done?'00:00':displayTimer(session,ev)}</strong><span class="rx42TimerPhase" id="rx42TimerPhase">${esc(phaseLabel(session))}</span><small class="rx42TimerSubline" id="timerSubline">${ev?timerSubline(session,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="rx42Ring" style="--progress:${progress}"><div class="rx42RingInner"><b id="r425RingMain">${rx45RingMarkup(ring.main)}</b><small id="r425RingSub">${ring.sub}</small></div></div><div class="rx42TimerMetrics"><div class="rx42TimerMetric best"><span>ЛУЧШИЙ КРУГ ЛИДЕРА</span><b id="r425LeaderBest">${stats.best}</b><small id="rx42LeaderBestName">${esc(leaderName)}</small></div><div class="rx42TimerMetric avg"><span>СРЕДНИЙ КРУГ ЛИДЕРА</span><b id="r425LeaderAvg">${stats.avg}</b><small id="rx42LeaderAvgName">${esc(leaderName)}</small></div><div class="rx42TimerMetric laps"><span>КРУГОВ ЛИДЕРА</span><b id="r425LeaderLaps">${stats.laps}</b><small id="rx42LeaderLapsName">${esc(leaderName)}</small></div></div></section><section class="rx42ControlPanel rx42Panel"><div class="rx42ControlTitle">УПРАВЛЕНИЕ ЗАЕЗДОМ</div>${rx42ControlGrid(done,session,false)}</section></aside></main>${rx42Footer(race,ev,session)}${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,session,done)}</section>`;
-}
-function rx47AnimatePilotOrder(board,html){
- const before=new Map([...board.querySelectorAll('[data-pilot-stats]')].map(el=>[el.dataset.pilotStats,el.getBoundingClientRect()]));
- board.innerHTML=html;
- requestAnimationFrame(()=>board.querySelectorAll('[data-pilot-stats]').forEach(el=>{const old=before.get(el.dataset.pilotStats);if(!old||typeof el.animate!=='function')return;const now=el.getBoundingClientRect(),dx=old.left-now.left,dy=old.top-now.top;if(Math.abs(dx)>1||Math.abs(dy)>1)el.animate([{transform:`translate(${dx}px,${dy}px)`,zIndex:3},{transform:'translate(0,0)',zIndex:3}],{duration:360,easing:'cubic-bezier(.22,.72,.2,1)'});}));
+ return `<section class="raceCockpit rx42Cockpit">${rx42Header(race,ev,session)}<main class="rx42Main"><section class="rx42Roster" data-pilot-count="${pilots.length}"><div class="rx42RosterHead"><div class="rx42RosterTitle">${raceSvg('trophy')}<h2>${done?'ИТОГОВЫЕ ПОЗИЦИИ':'УЧАСТНИКИ ЗАЕЗДА'}</h2></div><span class="rx42RosterCount">ВСЕГО: <b>${pilots.length||race.pilots?.length||0}</b></span></div><div class="rx42Table">${done?rx42FinalProtocolTable(race):rx42PilotTable(pilots,session)}</div></section><aside class="rx42Side"><section class="rx42Timer"><div class="rx42TimerMain"><div class="rx42TimerCopy"><span class="rx42TimerCaption">${timerCaption(session,ev)}</span><strong class="rx42TimerValue" id="mainTimer">${done?'00:00':displayTimer(session,ev)}</strong><span class="rx42TimerPhase" id="rx42TimerPhase">${esc(phaseLabel(session))}</span><small class="rx42TimerSubline" id="timerSubline">${ev?timerSubline(session,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="rx42Ring" style="--progress:${progress}"><div class="rx42RingInner"><b id="r425RingMain">${ring.main}</b><small id="r425RingSub">${ring.sub}</small></div></div></div><div class="rx42TimerMetrics"><div class="rx42TimerMetric best"><span>ЛУЧШИЙ КРУГ ЛИДЕРА</span><b id="r425LeaderBest">${stats.best}</b><small id="rx42LeaderBestName">${esc(leaderName)}</small></div><div class="rx42TimerMetric avg"><span>СРЕДНИЙ КРУГ ЛИДЕРА</span><b id="r425LeaderAvg">${stats.avg}</b><small id="rx42LeaderAvgName">${esc(leaderName)}</small></div><div class="rx42TimerMetric"><span>КРУГОВ ЛИДЕРА</span><b id="r425LeaderLaps">${stats.laps}</b><small id="rx42LeaderLapsName">${esc(leaderName)}</small></div></div></section><section class="rx42ControlPanel"><div class="rx42ControlTitle">УПРАВЛЕНИЕ ЗАЕЗДОМ</div>${rx42ControlGrid(done,session,false)}</section></aside></main>${rx42Footer(race,ev,session)}${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,session,done)}</section>`;
 }
 function updateDynamicCockpit(){
  const ev=currentEvent(state.race),s=state.session,timer=$('#mainTimer');if(timer)timer.textContent=displayTimer(s,ev);
@@ -2809,11 +2794,11 @@ function updateDynamicCockpit(){
  const ring=$('#timerRing');if(ring)ring.style.setProperty('--progress',timerProgress(s,ev));
  const sub=$('#timerSubline');if(sub)sub.textContent=timerSubline(s,ev);const clock=$('#cockpitClock');if(clock)clock.textContent=new Date().toLocaleTimeString('ru-RU',{hour12:false});const phaseEl=$('#rx42TimerPhase');if(phaseEl)phaseEl.textContent=phaseLabel(s);
  const board=$('.rx42Table');let ranked=[];if(ev&&s)ranked=liveRanking(getEventPilots(state.race,ev),s);
- if(board&&ev&&s&&s.phase!=='finished'){const warmSig=Object.keys(s.warmupDetected||{}).sort().join(','),sig=ranked.map(p=>{const l=s.live[p.id]||blankLive();return`${p.id}:${l.laps}:${l.startSeen}:${Math.round(l.lastLapMs||0)}:${Math.round(r425LapAvg(l)||0)}:${l.finished}`;}).join('|')+`|W:${warmSig}`;if(sig!==state.lastBoardSignature){state.lastBoardSignature=sig;rx47AnimatePilotOrder(board,rx42PilotTable(ranked,s));}}
- if(ev&&s){const rd=r425RingData(state.race,ev,ranked,s),st=r425TimerStats(state.race,ev,ranked,s),leaderName=ranked[0]?.name||'—',ringMain=$('#r425RingMain');const set=(q,v)=>{const e=$(q);if(e)e.textContent=v;};if(ringMain)ringMain.innerHTML=rx45RingMarkup(rd.main);set('#r425RingSub',rd.sub);set('#r425LeaderBest',st.best);set('#r425LeaderAvg',st.avg);set('#r425LeaderLaps',st.laps);set('#rx42LeaderBestName',leaderName);set('#rx42LeaderAvgName',leaderName);set('#rx42LeaderLapsName',leaderName);}
+ if(board&&ev&&s&&s.phase!=='finished'){const warmSig=Object.keys(s.warmupDetected||{}).sort().join(','),sig=ranked.map(p=>{const l=s.live[p.id]||blankLive();return`${p.id}:${l.laps}:${l.startSeen}:${Math.round(l.lastLapMs||0)}:${Math.round(r425LapAvg(l)||0)}:${l.finished}`;}).join('|')+`|W:${warmSig}`;if(sig!==state.lastBoardSignature){state.lastBoardSignature=sig;board.innerHTML=rx42PilotTable(ranked,s);}}
+ if(ev&&s){const rd=r425RingData(state.race,ev,ranked,s),st=r425TimerStats(state.race,ev,ranked,s),leaderName=ranked[0]?.name||'—';const set=(q,v)=>{const e=$(q);if(e)e.textContent=v;};set('#r425RingMain',rd.main);set('#r425RingSub',rd.sub);set('#r425LeaderBest',st.best);set('#r425LeaderAvg',st.avg);set('#r425LeaderLaps',st.laps);set('#rx42LeaderBestName',leaderName);set('#rx42LeaderAvgName',leaderName);set('#rx42LeaderLapsName',leaderName);}
  const statsEls=$$('.statsWidgetContent');if(statsEls.length&&ev&&s){let html;if(['warmup','countdown'].includes(s.phase)){html=`<div><span>ОБНАРУЖЕНО</span><b>${warmupSeenCount(s)} / ${ranked.length}</b></div><div><span>РЕЖИМ LAPWIZ</span><b>FREE PRACTICE</b></div><div><span>ПОСЛЕДНИЙ ПРОХОД</span><b>${esc(s.lastPass||'—')}</b></div><div><span>ДО СТАРТА</span><b>${displayTimer(s,ev)}</b></div>`;}else{const leader=ranked[0],ll=leader?s.live?.[leader.id]:null,target=eventRule(state.race,ev).targetLaps||'—';html=`<div><span>ЛИДЕР</span><b>${esc(leader?.name||'—')}</b></div><div><span>КРУГИ ЛИДЕРА</span><b>${ll?.laps||0}${target!=='—'?` / ${target}`:''}</b></div><div><span>ПОСЛЕДНИЙ ПРОХОД</span><b>${esc(s.lastPass||'—')}</b></div><div><span>ПИЛОТОВ</span><b>${ranked.length}</b></div>`;}statsEls.forEach(el=>el.innerHTML=html);}
 }
-/* ===== /Legion RX 4.0.47 UI TEST ===== */
+/* ===== /Legion RX 4.0.42 UI TEST ===== */
 
 </script>
 </body>
