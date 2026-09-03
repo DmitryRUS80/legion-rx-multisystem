@@ -1,8 +1,8 @@
-const CACHE='legion-rx-4-0-46-ui-test-phone-fix';
+const CACHE='legion-rx-4-0-47-ui-lab-native';
 const ASSETS=[
-  './','./index.html','./manifest.webmanifest','./ui-rally-4.0.46.css',
-  './fonts/LegionNarrow-Regular.otf','./fonts/LegionNarrow-Bold.otf',
+  './','./index.html','./manifest.webmanifest','./ui-rally-4.0.47.css',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
+  './fonts/LegionNarrow-Regular.otf','./fonts/LegionNarrow-Bold.otf','./fonts/LICENSE.txt',
   './audio/voice/prestart_10.wav','./audio/voice/good_race.wav',
   './audio/voice/countdown_01.wav','./audio/voice/countdown_02.wav','./audio/voice/countdown_03.wav','./audio/voice/countdown_04.wav','./audio/voice/countdown_05.wav','./audio/voice/countdown_06.wav','./audio/voice/countdown_07.wav','./audio/voice/countdown_08.wav','./audio/voice/countdown_09.wav','./audio/voice/countdown_10.wav',
   './audio/voice/warmup_01.wav','./audio/voice/warmup_02.wav','./audio/voice/warmup_03.wav','./audio/voice/warmup_04.wav','./audio/voice/warmup_05.wav','./audio/voice/warmup_30.wav',
@@ -15,6 +15,7 @@ function mimeFor(path){
   if(/\.mp3$/i.test(path))return'audio/mpeg';
   if(/\.wav$/i.test(path))return'audio/wav';
   if(/\.png$/i.test(path))return'image/png';
+  if(/\.otf$/i.test(path))return'font/otf';
   if(/\.svg$/i.test(path))return'image/svg+xml';
   return'';
 }

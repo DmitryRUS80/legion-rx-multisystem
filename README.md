@@ -1,6 +1,6 @@
-# Legion RX 4.0.46 UI TEST
+# Legion RX 4.0.47 UI TEST
 
-This RallyCross UI test applies the saved Legion RX UI Lab JSON profile without the old conflicting responsive presets. Phone portrait pilot rows and controls use one clean grid, the timer is fitted to its saved block height, and an embedded narrow typeface keeps typography consistent across iOS, Android and desktop. Existing race, LapWiz and announcer logic is preserved.
+This is an isolated RallyCross UI test rebuilt on the native Legion RX UI Lab DOM and CSS structure. The saved JSON profiles drive desktop, compact desktop, tablet, phone landscape and phone portrait layouts directly. Existing race, LapWiz and announcer logic is preserved.
 
 All 249 pilot country flags are stored in one offline PNG atlas instead of hundreds of separate SVG files. They render consistently on Windows, Android and iOS, and Russia remains the first country in the pilot selector. The GitHub deployment package contains only current runtime files.
 
