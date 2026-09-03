@@ -1,0 +1,1217 @@
+/* Legion RX 4.0.45 UI TEST
+   RallyCross cockpit rebuilt from the approved reference sketch.
+   The final override section is generated from legion-rx-ui-applied.json. */
+
+.rx42Cockpit {
+  --rx42-bg: #020811;
+  --rx42-panel: #06111d;
+  --rx42-panel-deep: #030b14;
+  --rx42-panel-raised: #091827;
+  --rx42-line: #153b5d;
+  --rx42-line-soft: #10283d;
+  --rx42-text: #f4f6f8;
+  --rx42-muted: #8b9bad;
+  --rx42-muted-2: #5c6d7e;
+  --rx42-blue: #1398ff;
+  --rx42-blue-deep: #06396a;
+  --rx42-green: #6fe822;
+  --rx42-green-deep: #073715;
+  --rx42-amber: #ffae00;
+  --rx42-amber-deep: #332203;
+  --rx42-red: #ff2638;
+  --rx42-red-deep: #5b0710;
+  --rx42-radius: 9px;
+  --rx42-gap: clamp(9px, .82vw, 14px);
+  --rx42-font: "Roboto Condensed", "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+  width: 100%;
+  height: 100dvh;
+  min-height: 0;
+  padding: var(--rx42-gap);
+  display: grid;
+  grid-template-rows: clamp(64px, 8.25dvh, 78px) minmax(0, 1fr) clamp(52px, 7.2dvh, 68px);
+  gap: var(--rx42-gap);
+  overflow: hidden;
+  color: var(--rx42-text);
+  background:
+    radial-gradient(circle at 78% 8%, rgba(0, 99, 180, .10), transparent 31%),
+    linear-gradient(180deg, #020811 0%, #01060c 100%);
+  font-family: var(--rx42-font);
+  font-stretch: condensed;
+}
+
+html[data-theme="light"] .rx42Cockpit {
+  color: var(--rx42-text);
+  background:
+    radial-gradient(circle at 78% 8%, rgba(0, 99, 180, .10), transparent 31%),
+    linear-gradient(180deg, #020811 0%, #01060c 100%);
+}
+
+.rx42Cockpit button { font-family: inherit; }
+.rx42Cockpit svg {
+  flex: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Top cockpit strip */
+.rx42Top {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(540px, 45.5%) minmax(0, 1fr);
+  gap: clamp(10px, 1.08vw, 18px);
+}
+
+.rx42TopInfo {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 32% minmax(0, 47%) 21%;
+  overflow: hidden;
+  border: 1px solid var(--rx42-line);
+  border-radius: var(--rx42-radius);
+  background: linear-gradient(180deg, rgba(7, 19, 32, .98), rgba(3, 11, 20, .98));
+  box-shadow: inset 0 1px rgba(255,255,255,.015), 0 10px 26px rgba(0,0,0,.24);
+}
+
+.rx42Brand,
+.rx42Event,
+.rx42Clock {
+  min-width: 0;
+  border: 0;
+  border-right: 1px solid var(--rx42-line);
+  background: transparent;
+  color: var(--rx42-text);
+}
+
+.rx42Brand {
+  padding: 0 clamp(14px, 1.35vw, 24px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rx42Brand strong {
+  font: italic 950 clamp(27px, 2.15vw, 37px)/.92 var(--rx42-font);
+  letter-spacing: -.025em;
+  white-space: nowrap;
+}
+.rx42Brand strong i { color: var(--rx42-blue); font-style: italic; }
+.rx42Brand small {
+  margin-top: 6px;
+  color: #9fb0c1;
+  font-size: clamp(7px, .54vw, 9px);
+  letter-spacing: .055em;
+}
+
+.rx42Event {
+  padding: 0 clamp(13px, 1.25vw, 22px);
+  display: grid;
+  align-content: center;
+  gap: 7px;
+}
+.rx42Event b {
+  min-width: 0;
+  overflow: hidden;
+  color: #f0f3f6;
+  font-size: clamp(16px, 1.35vw, 22px);
+  font-weight: 750;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42Event small {
+  display: flex;
+  align-items: center;
+  gap: clamp(9px, 1vw, 18px);
+  min-width: 0;
+  overflow: hidden;
+  color: #c0cad4;
+  font-size: clamp(9px, .78vw, 13px);
+  line-height: 1;
+  white-space: nowrap;
+}
+.rx42Event small i { color: var(--rx42-muted-2); font-style: normal; }
+
+.rx42Clock {
+  border-right: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 5px;
+}
+.rx42Clock b {
+  font: 850 clamp(22px, 1.72vw, 29px)/1 var(--rx42-font);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.rx42Clock small {
+  color: #c2ccd5;
+  font-size: clamp(8px, .61vw, 10px);
+  font-weight: 850;
+  letter-spacing: .08em;
+}
+
+.rx42TopActions {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: .52fr 1.15fr 1fr 1.2fr 1.08fr 1.08fr .6fr .6fr;
+  gap: clamp(5px, .64vw, 10px);
+}
+
+.rx42TopButton {
+  min-width: 0;
+  height: 100%;
+  padding: 5px 4px;
+  border: 1px solid var(--rx42-line);
+  border-radius: var(--rx42-radius);
+  background: linear-gradient(180deg, #081625, #040d17);
+  color: #e8edf1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4px, .46vw, 8px);
+  cursor: pointer;
+  overflow: hidden;
+}
+.rx42TopButton svg { width: clamp(18px, 1.42vw, 24px); height: clamp(18px, 1.42vw, 24px); }
+.rx42TopButton > span { min-width: 0; display: grid; gap: 5px; text-align: center; }
+.rx42TopButton b {
+  overflow: hidden;
+  font-size: clamp(8px, .72vw, 12px);
+  font-weight: 850;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42TopButton small {
+  overflow: hidden;
+  color: var(--rx42-muted);
+  font-size: clamp(6px, .54vw, 9px);
+  font-weight: 850;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42TopButton.iconOnly { padding: 0; }
+.rx42TopButton.iconOnly svg { width: clamp(20px, 1.55vw, 26px); height: clamp(20px, 1.55vw, 26px); }
+.rx42TopButton.ok { color: var(--rx42-green); }
+.rx42TopButton.ok small { color: var(--rx42-green); }
+.rx42TopButton.blue { color: var(--rx42-blue); }
+.rx42TopButton.blue small { color: var(--rx42-blue); }
+.rx42TopButton.danger { color: var(--rx42-red); }
+.rx42TopButton.danger small { color: #d9dee3; }
+.rx42TopButton:hover { border-color: #27628f; background: linear-gradient(180deg, #0b2034, #061321); }
+.rx42TopButton:focus-visible,
+.rx42Control:focus-visible,
+.rx42BottomCell:focus-visible { outline: 2px solid var(--rx42-blue); outline-offset: -2px; }
+
+/* Main split: roster left, race console right */
+.rx42Main {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.77fr) minmax(450px, 1fr);
+  gap: var(--rx42-gap);
+  overflow: hidden;
+}
+
+.rx42Roster,
+.rx42Timer,
+.rx42ControlPanel,
+.rx42Bottom {
+  border: 1px solid var(--rx42-line);
+  border-radius: var(--rx42-radius);
+  background: linear-gradient(180deg, rgba(7,18,30,.98), rgba(3,10,18,.98));
+  box-shadow: inset 0 1px rgba(255,255,255,.015), 0 12px 30px rgba(0,0,0,.22);
+}
+
+.rx42Roster {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: clamp(54px, 6.8dvh, 64px) minmax(0, 1fr);
+  overflow: hidden;
+}
+.rx42RosterHead {
+  padding: 0 clamp(13px, 1.25vw, 22px);
+  border-bottom: 1px solid var(--rx42-line-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.rx42RosterTitle { min-width: 0; display: flex; align-items: center; gap: 11px; }
+.rx42RosterTitle svg { width: clamp(22px, 1.55vw, 27px); height: clamp(22px, 1.55vw, 27px); color: var(--rx42-blue); }
+.rx42RosterTitle h2 {
+  margin: 0;
+  overflow: hidden;
+  font-size: clamp(20px, 1.55vw, 26px);
+  font-weight: 750;
+  letter-spacing: .02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42RosterCount { color: #aeb9c4; font-size: clamp(10px, .82vw, 14px); white-space: nowrap; }
+.rx42RosterCount b { margin-left: 5px; color: #f4f6f8; font-size: 1.1em; }
+
+.rx42Table {
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #17456c #050d15;
+}
+.rx42PilotRow {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: clamp(56px, 4.1vw, 68px) minmax(190px, 1.58fr) minmax(105px, .78fr) minmax(105px, .78fr) minmax(76px, .56fr) minmax(86px, .64fr) minmax(88px, .68fr);
+  align-items: center;
+  column-gap: clamp(7px, .74vw, 13px);
+  min-height: clamp(57px, 7.15dvh, 68px);
+  padding: 0 clamp(10px, .9vw, 15px);
+  border-bottom: 1px solid var(--rx42-line-soft);
+  background: linear-gradient(90deg, rgba(9,26,42,.76), rgba(3,11,19,.7));
+}
+.rx42PilotRow.header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  min-height: clamp(42px, 5.4dvh, 52px);
+  background: #07111c;
+  color: #bac4ce;
+  font-size: clamp(8px, .67vw, 11px);
+  font-weight: 850;
+  letter-spacing: .045em;
+}
+.rx42PilotRow.header span { min-width: 0; }
+.rx42PilotRow.header span small { display: block; margin-top: 5px; color: #657688; font-size: .82em; letter-spacing: .02em; }
+.rx42PilotRow:not(.header) { cursor: pointer; transition: background .14s ease; }
+.rx42PilotRow:not(.header):hover { background: linear-gradient(90deg, rgba(15,48,75,.92), rgba(5,17,29,.82)); }
+.rx42PilotRow.leader { background: linear-gradient(90deg, rgba(15,54,53,.55), rgba(4,14,23,.78) 74%); }
+
+.rx42Pos {
+  align-self: stretch;
+  margin-left: calc(clamp(10px, .9vw, 15px) * -1);
+  border-right: 1px solid var(--rx42-line);
+  border-left: 4px solid var(--rx42-blue);
+  background: linear-gradient(180deg, #112d49, #091a2b);
+  display: grid;
+  place-items: center;
+  color: #f3f6f8;
+  font-size: clamp(25px, 2vw, 34px);
+  font-weight: 850;
+  line-height: 1;
+  text-shadow: 0 1px 7px rgba(255,255,255,.10);
+}
+.rx42PilotRow.leader .rx42Pos {
+  border-left-color: var(--rx42-green);
+  background: radial-gradient(circle at 50% 50%, rgba(82,212,86,.25), transparent 58%), linear-gradient(180deg,#133247,#091b2a);
+}
+.rx42PilotRow.finished .rx42Pos { border-left-color: #537087; }
+
+.rx42PilotIdentity { min-width: 0; }
+.rx42PilotName {
+  min-width: 0;
+  overflow: hidden;
+  color: #f1f3f5;
+  font-size: clamp(18px, 1.5vw, 25px);
+  font-weight: 700;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42PilotName .countryFlag { margin-right: 9px; font-size: .78em; vertical-align: .06em; }
+.rx42PilotSub {
+  margin-top: 6px;
+  overflow: hidden;
+  color: #7f8e9e;
+  font-size: clamp(8px, .66vw, 11px);
+  letter-spacing: .035em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42PilotSub .legionClubMark { color: #c3ccd5; font-size: inherit; }
+.rx42PilotSub .metaDot { margin: 0 7px; color: #526477; }
+
+.rx42Metric { min-width: 0; display: flex; align-items: center; }
+.rx42Metric strong {
+  overflow: hidden;
+  color: #dce4eb;
+  font-size: clamp(18px, 1.5vw, 25px);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42Metric.best strong { color: var(--rx42-green); }
+.rx42Metric.best.slow strong { color: var(--rx42-amber); }
+.rx42Metric.avg strong { color: #c4d0db; }
+.rx42Metric.laps strong { color: #e4eaf0; }
+.rx42Gap {
+  overflow: hidden;
+  color: #c4ced8;
+  font-size: clamp(18px, 1.5vw, 25px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42Status {
+  justify-self: start;
+  max-width: 100%;
+  padding: 6px 9px;
+  overflow: hidden;
+  border: 1px solid #365067;
+  border-radius: 6px;
+  background: #0b1925;
+  color: #aeb9c3;
+  font-size: clamp(8px, .68vw, 11px);
+  font-weight: 850;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42Status.green { border-color: #1a7130; background: #073018; color: var(--rx42-green); }
+.rx42Status.amber { border-color: #7e5b0b; background: #291d02; color: var(--rx42-amber); }
+.rx42Status.blue { border-color: #17649a; background: #062846; color: #4cb2ff; }
+.rx42Status.red { border-color: #84313b; background: #310a10; color: #ff6976; }
+.rx42ProtocolSource {
+  grid-column: 4 / 7;
+  min-width: 0;
+  overflow: hidden;
+  color: #bac6d0;
+  font-size: clamp(12px, 1vw, 16px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rx42Side {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--rx42-gap);
+  padding-bottom: clamp(8px, 2.1dvh, 20px);
+  overflow: hidden;
+}
+
+/* Timer panel */
+.rx42Timer {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) clamp(86px, 12dvh, 112px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 83% 27%, rgba(0,105,190,.20), transparent 35%),
+    linear-gradient(135deg, #071624, #030a12 72%);
+}
+.rx42TimerMain {
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(14px, 1.25vw, 22px) clamp(16px, 1.45vw, 25px) 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(126px, 12vw, 200px);
+  align-items: center;
+  gap: 12px;
+}
+.rx42TimerCopy { min-width: 0; align-self: center; }
+.rx42TimerCaption {
+  display: block;
+  overflow: hidden;
+  color: var(--rx42-blue);
+  font-size: clamp(17px, 1.43vw, 24px);
+  font-weight: 850;
+  letter-spacing: .025em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42TimerValue {
+  display: block;
+  margin-top: 8px;
+  overflow: hidden;
+  color: #f6f7f8;
+  font-size: clamp(64px, 7.25vw, 116px);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.055em;
+  line-height: .84;
+  text-overflow: clip;
+  text-shadow: 0 3px 14px rgba(255,255,255,.08);
+  white-space: nowrap;
+}
+.rx42TimerPhase {
+  display: block;
+  margin-top: 17px;
+  color: var(--rx42-blue);
+  font-size: clamp(13px, 1.15vw, 19px);
+  font-weight: 750;
+  line-height: 1;
+  white-space: nowrap;
+}
+.rx42TimerSubline {
+  display: block;
+  margin-top: 8px;
+  overflow: hidden;
+  color: #6f8193;
+  font-size: clamp(8px, .68vw, 11px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rx42Ring {
+  --progress: 0;
+  width: clamp(122px, 12vw, 200px);
+  aspect-ratio: 1;
+  justify-self: end;
+  position: relative;
+  border-radius: 50%;
+  background: conic-gradient(from -23deg, var(--rx42-blue) calc(var(--progress) * 1%), #102b45 0);
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 0 14px rgba(19,152,255,.18));
+}
+.rx42Ring::before {
+  content: "";
+  position: absolute;
+  inset: clamp(10px, .92vw, 15px);
+  border: 1px solid #143752;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, #07182a, #020a12 72%);
+}
+.rx42RingInner { position: relative; z-index: 1; text-align: center; }
+.rx42RingInner b {
+  display: block;
+  font-size: clamp(34px, 3.25vw, 53px);
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.035em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.rx42RingInner small {
+  display: block;
+  margin-top: 8px;
+  color: #91a2b3;
+  font-size: clamp(9px, .85vw, 14px);
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+
+.rx42TimerMetrics {
+  min-width: 0;
+  border-top: 1px solid var(--rx42-line);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.rx42TimerMetric {
+  min-width: 0;
+  padding: clamp(11px, 1.15vw, 19px) clamp(10px, 1.08vw, 18px);
+  border-right: 1px solid var(--rx42-line);
+  display: grid;
+  align-content: center;
+  gap: 6px;
+}
+.rx42TimerMetric:last-child { border-right: 0; }
+.rx42TimerMetric span {
+  overflow: hidden;
+  color: #a3afbb;
+  font-size: clamp(7px, .66vw, 11px);
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42TimerMetric b {
+  overflow: hidden;
+  color: #f2f5f7;
+  font-size: clamp(17px, 1.55vw, 26px);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42TimerMetric small {
+  overflow: hidden;
+  color: #8b99a7;
+  font-size: clamp(8px, .67vw, 11px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42TimerMetric.best b { color: var(--rx42-green); }
+.rx42TimerMetric.avg b { color: #43adff; }
+
+/* Control panel */
+.rx42ControlPanel {
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(11px, 1.02vw, 17px);
+  display: grid;
+  grid-template-rows: clamp(25px, 3.3dvh, 32px) minmax(0, 1fr);
+  gap: clamp(7px, .7vw, 12px);
+  overflow: hidden;
+}
+.rx42ControlTitle {
+  color: #b5c0ca;
+  font-size: clamp(11px, .95vw, 16px);
+  font-weight: 750;
+  letter-spacing: .025em;
+}
+.rx42Controls {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: clamp(7px, .72vw, 12px);
+}
+.rx42Control {
+  min-width: 0;
+  min-height: 0;
+  padding: 8px;
+  border: 1px solid #15558a;
+  border-radius: 11px;
+  background:
+    radial-gradient(circle at 50% 34%, rgba(10,108,197,.23), transparent 56%),
+    linear-gradient(180deg, #071d31, #04111e);
+  color: #f2f4f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(7px, .72vw, 12px);
+  cursor: pointer;
+  overflow: hidden;
+}
+.rx42Control svg { width: clamp(30px, 2.65vw, 44px); height: clamp(30px, 2.65vw, 44px); color: #e8edf2; }
+.rx42Control > span { min-width: 0; display: grid; gap: 5px; text-align: center; }
+.rx42Control b {
+  overflow: hidden;
+  font-size: clamp(13px, 1.12vw, 18px);
+  font-weight: 750;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42Control small {
+  overflow: hidden;
+  color: #b6c2cc;
+  font-size: clamp(8px, .7vw, 11px);
+  font-weight: 650;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42Control.primary {
+  border-color: #65c929;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(60,209,42,.27), transparent 55%),
+    linear-gradient(180deg, #0a3a18, #041b0b);
+}
+.rx42Control.primary svg { color: #b8ff88; filter: drop-shadow(0 0 8px rgba(111,232,34,.30)); }
+.rx42Control.primary small { color: #aef07d; }
+.rx42Control.blue svg { color: #3ca5ff; filter: drop-shadow(0 0 8px rgba(19,152,255,.22)); }
+.rx42Control.danger {
+  border-color: #ff2638;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255,50,65,.28), transparent 55%),
+    linear-gradient(180deg, #780a14, #41050b);
+}
+.rx42Control.danger svg { color: #fff; filter: drop-shadow(0 0 8px rgba(255,255,255,.20)); }
+.rx42Control:hover:not(:disabled) { border-color: #2c84c2; background-color: #0c263b; }
+.rx42Control.primary:hover:not(:disabled) { border-color: #89ef46; }
+.rx42Control.danger:hover:not(:disabled) { border-color: #ff6370; }
+
+/* Disabled buttons retain their card, border and exact inner geometry. */
+.rx42Control:disabled {
+  opacity: 1 !important;
+  filter: none !important;
+  cursor: not-allowed;
+  border-color: #18354b;
+  background: linear-gradient(180deg, #08131d, #050c13);
+  color: #485763;
+}
+.rx42Control:disabled svg { color: #3d4b56; filter: none; }
+.rx42Control:disabled small { color: #394650; }
+.rx42Control.danger:disabled {
+  border-color: #4b2329;
+  background: linear-gradient(180deg, #281116, #18090c);
+}
+
+/* Bottom cockpit strip */
+.rx42Bottom {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: .98fr 1.35fr 1fr 1.45fr .27fr;
+  overflow: hidden;
+}
+.rx42BottomCell {
+  min-width: 0;
+  border: 0;
+  border-right: 1px solid var(--rx42-line);
+  background: transparent;
+  color: #c5ced7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(9px, 1.1vw, 18px);
+  cursor: pointer;
+  overflow: hidden;
+}
+.rx42BottomCell:last-child { border-right: 0; }
+.rx42BottomCell svg { width: clamp(19px, 1.55vw, 26px); height: clamp(19px, 1.55vw, 26px); color: var(--rx42-blue); }
+.rx42BottomCell > span { min-width: 0; display: flex; align-items: baseline; gap: clamp(8px, .85vw, 14px); }
+.rx42BottomCell small {
+  overflow: hidden;
+  color: #c3ccd5;
+  font-size: clamp(9px, .86vw, 14px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42BottomCell b {
+  overflow: hidden;
+  color: var(--rx42-green);
+  font-size: clamp(10px, .92vw, 15px);
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rx42BottomCell.next b { color: var(--rx42-blue); }
+.rx42BottomCell:hover { background: rgba(11,39,62,.55); }
+
+.rx42Tie {
+  min-width: 0;
+  min-height: 0;
+  grid-column: 1 / -1;
+  border: 1px solid var(--rx42-line);
+  border-radius: var(--rx42-radius);
+  background: linear-gradient(180deg, #07131f, #030a12);
+  padding: 18px;
+  overflow: auto;
+}
+
+/* Desktop compaction keeps the same composition instead of replacing it. */
+@media (max-width: 1450px) {
+  .rx42Cockpit { --rx42-gap: 8px; padding: 8px; grid-template-rows: 62px minmax(0,1fr) 52px; }
+  .rx42Top { grid-template-columns: minmax(480px, 44%) minmax(0,1fr); gap: 8px; }
+  .rx42TopActions { gap: 5px; }
+  .rx42PilotRow { grid-template-columns: 52px minmax(170px,1.45fr) minmax(90px,.74fr) minmax(90px,.74fr) 70px 80px 82px; column-gap: 7px; padding: 0 9px; }
+  .rx42Pos { margin-left: -9px; }
+  .rx42Main { grid-template-columns: minmax(0,1.72fr) minmax(410px,.95fr); }
+  .rx42Timer { grid-template-rows: minmax(0,1fr) 86px; }
+  .rx42TimerMain { grid-template-columns: minmax(0,1fr) clamp(120px,20dvh,150px); padding: 12px 14px 8px; }
+  .rx42Ring { width: clamp(120px,20dvh,150px); }
+  .rx42TimerValue { font-size: clamp(57px,6.7vw,96px); }
+  .rx42ControlPanel { padding: 9px; grid-template-rows: 23px minmax(0,1fr); gap: 7px; }
+  .rx42Controls { gap: 7px; }
+}
+
+@media (min-width: 1121px) and (max-height: 680px) {
+  .rx42Cockpit { padding: 6px; gap: 6px; grid-template-rows: 58px minmax(0,1fr) 46px; }
+  .rx42Top { gap: 6px; }
+  .rx42TopActions { gap: 4px; }
+  .rx42Side { gap: 6px; padding-bottom: 8px; }
+  .rx42Roster { grid-template-rows: 50px minmax(0,1fr); }
+  .rx42PilotRow { min-height: 56px; }
+  .rx42PilotRow.header { min-height: 38px; }
+  .rx42Timer { grid-template-rows: minmax(0,1fr) 74px; }
+  .rx42TimerMain { grid-template-columns: minmax(0,1fr) clamp(108px,21dvh,132px); padding: 9px 12px 6px; }
+  .rx42Ring { width: clamp(108px,21dvh,132px); }
+  .rx42TimerValue { margin-top: 5px; font-size: clamp(60px,6.5vw,88px); }
+  .rx42TimerPhase { margin-top: 8px; }
+  .rx42TimerSubline { margin-top: 4px; }
+  .rx42TimerMetric { padding: 7px 9px; gap: 3px; }
+  .rx42TimerMetric b { font-size: 17px; }
+  .rx42TimerMetric small { font-size: 8px; }
+  .rx42ControlPanel { padding: 7px; grid-template-rows: 20px minmax(0,1fr); gap: 5px; }
+  .rx42ControlTitle { font-size: 10px; }
+  .rx42Controls { gap: 6px; }
+  .rx42Control { padding: 6px; gap: 6px; }
+  .rx42Control svg { width: 28px; height: 28px; }
+  .rx42Control b { font-size: 13px; }
+  .rx42Control small { font-size: 8px; }
+}
+
+@media (max-width: 1120px) and (orientation: landscape) {
+  .rx42Cockpit { min-height: 0; padding: 5px; gap: 5px; grid-template-rows: 54px minmax(0,1fr) 44px; }
+  .rx42Top { grid-template-columns: 39% minmax(0,1fr); gap: 5px; }
+  .rx42TopInfo { grid-template-columns: 42% 37% 21%; }
+  .rx42Event small { gap: 5px; }
+  .rx42TopActions { gap: 3px; }
+  .rx42TopButton { padding: 3px 2px; gap: 3px; }
+  .rx42TopButton > span { gap: 2px; }
+  .rx42Main { grid-template-columns: minmax(0,1.58fr) minmax(350px,.88fr); gap: 5px; }
+  .rx42Roster { grid-template-rows: 42px minmax(0,1fr); }
+  .rx42RosterHead { padding: 0 9px; }
+  .rx42PilotRow { grid-template-columns: 44px minmax(126px,1.35fr) 74px 74px 54px 62px 67px; column-gap: 4px; min-height: 52px; padding: 0 6px; }
+  .rx42PilotRow.header { min-height: 28px; font-size: 7px; }
+  .rx42Pos { margin-left: -6px; border-left-width: 3px; }
+  .rx42PilotName { font-size: 16px; }
+  .rx42PilotSub { font-size: 7px; margin-top: 3px; }
+  .rx42Metric strong { font-size: 16px; }
+  .rx42Gap { font-size: 16px; }
+  .rx42Status { padding: 4px 5px; font-size: 7px; }
+  .rx42Side { gap: 5px; }
+  .rx42Side { padding-bottom: 0; }
+  .rx42Timer { grid-template-rows: minmax(0,1fr) 62px; }
+  .rx42TimerMain { grid-template-columns: minmax(0,1fr) 92px; padding: 8px 10px 5px; }
+  .rx42TimerCaption { font-size: 14px; }
+  .rx42TimerValue { margin-top: 5px; font-size: 51px; }
+  .rx42TimerPhase { margin-top: 7px; font-size: 11px; }
+  .rx42TimerSubline { display: none; }
+  .rx42Ring { width: 86px; }
+  .rx42RingInner b { font-size: 24px; }
+  .rx42RingInner small { margin-top: 4px; font-size: 7px; }
+  .rx42TimerMetric { padding: 6px 7px; gap: 3px; }
+  .rx42TimerMetric span { font-size: 6px; }
+  .rx42TimerMetric b { font-size: 13px; }
+  .rx42TimerMetric small { font-size: 7px; }
+  .rx42ControlPanel { padding: 6px; grid-template-rows: 17px minmax(0,1fr); gap: 4px; }
+  .rx42ControlTitle { font-size: 9px; }
+  .rx42Controls { gap: 4px; }
+  .rx42Control { padding: 3px; gap: 4px; border-radius: 7px; }
+  .rx42Control svg { width: 22px; height: 22px; }
+  .rx42Control b { font-size: 10px; }
+  .rx42Control small { font-size: 6.5px; }
+  .rx42BottomCell { gap: 6px; }
+  .rx42BottomCell > span { gap: 6px; }
+}
+
+/* Phone portrait: same blocks and styling, reordered without changing controls internally. */
+@media (max-width: 760px) and (orientation: portrait) {
+  body.cockpitMode #viewHost { overflow: hidden !important; }
+  .rx42Cockpit { min-height: 0; padding: 5px; gap: 5px; grid-template-rows: 54px minmax(0,1fr) 42px; }
+  .rx42Top { grid-template-columns: minmax(0,1fr) auto; gap: 5px; }
+  .rx42TopInfo { grid-template-columns: 128px minmax(0,1fr); }
+  .rx42Clock { display: none; }
+  .rx42Brand { padding: 0 8px; }
+  .rx42Brand strong { font-size: 21px; }
+  .rx42Brand small { display: none; }
+  .rx42Event { padding: 0 8px; gap: 4px; border-right: 0; }
+  .rx42Event b { font-size: 12px; }
+  .rx42Event small { font-size: 7px; gap: 6px; }
+  .rx42TopActions { width: 126px; grid-template-columns: repeat(3, 40px); gap: 3px; }
+  .rx42TopButton { display: none; }
+  .rx42TopButton:nth-child(2), .rx42TopButton:nth-child(3), .rx42TopButton:nth-child(8) { display: flex; }
+  .rx42TopButton > span { display: none; }
+  .rx42TopButton svg { width: 18px; height: 18px; }
+  .rx42Main { grid-template-columns: 1fr; grid-template-rows: 176px minmax(0,1fr) 156px; gap: 5px; }
+  .rx42Side { display: contents; }
+  .rx42Timer { grid-column: 1; grid-row: 1; grid-template-rows: minmax(0,1fr) 50px; }
+  .rx42Roster { grid-column: 1; grid-row: 2; grid-template-rows: 40px minmax(0,1fr); }
+  .rx42ControlPanel { grid-column: 1; grid-row: 3; padding: 5px; grid-template-rows: 0 minmax(0,1fr); gap: 0; }
+  .rx42ControlTitle { display: none; }
+  .rx42TimerMain { grid-template-columns: minmax(0,1fr) 84px; padding: 8px 10px 5px; }
+  .rx42TimerCaption { font-size: 14px; }
+  .rx42TimerValue { margin-top: 3px; font-size: 48px; }
+  .rx42TimerPhase { margin-top: 6px; font-size: 11px; }
+  .rx42TimerSubline { display: none; }
+  .rx42Ring { width: 78px; }
+  .rx42RingInner b { font-size: 21px; }
+  .rx42RingInner small { margin-top: 3px; font-size: 6px; }
+  .rx42TimerMetric { padding: 5px 7px; gap: 2px; }
+  .rx42TimerMetric span { font-size: 6px; }
+  .rx42TimerMetric b { font-size: 12px; }
+  .rx42TimerMetric small { display: none; }
+  .rx42RosterHead { padding: 0 9px; }
+  .rx42RosterTitle h2 { font-size: 16px; }
+  .rx42RosterTitle svg { width: 17px; height: 17px; }
+  .rx42RosterCount { font-size: 8px; }
+  .rx42PilotRow { grid-template-columns: 38px minmax(104px,1.3fr) 67px 67px 48px 61px; min-height: 55px; padding: 0 5px; column-gap: 4px; }
+  .rx42PilotRow > :nth-child(6), .rx42PilotRow.header > :nth-child(6) { display: none; }
+  .rx42PilotRow.header { min-height: 25px; font-size: 6px; }
+  .rx42PilotRow.header span small { display: none; }
+  .rx42Pos { margin-left: -5px; font-size: 21px; }
+  .rx42PilotName { font-size: 16px; }
+  .rx42PilotSub { display: none; }
+  .rx42Metric strong { font-size: 16px; }
+  .rx42Gap { display: none; }
+  .rx42Status { justify-self: stretch; padding: 4px 3px; text-align: center; font-size: 6.5px; }
+  .rx42Controls { gap: 4px; }
+  .rx42Control { padding: 3px; gap: 4px; border-radius: 7px; }
+  .rx42Control svg { width: 21px; height: 21px; }
+  .rx42Control b { font-size: 10px; }
+  .rx42Control small { font-size: 6px; }
+  .rx42Bottom { grid-template-columns: repeat(4,1fr); }
+  .rx42BottomCell { gap: 4px; }
+  .rx42BottomCell:nth-child(5) { display: none; }
+  .rx42BottomCell svg { width: 16px; height: 16px; }
+  .rx42BottomCell > span { display: grid; gap: 1px; }
+  .rx42BottomCell small, .rx42BottomCell b { font-size: 7px; }
+}
+
+/* ========================================================================== 
+   Legion RX 4.0.45 · applied UI Lab profile
+   Source: legion-rx-ui-applied.json, exported 2026-09-03T05:19:11.670Z.
+   These rules intentionally come last: saved values win over the old adaptive
+   presets without changing any race, LapWiz or announcer JavaScript.
+   ========================================================================== */
+
+.rx42Cockpit {
+  --rx45-outer-gap: 13px;
+  --rx45-panel-gap: 12px;
+  --rx45-radius: 9px;
+  --rx45-top-height: 79px;
+  --rx45-bottom-height: 44px;
+  --rx45-left: 65.5%;
+  --rx45-logo-width: 244px;
+  --rx45-event-width: 332px;
+  --rx45-clock-width: 176px;
+  --rx45-top-padding: 22px;
+  --rx45-logo-size: 34px;
+  --rx45-event-size: 21px;
+  --rx45-event-meta: 13px;
+  --rx45-clock-size: 21px;
+  --rx45-clock-meta: 13px;
+  --rx45-top-mark: 26px;
+  --rx45-quick-width: 72px;
+  --rx45-quick-height: 64px;
+  --rx45-quick-gap: 8px;
+  --rx45-quick-icon: 21px;
+  --rx45-quick-text: 10px;
+  --rx45-roster-head: 38px;
+  --rx45-column-head: 31px;
+  --rx45-row-height: 69px;
+  --rx45-name-size: 30px;
+  --rx45-data-size: 24px;
+  --rx45-meta-size: 18px;
+  --rx45-header-size: 16px;
+  --rx45-roster-title: 22px;
+  --rx45-roster-total: 16px;
+  --rx45-position-size: 40px;
+  --rx45-status-size: 15px;
+  --rx45-col-pos: 7fr;
+  --rx45-col-pilot: 35fr;
+  --rx45-col-best: 15fr;
+  --rx45-col-avg: 15fr;
+  --rx45-col-laps: 12fr;
+  --rx45-col-gap: 13fr;
+  --rx45-col-status: 13fr;
+  --rx45-column-gap: 6px;
+  --rx45-offset-pos: 0px;
+  --rx45-offset-pilot: 0px;
+  --rx45-offset-best: 0px;
+  --rx45-offset-avg: 0px;
+  --rx45-offset-laps: 0px;
+  --rx45-offset-gap: 0px;
+  --rx45-offset-status: 0px;
+  --rx45-timer-share: 43%;
+  --rx45-timer-padding: 24px;
+  --rx45-timer-column-gap: 27px;
+  --rx45-timer-x: 2px;
+  --rx45-timer-y: -1px;
+  --rx45-phase-size: 30px;
+  --rx45-timer-size: 84px;
+  --rx45-timer-sub-size: 18px;
+  --rx45-ring-size: 148px;
+  --rx45-ring-stroke: 9px;
+  --rx45-ring-x: -42px;
+  --rx45-ring-y: 0px;
+  --rx45-ring-number: 51px;
+  --rx45-ring-suffix: 30px;
+  --rx45-ring-label: 15px;
+  --rx45-ring-content-x: 0px;
+  --rx45-ring-content-y: 0px;
+  --rx45-stats-x: 0px;
+  --rx45-stats-y: 0px;
+  --rx45-stat-label: 13px;
+  --rx45-stat-value: 25px;
+  --rx45-stat-name: 17px;
+  --rx45-controls-padding: 4px;
+  --rx45-portrait-timer-height: 198px;
+  --rx45-portrait-controls-height: 177px;
+  --rx45-controls-title: 18px;
+  --rx45-control-gap: 2px;
+  --rx45-control-x: 0px;
+  --rx45-control-y: 0px;
+  --rx45-control-label: 24px;
+  --rx45-control-sub: 13px;
+  --rx45-control-icon: 50px;
+  --rx45-control-content-y: 0px;
+  --rx45-control-radius: 12px;
+  --rx45-bottom-font: 16px;
+  --rx45-bottom-icon: 28px;
+  --rx45-bottom-gap: 15px;
+  --rx42-gap: var(--rx45-panel-gap);
+  --rx42-radius: var(--rx45-radius);
+  padding: var(--rx45-outer-gap);
+  gap: var(--rx45-panel-gap);
+  grid-template-rows: var(--rx45-top-height) minmax(0, 1fr) var(--rx45-bottom-height);
+}
+
+.rx42Top {
+  grid-template-columns: minmax(0, calc(var(--rx45-logo-width) + var(--rx45-event-width) + var(--rx45-clock-width))) minmax(0, 1fr);
+  gap: var(--rx45-panel-gap);
+}
+.rx42TopInfo { grid-template-columns: var(--rx45-logo-width) var(--rx45-event-width) var(--rx45-clock-width); }
+.rx42Brand, .rx42Event { padding-left: var(--rx45-top-padding); padding-right: var(--rx45-top-padding); }
+.rx42Brand strong { font-size: var(--rx45-logo-size); }
+.rx42Brand small { font-size: max(7px, calc(var(--rx45-event-meta) * .68)); }
+.rx42Event b { font-size: var(--rx45-event-size); }
+.rx42Event small { font-size: var(--rx45-event-meta); }
+.rx42Clock b { font-size: var(--rx45-clock-size); }
+.rx42Clock small { font-size: var(--rx45-clock-meta); }
+.rx42RosterTitle svg { width: var(--rx45-top-mark); height: var(--rx45-top-mark); }
+.rx42TopActions {
+  display: grid;
+  grid-template-columns: repeat(8, var(--rx45-quick-width));
+  justify-content: end;
+  align-content: center;
+  gap: var(--rx45-quick-gap);
+}
+.rx42TopButton {
+  display: flex;
+  width: var(--rx45-quick-width);
+  height: var(--rx45-quick-height);
+  padding: 3px;
+  flex-direction: column;
+  gap: 4px;
+}
+.rx42TopButton svg, .rx42TopButton.iconOnly svg { width: var(--rx45-quick-icon); height: var(--rx45-quick-icon); }
+.rx42TopButton b, .rx42TopButton small { font-size: var(--rx45-quick-text); }
+
+.rx42Main {
+  grid-template-columns: minmax(0, var(--rx45-left)) minmax(0, 1fr);
+  gap: var(--rx45-panel-gap);
+}
+.rx42Roster { grid-template-rows: var(--rx45-roster-head) minmax(0, 1fr); }
+.rx42RosterTitle h2 { font-size: var(--rx45-roster-title); }
+.rx42RosterCount { font-size: var(--rx45-roster-total); }
+.rx42PilotRow {
+  grid-template-columns: minmax(0, var(--rx45-col-pos)) minmax(0, var(--rx45-col-pilot)) minmax(0, var(--rx45-col-best)) minmax(0, var(--rx45-col-avg)) minmax(0, var(--rx45-col-laps)) minmax(0, var(--rx45-col-gap)) minmax(0, var(--rx45-col-status));
+  column-gap: var(--rx45-column-gap);
+  min-height: var(--rx45-row-height);
+}
+.rx42PilotRow.header { min-height: var(--rx45-column-head); font-size: var(--rx45-header-size); }
+.rx42PilotRow > :nth-child(1) { transform: translateX(var(--rx45-offset-pos)); }
+.rx42PilotRow > :nth-child(2) { transform: translateX(var(--rx45-offset-pilot)); }
+.rx42PilotRow > :nth-child(3) { transform: translateX(var(--rx45-offset-best)); }
+.rx42PilotRow > :nth-child(4) { transform: translateX(var(--rx45-offset-avg)); }
+.rx42PilotRow > :nth-child(5) { transform: translateX(var(--rx45-offset-laps)); }
+.rx42PilotRow > :nth-child(6) { transform: translateX(var(--rx45-offset-gap)); }
+.rx42PilotRow > :nth-child(7) { transform: translateX(var(--rx45-offset-status)); }
+.rx42Pos { font-size: var(--rx45-position-size); }
+.rx42PilotName { font-size: var(--rx45-name-size); }
+.rx42PilotSub { font-size: var(--rx45-meta-size); }
+.rx42Metric strong, .rx42Gap { font-size: var(--rx45-data-size); }
+.rx42Status { font-size: var(--rx45-status-size); }
+
+.rx42Side { grid-template-rows: minmax(0, var(--rx45-timer-share)) minmax(0, 1fr); gap: var(--rx45-panel-gap); padding-bottom: 0; }
+.rx42TimerMain {
+  grid-template-columns: minmax(0, 1fr) var(--rx45-ring-size);
+  gap: var(--rx45-timer-column-gap);
+  padding: var(--rx45-timer-padding);
+}
+.rx42TimerCopy { transform: translate(var(--rx45-timer-x), var(--rx45-timer-y)); }
+.rx42TimerCaption { font-size: var(--rx45-phase-size); }
+.rx42TimerValue { font-size: var(--rx45-timer-size); }
+.rx42TimerPhase { font-size: var(--rx45-timer-sub-size); }
+.rx42Ring {
+  width: var(--rx45-ring-size);
+  transform: translate(var(--rx45-ring-x), var(--rx45-ring-y));
+}
+.rx42Ring::before { inset: var(--rx45-ring-stroke); }
+.rx42RingInner { transform: translate(var(--rx45-ring-content-x), var(--rx45-ring-content-y)); }
+.rx42RingInner b { font-size: var(--rx45-ring-number); }
+.rx42RingInner b .rx45RingSuffix {
+  display: inline;
+  margin: 0 0 0 3px;
+  color: inherit;
+  font-size: var(--rx45-ring-suffix);
+  letter-spacing: inherit;
+}
+.rx42RingInner small { font-size: var(--rx45-ring-label); }
+.rx42TimerMetrics { transform: translate(var(--rx45-stats-x), var(--rx45-stats-y)); }
+.rx42TimerMetric span { font-size: var(--rx45-stat-label); }
+.rx42TimerMetric b { font-size: var(--rx45-stat-value); }
+.rx42TimerMetric small { font-size: var(--rx45-stat-name); }
+
+.rx42ControlPanel {
+  padding: var(--rx45-controls-padding);
+  grid-template-rows: var(--rx45-controls-title) minmax(0, 1fr);
+  gap: var(--rx45-control-gap);
+}
+.rx42ControlTitle { font-size: var(--rx45-controls-title); }
+.rx42Controls { gap: var(--rx45-control-gap); transform: translate(var(--rx45-control-x), var(--rx45-control-y)); }
+.rx42Control { border-radius: var(--rx45-control-radius); }
+.rx42Control svg { width: var(--rx45-control-icon); height: var(--rx45-control-icon); position: relative; top: var(--rx45-control-content-y); }
+.rx42Control > span { position: relative; top: var(--rx45-control-content-y); }
+.rx42Control b { font-size: var(--rx45-control-label); }
+.rx42Control small { font-size: var(--rx45-control-sub); }
+.rx42BottomCell { gap: var(--rx45-bottom-gap); }
+.rx42BottomCell svg { width: var(--rx45-bottom-icon); height: var(--rx45-bottom-icon); }
+.rx42BottomCell small, .rx42BottomCell b { font-size: var(--rx45-bottom-font); }
+
+@media (min-width: 1121px) and (max-width: 1450px) {
+  .rx42Cockpit {
+    --rx45-outer-gap: 8px; --rx45-panel-gap: 7px; --rx45-radius: 9px;
+    --rx45-top-height: 60px; --rx45-bottom-height: 42px; --rx45-left: 63%;
+    --rx45-logo-width: 200px; --rx45-event-width: 280px; --rx45-clock-width: 155px; --rx45-top-padding: 15px;
+    --rx45-logo-size: 29px; --rx45-event-size: 17px; --rx45-event-meta: 10px; --rx45-clock-size: 18px; --rx45-clock-meta: 9px; --rx45-top-mark: 21px;
+    --rx45-quick-width: 60px; --rx45-quick-height: 46px; --rx45-quick-gap: 5px; --rx45-quick-icon: 18px; --rx45-quick-text: 8px;
+    --rx45-roster-head: 50px; --rx45-column-head: 36px; --rx45-row-height: 55px;
+    --rx45-name-size: 20px; --rx45-data-size: 20px; --rx45-meta-size: 10px; --rx45-header-size: 11px;
+    --rx45-roster-title: 20px; --rx45-roster-total: 11px; --rx45-position-size: 26px; --rx45-status-size: 11px;
+    --rx45-column-gap: 0px; --rx45-timer-share: 45%; --rx45-timer-padding: 18px; --rx45-timer-column-gap: 15px;
+    --rx45-timer-x: 0px; --rx45-timer-y: 0px; --rx45-phase-size: 18px; --rx45-timer-size: 61px; --rx45-timer-sub-size: 13px;
+    --rx45-ring-size: 120px; --rx45-ring-stroke: 7px; --rx45-ring-x: 0px; --rx45-ring-y: 0px; --rx45-ring-number: 32px; --rx45-ring-suffix: 22px; --rx45-ring-label: 11px;
+    --rx45-stat-label: 9px; --rx45-stat-value: 18px; --rx45-stat-name: 12px;
+    --rx45-controls-padding: 8px; --rx45-controls-title: 11px; --rx45-control-gap: 6px;
+    --rx45-control-label: 16px; --rx45-control-sub: 9px; --rx45-control-icon: 29px; --rx45-control-radius: 12px;
+    --rx45-bottom-font: 10px; --rx45-bottom-icon: 16px; --rx45-bottom-gap: 7px;
+  }
+  .rx42PilotRow { padding-left: 9px; padding-right: 9px; }
+  .rx42Pos { margin-left: -9px; }
+}
+
+@media (min-width: 761px) and (max-width: 1120px) {
+  .rx42Cockpit {
+    --rx45-outer-gap: 7px; --rx45-panel-gap: 7px; --rx45-radius: 9px;
+    --rx45-top-height: 58px; --rx45-bottom-height: 45px; --rx45-left: 59%;
+    --rx45-logo-width: 190px; --rx45-event-width: 250px; --rx45-clock-width: 176px; --rx45-top-padding: 14px;
+    --rx45-logo-size: 27px; --rx45-event-size: 16px; --rx45-event-meta: 9px; --rx45-clock-size: 21px; --rx45-clock-meta: 13px; --rx45-top-mark: 20px;
+    --rx45-quick-width: 50px; --rx45-quick-height: 42px; --rx45-quick-gap: 4px; --rx45-quick-icon: 17px; --rx45-quick-text: 7px;
+    --rx45-roster-head: 47px; --rx45-column-head: 34px; --rx45-row-height: 52px;
+    --rx45-name-size: 18px; --rx45-data-size: 17px; --rx45-meta-size: 9px; --rx45-header-size: 10px;
+    --rx45-roster-title: 18px; --rx45-roster-total: 10px; --rx45-position-size: 24px; --rx45-status-size: 10px;
+    --rx45-column-gap: 0px; --rx45-timer-share: 46%; --rx45-timer-padding: 16px; --rx45-timer-column-gap: 10px;
+    --rx45-timer-x: 0px; --rx45-timer-y: 0px; --rx45-phase-size: 16px; --rx45-timer-size: 54px; --rx45-timer-sub-size: 11px;
+    --rx45-ring-size: 115px; --rx45-ring-stroke: 7px; --rx45-ring-x: 0px; --rx45-ring-y: 0px; --rx45-ring-number: 30px; --rx45-ring-suffix: 20px; --rx45-ring-label: 10px;
+    --rx45-stat-label: 8px; --rx45-stat-value: 17px; --rx45-stat-name: 10px;
+    --rx45-controls-padding: 7px; --rx45-controls-title: 10px; --rx45-control-gap: 5px;
+    --rx45-control-label: 14px; --rx45-control-sub: 8px; --rx45-control-icon: 25px; --rx45-control-radius: 12px;
+    --rx45-bottom-font: 10px; --rx45-bottom-icon: 16px; --rx45-bottom-gap: 6px;
+  }
+  .rx42Top { grid-template-columns: minmax(0, calc(var(--rx45-logo-width) + var(--rx45-event-width))) minmax(0, 1fr); }
+  .rx42TopInfo { grid-template-columns: var(--rx45-logo-width) var(--rx45-event-width); }
+  .rx42Clock { display: none; }
+  .rx42TopButton { display: none; }
+  .rx42TopButton:nth-child(-n+4) { display: flex; }
+  .rx42TopActions { grid-template-columns: repeat(4, var(--rx45-quick-width)); }
+  .rx42PilotRow { padding-left: 6px; padding-right: 6px; }
+  .rx42Pos { margin-left: -6px; }
+  .rx42TimerMetric:nth-child(3) { display: none; }
+  .rx42TimerMetrics { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .rx42Cockpit {
+    --rx45-outer-gap: 1px; --rx45-panel-gap: 3px; --rx45-radius: 4px;
+    --rx45-top-height: 52px; --rx45-bottom-height: 42px; --rx45-left: 57%;
+    --rx45-logo-width: 120px; --rx45-event-width: 306px; --rx45-clock-width: 176px; --rx45-top-padding: 10px;
+    --rx45-logo-size: 24px; --rx45-event-size: 21px; --rx45-event-meta: 13px; --rx45-clock-size: 21px; --rx45-clock-meta: 13px; --rx45-top-mark: 17px;
+    --rx45-quick-width: 47px; --rx45-quick-height: 42px; --rx45-quick-gap: 4px; --rx45-quick-icon: 15px; --rx45-quick-text: 7px;
+    --rx45-roster-head: 28px; --rx45-column-head: 18px; --rx45-row-height: 38px;
+    --rx45-name-size: 13px; --rx45-data-size: 13px; --rx45-meta-size: 10px; --rx45-header-size: 8px;
+    --rx45-roster-title: 10px; --rx45-roster-total: 8px; --rx45-position-size: 27px; --rx45-status-size: 8px;
+    --rx45-col-pos: 8fr; --rx45-col-pilot: 44fr; --rx45-col-best: 18fr; --rx45-col-avg: 14fr; --rx45-col-laps: 16fr; --rx45-col-gap: 19.5fr; --rx45-col-status: 14fr;
+    --rx45-column-gap: 8px; --rx45-offset-pos: -2px; --rx45-offset-pilot: 0px; --rx45-offset-best: 0px; --rx45-offset-avg: 0px; --rx45-offset-laps: 10px; --rx45-offset-gap: 10px; --rx45-offset-status: 3px;
+    --rx45-timer-share: 45%; --rx45-timer-padding: 8px; --rx45-timer-column-gap: 8px;
+    --rx45-timer-x: 0px; --rx45-timer-y: 0px; --rx45-phase-size: 12px; --rx45-timer-size: 42px; --rx45-timer-sub-size: 9px;
+    --rx45-ring-size: 76px; --rx45-ring-stroke: 5px; --rx45-ring-x: 0px; --rx45-ring-y: 0px; --rx45-ring-number: 34px; --rx45-ring-suffix: 14px; --rx45-ring-label: 8px;
+    --rx45-stat-label: 7px; --rx45-stat-value: 13px; --rx45-stat-name: 9px;
+    --rx45-controls-padding: 3px; --rx45-controls-title: 7px; --rx45-control-gap: 2px; --rx45-control-x: 1px;
+    --rx45-control-label: 13px; --rx45-control-sub: 8px; --rx45-control-icon: 20px; --rx45-control-radius: 7px;
+    --rx45-bottom-font: 10px; --rx45-bottom-icon: 18px; --rx45-bottom-gap: 12px;
+  }
+  .rx42Top { grid-template-columns: var(--rx45-logo-width) minmax(0,1fr); }
+  .rx42TopInfo { grid-template-columns: var(--rx45-logo-width); }
+  .rx42Event, .rx42Clock { display: none; }
+  .rx42TopButton { display: none; }
+  .rx42TopButton:nth-child(-n+4) { display: flex; }
+  .rx42TopActions { grid-template-columns: repeat(4, var(--rx45-quick-width)); justify-content: start; }
+  .rx42Brand { padding-left: var(--rx45-top-padding); padding-right: var(--rx45-top-padding); }
+  .rx42Brand small, .rx42TopButton small { display: none; }
+  .rx42Main { grid-template-columns: minmax(0, var(--rx45-left)) minmax(0, 1fr); }
+  .rx42Roster { grid-template-rows: var(--rx45-roster-head) minmax(0,1fr); }
+  .rx42RosterHead { padding: 0 8px; }
+  .rx42RosterTitle { gap: 5px; }
+  .rx42PilotRow { padding: 0 4px; }
+  .rx42PilotRow > :nth-child(1), .rx42PilotRow > :nth-child(2), .rx42PilotRow > :nth-child(3), .rx42PilotRow > :nth-child(4), .rx42PilotRow > :nth-child(5), .rx42PilotRow > :nth-child(6), .rx42PilotRow > :nth-child(7) { display: initial; }
+  .rx42PilotRow > .rx42Pos { display: grid; margin-left: -4px; }
+  .rx42PilotRow > .rx42PilotIdentity { display: block; }
+  .rx42PilotRow > .rx42Metric { display: flex; }
+  .rx42PilotRow > .rx42Status { display: inline-block; }
+  .rx42PilotSub { display: block; margin-top: 3px; }
+  .rx42Gap { display: block; }
+  .rx42PilotRow.header span small { display: none; }
+  .rx42Timer { grid-template-rows: minmax(0,1fr) 62px; }
+  .rx42TimerSubline { display: none; }
+  .rx42TimerMetric { padding: 4px; }
+  .rx42ControlPanel { grid-template-rows: var(--rx45-controls-title) minmax(0,1fr); }
+  .rx42ControlTitle { display: block; }
+  .rx42Control { padding: 2px; gap: 3px; }
+  .rx42Bottom { grid-template-columns: repeat(4,1fr); }
+  .rx42BottomCell:nth-child(5) { display: none; }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  .rx42Cockpit {
+    --rx45-outer-gap: 0px; --rx45-panel-gap: 2px; --rx45-radius: 2px;
+    --rx45-top-height: 46px; --rx45-bottom-height: 36px; --rx45-left: 53.5%;
+    --rx45-logo-width: 137px; --rx45-event-width: 248px; --rx45-clock-width: 143px; --rx45-top-padding: 15px;
+    --rx45-logo-size: 22px; --rx45-event-size: 16px; --rx45-event-meta: 11px; --rx45-clock-size: 21px; --rx45-clock-meta: 11px; --rx45-top-mark: 13px;
+    --rx45-quick-width: 68px; --rx45-quick-height: 24px; --rx45-quick-gap: 2px; --rx45-quick-icon: 25px; --rx45-quick-text: 5px;
+    --rx45-roster-head: 28px; --rx45-column-head: 18px; --rx45-row-height: 41px;
+    --rx45-name-size: 16px; --rx45-data-size: 17px; --rx45-meta-size: 10px; --rx45-header-size: 8px;
+    --rx45-roster-title: 15px; --rx45-roster-total: 11px; --rx45-position-size: 28px; --rx45-status-size: 11px;
+    --rx45-col-pos: 8.5fr; --rx45-col-pilot: 33fr; --rx45-col-best: 17fr; --rx45-col-avg: 13.5fr; --rx45-col-laps: 10.5fr; --rx45-col-gap: 10fr; --rx45-col-status: 12fr;
+    --rx45-column-gap: 0px; --rx45-offset-pos: 3px; --rx45-offset-pilot: -1px; --rx45-offset-best: 2px; --rx45-offset-avg: -3px; --rx45-offset-laps: 0px; --rx45-offset-gap: -5px; --rx45-offset-status: 54px;
+    --rx45-timer-share: 45%; --rx45-timer-padding: 7px; --rx45-timer-column-gap: 12px;
+    --rx45-timer-x: 19px; --rx45-timer-y: 0px; --rx45-phase-size: 14px; --rx45-timer-size: 53px; --rx45-timer-sub-size: 15px;
+    --rx45-ring-size: 93px; --rx45-ring-stroke: 5px; --rx45-ring-x: -38px; --rx45-ring-y: -5px; --rx45-ring-number: 41px; --rx45-ring-suffix: 21px; --rx45-ring-label: 12px;
+    --rx45-ring-content-y: 1px; --rx45-stats-x: 6px; --rx45-stats-y: -5px;
+    --rx45-stat-label: 9px; --rx45-stat-value: 19px; --rx45-stat-name: 13px;
+    --rx45-portrait-timer-height: 131px; --rx45-portrait-controls-height: 100px;
+    --rx45-controls-padding: 1px; --rx45-controls-title: 10px; --rx45-control-gap: 3px; --rx45-control-y: -1px;
+    --rx45-control-label: 14px; --rx45-control-sub: 9px; --rx45-control-icon: 24px; --rx45-control-content-y: 2px; --rx45-control-radius: 2px;
+    --rx45-bottom-font: 11px; --rx45-bottom-icon: 22px; --rx45-bottom-gap: 8px;
+  }
+  .rx42Top { grid-template-columns: var(--rx45-logo-width) minmax(0,1fr); gap: var(--rx45-panel-gap); }
+  .rx42TopInfo { grid-template-columns: var(--rx45-logo-width); }
+  .rx42Event, .rx42Clock { display: none; }
+  .rx42Brand { padding-left: var(--rx45-top-padding); padding-right: var(--rx45-top-padding); }
+  .rx42Brand small { display: none; }
+  .rx42TopActions { width: auto; grid-template-columns: repeat(3, var(--rx45-quick-width)); gap: var(--rx45-quick-gap); justify-content: start; }
+  .rx42TopButton { display: none; }
+  .rx42TopButton:nth-child(-n+3) { display: flex; }
+  .rx42TopButton > span, .rx42TopButton small { display: none; }
+  .rx42Main { grid-template-columns: 1fr; grid-template-rows: var(--rx45-portrait-timer-height) minmax(0,1fr) var(--rx45-portrait-controls-height); gap: var(--rx45-panel-gap); }
+  .rx42Side { display: contents; }
+  .rx42Timer { grid-column: 1; grid-row: 1; grid-template-rows: minmax(0,1fr) 45px; }
+  .rx42Roster { grid-column: 1; grid-row: 2; grid-template-rows: var(--rx45-roster-head) minmax(0,1fr); }
+  .rx42ControlPanel { grid-column: 1; grid-row: 3; grid-template-rows: 0 minmax(0,1fr); gap: 0; }
+  .rx42ControlTitle { display: none; }
+  .rx42TimerMain { grid-template-columns: minmax(0,1fr) var(--rx45-ring-size); }
+  .rx42TimerValue { margin-top: 2px; }
+  .rx42TimerPhase { margin-top: 3px; }
+  .rx42TimerSubline { display: none; }
+  .rx42TimerMetric { padding: 3px 4px; gap: 1px; }
+  .rx42RosterHead { padding: 0 5px; }
+  .rx42RosterTitle { gap: 4px; }
+  .rx42RosterTitle svg { width: var(--rx45-top-mark); height: var(--rx45-top-mark); }
+  .rx42PilotRow {
+    grid-template-columns: minmax(0, var(--rx45-col-pos)) minmax(0, var(--rx45-col-pilot)) minmax(0, var(--rx45-col-best)) minmax(0, var(--rx45-col-gap)) minmax(0, var(--rx45-col-status));
+    padding: 0 3px;
+  }
+  .rx42PilotRow > :nth-child(4), .rx42PilotRow > :nth-child(5) { display: none; }
+  .rx42PilotRow > :nth-child(1), .rx42PilotRow > :nth-child(2), .rx42PilotRow > :nth-child(3), .rx42PilotRow > :nth-child(6), .rx42PilotRow > :nth-child(7) { display: initial; }
+  .rx42PilotRow > .rx42Pos { display: grid; margin-left: -3px; }
+  .rx42PilotRow > .rx42PilotIdentity { display: block; }
+  .rx42PilotRow > .rx42Metric { display: flex; }
+  .rx42PilotRow > .rx42Status { display: inline-block; }
+  .rx42PilotSub { display: block; margin-top: 2px; }
+  .rx42Gap { display: block; }
+  .rx42PilotRow.header span small { display: none; }
+  .rx42Control { padding: 1px; gap: 1px; }
+  .rx42Bottom { grid-template-columns: repeat(4,1fr); }
+  .rx42BottomCell:nth-child(5) { display: none; }
+  .rx42BottomCell > span { display: flex; gap: 2px; }
+}

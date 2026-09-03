@@ -1,6 +1,6 @@
-const CACHE='legion-rx-4-0-44-ui-test-equal-row-type';
+const CACHE='legion-rx-4-0-45-ui-test-json-profile';
 const ASSETS=[
-  './','./index.html','./manifest.webmanifest','./ui-rally-4.0.44.css',
+  './','./index.html','./manifest.webmanifest','./ui-rally-4.0.45.css',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
   './audio/voice/prestart_10.wav','./audio/voice/good_race.wav',
   './audio/voice/countdown_01.wav','./audio/voice/countdown_02.wav','./audio/voice/countdown_03.wav','./audio/voice/countdown_04.wav','./audio/voice/countdown_05.wav','./audio/voice/countdown_06.wav','./audio/voice/countdown_07.wav','./audio/voice/countdown_08.wav','./audio/voice/countdown_09.wav','./audio/voice/countdown_10.wav',

@@ -1,6 +1,6 @@
 {
-  "name": "Legion RX 4.0.44 UI Test",
-  "short_name": "Legion RX 4.0.44",
+  "name": "Legion RX 4.0.45 UI Test",
+  "short_name": "Legion RX 4.0.45",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
