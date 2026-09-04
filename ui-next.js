@@ -1,5 +1,5 @@
 'use strict';
-/* Legion RX 4.1.0 UI NEXT TEST 03
+/* Legion RX 4.1.0 UI NEXT TEST 04
    Visual/UI adapter only. Race, BLE, audio, storage and sports logic remain in index.html. */
 
 const RXN_COLUMN_KEY='legionrx_ui_next_columns_v3';
@@ -29,7 +29,7 @@ function rxnFormatDuration(ms,digits=rxnLoadPrecision()){
   return `${minutes}:${secText}`;
 }
 function rxnFormatTimeHtml(ms,digits=rxnLoadPrecision()){
-  return rxnSplitMillisText(rxnFormatDuration(ms,digits));
+  return rxnSplitMillisText(rxnFormatDuration(ms,digits),digits);
 }
 
 function rxnPilotColor(p){
@@ -44,9 +44,9 @@ function rxnFlagMarkup(p){
   if(!pos)return '<span class="rxnFlag rxnFlagEmpty" aria-hidden="true"></span>';
   return `<span class="rxnFlag" style="--country-flag-position:${pos}" title="${esc(countryName(code))}" aria-label="${esc(countryName(code))}"></span>`;
 }
-function rxnSplitMillisText(value){
+function rxnSplitMillisText(value,digits=rxnLoadPrecision()){
   const s=String(value??'—');
-  if(!s.includes('.'))return esc(s);
+  if(!s.includes('.')||digits!==3)return esc(s);
   const i=s.lastIndexOf('.');
   return `${esc(s.slice(0,i))}<span class="rxnDot">.</span><span class="rxnMillis">${esc(s.slice(i+1))}</span>`;
 }
@@ -62,7 +62,7 @@ function rxnGapRaw(ranked,s,p,index){
   }
   return'—';
 }
-function rxnGapHtml(ranked,s,p,index){return rxnSplitMillisText(rxnGapRaw(ranked,s,p,index));}
+function rxnGapHtml(ranked,s,p,index){return rxnSplitMillisText(rxnGapRaw(ranked,s,p,index),rxnLoadPrecision());}
 function rxnRowState(s,l,pid,index){
   const pre=['warmup','countdown'].includes(s?.phase);
   if(pre)return s?.warmupDetected?.[pid]?{text:'✓',cls:'ok'}:{text:'',cls:''};
@@ -209,7 +209,118 @@ cockpitView=rxnCockpitView;
 updateDynamicCockpit=rxnUpdateDynamicCockpit;
 
 // Live display switches. They change presentation only; race/session data is untouched.
+
+/* ===== UI NEXT Track Day / Free Practice =====
+   New isolated DOM. Track Day timing/PIT/LapWiz logic stays in index.html. */
+function rxnTrackGapHtml(ranked,td,p,index){
+  if(index===0)return rxnSplitMillisText(rxnFormatDuration(0),rxnLoadPrecision());
+  const leader=td?.live?.[ranked[0]?.id]||blankTrackLive(),l=td?.live?.[p.id]||blankTrackLive();
+  const lapDiff=(leader.laps||0)-(l.laps||0);
+  if(lapDiff>0)return `+${lapDiff}L`;
+  const lb=Number(leader.bestLapMs),pb=Number(l.bestLapMs);
+  if(Number.isFinite(lb)&&Number.isFinite(pb)&&pb>=lb)return `+${rxnSplitMillisText(rxnFormatDuration(pb-lb),rxnLoadPrecision())}`;
+  return '—';
+}
+function rxnTrackProgress(l,td){
+  if(!l?.startSeen||l?.status==='PIT'||td?.status!=='active')return{pct:0,color:'#173247'};
+  const elapsed=Math.max(0,trackElapsed(td)-Number(l.lastElapsedAtPass||0));
+  const sm=lapSummary(l),expected=Number.isFinite(sm.avg)?sm.avg:Number.isFinite(l.bestLapMs)?l.bestLapMs:Number.isFinite(l.lastLapMs)?l.lastLapMs:30000;
+  const pct=Math.max(0,Math.min(100,elapsed/Math.max(5000,expected)*100));
+  const base=Number.isFinite(l.bestLapMs)?l.bestLapMs:expected,ratio=elapsed/Math.max(5000,base);
+  let color='#38e46d';if(ratio>1.12)color='#ed3d50';else if(ratio>1.02)color='#e4c136';
+  return{pct,color};
+}
+function rxnTrackCheck(l){
+  if(!l?.startSeen)return'';
+  if(l.status==='PIT')return'PIT';
+  if(l.status==='PIT_OUT'&&Date.now()<Number(l.pitOutUntilEpoch||0))return'OUT';
+  return'✓';
+}
+function rxnTrackPhoneMetric(l){
+  if(!l?.startSeen)return'—';
+  if(l.status==='PIT')return'PIT';
+  const best=rxnTimeHtml(l.bestLapMs);
+  return `<b>${l.laps||0}L</b>${Number.isFinite(l.bestLapMs)?`<small>${best}</small>`:''}`;
+}
+function rxnTrackPilotTable(td){
+  const pilots=rankTrackPilots(td);
+  const rows=pilots.map((p,i)=>{
+    const l=td.live?.[p.id]||blankTrackLive(),sm=lapSummary(l),pr=rxnTrackProgress(l,td),st=rxnTrackCheck(l);
+    return `<div class="rxnPilotRow rxnPilotData ${i===0&&l.laps>0?'leader':''}" data-pilot-id="${esc(p.id)}" data-pilot-stats="${esc(p.id)}" data-stats-context="track">
+      <div class="rxnPos">${i+1}</div>
+      <div class="rxnId" style="--pilot-color:${rxnPilotColor(p)}">${esc(p.transponder||i+1)}</div>
+      <div class="rxnNameCell"><div class="rxnName">${esc(p.name||'—')}</div><div class="rxnLapTrack"><i style="width:${pr.pct.toFixed(1)}%;background:${pr.color}"></i></div></div>
+      <div class="rxnFlagCell">${rxnFlagMarkup(p)}</div>
+      <div class="rxnGap">${rxnTrackGapHtml(pilots,td,p,i)}</div>
+      <div class="rxnCheck ${l.startSeen?'ok':''}">${st}</div>
+      <div class="rxnBest">${rxnTimeHtml(sm.best)}</div>
+      <div class="rxnAvg">${rxnTimeHtml(sm.avg)}</div>
+      <div class="rxnLast">${rxnTimeHtml(l.lastLapMs)}</div>
+      <div class="rxnLaps">${l.laps||0}</div>
+      <div class="rxnPhoneMetric">${rxnTrackPhoneMetric(l)}</div>
+    </div>`;
+  }).join('');
+  return rxnPilotHeader()+rows;
+}
+function rxnTrackHeader(td){
+  const active=td?.status==='active';
+  return `<header class="rxnTop">
+    ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="lapwiz" title="Bluetooth / LapWiz"',icon:'bluetooth'})}
+    ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:lapwiz.connected?'data-action="lap-disconnect"':'data-track-action="lap-connect"',icon:'wave',title:'LAPWIZ',sub:lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'})}
+    ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer"',icon:'mic',title:'ДИКТОР',sub:state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'})}
+    ${rxnTopButton({cls:active?'ok':'blue',attrs:'',icon:'flag',title:'СТАТУС',sub:active?'ПРАКТИКА':'ЗАВЕРШЕНА'})}
+    ${rxnTopButton({attrs:'data-track-action="report"',icon:'chart',title:'СТАТИСТИКА',sub:'СЕССИЯ'})}
+    ${rxnTopButton({cls:'danger',attrs:'data-track-action="finish"',icon:'stop',title:'ЗАВЕРШИТЬ',sub:'ПРАКТИКУ'})}
+    ${rxnTopButton({cls:'blue',attrs:'data-track-action="report"',icon:'chart',title:'РЕЗУЛЬТАТЫ'})}
+    ${rxnTopButton({cls:'iconOnly',attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
+    ${rxnTopButton({cls:'iconOnly',attrs:'data-track-action="home" title="Главная"',icon:'list'})}
+  </header>`;
+}
+function rxnTrackTitle(td){
+  return `<section class="rxnRaceTitle"><div><small>LEGION RX · FREE PRACTICE</small><h1>${esc(td?.name||'СВОБОДНАЯ ПРАКТИКА')}</h1></div><div class="rxnRaceMeta"><span>TRACK DAY</span><b id="rxnPhaseTitle">${td?.status==='active'?'ПРАКТИКА ИДЁТ':'СЕССИЯ ЗАВЕРШЕНА'}</b></div></section>`;
+}
+function rxnTrackTimerPanel(td,pilots){
+  const remaining=trackRemaining(td),leader=pilots?.[0],ll=leader?td.live?.[leader.id]:null,total=Math.max(1,Number(td.durationMin||1)*60000),progress=Math.max(0,Math.min(100,remaining/total*100));
+  return `<section class="rxnTimerPanel"><div class="rxnTimerCopy"><span>${td.status==='active'?'ДО КОНЦА СЕССИИ':'СЕССИЯ ЗАВЕРШЕНА'}</span><strong id="trackMainTimer">${fmtClock(td.status==='active'?remaining:(td.elapsedFinalMs||trackElapsed(td)))}</strong><small id="trackTimerSubline">${td.durationMin} МИН · FREE PRACTICE</small></div><div id="trackTimerRing" class="rxnRing" style="--ring-progress:${progress*3.6}deg"><div><b id="rxnTrackRingMain">${ll?.laps||0}</b><small id="rxnTrackRingSub">КРУГОВ ЛИДЕРА</small></div></div></section>`;
+}
+function rxnTrackControlGrid(td){
+  const active=td?.status==='active';
+  if(!active)return `<div class="rxnControls">${rxnControlButton('blue','data-track-action="report"','chart','СТАТИСТИКА')}${rxnControlButton('','data-track-action="home"','home','ГЛАВНАЯ')}${rxnControlButton('','data-track-action="setup"','settings','НОВАЯ СЕССИЯ')}${rxnControlButton('blue','data-track-action="report"','chart','ОТЧЁТ')}${rxnControlButton('blue','disabled','refresh','РУЧНОЙ КРУГ')}${rxnControlButton('danger','data-track-action="clear-active"','stop','ЗАКРЫТЬ')}</div>`;
+  return `<div class="rxnControls">${rxnControlButton('primary','disabled','play','ПРАКТИКА ИДЁТ')}${rxnControlButton('','disabled','pause','ПАУЗА')}${rxnControlButton('','data-track-action="finish"','flag','ФИНИШ')}${rxnControlButton('blue','data-track-action="report"','chart','СТАТИСТИКА')}${rxnControlButton('blue','data-rxn-track-manual="1"','refresh','РУЧНОЙ КРУГ')}${rxnControlButton('danger','data-track-action="finish"','stop','СТОП')}</div>`;
+}
+function rxnTrackControlPanel(td){return `<section class="rxnControlPanel">${rxnTrackControlGrid(td)}${rxnDisplayTools()}</section>`;}
+function rxnTrackDayCockpitView(){
+  const td=ensureTrackDayState(state.trackDay);if(!td)return `<section class="page"><div class="card"><h2>Нет активного Track Day</h2><button class="btn primary" data-track-action="setup">К настройке</button></div></section>`;
+  const pilots=rankTrackPilots(td),cls=rxnColumnClass(),count=rxnMetricCount();
+  return `<section class="rxnCockpit rxnTrackCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnTrackHeader(td)}${rxnTrackTitle(td)}<main class="rxnMain"><section class="rxnRoster"><div id="trackPilotBoard" class="rxnTable">${rxnTrackPilotTable(td)}</div></section><aside class="rxnSide">${rxnTrackTimerPanel(td,pilots)}${rxnTrackControlPanel(td)}</aside></main></section>`;
+}
+function rxnUpdateTrackDayDynamic(){
+  const td=ensureTrackDayState(state.trackDay);if(!td)return;
+  const pilots=rankTrackPilots(td),remaining=trackRemaining(td),total=Math.max(1,Number(td.durationMin||1)*60000),progress=Math.max(0,Math.min(100,remaining/total*100));
+  const timer=document.querySelector('#trackMainTimer');if(timer)timer.textContent=fmtClock(td.status==='active'?remaining:(td.elapsedFinalMs||trackElapsed(td)));
+  const ring=document.querySelector('#trackTimerRing');if(ring)ring.style.setProperty('--ring-progress',`${progress*3.6}deg`);
+  const leader=pilots[0],ll=leader?td.live?.[leader.id]:null,rm=document.querySelector('#rxnTrackRingMain');if(rm)rm.textContent=String(ll?.laps||0);
+  const phase=document.querySelector('#rxnPhaseTitle');if(phase)phase.textContent=td.status==='active'?'ПРАКТИКА ИДЁТ':'СЕССИЯ ЗАВЕРШЕНА';
+  const board=document.querySelector('#trackPilotBoard');if(board){
+    const sig=pilots.map(p=>{const l=td.live?.[p.id]||blankTrackLive();return`${p.id}:${l.laps}:${Math.round(l.lastLapMs||0)}:${Math.round(l.bestLapMs||0)}:${l.startSeen}:${l.status}`;}).join('|')+`|P:${rxnLoadPrecision()}|C:${rxnColumnClass()}`;
+    if(sig!==td._rxnBoardSig){td._rxnBoardSig=sig;rxnAnimateBoard(board,rxnTrackPilotTable(td));}
+    document.querySelectorAll('.rxnPilotData[data-pilot-id]').forEach(row=>{const p=pilots.find(x=>String(x.id)===String(row.dataset.pilotId));if(!p)return;const l=td.live?.[p.id]||blankTrackLive(),pr=rxnTrackProgress(l,td),fill=row.querySelector('.rxnLapTrack i');if(fill){fill.style.width=`${pr.pct.toFixed(1)}%`;fill.style.background=pr.color;}});
+  }
+}
+function rxnTrackManualLapModal(){
+  const td=ensureTrackDayState(state.trackDay);if(!td||td.status!=='active')return toast('Ручной круг доступен во время свободной практики');
+  const pilots=rankTrackPilots(td);
+  $('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal manualLapModal"><div class="modalHead"><div><div class="sectionLabel">FREE PRACTICE · РУЧНОЙ РЕЗЕРВ</div><h2>Кому добавить проход?</h2></div><button class="iconBtn" id="closeModal">×</button></div><div class="manualPilotGrid">${pilots.map(p=>{const l=td.live?.[p.id]||blankTrackLive();return `<button data-rxn-track-pilot="${esc(p.id)}"><span>${nameInitials(p.name)}</span><b>${pilotNameMarkup(p)}</b><em>${l.laps||0} кругов</em></button>`;}).join('')}</div></div></div>`;
+  $('#closeModal').onclick=closeModal;
+  $$('[data-rxn-track-pilot]').forEach(b=>b.onclick=()=>{const p=trackPilot(td,b.dataset.rxnTrackPilot);if(p){processTrackPass(p.transponder,null,'MANUAL');toast(`Ручной проход: ${p.name}`);closeModal();}});
+}
+trackDayCockpitView=rxnTrackDayCockpitView;
+updateTrackDayDynamic=rxnUpdateTrackDayDynamic;
+/* ===== /UI NEXT Track Day ===== */
+
 document.addEventListener('click',e=>{
+  const trackManual=e.target.closest?.('[data-rxn-track-manual]');
+  if(trackManual){rxnTrackManualLapModal();return;}
   const colBtn=e.target.closest?.('[data-rxn-col]');
   if(colBtn){
     const c=rxnLoadColumns(),k=colBtn.dataset.rxnCol;c[k]=!c[k];rxnSaveColumns(c);
@@ -218,6 +329,7 @@ document.addEventListener('click',e=>{
     const cls=rxnColumnClass();if(cls)root.className+=' '+cls;
     root.style.setProperty('--rxn-metric-count',String(rxnMetricCount()));
     root.querySelectorAll('[data-rxn-col]').forEach(x=>x.classList.toggle('active',!!c[x.dataset.rxnCol]));
+    if(state?.view==='trackDayCockpit'){const td=ensureTrackDayState(state.trackDay),board=document.querySelector('#trackPilotBoard');if(td&&board)rxnAnimateBoard(board,rxnTrackPilotTable(td));}
     return;
   }
   const precisionBtn=e.target.closest?.('[data-rxn-precision]');
@@ -226,15 +338,16 @@ document.addEventListener('click',e=>{
     rxnSavePrecision(n);
     document.querySelectorAll('[data-rxn-precision]').forEach(x=>x.classList.toggle('active',Number(x.dataset.rxnPrecision)===n));
     const race=state.race,ev=currentEvent(race),s=state.session;
-    if(race&&ev&&s){
+    if(race&&ev&&s&&state?.view==='cockpit'){
       const ranked=liveRanking(getEventPilots(race,ev),s),board=document.querySelector('.rxnTable');
       if(board&&s.phase!=='finished')rxnAnimateBoard(board,rxnPilotTable(ranked,s));
     }
+    if(state?.view==='trackDayCockpit'){const td=ensureTrackDayState(state.trackDay),board=document.querySelector('#trackPilotBoard');if(td&&board)rxnAnimateBoard(board,rxnTrackPilotTable(td));}
   }
 });
 
 // Layout responds to orientation without touching race/session state.
 let rxnResizeTimer=null;
 window.addEventListener('resize',()=>{
-  clearTimeout(rxnResizeTimer);rxnResizeTimer=setTimeout(()=>{if(state?.view==='cockpit')render();},180);
+  clearTimeout(rxnResizeTimer);rxnResizeTimer=setTimeout(()=>{if(['cockpit','trackDayCockpit'].includes(state?.view))render();},180);
 });
