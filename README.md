@@ -1,9 +1,9 @@
-# Legion RX 4.0.42 UI TEST
+# Legion RX 4.1.0 UI NEXT TEST 02
 
-This is an isolated RallyCross UI test rebuilt from the approved dark reference sketch. The cockpit now uses a new namespaced layout for the top status block, complete pilot table, timer and lap ring, 3×2 controls and bottom information strip. Existing race, LapWiz and announcer logic is preserved.
+Первая адаптивная доработка UI NEXT после теста на реальном desktop/tablet.
 
-All 249 pilot country flags are stored in one offline PNG atlas instead of hundreds of separate SVG files. They render consistently on Windows, Android and iOS, and Russia remains the first country in the pilot selector. The GitHub deployment package contains only current runtime files.
+Основная цель TEST 02: крупная читаемая таблица пилотов на desktop, заполнение всей ширины строки на планшетах и полный набор метрик в portrait-tablet с переключателями столбцов.
 
-Local Pilot Voice: MP3, WAV or OGG recordings of pilot names are loaded in the pilot profile and stored offline in IndexedDB by permanent pilot ID. No account, API, payment, server or internet connection is required.
+Спортивная логика RallyCross, LapWiz BLE core, диктор/audio, storage и обработка проходов не переписывались. UI NEXT остаётся отдельным визуальным адаптером.
 
-The saved name and the supplied race-announcer WAV files share one playback queue. The start flow uses the dedicated “one minute to start” recording, then call to start, pilot names, “Good race”, configurable countdown to 1, and HORN. The “one minute remaining in the heat” recording now plays only during a timed race. A new heat-best lap announces the phrase and pilot name without reading seconds or milliseconds. Finish, results and service messages can be enabled separately in Settings.
+См. README_UI_NEXT_TEST_02.md и TEST_CHECKLIST_UI_NEXT_02.txt.

@@ -1,8 +1,8 @@
 'use strict';
-/* Legion RX 4.1.0 UI NEXT TEST 01
+/* Legion RX 4.1.0 UI NEXT TEST 02
    Visual/UI adapter only. Race, BLE, audio, storage and sports logic remain in index.html. */
 
-const RXN_COLUMN_KEY='legionrx_ui_next_ipad_columns_v1';
+const RXN_COLUMN_KEY='legionrx_ui_next_tablet_columns_v2';
 const RXN_PALETTE=['#299eef','#82c92d','#f3aa13','#764bc3','#ef6671','#a96c43','#32ad67','#d95aad','#2f77c9','#d4832f','#68a7b8','#9b78d1','#d8c23f','#ef7b55'];
 
 function rxnLoadColumns(){
