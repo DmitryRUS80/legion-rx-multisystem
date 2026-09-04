@@ -1,11 +1,11 @@
 {
-  "name": "Legion RX 4.0.42 UI Test",
-  "short_name": "Legion RX 4.0.42",
+  "name": "Legion RX 4.1.0 UI Next Test 01",
+  "short_name": "Legion RX 4.1.0",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#080c11",
-  "theme_color": "#080c11",
+  "background_color": "#03101a",
+  "theme_color": "#03101a",
   "icons": [
     {
       "src": "icons/icon-192.png",
