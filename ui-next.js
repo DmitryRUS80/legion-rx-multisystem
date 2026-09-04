@@ -1,8 +1,9 @@
 'use strict';
-/* Legion RX 4.1.0 UI NEXT TEST 02
+/* Legion RX 4.1.0 UI NEXT TEST 03
    Visual/UI adapter only. Race, BLE, audio, storage and sports logic remain in index.html. */
 
-const RXN_COLUMN_KEY='legionrx_ui_next_tablet_columns_v2';
+const RXN_COLUMN_KEY='legionrx_ui_next_columns_v3';
+const RXN_PRECISION_KEY='legionrx_ui_next_precision_v1';
 const RXN_PALETTE=['#299eef','#82c92d','#f3aa13','#764bc3','#ef6671','#a96c43','#32ad67','#d95aad','#2f77c9','#d4832f','#68a7b8','#9b78d1','#d8c23f','#ef7b55'];
 
 function rxnLoadColumns(){
@@ -12,6 +13,24 @@ function rxnLoadColumns(){
 function rxnSaveColumns(v){try{localStorage.setItem(RXN_COLUMN_KEY,JSON.stringify(v));}catch{}}
 function rxnColumnClass(){const c=rxnLoadColumns(),a=[];for(const k of ['gap','check','best','avg','last','laps'])if(!c[k])a.push(`rxnHide-${k}`);return a.join(' ');}
 function rxnMetricCount(){const c=rxnLoadColumns();return Math.max(1,['gap','check','best','avg','last','laps'].filter(k=>c[k]).length);}
+function rxnLoadPrecision(){
+  try{const n=Number(localStorage.getItem(RXN_PRECISION_KEY));return [1,2,3].includes(n)?n:1;}catch{return 1;}
+}
+function rxnSavePrecision(n){try{localStorage.setItem(RXN_PRECISION_KEY,String(n));}catch{}}
+function rxnFormatDuration(ms,digits=rxnLoadPrecision()){
+  if(!Number.isFinite(ms)||ms<0)return '—';
+  const total=Math.max(0,Number(ms));
+  if(total<60000){
+    return (total/1000).toFixed(digits);
+  }
+  const minutes=Math.floor(total/60000);
+  const seconds=(total-minutes*60000)/1000;
+  const secText=seconds.toFixed(digits).padStart(2+(digits?digits+1:0),'0');
+  return `${minutes}:${secText}`;
+}
+function rxnFormatTimeHtml(ms,digits=rxnLoadPrecision()){
+  return rxnSplitMillisText(rxnFormatDuration(ms,digits));
+}
 
 function rxnPilotColor(p){
   const raw=String(p?.uiColor||profileForPilot(p)?.uiColor||'').trim();
@@ -31,20 +50,15 @@ function rxnSplitMillisText(value){
   const i=s.lastIndexOf('.');
   return `${esc(s.slice(0,i))}<span class="rxnDot">.</span><span class="rxnMillis">${esc(s.slice(i+1))}</span>`;
 }
-function rxnTimeHtml(ms){return rxnSplitMillisText(fmtMs(ms));}
-function rxnClockMillis(ms){
-  if(!Number.isFinite(ms)||ms<0)return'0:00.000';
-  const total=Math.floor(ms),m=Math.floor(total/60000),s=Math.floor((total%60000)/1000),mm=total%1000;
-  return `${m}:${String(s).padStart(2,'0')}.${String(mm).padStart(3,'0')}`;
-}
-function rxnPaceHtml(l){return `${l?.laps||0}/${rxnSplitMillisText(rxnClockMillis(Number(l?.elapsedMs||0)))}`;}
+function rxnTimeHtml(ms){return rxnFormatTimeHtml(ms);}
+function rxnPaceHtml(l){return `${l?.laps||0}/${rxnFormatTimeHtml(Number(l?.elapsedMs||0))}`;}
 function rxnGapRaw(ranked,s,p,index){
-  if(!s||index===0)return index===0?'0.000':'—';
+  if(!s||index===0)return index===0?rxnFormatDuration(0):'—';
   const leader=s.live?.[ranked[0]?.id]||blankLive(),l=s.live?.[p.id]||blankLive();
   const diff=(leader.laps||0)-(l.laps||0);
   if(diff>0)return`+${diff}L`;
   if(Number.isFinite(l.elapsedMs)&&Number.isFinite(leader.elapsedMs)&&l.elapsedMs>0&&leader.elapsedMs>0){
-    const d=Math.max(0,l.elapsedMs-leader.elapsedMs);return`+${fmtMs(d)}`;
+    const d=Math.max(0,l.elapsedMs-leader.elapsedMs);return`+${rxnFormatDuration(d)}`;
   }
   return'—';
 }
@@ -143,9 +157,14 @@ function rxnControlGrid(done,s,tie=false){
 }
 function rxnColumnToggles(){
   const c=rxnLoadColumns(),defs=[['gap','GAP'],['check','✓'],['best','BEST'],['avg','AVG'],['last','LAST'],['laps','LAPS']];
-  return `<div class="rxnColumnToggles">${defs.map(([k,t])=>`<button data-rxn-col="${k}" class="${c[k]?'active':''}">${t}</button>`).join('')}</div>`;
+  return `<div class="rxnColumnToggles">${defs.map(([k,t])=>`<button type="button" data-rxn-col="${k}" class="${c[k]?'active':''}">${t}</button>`).join('')}</div>`;
 }
-function rxnControlPanel(done,s,tie=false){return `<section class="rxnControlPanel">${rxnControlGrid(done,s,tie)}${rxnColumnToggles()}</section>`;}
+function rxnPrecisionToggles(){
+  const p=rxnLoadPrecision();
+  return `<div class="rxnPrecisionToggles"><button type="button" data-rxn-precision="1" class="${p===1?'active':''}" title="Десятые доли секунды">0.1</button><button type="button" data-rxn-precision="2" class="${p===2?'active':''}" title="Сотые доли секунды">0.01</button><button type="button" data-rxn-precision="3" class="${p===3?'active':''}" title="Тысячные доли секунды">0.001</button></div>`;
+}
+function rxnDisplayTools(){return `<div class="rxnDisplayTools">${rxnColumnToggles()}${rxnPrecisionToggles()}</div>`;}
+function rxnControlPanel(done,s,tie=false){return `<section class="rxnControlPanel">${rxnControlGrid(done,s,tie)}${rxnDisplayTools()}</section>`;}
 function rxnCockpitView(){
   if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
   const race=state.race,ev=currentEvent(race),events=eventList(race),s=ensureSession(ev),pilots=ev?liveRanking(getEventPilots(race,ev),s):[],done=race.stage==='finished',tie=race.stage==='tie';
@@ -189,14 +208,29 @@ function rxnUpdateDynamicCockpit(){
 cockpitView=rxnCockpitView;
 updateDynamicCockpit=rxnUpdateDynamicCockpit;
 
-// iPad portrait column switches. Event delegation survives re-renders.
+// Live display switches. They change presentation only; race/session data is untouched.
 document.addEventListener('click',e=>{
-  const b=e.target.closest?.('[data-rxn-col]');if(!b)return;
-  const c=rxnLoadColumns(),k=b.dataset.rxnCol;c[k]=!c[k];rxnSaveColumns(c);
-  const root=document.querySelector('.rxnCockpit');if(!root)return;
-  root.className=root.className.replace(/\brxnHide-(gap|check|best|avg|last|laps)\b/g,'').replace(/\s+/g,' ').trim();
-  const cls=rxnColumnClass();if(cls)root.className+=' '+cls;root.style.setProperty('--rxn-metric-count',String(rxnMetricCount()));
-  root.querySelectorAll('[data-rxn-col]').forEach(x=>x.classList.toggle('active',!!c[x.dataset.rxnCol]));
+  const colBtn=e.target.closest?.('[data-rxn-col]');
+  if(colBtn){
+    const c=rxnLoadColumns(),k=colBtn.dataset.rxnCol;c[k]=!c[k];rxnSaveColumns(c);
+    const root=document.querySelector('.rxnCockpit');if(!root)return;
+    root.className=root.className.replace(/\brxnHide-(gap|check|best|avg|last|laps)\b/g,'').replace(/\s+/g,' ').trim();
+    const cls=rxnColumnClass();if(cls)root.className+=' '+cls;
+    root.style.setProperty('--rxn-metric-count',String(rxnMetricCount()));
+    root.querySelectorAll('[data-rxn-col]').forEach(x=>x.classList.toggle('active',!!c[x.dataset.rxnCol]));
+    return;
+  }
+  const precisionBtn=e.target.closest?.('[data-rxn-precision]');
+  if(precisionBtn){
+    const n=Number(precisionBtn.dataset.rxnPrecision);if(![1,2,3].includes(n))return;
+    rxnSavePrecision(n);
+    document.querySelectorAll('[data-rxn-precision]').forEach(x=>x.classList.toggle('active',Number(x.dataset.rxnPrecision)===n));
+    const race=state.race,ev=currentEvent(race),s=state.session;
+    if(race&&ev&&s){
+      const ranked=liveRanking(getEventPilots(race,ev),s),board=document.querySelector('.rxnTable');
+      if(board&&s.phase!=='finished')rxnAnimateBoard(board,rxnPilotTable(ranked,s));
+    }
+  }
 });
 
 // Layout responds to orientation without touching race/session state.

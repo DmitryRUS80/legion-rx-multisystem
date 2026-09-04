@@ -1,13 +1,8 @@
-LEGION RX 4.1.0 UI NEXT TEST 02
+LEGION RX 4.1.0 UI NEXT TEST 03
 
-GITHUB PAGES:
-1. Распаковать архив.
-2. Содержимое папки Legion_RX_4.1.0_UI_NEXT_TEST_02 положить в корень репозитория.
-3. index.html, sw.js, ui-next.css, ui-next.js, flags, audio, icons должны лежать на одном уровне.
-4. После обновления GitHub Pages открыть приложение и обновить страницу. TEST 02 использует новый offline cache, поэтому старый TEST 01 не должен подменять CSS/JS.
-
-ПРОВЕРИТЬ ПЕРВЫМ:
-- Desktop 1792x864 / 1920x1080: крупные строки, примерно 8–10/10–11 видимых пилотов.
-- Android tablet landscape: полная ширина таблицы без наложений.
-- Android/iPad portrait >=600 CSS px: все метрики + переключатели под пультом.
-- Реальный LapWiz: подключение, START/STOP, первый проход START без круга, второй проход = первый круг.
+1. Распакуйте содержимое архива в корень GitHub Pages репозитория.
+2. Убедитесь, что index.html, sw.js, ui-next.js, ui-next.css, manifest.webmanifest, flags/ и icons/ лежат на одном уровне.
+3. После публикации сделайте жёсткое обновление страницы или переустановите PWA: cache TEST 03 имеет новый ключ.
+4. Проверьте сначала визуал без LapWiz.
+5. Затем проверьте LapWiz: connect → warmup pass → START marker → next pass = lap 1 → STOP.
+6. Во время заезда под пультом можно включать/выключать GAP / ✓ / BEST / AVG / LAST / LAPS и менять точность времени 0.1 / 0.01 / 0.001. Эти действия меняют только отображение.

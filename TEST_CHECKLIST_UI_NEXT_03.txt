@@ -1,0 +1,33 @@
+LEGION RX UI NEXT TEST 03 — CHECKLIST
+
+1. Desktop / Android tablet landscape
+   - GAP, ✓, BEST, AVG, LAST, LAPS switches are visible below the six race-control buttons.
+   - All six columns ON: values do not overlap.
+   - Turn AVG off: remaining five columns expand evenly to the right edge.
+   - Turn more columns off: no blank fixed tracks remain.
+
+2. Time precision
+   - Default: 21.5 (tenths).
+   - Press 0.01: 21.50.
+   - Press 0.001: 21.500.
+   - Time > 60 s: 1:25.5 / 1:25.50 / 1:25.500.
+   - GAP example: +5.1, lap gap: +1L.
+
+3. Tablet portrait (>= 600 CSS px)
+   - Full table visible: GAP / ✓ / BEST / AVG / LAST / LAPS.
+   - Flag is directly after the name block.
+   - Column switches and precision switches are below the pult.
+   - Disabling any metric redistributes remaining metric width evenly.
+
+4. Phone portrait (< 600 CSS px)
+   - Compact dynamic right cell remains.
+   - No full-column toolbar is forced into the narrow screen.
+
+5. Functional regression
+   - LapWiz connect/disconnect.
+   - START / STOP.
+   - Warmup first pass / START marker.
+   - Next pass counts first lap.
+   - Pause, finish, +1 min, manual lap.
+   - Announcer / BLEEP / HORN.
+   - Results / championship state / refresh.
