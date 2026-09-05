@@ -1,0 +1,80 @@
+{
+  "tests": [
+    {
+      "name": "Sport self-test",
+      "ok": true,
+      "detail": "{\"ok\": true, \"version\": \"RALLYCROSS-2026.09\", \"tests\": [{\"name\": \"Q P1\", \"ok\": true, \"got\": 50, \"want\": 50}, {\"name\": \"Q P4\", \"ok\": true, \"got\": 40, \"want\": 40}, {\"name\": \"Q P16\", \"ok\": true, \"got\": 28, \"want\": 28}, {\"name\": \"Q P17 continuation\", \"ok\": true, \"got\": 27, \"want\": 27}, {\"name\": \"Best3 sum\", \"ok\": true, \"got\": 137, \"want\": 137}, {\"name\": \"Final FIN score\", \"ok\": true, \"got\": 2, \"want\": 2}, {\"name\": \"Final DNF score\", \"ok\": true, \"got\": 7, \"want\": 7}, {\"name\": \"Final DNS score\", \"ok\": true, \"got\": 7, \"want\": 7}, {\"name\": \"Final DSQ score\", \"ok\": true, \"got\": 7, \"want\": 7}, {\"name\": \"A runs\", \"ok\": true, \"got\": \"A1,A2,A3\", \"want\": \"A1,A2,A3\"}, {\"name\": \"Stage P1\", \"ok\": true, \"got\": 25, \"want\": 25}]}"
+    },
+    {
+      "name": "Qualification points/statuses preserved",
+      "ok": true,
+      "detail": "[{\"id\": \"p1\", \"best3\": 150, \"statuses\": [\"FIN\", \"FIN\", \"FIN\", \"FIN\"], \"points\": [50, 50, 50, 50]}, {\"id\": \"p2\", \"best3\": 135, \"statuses\": [\"FIN\", \"FIN\", \"FIN\", \"FIN\"], \"points\": [45, 42, 45, 45]}, {\"id\": \"p3\", \"best3\": 129, \"statuses\": [\"FIN\", \"FIN\", \"FIN\", \"FIN\"], \"points\": [42, 45, 40, 42]}, {\"id\": \"p4\", \"best3\": 122, \"statuses\": [\"FIN\", \"FIN\", \"FIN\", \"FIN\"], \"points\": [40, 40, 42, 39]}, {\"id\": \"p5\", \"best3\": 118, \"statuses\": [\"FIN\", \"FIN\", \"DNF\", \"FIN\"], \"points\": [39, 39, 0, 40]}, {\"id\": \"p6\", \"best3\": 115, \"statuses\": [\"FIN\", \"DNS\", \"FIN\", \"FIN\"], \"points\": [38, 0, 39, 38]}]"
+    },
+    {
+      "name": "Final A1/A2/A3 completed",
+      "ok": true,
+      "detail": "[{\"pilotId\": \"p1\", \"results\": [{\"pilotId\": \"p1\", \"status\": \"FIN\", \"place\": 1, \"dnfOrder\": null}, {\"pilotId\": \"p1\", \"status\": \"FIN\", \"place\": 1, \"dnfOrder\": null}, {\"pilotId\": \"p1\", \"status\": \"FIN\", \"place\": 1, \"dnfOrder\": null}], \"scores\": [1, 1, 1], \"bestTwo\": [1, 1], \"total\": 2, \"wins\": 3, \"seconds\": 0, \"lastScore\": 1, \"qRank\": 1}, {\"pilotId\": \"p2\", \"results\": [{\"pilotId\": \"p2\", \"status\": \"FIN\", \"place\": 2, \"dnfOrder\": null}, {\"pilotId\": \"p2\", \"status\": \"FIN\", \"place\": 2, \"dnfOrder\": null}, {\"pilotId\": \"p2\", \"status\": \"DNF\", \"place\": null, \"dnfOrder\": 1}], \"scores\": [2, 2, 7], \"bestTwo\": [2, 2], \"total\": 4, \"wins\": 0, \"seconds\": 2, \"lastScore\": 7, \"qRank\": 2}]"
+    },
+    {
+      "name": "Final protocol keeps run statuses",
+      "ok": true,
+      "detail": "Финал A · A1 1 · A2 1 · A3 1 · лучшие 2: 2 | Финал A · A1 2 · A2 2 · A3 DNF (7) · лучшие 2: 4 | Финал A · A1 DNF (7) · A2 3 · A3 2 · лучшие 2: 5 | Финал A · A1 DNS (7) · A2 4 · A3 3 · лучшие 2: 7 | Финал A · A1 3 · A2 6 · A3 5 · лучшие 2: 8 | Финал A · A1 DSQ (7) · A2 5 · A3 4 · лучшие 2: 9"
+    },
+    {
+      "name": "Championship event points present",
+      "ok": true,
+      "detail": "[25, 18, 15]"
+    },
+    {
+      "name": "Result confirmation UI",
+      "ok": true,
+      "detail": "{'modal': True, 'dns': 'DNS', 'options': ['FIN', 'DNF', 'DNS', 'DSQ']}"
+    },
+    {
+      "name": "DNF/DNS saved from new UI",
+      "ok": true,
+      "detail": "{\"saved\": true, \"result\": [{\"pilotId\": \"u1\", \"status\": \"FIN\", \"place\": 1, \"dnfOrder\": null}, {\"pilotId\": \"u2\", \"status\": \"DNF\", \"place\": null, \"dnfOrder\": 1}, {\"pilotId\": \"u3\", \"status\": \"DNS\", \"place\": null, \"dnfOrder\": null}], \"stage\": \"finals\"}"
+    },
+    {
+      "name": "Final start-grid button",
+      "ok": true,
+      "detail": "1"
+    },
+    {
+      "name": "Start-grid order visible",
+      "ok": true,
+      "detail": "3"
+    },
+    {
+      "name": "Start-grid confirmation persisted",
+      "ok": true,
+      "detail": "1"
+    },
+    {
+      "name": "Results screen shows sport rule version/statuses",
+      "ok": true,
+      "detail": "СПОРТИВНЫЕ РЕЗУЛЬТАТЫ · RALLYCROSS-2026.09\nUI TEST\n×\nQ: 50 / 45 / 42 / 40 / 39 / 38…\nBEST 3\nA1+A2+A3 · лучшие 2\nне-FIN = 7\nЭтап: 25 / 18 / 15 / 12 / 10 / 8 / 6 / 4 / 2 / 1\nКвалификационный рейтинг\nPOS\tПИЛОТ\tQ1\tBEST 3\n1\tU1\t1 (50)\t50\n2\tU2\tDNF\t0\n3\tU3\tDNS\t0\nФинал A\nPOS\tПИЛОТ\tA1\tA2\tA3\tЛУЧШИЕ 2\n1\tU1\t—\t—\t—\t—\n2\tU2\t—\t—\t—\t—\n3\tU3\t—\t—\t—\t—\nЗавершённые заезды\nКвалификация 1 · Заезд 1"
+    },
+    {
+      "name": "Result modal layout 390x844",
+      "ok": true,
+      "detail": "{'sw': 344, 'cw': 344, 'sh': 580, 'ch': 580}"
+    },
+    {
+      "name": "Result modal layout 820x1180",
+      "ok": true,
+      "detail": "{'sw': 785, 'cw': 785, 'sh': 472, 'ch': 472}"
+    },
+    {
+      "name": "Result modal layout 1280x800",
+      "ok": true,
+      "detail": "{'sw': 978, 'cw': 978, 'sh': 472, 'ch': 472}"
+    },
+    {
+      "name": "No runtime JS errors",
+      "ok": true,
+      "detail": "[]"
+    }
+  ],
+  "ok": true
+}

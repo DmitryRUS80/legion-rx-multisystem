@@ -1,4 +1,4 @@
-const CACHE='legion-rx-4-1-0-ui-next-test-04';
+const CACHE='legion-rx-4-1-0-ui-next-test-05';
 const ASSETS=[
   './','./index.html','./manifest.webmanifest','./ui-next.css','./ui-next.js',
   './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',

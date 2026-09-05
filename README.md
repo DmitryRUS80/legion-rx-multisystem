@@ -1,7 +1,7 @@
-# Legion RX 4.1.0 UI NEXT TEST 04
+# Legion RX 4.1.0 UI NEXT TEST 05
 
-Тестовая сборка нового UI RallyCross + Free Practice.
+Срочная демонстрационная сборка с восстановленным полным контуром спортивных результатов RallyCross.
 
-Главное в TEST 04: корректное отображение точности времени и единый новый пульт Free Practice с кнопкой `СТАТИСТИКА` вместо `+1 МИН`.
+Главное: спортивные правила вынесены в один авторитетный блок `SPORT_RULES` внутри ядра, а новый UI только передаёт в него подтверждённые результаты. LapWiz/BLE, засечка кругов, аудио, Track Day и база пилотов не переписывались.
 
-См. `README_UI_NEXT_TEST_04.md` и `TEST_CHECKLIST_UI_NEXT_04.txt`.
+См. `CHANGELOG_4.1.0_UI_NEXT_TEST_05.md`, `TEST_CHECKLIST_UI_NEXT_05.txt`, `SPORT_TEST_REPORT.json`.

@@ -1,5 +1,5 @@
 'use strict';
-/* Legion RX 4.1.0 UI NEXT TEST 04
+/* Legion RX 4.1.0 UI NEXT TEST 05
    Visual/UI adapter only. Race, BLE, audio, storage and sports logic remain in index.html. */
 
 const RXN_COLUMN_KEY='legionrx_ui_next_columns_v3';
@@ -139,7 +139,8 @@ function rxnHeader(race,ev,s){
 }
 function rxnRaceTitle(race,ev,s){
   const label=eventShortLabel(ev)||'ЗАЕЗД';
-  return `<section class="rxnRaceTitle"><div><small>LEGION RX · RALLYCROSS</small><h1>${esc(label)}</h1></div><div class="rxnRaceMeta"><span>${esc(race.className||'Rally-10')}</span><b id="rxnPhaseTitle">${esc(phaseLabel(s))}</b></div></section>`;
+  const grid=ev?.phase==='finals'?`<button class="rxnGridButton" type="button" data-rxn-grid-open="${esc(ev.key)}">СТАРТОВАЯ РЕШЁТКА</button>`:'';
+  return `<section class="rxnRaceTitle"><div><small>LEGION RX · RALLYCROSS</small><h1>${esc(label)}</h1></div><div class="rxnRaceMeta">${grid}<span>${esc(race.className||'Rally-10')}</span><b id="rxnPhaseTitle">${esc(phaseLabel(s))}</b></div></section>`;
 }
 function rxnTimerPanel(race,ev,pilots,s,done){
   const ring=r425RingData(race,ev,pilots,s),progress=timerProgress(s,ev);
@@ -152,7 +153,7 @@ function rxnControlGrid(done,s,tie=false){
   if(tie)return `<div class="rxnControls">${rxnControlButton('blue','data-action="race-results"','chart','ТАБЛИЦА','РЕЗУЛЬТАТЫ')}${rxnControlButton('','disabled','pause','ПАУЗА')}${rxnControlButton('','disabled','flag','ФИНИШ')}${rxnControlButton('blue','disabled','plusClock','+1 МИН')}${rxnControlButton('primary','data-action="tie-draw"','refresh','ЖЕРЕБЬЁВКА')}${rxnControlButton('danger','data-action="home"','stop','ВЫХОД')}</div>`;
   if(done)return `<div class="rxnControls">${rxnControlButton('blue','data-action="race-results"','chart','РЕЗУЛЬТАТЫ')}${rxnControlButton('','data-action="home"','home','ГЛАВНАЯ')}${rxnControlButton('','data-action="open-rx"','settings','НАСТРОЙКА')}${rxnControlButton('blue','disabled','plusClock','+1 МИН')}${rxnControlButton('blue','disabled','refresh','РУЧНОЙ КРУГ')}${rxnControlButton('danger','data-action="complete-competition"','stop','ЗАВЕРШИТЬ')}</div>`;
   const p=s?.phase||'ready',timeRule=eventRule(state.race,currentEvent(state.race))?.limitType==='time';
-  let primary;if(p==='ready')primary=rxnControlButton('primary','data-action="start-session"','play','СТАРТ','ПРОГРЕВ');else if(p==='paused')primary=rxnControlButton('primary','data-action="pause-session"','play','ПРОДОЛЖИТЬ');else if(p==='finished')primary=rxnControlButton('blue','data-action="next-event"','next','СЛЕДУЮЩИЙ','ЗАЕЗД');else primary=rxnControlButton('primary','disabled','play','ЗАЕЗД ИДЁТ');
+  let primary;if(p==='ready')primary=rxnControlButton('primary','data-action="start-session"','play','СТАРТ','ПРОГРЕВ');else if(p==='paused')primary=rxnControlButton('primary','data-action="pause-session"','play','ПРОДОЛЖИТЬ');else if(p==='finished')primary=rxnControlButton('blue','data-action="next-event"','chart','РЕЗУЛЬТАТ','ПОДТВЕРДИТЬ');else primary=rxnControlButton('primary','disabled','play','ЗАЕЗД ИДЁТ');
   return `<div class="rxnControls">${primary}${rxnControlButton('','data-action="pause-session" '+(!['running','finishing'].includes(p)?'disabled':''),'pause','ПАУЗА')}${rxnControlButton('','data-action="finish-session" '+(!['running','finishing','paused'].includes(p)?'disabled':''),'flag','ФИНИШ')}${rxnControlButton('blue','data-action="add-minute" '+(!timeRule||!['running','paused','finishing'].includes(p)?'disabled':''),'plusClock','+1 МИН','ДОБАВИТЬ ВРЕМЯ')}${rxnControlButton('blue','data-action="manual-lap-modal" '+(!['running','finishing'].includes(p)?'disabled':''),'refresh','РУЧНОЙ КРУГ')}${rxnControlButton('danger','data-action="stop-session" '+(!['warmup','countdown','running','finishing','paused'].includes(p)?'disabled':''),'stop','СТОП')}</div>`;
 }
 function rxnColumnToggles(){
@@ -203,6 +204,75 @@ function rxnUpdateDynamicCockpit(){
     rxnUpdateProgress(ranked,s);
   }
 }
+
+
+/* ===== SPORT RESULT BRIDGE · TEST 05 =====
+   The sports core stays authoritative. This UI only supplies/reads explicit result data. */
+const rxnCoreSaveCurrentEventResult=saveCurrentEventResult;
+
+function rxnStatusLabel(status){return ({FIN:'FIN · ФИНИШ',DNF:'DNF · НЕ ФИНИШИРОВАЛ',DNS:'DNS · НЕ СТАРТОВАЛ',DSQ:'DSQ · ДИСКВАЛИФИКАЦИЯ'})[status]||status;}
+function rxnSuggestedStatus(p,s){const l=s?.live?.[p.id]||blankLive();return(!l.startSeen&&(l.laps||0)===0)?'DNS':'FIN';}
+function rxnResultConfirmModal(){
+  const race=state.race,ev=currentEvent(race),s=state.session;
+  if(!race||!ev||s?.phase!=='finished')return toast('Сначала завершите текущий заезд');
+  const ranked=liveRanking(getEventPilots(race,ev),s),raw=findRawEvent(ev.key),isQ=ev.type==='qualifying';
+  const rows=ranked.map((p,i)=>{const l=s.live?.[p.id]||blankLive(),status=rxnSuggestedStatus(p,s);return `<div class="rxnResultEditRow" data-rxn-result-row="${esc(p.id)}">
+    <div class="rxnResultPos">${i+1}</div><div class="rxnResultId" style="--pilot-color:${rxnPilotColor(p)}">${esc(p.transponder||i+1)}</div>
+    <div class="rxnResultPilot"><b>${esc(p.name||'—')}</b><small>${l.laps||0} кр. · ${rxnFormatDuration(Number(l.elapsedMs||0))}</small></div>
+    <select data-result-status="${esc(p.id)}" data-rxn-status="${esc(p.id)}">
+      ${SPORT_RULES.statuses.map(st=>`<option value="${st}" ${st===status?'selected':''}>${rxnStatusLabel(st)}</option>`).join('')}
+    </select>
+    <input type="number" min="1" max="${ranked.length}" value="${i+1}" data-result-place="${esc(p.id)}" ${status!=='FIN'?'disabled':''} aria-label="Место">
+  </div>`;}).join('');
+  $('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal rxnResultModal"><div class="modalHead"><div><div class="sectionLabel">${isQ?'КВАЛИФИКАЦИЯ':'ФИНАЛ'} · ПОДТВЕРЖДЕНИЕ</div><h2>${esc(ev.label||eventShortLabel(ev))}</h2><p>Порядок предложен по засечке. Перед сохранением проверьте FIN / DNF / DNS / DSQ.</p></div><button class="iconBtn" data-rxn-result-close="1">×</button></div>
+    <div class="rxnResultRuleNote">${isQ?`Очки Q: ${SPORT_RULES.qualifyingPoints.slice(0,6).join(' · ')}… · BEST 3`:`Финал A: A1 / A2 / A3 · учитываются лучшие ${SPORT_RULES.finalBestCount} · DNF/DNS/DSQ = ${SPORT_RULES.finalNonFinishScore} для суммы финала`}</div>
+    <div class="rxnResultEditHead"><span>POS</span><span>ID</span><span>ПИЛОТ</span><span>СТАТУС</span><span>МЕСТО</span></div><div class="rxnResultEditList">${rows}</div>
+    <div class="rxnResultActions"><button class="btn secondary" data-rxn-result-close="1">НАЗАД</button><button class="btn primary" data-rxn-result-save="1">СОХРАНИТЬ РЕЗУЛЬТАТ</button></div>
+  </div></div>`;
+}
+function rxnSaveConfirmedResult(){
+  const race=state.race,ev=currentEvent(race);if(!race||!ev)return;
+  const key=ev.key;
+  rxnCoreSaveCurrentEventResult();
+  if(findRawEvent(key)?.saved)closeModal();
+}
+function rxnStartGridOrder(race,raw){
+  const q=qualificationRankMap(race);return (raw?.pilots||[]).map(id=>getPilot(race,id)).filter(Boolean).sort((a,b)=>(q.get(String(a.id))||9999)-(q.get(String(b.id))||9999));
+}
+function rxnStartGridModal(eventKey=''){
+  const race=state.race,raw=findRawEvent(eventKey||currentEvent(race)?.key);if(!race||!raw)return;
+  const order=rxnStartGridOrder(race,raw),q=qualificationRankMap(race);
+  $('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal rxnGridModal"><div class="modalHead"><div><div class="sectionLabel">ПОРЯДОК ВЫЗОВА НА СТАРТ</div><h2>${esc(raw.label||raw.name||'Финал')}</h2><p>Вызов идёт по рейтингу квалификации: от лучшего результата к следующему.</p></div><button class="iconBtn" data-rxn-grid-close="1">×</button></div><div class="rxnGridList">${order.map((p,i)=>`<div class="rxnGridRow"><strong>${i+1}</strong><span class="rxnResultId" style="--pilot-color:${rxnPilotColor(p)}">${esc(p.transponder||i+1)}</span><div><b>${esc(p.name)}</b><small>Q-рейтинг: ${q.get(String(p.id))||'—'} · стартовая позиция ${i+1}</small></div></div>`).join('')||'<div class="rxnEmpty">Состав финала ещё не сформирован.</div>'}</div><div class="rxnResultActions"><button class="btn secondary" data-rxn-grid-close="1">ЗАКРЫТЬ</button><button class="btn primary" data-rxn-grid-confirm="${esc(raw.key)}">ПОРЯДОК ПОДТВЕРЖДЁН</button></div></div></div>`;
+}
+function rxnFormatMainRun(item,score){if(!item)return'—';return item.status==='FIN'?String(item.place||score||'—'):`${item.status} (${score??SPORT_RULES.finalNonFinishScore})`;}
+function rxnRaceResultsModal(focusKey=''){
+  const race=state.race;if(!race)return;updateStandings(race);
+  const completed=eventList(race).filter(e=>e.saved),main=race.finals?.length?buildMainStandings(race):[];
+  const qrows=race.pilots.map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.name)}</td>${Array.from({length:race.qualifyingCount},(_,k)=>{const q=p.qualifying.find(x=>x.round===k+1);return `<td>${q?q.status==='FIN'?`${q.place} (${q.points})`:esc(q.status):'—'}</td>`}).join('')}<td><b>${p.best3}</b></td></tr>`).join('');
+  const mainRows=main.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(getPilot(race,r.pilotId)?.name||'—')}</td>${r.results.map((x,j)=>`<td>${esc(rxnFormatMainRun(x,r.scores[j]))}</td>`).join('')}<td><b>${r.total??'—'}</b></td></tr>`).join('');
+  const eventTables=completed.map(e=>{const rows=(e.result||[]).map((r,i)=>{const p=getPilot(race,r.pilotId);return `<tr><td>${r.status==='FIN'?(r.place||i+1):esc(r.status)}</td><td>${esc(p?.name||'—')}</td><td><b class="rxnStatusText ${String(r.status||'FIN').toLowerCase()}">${esc(r.status||'FIN')}</b>${r.status==='DNF'&&r.dnfOrder?` · порядок ${r.dnfOrder}`:''}</td></tr>`;}).join('');return `<details ${focusKey===e.key?'open':''} class="card rxnResultDetails"><summary>${esc(e.label)}</summary><div class="tableWrap"><table class="table"><thead><tr><th>Место</th><th>Пилот</th><th>Статус</th></tr></thead><tbody>${rows||'<tr><td colspan="3">Заезд отменён / нет результата</td></tr>'}</tbody></table></div></details>`;}).join('');
+  $('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal rxnTablesModal"><div class="modalHead"><div><div class="sectionLabel">СПОРТИВНЫЕ РЕЗУЛЬТАТЫ · ${esc(SPORT_RULES.version)}</div><h2>${esc(race.eventName)}</h2></div><button class="iconBtn" id="closeModal">×</button></div>
+    <div class="rxnRulesBar"><span>Q: ${SPORT_RULES.qualifyingPoints.slice(0,6).join(' / ')}…</span><span>BEST 3</span><span>A1+A2+A3 · лучшие ${SPORT_RULES.finalBestCount}</span><span>не-FIN = ${SPORT_RULES.finalNonFinishScore}</span><span>Этап: ${SPORT_RULES.championshipEventPoints.join(' / ')}</span></div>
+    <h3>Квалификационный рейтинг</h3><div class="tableWrap"><table class="table"><thead><tr><th>POS</th><th>Пилот</th>${Array.from({length:race.qualifyingCount},(_,i)=>`<th>Q${i+1}</th>`).join('')}<th>Best 3</th></tr></thead><tbody>${qrows}</tbody></table></div>
+    ${main.length?`<h3>Финал A</h3><div class="tableWrap"><table class="table"><thead><tr><th>POS</th><th>Пилот</th><th>A1</th><th>A2</th><th>A3</th><th>Лучшие ${SPORT_RULES.finalBestCount}</th></tr></thead><tbody>${mainRows}</tbody></table></div>`:''}
+    <h3>Завершённые заезды</h3>${eventTables||'<div class="empty">Пока нет завершённых заездов.</div>'}
+    ${race.finalProtocol?.length?`<h3>Итоговый протокол</h3><div class="tableWrap"><table class="table"><thead><tr><th>Место</th><th>Пилот</th><th>Очки этапа</th><th>Статус</th><th>Источник</th></tr></thead><tbody>${race.finalProtocol.map(r=>`<tr><td>${r.place}</td><td>${esc(getPilot(race,r.pilotId)?.name||'—')}</td><td>${r.eventPoints}</td><td>${esc(r.status||'FIN')}</td><td>${esc(r.source)}</td></tr>`).join('')}</tbody></table></div>`:''}
+  </div></div>`;$('#closeModal').onclick=closeModal;
+}
+function rxnRunSportSelfTest(){
+  const t=[],eq=(name,a,b)=>t.push({name,ok:Object.is(a,b),got:a,want:b});
+  eq('Q P1',getPoints(1),50);eq('Q P4',getPoints(4),40);eq('Q P16',getPoints(16),28);eq('Q P17 continuation',getPoints(17),27);
+  const pilot={qualifying:[{round:1,heat:1,status:'FIN',place:1,points:50},{round:2,heat:1,status:'FIN',place:2,points:45},{round:3,heat:1,status:'FIN',place:3,points:42},{round:4,heat:1,status:'FIN',place:4,points:40}]};calculateBest3(pilot);eq('Best3 sum',pilot.best3,137);
+  eq('Final FIN score',mainRunScore({status:'FIN',place:2}),2);eq('Final DNF score',mainRunScore({status:'DNF'}),SPORT_RULES.finalNonFinishScore);eq('Final DNS score',mainRunScore({status:'DNS'}),SPORT_RULES.finalNonFinishScore);eq('Final DSQ score',mainRunScore({status:'DSQ'}),SPORT_RULES.finalNonFinishScore);
+  eq('A runs',FINAL_A_RUNS.join(','),'A1,A2,A3');eq('Stage P1',EVENT_POINTS[0],25);
+  return{ok:t.every(x=>x.ok),version:SPORT_RULES.version,tests:t};
+}
+window.LegionRXSportDiagnostics=rxnRunSportSelfTest;
+const rxnSportBootCheck=rxnRunSportSelfTest();if(!rxnSportBootCheck.ok)console.error('LEGION RX SPORT RULES SELF-TEST FAILED',rxnSportBootCheck);else console.info('LEGION RX SPORT RULES OK',rxnSportBootCheck.version);
+
+saveCurrentEventResult=rxnResultConfirmModal;
+raceResultsModal=rxnRaceResultsModal;
+/* ===== /SPORT RESULT BRIDGE ===== */
 
 // Override only the visual cockpit boundary. Core functions remain untouched.
 cockpitView=rxnCockpitView;
@@ -317,6 +387,18 @@ function rxnTrackManualLapModal(){
 trackDayCockpitView=rxnTrackDayCockpitView;
 updateTrackDayDynamic=rxnUpdateTrackDayDynamic;
 /* ===== /UI NEXT Track Day ===== */
+
+document.addEventListener('change',e=>{
+  const sel=e.target.closest?.('[data-rxn-status]');if(!sel)return;
+  const row=sel.closest('[data-rxn-result-row]'),place=row?.querySelector('[data-result-place]');if(place)place.disabled=sel.value!=='FIN';
+});
+document.addEventListener('click',e=>{
+  if(e.target.closest?.('[data-rxn-result-save]')){rxnSaveConfirmedResult();return;}
+  if(e.target.closest?.('[data-rxn-result-close]')){closeModal();return;}
+  const grid=e.target.closest?.('[data-rxn-grid-open]');if(grid){rxnStartGridModal(grid.dataset.rxnGridOpen);return;}
+  const gc=e.target.closest?.('[data-rxn-grid-close]');if(gc){closeModal();return;}
+  const confirmGrid=e.target.closest?.('[data-rxn-grid-confirm]');if(confirmGrid){const raw=findRawEvent(confirmGrid.dataset.rxnGridConfirm);if(raw){state.race.startGrids=state.race.startGrids||{};state.race.startGrids[raw.key]={order:rxnStartGridOrder(state.race,raw).map(p=>p.id),confirmedAt:new Date().toISOString()};persistRace();toast('Стартовая решётка подтверждена');}closeModal();return;}
+});
 
 document.addEventListener('click',e=>{
   const trackManual=e.target.closest?.('[data-rxn-track-manual]');

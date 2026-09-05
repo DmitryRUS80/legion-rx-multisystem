@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.1.0 UI NEXT TEST 04</title>
+<title>Legion RX 4.1.0 UI NEXT TEST 05</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -807,7 +807,7 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.1.0 UI NEXT TEST 04</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.1.0 UI NEXT TEST 05</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -836,9 +836,21 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
 <script>window.addEventListener('error',function(e){var b=document.getElementById('runtimeError');if(b){b.style.display='block';b.textContent='Ошибка Legion RX: '+(e.message||'неизвестная ошибка')+' · строка '+(e.lineno||'?');}});</script>
 <script>'use strict';
 
-const SCORE_TABLE = [50,45,42,40,39,38,37,36,35,34,33,32,31,30,29,28];
-const EVENT_POINTS = [25,18,15,12,10,8,6,4,2,1];
-const FINAL_A_RUNS = ['A1','A2','A3'];
+/* ===== SPORT RULES · AUTHORITATIVE CORE =====
+   UI must read these rules, never duplicate them.
+   Keep this block together with the scoring functions below. */
+const SPORT_RULES = Object.freeze({
+  version:'RALLYCROSS-2026.09',
+  qualifyingPoints:Object.freeze([50,45,42,40,39,38,37,36,35,34,33,32,31,30,29,28]),
+  championshipEventPoints:Object.freeze([25,18,15,12,10,8,6,4,2,1]),
+  finalARuns:Object.freeze(['A1','A2','A3']),
+  finalBestCount:2,
+  finalNonFinishScore:7,
+  statuses:Object.freeze(['FIN','DNF','DNS','DSQ'])
+});
+const SCORE_TABLE = SPORT_RULES.qualifyingPoints;
+const EVENT_POINTS = SPORT_RULES.championshipEventPoints;
+const FINAL_A_RUNS = SPORT_RULES.finalARuns;
 
 function uid(prefix='id'){return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;}
 function deepClone(v){return JSON.parse(JSON.stringify(v));}
@@ -868,7 +880,7 @@ function makePilot(profile={},registrationOrder=1){
 }
 function getPilot(race,id){return race.pilots.find(p=>String(p.id)===String(id));}
 
-function getPoints(place){if(!Number.isInteger(place)||place<1)return 0;return SCORE_TABLE[place-1]??Math.max(1,29-place);}
+function getPoints(place){if(!Number.isInteger(place)||place<1)return 0;return SCORE_TABLE[place-1]??Math.max(1,44-place);}
 function qualifyingResultRank(result){if(!result)return 10000;if(result.status==='FIN')return result.place;if(result.status==='DNF')return 100+(result.dnfOrder||99);if(result.status==='DNS')return 300;if(result.status==='DSQ')return 400;return 500;}
 function savePilotResult(pilot,round,heat,resultValue,dnfOrder=null){
   const existing=pilot.qualifying.find(r=>r.round===round);const isPlace=Number.isInteger(resultValue);const record={round,heat,place:isPlace?resultValue:null,status:isPlace?'FIN':resultValue,dnfOrder:resultValue==='DNF'&&Number.isInteger(dnfOrder)?dnfOrder:null,points:isPlace?getPoints(resultValue):0};
@@ -907,9 +919,48 @@ function setMainGrid(race,lastTwo){const qTop4=race.pilots.slice(0,4).map(p=>p.i
 function processPreliminaryRound(race,round){const finals=race.finals.filter(f=>f.type==='prelim'&&f.round===round);if(!finals.length||!finals.every(f=>f.saved))return;const winners=finals.map(f=>classifiedForAdvancement(f.result)[0]?.pilotId).filter(Boolean);if(winners.length<=6){if(!finalByName(race,`LCQ-F${round}`))race.finals.push(createFinal(`LCQ-F${round}`,winners,{type:'final-lcq',label:'Заключительный LCQ',round:round+1,order:500+round,enabled:true,advanceCount:2}));}else{const next=round+1;if(!race.finals.some(f=>f.type==='prelim'&&f.round===next))createPreliminaryRound(race,winners,next,100+next*50);}}
 function advanceFinalists(race,final){if(final.type==='single-lcq'){setMainGrid(race,classifiedForAdvancement(final.result).slice(0,2).map(i=>i.pilotId));return;}if(final.type==='dual-lcq'){const pair=race.finals.filter(f=>f.type==='dual-lcq');if(pair.every(f=>f.saved)){const rank=qualificationRankMap(race),w=pair.map(f=>classifiedForAdvancement(f.result)[0]?.pilotId).filter(Boolean).sort((a,b)=>(rank.get(String(a))||9999)-(rank.get(String(b))||9999));setMainGrid(race,w);}return;}if(final.type==='prelim'){processPreliminaryRound(race,final.round);return;}if(final.type==='final-lcq'){setMainGrid(race,classifiedForAdvancement(final.result).slice(0,2).map(i=>i.pilotId));return;}if(final.type==='main'){const idx=FINAL_A_RUNS.indexOf(final.name);if(idx<2){const n=finalByName(race,FINAL_A_RUNS[idx+1]);if(n)n.enabled=true;}else buildFinalProtocol(race);}}
 function saveFinalEvent(race,eventKey,result){const final=race.finals.find(f=>f.key===eventKey);if(!final||!final.enabled||final.saved)throw new Error('Финал закрыт или уже сохранён');final.result=normalizeResult(result).sort(compareFinalResultItems);final.saved=true;final.result.forEach((item,index)=>{const p=getPilot(race,item.pilotId);if(p)p.finalResults.push({final:final.name,place:item.place,status:item.status,dnfOrder:item.dnfOrder,order:index+1});});advanceFinalists(race,final);return final;}
-function mainRunScore(item){return item?.status==='FIN'?Number(item.place||7):7;}
-function buildMainStandings(race){const rank=qualificationRankMap(race),main=FINAL_A_RUNS.map(n=>finalByName(race,n)).filter(Boolean),pilotIds=main[0]?.pilots||[];return pilotIds.map(pilotId=>{const results=main.map(f=>f.saved?(f.result.find(i=>String(i.pilotId)===String(pilotId))||{status:'DNS'}):null),scores=results.map(i=>i?mainRunScore(i):null),done=scores.filter(Number.isFinite),bestTwo=[...done].sort((a,b)=>a-b).slice(0,2),latest=[...scores].reverse().find(Number.isFinite);return{pilotId,results,scores,bestTwo,total:bestTwo.length?bestTwo.reduce((s,v)=>s+v,0):null,wins:results.filter(i=>i?.status==='FIN'&&i.place===1).length,seconds:results.filter(i=>i?.status==='FIN'&&i.place===2).length,lastScore:latest??9999,qRank:rank.get(String(pilotId))||9999};}).sort((a,b)=>{if(a.total===null&&b.total!==null)return 1;if(a.total!==null&&b.total===null)return-1;if(a.total!==b.total)return(a.total??9999)-(b.total??9999);return b.wins-a.wins||b.seconds-a.seconds||a.lastScore-b.lastScore||a.qRank-b.qRank;});}
-function buildFinalProtocol(race){const main=buildMainStandings(race),added=new Set(main.map(i=>String(i.pilotId))),eliminated=[],rank=qualificationRankMap(race),groups=new Map();race.finals.filter(f=>f.saved&&f.type!=='main').forEach(f=>{const k=f.type==='dual-lcq'?'dual-lcq':f.type==='prelim'?`prelim-${f.round}`:`${f.type}-${f.order}`;if(!groups.has(k))groups.set(k,{order:f.order,finals:[]});groups.get(k).order=Math.max(groups.get(k).order,f.order);groups.get(k).finals.push(f);});[...groups.values()].sort((a,b)=>b.order-a.order).forEach(g=>{const c=[];g.finals.forEach(f=>[...f.result].sort(compareFinalResultItems).forEach((i,index)=>c.push({...i,resultOrder:index+1,source:f.label})));c.sort((a,b)=>a.resultOrder-b.resultOrder||(rank.get(String(a.pilotId))||9999)-(rank.get(String(b.pilotId))||9999));c.forEach(i=>{if(!added.has(String(i.pilotId))){eliminated.push({pilotId:i.pilotId,status:i.status,source:i.source});added.add(String(i.pilotId));}});});race.pilots.forEach(p=>{if(!added.has(String(p.id)))eliminated.push({pilotId:p.id,status:'NC',source:'Квалификация'});});const rows=[...main.map(i=>({pilotId:i.pilotId,status:'FIN',source:`Финал A · ${i.total} очк.`})),...eliminated];race.finalProtocol=rows.map((i,index)=>({place:index+1,pilotId:i.pilotId,status:i.status,source:i.source,eventPoints:['DNS','DSQ'].includes(i.status)?0:(EVENT_POINTS[index]||0)}));race.stage='finished';race.lifecycleStatus='completed';race.completedAt=new Date().toISOString();return race.finalProtocol;}
+function mainRunScore(item){return item?.status==='FIN'?Number(item.place||SPORT_RULES.finalNonFinishScore):SPORT_RULES.finalNonFinishScore;}
+function buildMainStandings(race){const rank=qualificationRankMap(race),main=FINAL_A_RUNS.map(n=>finalByName(race,n)).filter(Boolean),pilotIds=main[0]?.pilots||[];return pilotIds.map(pilotId=>{const results=main.map(f=>f.saved?(f.result.find(i=>String(i.pilotId)===String(pilotId))||{status:'DNS'}):null),scores=results.map(i=>i?mainRunScore(i):null),done=scores.filter(Number.isFinite),bestTwo=[...done].sort((a,b)=>a-b).slice(0,SPORT_RULES.finalBestCount),latest=[...scores].reverse().find(Number.isFinite);return{pilotId,results,scores,bestTwo,total:bestTwo.length?bestTwo.reduce((s,v)=>s+v,0):null,wins:results.filter(i=>i?.status==='FIN'&&i.place===1).length,seconds:results.filter(i=>i?.status==='FIN'&&i.place===2).length,lastScore:latest??9999,qRank:rank.get(String(pilotId))||9999};}).sort((a,b)=>{if(a.total===null&&b.total!==null)return 1;if(a.total!==null&&b.total===null)return-1;if(a.total!==b.total)return(a.total??9999)-(b.total??9999);return b.wins-a.wins||b.seconds-a.seconds||a.lastScore-b.lastScore||a.qRank-b.qRank;});}
+function mainOverallStatus(item){
+  const rr=(item?.results||[]).filter(Boolean);
+  if(rr.some(r=>r.status==='FIN'))return'FIN';
+  if(rr.some(r=>r.status==='DNF'))return'DNF';
+  if(rr.some(r=>r.status==='DNS'))return'DNS';
+  if(rr.some(r=>r.status==='DSQ'))return'DSQ';
+  return'NC';
+}
+function mainRunLabel(result,score){
+  if(!result)return'—';
+  return result.status==='FIN'?String(result.place||score||'—'):`${result.status}${Number.isFinite(score)?` (${score})`:''}`;
+}
+function buildFinalProtocol(race){
+  const main=buildMainStandings(race),added=new Set(main.map(i=>String(i.pilotId))),eliminated=[],rank=qualificationRankMap(race),groups=new Map();
+  race.finals.filter(f=>f.saved&&f.type!=='main').forEach(f=>{
+    const k=f.type==='dual-lcq'?'dual-lcq':f.type==='prelim'?`prelim-${f.round}`:`${f.type}-${f.order}`;
+    if(!groups.has(k))groups.set(k,{order:f.order,finals:[]});
+    groups.get(k).order=Math.max(groups.get(k).order,f.order);groups.get(k).finals.push(f);
+  });
+  [...groups.values()].sort((a,b)=>b.order-a.order).forEach(g=>{
+    const c=[];g.finals.forEach(f=>[...f.result].sort(compareFinalResultItems).forEach((i,index)=>c.push({...i,resultOrder:index+1,source:f.label})));
+    c.sort((a,b)=>a.resultOrder-b.resultOrder||(rank.get(String(a.pilotId))||9999)-(rank.get(String(b.pilotId))||9999));
+    c.forEach(i=>{if(!added.has(String(i.pilotId))){eliminated.push({pilotId:i.pilotId,status:i.status,source:i.source});added.add(String(i.pilotId));}});
+  });
+  race.pilots.forEach(p=>{if(!added.has(String(p.id)))eliminated.push({pilotId:p.id,status:'NC',source:'Квалификация'});});
+  const rows=[
+    ...main.map(i=>({
+      pilotId:i.pilotId,
+      status:mainOverallStatus(i),
+      source:`Финал A · A1 ${mainRunLabel(i.results[0],i.scores[0])} · A2 ${mainRunLabel(i.results[1],i.scores[1])} · A3 ${mainRunLabel(i.results[2],i.scores[2])} · лучшие ${SPORT_RULES.finalBestCount}: ${i.total??'—'}`
+    })),
+    ...eliminated
+  ];
+  race.finalProtocol=rows.map((i,index)=>({
+    place:index+1,pilotId:i.pilotId,status:i.status,source:i.source,
+    eventPoints:['DNS','DSQ','NC'].includes(i.status)?0:(EVENT_POINTS[index]||0)
+  }));
+  race.stage='finished';race.lifecycleStatus='completed';race.completedAt=new Date().toISOString();
+  return race.finalProtocol;
+}
 
 function normalizeResult(items){
   const arr=(items||[]).map(i=>({pilotId:i.pilotId,status:i.status||'FIN',place:i.status==='FIN'||!i.status?Number(i.place)||null:null,dnfOrder:i.status==='DNF'?Number(i.dnfOrder)||null:null}));
@@ -963,7 +1014,7 @@ class LapWizCore extends EventTarget{
   unknownBeep(){this.beep(false);}
 }
 
-const LEGION_APP_VERSION='4.1.0-ui-next-test-04';
+const LEGION_APP_VERSION='4.1.0-ui-next-test-05';
 const LEGION_OFFLINE_CACHE='legion-rx-4-1-0-ui-next-test-04';
 const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v410_ui_next_01';
 const LEGION_FLAG_CODES=`AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW`.split(/\s+/);
@@ -1362,7 +1413,7 @@ async function playPilotVoiceSequence(pilots,{initialDelay=500}={}){for(let i=0;
 let raceVoiceQueue=Promise.resolve();
 function queueRaceVoice(task){const run=raceVoiceQueue.then(task,task);raceVoiceQueue=run.catch(e=>{console.warn('Race voice queue',e);return false;});return run;}
 function announceService(key){if(!state.settings.announcerEnabled||!state.settings.voiceService)return Promise.resolve(false);return queueRaceVoice(()=>announcer.play(key,{wait:true}));}
-function announceStartCall(ev){if(!state.settings.announcerEnabled||!state.settings.voiceStartCall)return Promise.resolve(false);const pilots=getEventPilots(state.race,ev);return queueRaceVoice(async()=>{await announcer.play('warmup_1',{wait:true});await announcer.play('callToStart',{wait:true});await playPilotVoiceSequence(pilots,{initialDelay:250});return true;});}
+function announceStartCall(ev){if(!state.settings.announcerEnabled||!state.settings.voiceStartCall)return Promise.resolve(false);let pilots=getEventPilots(state.race,ev);if(ev&&ev.type!=='qualifying'){const rank=qualificationRankMap(state.race);pilots=[...pilots].sort((a,b)=>(rank.get(String(a.id))||9999)-(rank.get(String(b.id))||9999));}return queueRaceVoice(async()=>{await announcer.play('warmup_1',{wait:true});await announcer.play('callToStart',{wait:true});await playPilotVoiceSequence(pilots,{initialDelay:250});return true;});}
 function announceBestLap(p){if(!state.settings.announcerEnabled||!state.settings.voiceBestLap)return Promise.resolve(false);return queueRaceVoice(async()=>{await announcer.play('newBestLap',{wait:true});await playPilotVoice(p,{delay:160});return true;});}
 function announcePilotFinish(p){if(!state.settings.announcerEnabled||!state.settings.voiceFinish)return Promise.resolve(false);return queueRaceVoice(async()=>{await playPilotVoice(p,{delay:0});await announcer.play('pilotFinished',{wait:true});return true;});}
 function announceHeatResults(result,race){if(!state.settings.announcerEnabled||!state.settings.voiceResults)return Promise.resolve(false);const ordered=[...(result||[])].filter(x=>x.status==='FIN').sort((a,b)=>(a.place||999)-(b.place||999)).map(x=>getPilot(race,x.pilotId)).filter(Boolean);return queueRaceVoice(async()=>{await announcer.play('heatResults',{wait:true});await playPilotVoiceSequence(ordered,{initialDelay:250});return true;});}
@@ -1660,7 +1711,7 @@ function processPass(transponder,deviceMs=null,source='MANUAL'){lapwiz.lastId=St
 function processPilotPass(p,deviceMs=null,source='MANUAL'){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return;const l=s.live[p.id]||blankLive();if(l.finished)return;const now=performance.now(),elapsedNow=sessionElapsed(s);let lapMs=null;if(Number.isFinite(deviceMs)&&source==='LAPWIZ'){if(Number.isFinite(l.lastDeviceMs)&&deviceMs>l.lastDeviceMs)lapMs=deviceMs-l.lastDeviceMs;else if(!l.lastDeviceMs&&deviceMs>0)lapMs=deviceMs;l.lastDeviceMs=deviceMs;}if(!Number.isFinite(lapMs)||lapMs<=0)lapMs=elapsedNow-(Number.isFinite(l.lastElapsedAtPass)?l.lastElapsedAtPass:0);l.lastElapsedAtPass=elapsedNow;l.lastPassPerf=now;l.lastLapMs=lapMs;l.bestLapMs=Math.min(l.bestLapMs,lapMs);l.laps++;l.elapsedMs=elapsedNow;const rule=eventRule(state.race,ev);if(rule.limitType==='laps'&&l.laps>=rule.targetLaps){l.finished=true;l.finishedAt=l.elapsedMs;}if(s.phase==='finishing'&&s.timeExpired){l.finished=true;l.finishedAt=l.elapsedMs;}s.live[p.id]=l;s.lastPass=`${p.name} · ${l.laps} · ${fmtMs(lapMs)}`;updateDynamicCockpit();if(Object.values(s.live).every(v=>v.finished)&&(rule.limitType==='laps'||s.phase==='finishing'))finishSession('Все пилоты завершили заезд');}
 function logEvent(text){state.race.runtime.eventLog.push({time:new Date().toISOString(),text});persistRace();}
 function makeDraftResult(pilots,session){return pilots.map((p,i)=>{const l=session?.live?.[p.id]||blankLive();return{pilotId:p.id,name:p.name,status:'FIN',place:i+1,laps:l.laps,elapsedMs:l.elapsedMs};});}
-function readEditedResult(){const ev=currentEvent(state.race),ranked=liveRanking(getEventPilots(state.race,ev),state.session);return ranked.map((p,i)=>{const st=document.querySelector(`[data-result-status="${CSS.escape(String(p.id))}"]`)?.value||'FIN',place=Number(document.querySelector(`[data-result-place="${CSS.escape(String(p.id))}"]`)?.value||i+1);return{pilotId:p.id,status:st,place:st==='FIN'?place:null,dnfOrder:st==='DNF'?i+1:null};});}
+function readEditedResult(){const ev=currentEvent(state.race),ranked=liveRanking(getEventPilots(state.race,ev),state.session);let dnfOrder=0;return ranked.map((p,i)=>{const st=document.querySelector(`[data-result-status="${CSS.escape(String(p.id))}"]`)?.value||'FIN',place=Number(document.querySelector(`[data-result-place="${CSS.escape(String(p.id))}"]`)?.value||i+1);return{pilotId:p.id,status:st,place:st==='FIN'?place:null,dnfOrder:st==='DNF'?++dnfOrder:null};});}
 function saveCurrentEventResult(){const race=state.race,ev=currentEvent(race),s=state.session;if(!ev||s?.phase!=='finished')return toast('Сначала завершите заезд');try{const result=readEditedResult();if(ev.type==='qualifying')saveQualifyingEvent(race,ev.key,result);else saveFinalEvent(race,ev.key,result);syncChampionshipIfFinished(race);persistRace();state.session=null;state.resultsOpen=false;toast('Результат сохранён. Следующий заезд подготовлен.');render();}catch(e){toast(e.message);}}
 
 async function togglePause(){const s=state.session;if(!s)return;if(lapwiz.connected)return toast('Пауза с LapWiz будет включена после отдельного протокольного теста');if(s.phase==='running'){s.accumulatedElapsedMs=sessionElapsed(s);s.runStartedAtPerf=null;s.phaseBeforePause='running';s.phase='paused';logEvent('Пауза');render();return;}if(s.phase==='paused'){s.runStartedAtPerf=performance.now();s.phase=s.phaseBeforePause||'running';logEvent('Продолжение заезда');render();}}
@@ -1701,7 +1752,7 @@ function settingsView(){return `<section class="page"><div class="pageHeader"><d
   <section class="ruleBox"><div class="ruleBoxHead"><b>Квалификация</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsQLimit"><option value="time" ${state.settings.qualificationLimitType==='time'?'selected':''}>По времени</option><option value="laps" ${state.settings.qualificationLimitType==='laps'?'selected':''}>По кругам</option></select></div><div class="field"><label>Минуты</label><input id="settingsQMin" type="number" value="${state.settings.qualificationMinutes}"></div><div class="field"><label>Круги</label><input id="settingsQLaps" type="number" value="${state.settings.qualificationLaps}"></div></div></section>
   <section class="ruleBox"><div class="ruleBoxHead"><b>Финалы / LCQ</b></div><div class="formGrid"><div class="field"><label>Режим</label><select id="settingsFLimit"><option value="laps" ${state.settings.finalLimitType==='laps'?'selected':''}>По кругам</option><option value="time" ${state.settings.finalLimitType==='time'?'selected':''}>По времени</option></select></div><div class="field"><label>Круги</label><input id="settingsFLaps" type="number" value="${state.settings.finalLaps}"></div><div class="field"><label>Минуты</label><input id="settingsFMin" type="number" value="${state.settings.finalMinutes}"></div></div></section>
  </div><button class="btn primary" style="margin-top:12px" data-action="save-settings">Сохранить настройки</button></article>
- <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.1.0 UI NEXT TEST 04</b></p><p>Тестовая сборка нового интерфейса RallyCross по утверждённому эскизу. Спортивная логика, LapWiz и диктор сохранены без изменений.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
+ <article class="card settingGroup"><h3>О приложении</h3><p><b>Legion RX 4.1.0 UI NEXT TEST 05</b></p><p>Тестовая сборка RallyCross с восстановленным контуром спортивных результатов: FIN/DNF/DNS/DSQ, очки квалификации, BEST 3, A1/A2/A3, итоговые очки этапа и стартовая решётка. LapWiz и засечка не переписывались.</p><div class="list"><div class="listRow"><div class="grow"><b>Диктор старта</b><div class="sub">работает · 2 сценария</div></div><span class="badge liveBadge">ГОТОВО</span></div><div class="listRow"><div class="grow"><b>Ралли-спринт / Classic RC</b><div class="sub">спортивные модули ещё не реализованы</div></div><span class="badge soon">СКОРО</span></div><div class="listRow"><div class="grow"><b>Автоматизация / позиции / Broadcast</b><div class="sub">следующие слои общего диктора</div></div><span class="badge soon">СКОРО</span></div></div></article>
  </div></section>`;}
 
 function bindView(){
@@ -2337,7 +2388,7 @@ function homeView(){
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
-   :`<div class="heroMini"><b>4.1.0 UI NEXT TEST 04</b><span>Reference sketch · New isolated markup · Race logic unchanged</span></div>`;
+   :`<div class="heroMini"><b>4.1.0 UI NEXT TEST 05</b><span>Reference sketch · New isolated markup · Race logic unchanged</span></div>`;
  return `<section class="page homePage">
  <div class="heroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат</h2></div></div>
