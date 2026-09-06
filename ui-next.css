@@ -110,3 +110,16 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:#020a11
 .rxnTablesModal{width:min(1100px,96vw);max-height:94vh;overflow:auto}.rxnTablesModal h3{margin:16px 0 7px}.rxnResultDetails{padding:8px 10px}.rxnResultDetails summary{cursor:pointer;font-weight:800}.rxnResultDetails .tableWrap{margin-top:8px}.rxnStatusText{font-weight:900}.rxnStatusText.fin{color:#55df81}.rxnStatusText.dnf{color:#f4c148}.rxnStatusText.dns{color:#7ebde3}.rxnStatusText.dsq{color:#ff6475}
 @media(max-width:700px){.rxnGridButton{padding:5px 6px;font-size:8px}.rxnResultEditHead{display:none}.rxnResultEditRow{grid-template-columns:36px 44px minmax(0,1fr) 126px 54px;min-height:50px;padding:4px}.rxnResultId{height:31px;font-size:15px}.rxnResultPilot b{font-size:13px}.rxnResultPilot small{font-size:9px}.rxnResultEditRow select{font-size:10px;padding:0 4px}.rxnResultEditRow input{font-size:14px}.rxnResultActions{flex-direction:column}.rxnResultActions .btn{width:100%}.rxnGridRow{grid-template-columns:38px 44px minmax(0,1fr)}.rxnGridRow>strong{font-size:22px}.rxnGridRow b{font-size:14px}.rxnGridRow small{font-size:9px}}
 /* ===== /SPORT RESULT / GRID ===== */
+
+
+/* ===== TRACK DAY JUDGE LAP CORRECTION · TEST 06 ===== */
+.lapStatsModal{width:min(900px,96vw)}
+.lapJudgeNote{margin:0 0 10px;padding:10px 12px;border:1px solid #1b587b;border-radius:5px;background:#071d2b;color:#a9cfe2;font-size:12px;line-height:1.45}
+.lapJudgeCell{text-align:right!important;white-space:nowrap}
+.lapRemoveBtn{min-height:32px;padding:0 10px;border:1px solid #7a3140;border-radius:4px;background:#35131c;color:#ffb8c1;font:800 10px/1 var(--rxn-font);cursor:pointer}
+.lapRemoveBtn:hover{background:#531923;color:#fff}
+.lapCorrectionLog{margin-top:10px;border:1px solid #173d55;border-radius:5px;background:#061722;padding:9px 11px}
+.lapCorrectionLog>div:not(.sectionLabel){display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #102d40;color:#b6d3e2;font-size:11px}
+.lapCorrectionLog>div:last-child{border-bottom:0}.lapCorrectionLog small{color:#63859a}
+@media(max-width:700px){.lapStatsModal .table{min-width:560px}.lapRemoveBtn{padding:0 7px;font-size:9px}.lapJudgeNote{font-size:11px}}
+/* ===== /TRACK DAY JUDGE LAP CORRECTION ===== */

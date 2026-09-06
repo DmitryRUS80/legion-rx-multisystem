@@ -1,5 +1,5 @@
 'use strict';
-/* Legion RX 4.1.0 UI NEXT TEST 05
+/* Legion RX 4.1.0 UI NEXT TEST 06
    Visual/UI adapter only. Race, BLE, audio, storage and sports logic remain in index.html. */
 
 const RXN_COLUMN_KEY='legionrx_ui_next_columns_v3';
