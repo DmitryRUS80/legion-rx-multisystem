@@ -1,4 +1,4 @@
-/* Legion RX RC12 DESKTOP PULT · UI-only cockpit refinement */
+/* Legion RX RC13 DIRECT UI */
 'use strict';
 importScripts('./offline-config.js');
 

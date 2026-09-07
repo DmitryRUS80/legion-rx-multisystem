@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc12-desktop-pult';
-  const displayVersion='4.2.0 CLEAN FULL APP RC12 DESKTOP PULT';
-  const cacheName='legion-rx-4-2-0-clean-full-rc12-desktop-pult';
+  const appVersion='4.2.0-clean-full-rc13-direct-ui';
+  const displayVersion='4.2.0 CLEAN FULL APP RC13 DIRECT UI';
+  const cacheName='legion-rx-4-2-0-clean-full-rc13-direct-ui';
   const assets=[
   "./",
   "./app-bridge.js",
