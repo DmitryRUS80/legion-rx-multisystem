@@ -1,4 +1,4 @@
-/* Legion RX RC8 ROLLBACK · exact pre-race-queue UI */
+/* Legion RX RC5 RESTORE · exact pre-progress UI */
 'use strict';
 importScripts('./offline-config.js');
 
