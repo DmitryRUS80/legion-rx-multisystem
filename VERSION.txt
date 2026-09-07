@@ -1,4 +1,4 @@
-APP VERSION: 4.2.0 CLEAN FULL APP RC5
-BUILD: 2026-09-07.RC5
-CORE VERSION: 4.2.0 CLEAN
-CHANGE: UI-only — RallyCross/Practice cockpit header + control buttons aligned to pilot-row visual language
+APP VERSION: 4.2.0 CLEAN FULL APP RC6
+BUILD: 2026-09-07.RC6
+BASE: 4.2.0 CLEAN FULL APP RC4
+CHANGE: RallyCross cockpit UI only — black/white controls, landscape race queue, portrait progress button, BEST LAP slide-in

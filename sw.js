@@ -1,4 +1,4 @@
-/* Legion RX RC5 UI refresh */
+/* Legion RX RC6 UI cockpit build */
 'use strict';
 importScripts('./offline-config.js');
 
