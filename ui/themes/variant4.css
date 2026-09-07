@@ -63,3 +63,9 @@ body.cockpitMode{background:#02070a!important}
  body:not(.cockpitMode){background:var(--v4-paper)!important}.mainNav{background:var(--v4-white)!important;border-top:1px solid #111!important}.mainNav button.active{background:var(--v4-black)!important;color:#fff!important}.mainNav button svg{stroke-width:2.2!important}
  .rxnControl{gap:6px!important;padding:3px 6px!important}.rxnControl:after{width:4px}.rxnTopActions .rxnTopButton:after{width:5px;height:5px;top:3px;right:3px}
 }
+
+
+/* RC12 desktop emphasis: wider action-state accent bars, mobile/tablet unchanged. */
+@media (min-width:1400px) and (min-height:650px){
+ .rxnControl:after{width:12px!important}
+}

@@ -125,26 +125,37 @@ function rxnTopButton({cls='',attrs='',icon='flag',title='',sub=''}){
 }
 
 function rxnHeader(race,ev,s){
-  const phase=phaseLabel(s),phaseSmall=['warmup','countdown'].includes(s?.phase)?displayTimer(s,ev):phase;
   return `<header class="rxnTop">
-    <button class="rxnHomeBrand" type="button" data-action="home" title="Главная"><span>LEGION <i>RX</i></span></button>
+    <div class="rxnHeaderLeft">
+      <button class="rxnHomeBrand" type="button" data-action="home" title="Главная"><span>LEGION <i>RX</i></span></button>
+      <nav class="rxnPrimaryNav" aria-label="Основная навигация">
+        <button type="button" data-action="home" title="Главная">${raceSvg('home')}<b>ГЛАВНАЯ</b></button>
+        <button type="button" data-nav="championships" title="Чемпионаты">${raceSvg('trophy')}<b>ЧЕМПИОНАТЫ</b></button>
+        <button type="button" data-nav="pilots" title="Пилоты">${uiIcon('users','raceSvg')}<b>ПИЛОТЫ</b></button>
+      </nav>
+    </div>
     <nav class="rxnTopActions" aria-label="Пульт RallyCross">
-      ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="lapwiz" title="Bluetooth / LapWiz"',icon:'bluetooth'})}
-      ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:'data-quick-panel="lapwiz" title="LapWiz"',icon:'wave',title:'LAPWIZ',sub:lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'})}
-      ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer" title="Диктор"',icon:'mic',title:'ДИКТОР',sub:state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'})}
-      ${rxnTopButton({cls:'blue',attrs:'data-quick-panel="status" title="Статус"',icon:'flag',title:'СТАТУС',sub:phaseSmall})}
-      ${rxnTopButton({attrs:'data-race-skip-current="1" title="Пропустить заезд"',icon:'next',title:'ПРОПУСТИТЬ',sub:'ЗАЕЗД'})}
-      ${rxnTopButton({cls:'danger',attrs:'data-race-manage="open" title="Завершить событие"',icon:'stop',title:'ЗАВЕРШИТЬ',sub:'СОБЫТИЕ'})}
-      ${rxnTopButton({cls:'blue',attrs:'data-action="race-results" title="Результаты"',icon:'chart',title:'РЕЗУЛЬТАТЫ'})}
-      ${rxnTopButton({cls:'iconOnly',attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
-      ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="menu" title="Меню"',icon:'list'})}
+      ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:'data-quick-panel="lapwiz" title="LapWiz"',icon:'wave'})}
+      ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer" title="Диктор"',icon:'mic'})}
+      ${rxnTopButton({cls:'blue',attrs:'data-quick-panel="status" title="Статус"',icon:'flag'})}
+      ${rxnTopButton({attrs:'data-race-skip-current="1" title="Пропустить заезд"',icon:'next'})}
+      ${rxnTopButton({cls:'danger',attrs:'data-race-manage="open" title="Завершить событие"',icon:'stop'})}
+      ${rxnTopButton({cls:'blue',attrs:'data-action="race-results" title="Результаты"',icon:'chart'})}
+      ${rxnTopButton({attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
+      ${rxnTopButton({attrs:'data-quick-panel="menu" title="Меню"',icon:'list'})}
     </nav>
   </header>`;
 }
-function rxnRaceTitle(race,ev,s){
+function rxnLeaderStrip(pilots,s){
+  const leader=pilots?.[0];
+  const live=leader?s?.live?.[leader.id]:null;
+  const best=Number.isFinite(live?.bestLapMs)?fmtMs(live.bestLapMs):'—';
+  return `<div class="rxnLeaderStrip">${raceSvg('trophy')}<span><small>ЛИДЕР · ЛУЧШИЙ КРУГ</small><b id="rxnLeaderName">${esc(leader?.name||'—')}</b></span><strong id="rxnLeaderBest">${best}</strong></div>`;
+}
+function rxnRaceTitle(race,ev,s,pilots=[]){
   const label=eventShortLabel(ev)||'ЗАЕЗД';
   const grid=ev?.phase==='finals'?`<button class="rxnGridButton" type="button" data-rxn-grid-open="${esc(ev.key)}">СТАРТОВАЯ РЕШЁТКА</button>`:'';
-  return `<section class="rxnRaceTitle"><div><small>LEGION RX · RALLYCROSS</small><h1>${esc(label)}</h1></div><div class="rxnRaceMeta">${grid}<span>${esc(race.className||'Rally-10')}</span><b id="rxnPhaseTitle">${esc(phaseLabel(s))}</b></div></section>`;
+  return `<section class="rxnRaceTitle"><div class="rxnRaceTitleLeft"><div class="rxnRaceHeading"><small>LEGION RX · RALLYCROSS</small><h1>${esc(label)}</h1></div><div class="rxnRaceMeta">${grid}<span>${esc(race.className||'Rally-10')}</span><b id="rxnPhaseTitle">${esc(phaseLabel(s))}</b></div></div>${rxnLeaderStrip(pilots,s)}</section>`;
 }
 function rxnTimerPanel(race,ev,pilots,s,done){
   const ring=r425RingData(race,ev,pilots,s),progress=timerProgress(s,ev);
@@ -174,8 +185,8 @@ function cockpitView(){
   if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
   const race=state.race,ev=currentEvent(race),events=eventList(race),s=ensureSession(ev),pilots=ev?liveRanking(getEventPilots(race,ev),s):[],done=race.stage==='finished',tie=race.stage==='tie';
   const cls=rxnColumnClass(),count=rxnMetricCount();
-  if(tie)return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s)}<main class="rxnTieMain"><div class="rxnTieBox">${tieWidget(race)}</div>${rxnControlPanel(false,s,true)}</main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
-  return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s)}<main class="rxnMain"><section class="rxnRoster"><div class="rxnTable">${done?rxnFinalProtocolTable(race):rxnPilotTable(pilots,s)}</div></section><aside class="rxnSide">${rxnTimerPanel(race,ev,pilots,s,done)}${rxnControlPanel(done,s,false)}</aside></main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
+  if(tie)return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s,pilots)}<main class="rxnTieMain"><div class="rxnTieBox">${tieWidget(race)}</div>${rxnControlPanel(false,s,true)}</main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
+  return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s,pilots)}<main class="rxnMain"><section class="rxnRoster"><div class="rxnTable">${done?rxnFinalProtocolTable(race):rxnPilotTable(pilots,s)}</div></section><aside class="rxnSide">${rxnTimerPanel(race,ev,pilots,s,done)}${rxnControlPanel(done,s,false)}</aside></main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
 }
 
 function rxnAnimateBoard(board,html){
@@ -198,9 +209,10 @@ function updateDynamicCockpitUI(){
   const timer=document.querySelector('#mainTimer');if(timer)timer.textContent=displayTimer(s,ev);
   if(s.phase==='countdown'&&s.warmupEndsAtPerf)s.countdownLeft=Math.max(0,Math.ceil(warmupRemainingMs(s)/1000));
   const ranked=liveRanking(getEventPilots(race,ev),s),ring=document.querySelector('#timerRing');
+  const leader=ranked[0],leaderLive=leader?s.live?.[leader.id]:null;
   if(ring)ring.style.setProperty('--ring-progress',`${timerProgress(s,ev)*3.6}deg`);
   const rd=r425RingData(race,ev,ranked,s),set=(q,v)=>{const e=document.querySelector(q);if(e)e.textContent=v;};
-  set('#r425RingMain',rd.main);set('#r425RingSub',rd.sub);set('#timerSubline',timerSubline(s,ev));set('#rxnPhaseTitle',phaseLabel(s));
+  set('#r425RingMain',rd.main);set('#r425RingSub',rd.sub);set('#timerSubline',timerSubline(s,ev));set('#rxnPhaseTitle',phaseLabel(s));set('#rxnLeaderName',leader?.name||'—');set('#rxnLeaderBest',Number.isFinite(leaderLive?.bestLapMs)?fmtMs(leaderLive.bestLapMs):'—');
   const board=document.querySelector('.rxnTable');
   if(board&&s.phase!=='finished'){
     const warmSig=Object.keys(s.warmupDetected||{}).sort().join(','),sig=ranked.map(p=>{const l=s.live[p.id]||blankLive();return`${p.id}:${l.laps}:${l.startSeen}:${Math.round(l.lastLapMs||0)}:${Math.round(r425LapAvg(l)||0)}:${l.finished}`;}).join('|')+`|W:${warmSig}`;

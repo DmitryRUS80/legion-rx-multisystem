@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current build: **4.2.0 CLEAN FULL APP RC11 VARIANT4**  
+Current build: **4.2.0 CLEAN FULL APP RC12 DESKTOP PULT**  
 Base: **4.1.1 OFFLINE HOTFIX FULL APP**.  
 The incomplete CLEAN RC1 is invalid and must not be used.
 
@@ -29,3 +29,7 @@ See `TEST_REPORT.md`. Physical LapWiz and offline cold-start on the user's devic
 
 ## RC5 RESTORE
 Runtime UI restored to the exact RC5 cockpit state before the race-progress/queue section was added. platform/ and modes/ are byte-identical to original RC5. Unique runtime CSS/JS filenames are used only to bypass stale browser caches.
+
+
+## RC12 DESKTOP PULT
+UI-only refinement from RC11 Variant 4: desktop header alignment, duplicate LapWiz toolbar button removed, desktop main control icon/label scale increased, compact event title, leader/best-lap display strip, wider control accent bars, compact bottom display tools anchored to the panel bottom. RallyCross rules/platform modules unchanged.

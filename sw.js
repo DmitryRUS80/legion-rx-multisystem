@@ -1,4 +1,4 @@
-/* Legion RX RC11 VARIANT4 · selected UI theme */
+/* Legion RX RC12 DESKTOP PULT · UI-only cockpit refinement */
 'use strict';
 importScripts('./offline-config.js');
 
