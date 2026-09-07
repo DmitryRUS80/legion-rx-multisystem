@@ -1,4 +1,4 @@
-/* Legion RX RC4 cache refresh */
+/* Legion RX RC5 UI refresh */
 'use strict';
 importScripts('./offline-config.js');
 

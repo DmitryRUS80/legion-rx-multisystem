@@ -1,4 +1,4 @@
-APP VERSION: 4.2.0 CLEAN FULL APP RC4
-BUILD: 2026-09-07.RC4
-BASE: 4.2.0 CLEAN FULL APP RC3
-CHANGE: Desktop flag asset/cache refresh + visible version from one source
+APP VERSION: 4.2.0 CLEAN FULL APP RC5
+BUILD: 2026-09-07.RC5
+CORE VERSION: 4.2.0 CLEAN
+CHANGE: UI-only — RallyCross/Practice cockpit header + control buttons aligned to pilot-row visual language
