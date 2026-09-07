@@ -1,4 +1,4 @@
-/* Legion RX RC5 RESTORE · exact pre-progress UI */
+/* Legion RX RC11 VARIANT4 · selected UI theme */
 'use strict';
 importScripts('./offline-config.js');
 

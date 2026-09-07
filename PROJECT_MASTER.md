@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current build: **4.2.0 CLEAN FULL APP RC3**  
+Current build: **4.2.0 CLEAN FULL APP RC11 VARIANT4**  
 Base: **4.1.1 OFFLINE HOTFIX FULL APP**.  
 The incomplete CLEAN RC1 is invalid and must not be used.
 
@@ -25,3 +25,7 @@ Current RallyCross and Free Practice pults are the UI donor and are preserved in
 
 ## Verification status
 See `TEST_REPORT.md`. Physical LapWiz and offline cold-start on the user's device are still required before GOLD.
+
+
+## RC5 RESTORE
+Runtime UI restored to the exact RC5 cockpit state before the race-progress/queue section was added. platform/ and modes/ are byte-identical to original RC5. Unique runtime CSS/JS filenames are used only to bypass stale browser caches.

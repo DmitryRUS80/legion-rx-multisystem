@@ -104,6 +104,7 @@ function raceSvg(name,cls='raceSvg'){
  const paths={
   trophy:'<path d="M8 4h8v4a4 4 0 0 1-8 0V4Z"/><path d="M8 6H4v1a4 4 0 0 0 4 4m8-5h4v1a4 4 0 0 1-4 4M12 12v5m-4 3h8"/>',
   flag:'<path d="M5 21V4"/><path d="M5 5h13l-2.5 4L18 13H5"/>',
+  wave:'<path d="M3 12h2l2-5 3 10 3-13 3 16 2-8h3"/>',
   timer:'<circle cx="12" cy="13" r="8"/><path d="M9 2h6M12 13l3-3M12 5v2"/>',
   bluetooth:'<path d="M7 7l10 10-5 4V3l5 4L7 17"/>',
   mic:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-4 0h8"/>',
@@ -122,7 +123,7 @@ function raceSvg(name,cls='raceSvg'){
   radio:'<circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.5 5.5a9 9 0 0 0 0 13M18.5 5.5a9 9 0 0 1 0 13"/>',
   car:'<path d="M3 15l2-6h14l2 6v4h-2m-14 0H3v-4h18v4h-2M7 19h10"/><circle cx="7" cy="16" r="1.5"/><circle cx="17" cy="16" r="1.5"/>'
  };
- return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.flag}</svg>`;
+ return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.flag}</svg>`;
 }
 
 function eventShortLabel(ev){if(!ev)return'—';return ev.label||'Заезд';}
