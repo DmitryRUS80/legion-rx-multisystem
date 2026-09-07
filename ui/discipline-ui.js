@@ -4,6 +4,7 @@
 
 const RXN_COLUMN_KEY='legionrx_ui_next_columns_v3';
 const RXN_PRECISION_KEY='legionrx_ui_next_precision_v1';
+const RXN_QUEUE_COLLAPSED_KEY='legionrx_ui_next_queue_collapsed_v1';
 const RXN_PALETTE=['#299eef','#82c92d','#f3aa13','#764bc3','#ef6671','#a96c43','#32ad67','#d95aad','#2f77c9','#d4832f','#68a7b8','#9b78d1','#d8c23f','#ef7b55'];
 
 function rxnLoadColumns(){
@@ -17,6 +18,11 @@ function rxnLoadPrecision(){
   try{const n=Number(localStorage.getItem(RXN_PRECISION_KEY));return [1,2,3].includes(n)?n:1;}catch{return 1;}
 }
 function rxnSavePrecision(n){try{localStorage.setItem(RXN_PRECISION_KEY,String(n));}catch{}}
+
+function rxnLoadQueueCollapsed(){
+  try{return localStorage.getItem(RXN_QUEUE_COLLAPSED_KEY)==='1';}catch{return false;}
+}
+function rxnSaveQueueCollapsed(v){try{localStorage.setItem(RXN_QUEUE_COLLAPSED_KEY,v?'1':'0');}catch{}}
 function rxnFormatDuration(ms,digits=rxnLoadPrecision()){
   if(!Number.isFinite(ms)||ms<0)return '—';
   const total=Math.max(0,Number(ms));
@@ -167,13 +173,18 @@ function rxnCheckBestLapOverlay(race,ev,pilots,s){
   const best=rxnBestLapCandidate(pilots,s);if(!best)return;
   if(best.ms+0.5<rxnBestLapUi.bestMs){rxnBestLapUi.bestMs=best.ms;rxnShowBestLapOverlay(race,ev,best.pilot,best.ms);}
 }
+
 function rxnRaceQueue(race,ev,events,s){
   if(!race||!events?.length)return'';
   const ci=Math.max(0,events.findIndex(e=>e.key===ev?.key));
   const visible=events.slice(ci,ci+6);
   const next=nextRaceEvent(race,ev),curLabel=r428CompactHeatLabel(ev),nextLabel=next?r428CompactHeatLabel(next):'ФИНИШ';
-  const rows=visible.map((e,offset)=>{const st=eventStatus(race,e),idx=ci+offset+1,tag=r428CompactHeatLabel(e),pilots=(e.pilots||[]).length;return `<div class="rxnRaceQueueRow ${st}"><strong>${idx}</strong><span><b>${esc(e.label||tag)}</b><small>${pilots} пилотов · ${st==='current'?'СЕЙЧАС':st==='ready'?'ДАЛЕЕ':st==='completed'?'ЗАВЕРШЁН':st==='cancelled'?'ОТМЕНЁН':'ОЖИДАЕТ'}</small></span><em>${esc(tag)}</em></div>`;}).join('');
-  return `<section class="rxnRaceQueue"><button class="rxnRaceQueueHead" type="button" data-action="toggle-events">${raceSvg('list')}<span><small>ХОД СОРЕВНОВАНИЯ</small><b><i id="rxnQueuePhase">${esc(phaseLabel(s))}</i> · СЕЙЧАС ${esc(curLabel)} · ДАЛЕЕ ${esc(nextLabel)}</b></span>${raceSvg('chevron','rxnQueueChevron')}</button><div class="rxnRaceQueueList">${rows||'<div class="rxnRaceQueueEmpty">Следующих заездов нет</div>'}</div></section>`;
+  const collapsed=rxnLoadQueueCollapsed();
+  const rows=visible.map((e,offset)=>{
+    const st=eventStatus(race,e),idx=ci+offset+1,label=esc(e.label||r428CompactHeatLabel(e)),badges=rxnEventBadgeMarkup(e);
+    return `<div class="rxnRaceQueueRow ${st}"><strong>${idx}</strong><b>${label}</b><div class="rxnRaceQueueBadges">${badges}</div></div>`;
+  }).join('');
+  return `<section class="rxnRaceQueue ${collapsed?'collapsed':''}"><button class="rxnRaceQueueHead" type="button" data-action="toggle-queue-collapse">${raceSvg('list')}<span><small>ХОД СОРЕВНОВАНИЯ</small><b><i id="rxnQueuePhase">${esc(phaseLabel(s))}</i> · СЕЙЧАС ${esc(curLabel)} · ДАЛЕЕ ${esc(nextLabel)}</b></span>${raceSvg('chevron','rxnQueueChevron')}</button><div class="rxnRaceQueueList">${rows||'<div class="rxnRaceQueueEmpty">Следующих заездов нет</div>'}</div></section>`;
 }
 function rxnRaceTitle(race,ev,s){
   const label=eventShortLabel(ev)||'ЗАЕЗД';
