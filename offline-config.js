@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc5-restore';
-  const displayVersion='4.2.0 CLEAN FULL APP RC5 RESTORE';
-  const cacheName='legion-rx-4-2-0-clean-full-rc5-restore';
+  const appVersion='4.2.0-clean-full-rc9-header';
+  const displayVersion='4.2.0 CLEAN FULL APP RC9 HEADER';
+  const cacheName='legion-rx-4-2-0-clean-full-rc9-header';
   const assets=[
   "./",
   "./app-bridge.js",

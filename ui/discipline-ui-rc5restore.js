@@ -126,6 +126,8 @@ function rxnTopButton({cls='',attrs='',icon='flag',title='',sub=''}){
 function rxnHeader(race,ev,s){
   const phase=phaseLabel(s),phaseSmall=['warmup','countdown'].includes(s?.phase)?displayTimer(s,ev):phase;
   return `<header class="rxnTop">
+    <button class="rxnHomeBrand" type="button" data-action="home" title="Главная"><span>LEGION <i>RX</i></span></button>
+    <div class="rxnTopSpacer" aria-hidden="true"></div>
     ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="lapwiz" title="Bluetooth / LapWiz"',icon:'bluetooth'})}
     ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:'data-quick-panel="lapwiz"',icon:'wave',title:'LAPWIZ',sub:lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'})}
     ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer"',icon:'mic',title:'ДИКТОР',sub:state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'})}

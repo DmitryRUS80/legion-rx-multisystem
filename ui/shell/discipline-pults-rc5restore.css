@@ -40,6 +40,7 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:#020a11
 .rxnCockpit,.rxnCockpit *{box-sizing:border-box}
 .rxnCockpit{height:100dvh;min-height:0;overflow:hidden;background-color:#03101a;background-image:linear-gradient(rgba(0,158,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,158,255,.07) 1px,transparent 1px);background-size:6px 6px;color:var(--rxn-text);font-family:var(--rxn-font);display:grid;grid-template-rows:62px 56px minmax(0,1fr);padding:6px;gap:4px}
 .rxnTop{display:grid;grid-template-columns:62px minmax(112px,1.05fr) minmax(108px,.95fr) minmax(110px,1fr) minmax(116px,1.05fr) minmax(118px,1.05fr) minmax(105px,.9fr) 76px 70px;gap:5px;min-width:0}
+.rxnHomeBrand,.rxnTopSpacer{display:none}
 .rxnTopButton{min-width:0;height:100%;border:0;border-bottom:2px solid #04111c;border-radius:1px;background:rgba(255,255,255,.045);color:#f3f7fa;display:flex;align-items:center;justify-content:center;gap:7px;padding:4px 7px;overflow:hidden;box-shadow:inset 0 1px rgba(255,255,255,.018);transition:background .15s ease,box-shadow .15s ease}.rxnTopButton:nth-child(odd){background:rgba(255,255,255,.03)}.rxnTopButton:hover{background:rgba(255,255,255,.075)}.rxnTopButton svg{width:21px;height:21px;flex:none;color:#8fa5b4;stroke-width:1.55}.rxnTopButton span{min-width:0;display:flex;flex-direction:column;line-height:1}.rxnTopButton b{font-size:12px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rxnTopButton small{font-size:8px;color:#7f94a4;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rxnTopButton.ok{box-shadow:inset 0 2px var(--rxn-green)}.rxnTopButton.ok svg,.rxnTopButton.ok small{color:var(--rxn-green)}.rxnTopButton.danger{box-shadow:inset 0 2px var(--rxn-red)}.rxnTopButton.danger svg,.rxnTopButton.danger small{color:#ff6677}.rxnTopButton.blue{box-shadow:inset 0 2px var(--rxn-blue)}.rxnTopButton.blue svg,.rxnTopButton.blue small{color:var(--rxn-blue)}.rxnTopButton.iconOnly{padding:0}.rxnTopButton.iconOnly svg{width:23px;height:23px}.rxnTopButton:disabled{opacity:.35}
 .rxnRaceTitle{height:56px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;border-bottom:1px solid #19435e;padding:4px 7px 6px;min-width:0}.rxnRaceTitle small{display:block;color:var(--rxn-blue);font-size:9px;font-weight:700;letter-spacing:.04em}.rxnRaceTitle h1{margin:3px 0 0;font:700 clamp(24px,2.6vw,38px)/.9 var(--rxn-font);text-transform:uppercase;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rxnRaceMeta{display:flex;align-items:center;gap:18px;font-size:11px;text-transform:uppercase;white-space:nowrap}.rxnRaceMeta span{color:#9bb0be}.rxnRaceMeta b{color:var(--rxn-green)}
 
@@ -123,3 +124,25 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:#020a11
 .lapCorrectionLog>div:last-child{border-bottom:0}.lapCorrectionLog small{color:#63859a}
 @media(max-width:700px){.lapStatsModal .table{min-width:560px}.lapRemoveBtn{padding:0 7px;font-size:9px}.lapJudgeNote{font-size:11px}}
 /* ===== /TRACK DAY JUDGE LAP CORRECTION ===== */
+
+/* ===== RC9 DESKTOP COCKPIT HEADER ONLY ===== */
+@media (min-width:1400px) and (min-height:650px){
+ .rxnCockpit{grid-template-rows:54px 56px minmax(0,1fr);padding-top:4px}
+ .rxnTop{grid-template-columns:210px minmax(24px,1fr) repeat(9,48px);gap:6px;align-items:center}
+ .rxnHomeBrand{display:flex;height:48px;align-items:center;justify-content:flex-start;border:0;background:transparent;color:#f4f7f9;padding:0 12px;cursor:pointer}
+ .rxnHomeBrand span{font:800 22px/1 var(--rxn-font);letter-spacing:.015em;white-space:nowrap}
+ .rxnHomeBrand i{font-style:normal;color:var(--rxn-blue)}
+ .rxnTopSpacer{display:block}
+ .rxnTopButton{width:48px;height:48px;min-width:48px;padding:0;border:1px solid #15384e;border-radius:4px;background:rgba(5,19,29,.72);box-shadow:none}
+ .rxnTopButton:nth-child(odd){background:rgba(5,19,29,.72)}
+ .rxnTopButton:hover{background:#0a2435;border-color:#246187}
+ .rxnTopButton svg,.rxnTopButton.iconOnly svg{width:23px;height:23px;color:#d8e2e8;stroke-width:1.6}
+ .rxnTopButton span{display:none!important}
+ .rxnTopButton.ok{box-shadow:inset 0 2px var(--rxn-green)}
+ .rxnTopButton.ok svg{color:var(--rxn-green)}
+ .rxnTopButton.blue{box-shadow:inset 0 2px var(--rxn-blue)}
+ .rxnTopButton.blue svg{color:#80ccff}
+ .rxnTopButton.danger{box-shadow:inset 0 2px var(--rxn-red)}
+ .rxnTopButton.danger svg{color:#ff7d89}
+}
+/* ===== /RC9 DESKTOP COCKPIT HEADER ONLY ===== */
