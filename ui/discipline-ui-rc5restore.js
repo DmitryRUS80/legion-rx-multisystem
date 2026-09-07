@@ -123,20 +123,22 @@ function rxnFinalProtocolTable(race){
 function rxnTopButton({cls='',attrs='',icon='flag',title='',sub=''}){
   return `<button class="rxnTopButton ${cls}" ${attrs}>${raceSvg(icon)}${title?`<span><b>${title}</b>${sub?`<small>${sub}</small>`:''}</span>`:''}</button>`;
 }
+
 function rxnHeader(race,ev,s){
   const phase=phaseLabel(s),phaseSmall=['warmup','countdown'].includes(s?.phase)?displayTimer(s,ev):phase;
   return `<header class="rxnTop">
     <button class="rxnHomeBrand" type="button" data-action="home" title="Главная"><span>LEGION <i>RX</i></span></button>
-    <div class="rxnTopSpacer" aria-hidden="true"></div>
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="lapwiz" title="Bluetooth / LapWiz"',icon:'bluetooth'})}
-    ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:'data-quick-panel="lapwiz"',icon:'wave',title:'LAPWIZ',sub:lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'})}
-    ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer"',icon:'mic',title:'ДИКТОР',sub:state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'})}
-    ${rxnTopButton({cls:'blue',attrs:'data-quick-panel="status"',icon:'flag',title:'СТАТУС',sub:phaseSmall})}
-    ${rxnTopButton({attrs:'data-race-skip-current="1"',icon:'next',title:'ПРОПУСТИТЬ',sub:'ЗАЕЗД'})}
-    ${rxnTopButton({cls:'danger',attrs:'data-race-manage="open"',icon:'stop',title:'ЗАВЕРШИТЬ',sub:'СОБЫТИЕ'})}
-    ${rxnTopButton({cls:'blue',attrs:'data-action="race-results"',icon:'chart',title:'РЕЗУЛЬТАТЫ'})}
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="menu" title="Меню"',icon:'list'})}
+    <nav class="rxnTopActions" aria-label="Пульт RallyCross">
+      ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="lapwiz" title="Bluetooth / LapWiz"',icon:'bluetooth'})}
+      ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:'data-quick-panel="lapwiz" title="LapWiz"',icon:'wave',title:'LAPWIZ',sub:lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'})}
+      ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer" title="Диктор"',icon:'mic',title:'ДИКТОР',sub:state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'})}
+      ${rxnTopButton({cls:'blue',attrs:'data-quick-panel="status" title="Статус"',icon:'flag',title:'СТАТУС',sub:phaseSmall})}
+      ${rxnTopButton({attrs:'data-race-skip-current="1" title="Пропустить заезд"',icon:'next',title:'ПРОПУСТИТЬ',sub:'ЗАЕЗД'})}
+      ${rxnTopButton({cls:'danger',attrs:'data-race-manage="open" title="Завершить событие"',icon:'stop',title:'ЗАВЕРШИТЬ',sub:'СОБЫТИЕ'})}
+      ${rxnTopButton({cls:'blue',attrs:'data-action="race-results" title="Результаты"',icon:'chart',title:'РЕЗУЛЬТАТЫ'})}
+      ${rxnTopButton({cls:'iconOnly',attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
+      ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="menu" title="Меню"',icon:'list'})}
+    </nav>
   </header>`;
 }
 function rxnRaceTitle(race,ev,s){
@@ -320,18 +322,22 @@ function rxnTrackPilotTable(td){
   }).join('');
   return rxnPilotHeader()+rows;
 }
+
 function rxnTrackHeader(td){
   const active=td?.status==='active';
   return `<header class="rxnTop">
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="lapwiz" title="Bluetooth / LapWiz"',icon:'bluetooth'})}
-    ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:lapwiz.connected?'data-action="lap-disconnect"':'data-track-action="lap-connect"',icon:'wave',title:'LAPWIZ',sub:lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'})}
-    ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer"',icon:'mic',title:'ДИКТОР',sub:state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'})}
-    ${rxnTopButton({cls:active?'ok':'blue',attrs:'',icon:'flag',title:'СТАТУС',sub:active?'ПРАКТИКА':'ЗАВЕРШЕНА'})}
-    ${rxnTopButton({attrs:'data-track-action="report"',icon:'chart',title:'СТАТИСТИКА',sub:'СЕССИЯ'})}
-    ${rxnTopButton({cls:'danger',attrs:'data-track-action="finish"',icon:'stop',title:'ЗАВЕРШИТЬ',sub:'ПРАКТИКУ'})}
-    ${rxnTopButton({cls:'blue',attrs:'data-track-action="report"',icon:'chart',title:'РЕЗУЛЬТАТЫ'})}
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-track-action="home" title="Главная"',icon:'list'})}
+    <button class="rxnHomeBrand" type="button" data-track-action="home" title="Главная"><span>LEGION <i>RX</i></span></button>
+    <nav class="rxnTopActions" aria-label="Пульт Free Practice">
+      ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="lapwiz" title="Bluetooth / LapWiz"',icon:'bluetooth'})}
+      ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:(lapwiz.connected?'data-action="lap-disconnect"':'data-track-action="lap-connect"')+' title="LapWiz"',icon:'wave',title:'LAPWIZ',sub:lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'})}
+      ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer" title="Диктор"',icon:'mic',title:'ДИКТОР',sub:state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'})}
+      ${rxnTopButton({cls:active?'ok':'blue',attrs:'title="Статус"',icon:'flag',title:'СТАТУС',sub:active?'ПРАКТИКА':'ЗАВЕРШЕНА'})}
+      ${rxnTopButton({attrs:'data-track-action="report" title="Статистика"',icon:'chart',title:'СТАТИСТИКА',sub:'СЕССИЯ'})}
+      ${rxnTopButton({cls:'danger',attrs:'data-track-action="finish" title="Завершить практику"',icon:'stop',title:'ЗАВЕРШИТЬ',sub:'ПРАКТИКУ'})}
+      ${rxnTopButton({cls:'blue',attrs:'data-track-action="report" title="Результаты"',icon:'chart',title:'РЕЗУЛЬТАТЫ'})}
+      ${rxnTopButton({cls:'iconOnly',attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
+      ${rxnTopButton({cls:'iconOnly',attrs:'data-track-action="home" title="Главная"',icon:'list'})}
+    </nav>
   </header>`;
 }
 function rxnTrackTitle(td){

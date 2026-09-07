@@ -146,3 +146,96 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:#020a11
  .rxnTopButton.danger svg{color:#ff7d89}
 }
 /* ===== /RC9 DESKTOP COCKPIT HEADER ONLY ===== */
+
+
+/* ===== RC10 UNIFIED COCKPIT HEADER · UI ONLY ===== */
+.rxnTop{
+  display:grid!important;
+  grid-template-columns:minmax(116px,1fr) minmax(0,31%)!important;
+  align-items:center!important;
+  gap:6px!important;
+  min-width:0!important;
+  padding:0!important;
+}
+.rxnHomeBrand{
+  display:flex!important;
+  min-width:0!important;
+  height:46px!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  border:0!important;
+  background:transparent!important;
+  color:#f4f7f9!important;
+  padding:0 10px!important;
+  cursor:pointer!important;
+  overflow:hidden!important;
+}
+.rxnHomeBrand span{
+  font:800 21px/1 var(--rxn-font)!important;
+  letter-spacing:.015em!important;
+  white-space:nowrap!important;
+}
+.rxnHomeBrand i{font-style:normal!important;color:var(--rxn-blue)!important}
+.rxnTopSpacer{display:none!important}
+.rxnTopActions{
+  min-width:0!important;
+  width:100%!important;
+  height:46px!important;
+  display:grid!important;
+  grid-template-columns:repeat(9,minmax(0,1fr))!important;
+  gap:4px!important;
+  align-items:stretch!important;
+}
+.rxnTopActions .rxnTopButton{
+  width:100%!important;
+  min-width:0!important;
+  height:46px!important;
+  padding:0!important;
+  border:1px solid #15384e!important;
+  border-radius:4px!important;
+  background:rgba(5,19,29,.72)!important;
+  box-shadow:none!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.rxnTopActions .rxnTopButton:nth-child(odd){background:rgba(5,19,29,.72)!important}
+.rxnTopActions .rxnTopButton span{display:none!important}
+.rxnTopActions .rxnTopButton svg,.rxnTopActions .rxnTopButton.iconOnly svg{
+  width:22px!important;height:22px!important;flex:none!important;color:#d8e2e8!important;stroke-width:1.6!important
+}
+.rxnTopActions .rxnTopButton.ok{box-shadow:inset 0 2px var(--rxn-green)!important}
+.rxnTopActions .rxnTopButton.ok svg{color:var(--rxn-green)!important}
+.rxnTopActions .rxnTopButton.blue{box-shadow:inset 0 2px var(--rxn-blue)!important}
+.rxnTopActions .rxnTopButton.blue svg{color:#80ccff!important}
+.rxnTopActions .rxnTopButton.danger{box-shadow:inset 0 2px var(--rxn-red)!important}
+.rxnTopActions .rxnTopButton.danger svg{color:#ff7d89!important}
+
+/* Landscape: action strip aligns to the same right column as timer + controls. */
+@media (orientation:landscape){
+ .rxnCockpit{grid-template-rows:52px 56px minmax(0,1fr)!important}
+ .rxnTop{grid-template-columns:minmax(0,1fr) minmax(235px,30%)!important}
+}
+@media (orientation:landscape) and (min-width:1400px) and (min-height:650px){
+ .rxnCockpit{grid-template-rows:52px 56px minmax(0,1fr)!important;padding-top:4px!important}
+ .rxnTop{grid-template-columns:minmax(0,1fr) minmax(420px,31%)!important}
+}
+
+/* Portrait: logo left, all icon buttons right. No captions and no second line. */
+@media (orientation:portrait){
+ .rxnCockpit{grid-template-rows:50px 50px minmax(0,1fr)!important}
+ .rxnTop{grid-template-columns:100px minmax(0,1fr)!important;gap:3px!important}
+ .rxnHomeBrand{height:44px!important;padding:0 5px!important}
+ .rxnHomeBrand span{font-size:17px!important}
+ .rxnTopActions{height:44px!important;gap:2px!important}
+ .rxnTopActions .rxnTopButton{height:44px!important;border-radius:3px!important}
+ .rxnTopActions .rxnTopButton svg,.rxnTopActions .rxnTopButton.iconOnly svg{width:19px!important;height:19px!important}
+}
+@media (orientation:portrait) and (max-width:599px){
+ .rxnTop{grid-template-columns:88px minmax(0,1fr)!important}
+ .rxnHomeBrand span{font-size:15px!important}
+ .rxnTopActions .rxnTopButton{height:42px!important}
+ .rxnTopActions{height:42px!important;gap:1px!important}
+ .rxnTopActions .rxnTopButton svg,.rxnTopActions .rxnTopButton.iconOnly svg{width:17px!important;height:17px!important}
+}
+/* ===== /RC10 UNIFIED COCKPIT HEADER ===== */
