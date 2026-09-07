@@ -1,0 +1,1 @@
+window.addEventListener('error',function(e){var b=document.getElementById('runtimeError');if(b){b.style.display='block';b.textContent='Ошибка Legion RX: '+(e.message||'неизвестная ошибка')+' · строка '+(e.lineno||'?');}});
