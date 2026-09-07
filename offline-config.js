@@ -1,7 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc3';
-  const cacheName='legion-rx-4-2-0-clean-full-rc3';
+  const appVersion='4.2.0-clean-full-rc4';
+  const displayVersion='4.2.0 CLEAN FULL APP RC4';
+  const cacheName='legion-rx-4-2-0-clean-full-rc4';
   const assets=[
   "./",
   "./app-bridge.js",
@@ -40,7 +41,7 @@
   "./audio/voice/warmup_05.wav",
   "./audio/voice/warmup_30.wav",
   "./boot.js",
-  "./flags/flags-atlas.png",
+  "./flags/flags-atlas-rc4.png",
   "./icons/apple-touch-icon.png",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
@@ -75,5 +76,5 @@
   "./ui/shell/router.js",
   "./ui/shell/runtime-error.js"
 ];
-  root.LEGION_OFFLINE_CONFIG=Object.freeze({appVersion,cacheName,markerKey:'legionrx_offline_ready_'+appVersion.replace(/[^a-z0-9]+/gi,'_').toLowerCase(),assets:Object.freeze(assets)});
+  root.LEGION_OFFLINE_CONFIG=Object.freeze({appVersion,displayVersion,cacheName,markerKey:'legionrx_offline_ready_'+appVersion.replace(/[^a-z0-9]+/gi,'_').toLowerCase(),assets:Object.freeze(assets)});
 })(typeof self!=='undefined'?self:window);

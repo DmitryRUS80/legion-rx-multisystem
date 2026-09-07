@@ -1,5 +1,5 @@
 'use strict';
-/* Legion RX 4.2.0 CLEAN FULL APP RC3
+/* Legion RX 4.2.0 CLEAN FULL APP RC4
    Visual/UI adapter only. Race, BLE, audio, storage and sports logic remain in index.html. */
 
 const RXN_COLUMN_KEY='legionrx_ui_next_columns_v3';

@@ -1,3 +1,4 @@
-APP VERSION: 4.2.0 CLEAN FULL APP RC3
-BASE: 4.1.1 OFFLINE HOTFIX FULL APP
-STATUS: verification candidate; not GOLD until physical LapWiz + offline cold-start test
+APP VERSION: 4.2.0 CLEAN FULL APP RC4
+BUILD: 2026-09-07.RC4
+BASE: 4.2.0 CLEAN FULL APP RC3
+CHANGE: Desktop flag asset/cache refresh + visible version from one source

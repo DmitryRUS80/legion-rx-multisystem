@@ -1,4 +1,7 @@
 'use strict';
+const appVersionLabel=document.getElementById('appVersionLabel');
+if(appVersionLabel)appVersionLabel.textContent=LEGION_APP_DISPLAY_VERSION;
+document.title=`Legion RX · ${LEGION_APP_DISPLAY_VERSION}`;
 function uiToast(msg){const el=$('#toast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(uiToast.t);uiToast.t=setTimeout(()=>el.classList.remove('show'),2200);}
 function uiCloseModal(){const h=$('#modalHost');if(h)h.innerHTML='';}
 AppBridge.toast=uiToast;AppBridge.closeModal=uiCloseModal;AppBridge.render=uiRender;AppBridge.updateHeader=uiUpdateHeader;AppBridge.nav=uiNav;
