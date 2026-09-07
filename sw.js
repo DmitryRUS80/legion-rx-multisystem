@@ -1,4 +1,4 @@
-/* Legion RX RC6 UI cockpit build */
+/* Legion RX RC8 ROLLBACK · exact pre-race-queue UI */
 'use strict';
 importScripts('./offline-config.js');
 

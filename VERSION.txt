@@ -1,4 +1,1 @@
-APP VERSION: 4.2.0 CLEAN FULL APP RC7
-BUILD: 2026-09-07.RC6
-BASE: 4.2.0 CLEAN FULL APP RC4
-CHANGE: RallyCross cockpit UI only — black/white controls, landscape race queue, portrait progress button, BEST LAP slide-in
+APP VERSION: 4.2.0 CLEAN FULL APP RC8 ROLLBACK

@@ -86,7 +86,7 @@ function nextEventWidget(race,next){const body=next?`<div class="nextHeatBig"><b
 
 function collapsibleWidget(key,title,body,disabled=false){const collapsed=Boolean(state.widgetCollapsed[key]);return `<section class="raceWidget ${disabled?'futureWidget':''} ${collapsed?'collapsed':''}"><button class="raceWidgetHead" type="button" ${disabled?'disabled':`data-widget-toggle="${key}"`}><span>${title}</span>${disabled?'<span class="soonTag">СКОРО</span>':uiIcon('chevronDown','collapseIcon')}</button><div class="raceWidgetBody">${body}</div></section>`;}
 
-function eventItem(race,e,i){const s=eventStatus(race,e),clickable=(s==='completed'||s==='cancelled'),title=esc(e.label||eventShortLabel(e)),badges=rxnEventBadgeMarkup(e);return `<div class="eventItem ${s}" ${clickable?`data-show-event="${e.key}" style="cursor:pointer"`:''}><div class="eventItemRow"><strong>${i+1}</strong><b>${title}</b><div class="eventItemBadges">${badges}</div></div></div>`;}
+function eventItem(race,e,i){const s=eventStatus(race,e),pilots=(e.pilots||[]).length;return `<div class="eventItem ${s}" ${s==='completed'?`data-show-event="${e.key}" style="cursor:pointer"`:''}><div class="top"><b>${i+1}. ${esc(e.label)}</b><span class="eventDot"></span></div><small>${pilots} пилотов · ${s==='completed'?'завершён · нажмите для результата':s==='current'?'текущий':s==='ready'?'готов':'закрыт'}</small></div>`;}
 
 function eventRuleText(race,ev){if(!ev)return'Нет активного события';const r=eventRule(race,ev);return r.limitType==='time'?`По времени · ${r.durationMin} мин · финиш текущего круга`:`По кругам · ${r.targetLaps} кругов`;}
 
@@ -126,16 +126,6 @@ function raceSvg(name,cls='raceSvg'){
 }
 
 function eventShortLabel(ev){if(!ev)return'—';return ev.label||'Заезд';}
-
-
-function rxnEventBadgeParts(ev){
-  const raw=String(r428CompactHeatLabel(ev)||'').replace(/\s+/g,' ').trim();
-  if(!raw)return[];
-  return raw.split(/\s*[·•]\s*/).map(x=>x.trim()).filter(Boolean);
-}
-function rxnEventBadgeMarkup(ev){
-  return rxnEventBadgeParts(ev).map(part=>`<span class="rxnEventBadge">${esc(part)}</span>`).join('');
-}
 
 function eventRuleText405(race,ev){if(!ev)return'Нет активного заезда';const r=eventRule(race,ev);return r.limitType==='time'?`${r.durationMin} мин · финиш текущего круга`:`${r.targetLaps} кругов`;}
 

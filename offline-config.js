@@ -1,7 +1,7 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc7';
-  const displayVersion='4.2.0 CLEAN FULL APP RC7';
+  const appVersion='4.2.0-clean-full-rc8-rollback';
+  const displayVersion='4.2.0 CLEAN FULL APP RC8 ROLLBACK';
   const cacheName='legion-rx-4-2-0-clean-full-rc6';
   const assets=[
   "./",

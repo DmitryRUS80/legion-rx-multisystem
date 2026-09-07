@@ -4,7 +4,6 @@
 
 const RXN_COLUMN_KEY='legionrx_ui_next_columns_v3';
 const RXN_PRECISION_KEY='legionrx_ui_next_precision_v1';
-const RXN_QUEUE_COLLAPSED_KEY='legionrx_ui_next_queue_collapsed_v1';
 const RXN_PALETTE=['#299eef','#82c92d','#f3aa13','#764bc3','#ef6671','#a96c43','#32ad67','#d95aad','#2f77c9','#d4832f','#68a7b8','#9b78d1','#d8c23f','#ef7b55'];
 
 function rxnLoadColumns(){
@@ -18,11 +17,6 @@ function rxnLoadPrecision(){
   try{const n=Number(localStorage.getItem(RXN_PRECISION_KEY));return [1,2,3].includes(n)?n:1;}catch{return 1;}
 }
 function rxnSavePrecision(n){try{localStorage.setItem(RXN_PRECISION_KEY,String(n));}catch{}}
-
-function rxnLoadQueueCollapsed(){
-  try{return localStorage.getItem(RXN_QUEUE_COLLAPSED_KEY)==='1';}catch{return false;}
-}
-function rxnSaveQueueCollapsed(v){try{localStorage.setItem(RXN_QUEUE_COLLAPSED_KEY,v?'1':'0');}catch{}}
 function rxnFormatDuration(ms,digits=rxnLoadPrecision()){
   if(!Number.isFinite(ms)||ms<0)return '—';
   const total=Math.max(0,Number(ms));
@@ -143,54 +137,10 @@ function rxnHeader(race,ev,s){
     ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="menu" title="Меню"',icon:'list'})}
   </header>`;
 }
-const rxnBestLapUi={key:'',bestMs:Infinity,hideTimer:null};
-function rxnBestLapCandidate(pilots,s){
-  let best=null;
-  for(const p of pilots||[]){
-    const ms=Number(s?.live?.[p.id]?.bestLapMs);
-    if(Number.isFinite(ms)&&ms>0&&(!best||ms<best.ms))best={pilot:p,ms};
-  }
-  return best;
-}
-function rxnPrimeBestLapUi(race,ev,pilots,s){
-  const key=`${race?.id||''}:${ev?.key||''}`;
-  if(rxnBestLapUi.key===key)return;
-  const best=rxnBestLapCandidate(pilots,s);
-  rxnBestLapUi.key=key;rxnBestLapUi.bestMs=best?.ms??Infinity;
-  if(rxnBestLapUi.hideTimer){clearTimeout(rxnBestLapUi.hideTimer);rxnBestLapUi.hideTimer=null;}
-}
-function rxnBestLapOverlayShell(){return `<div id="rxnBestLapOverlay" class="rxnBestLapOverlay" aria-live="polite"></div>`;}
-function rxnShowBestLapOverlay(race,ev,pilot,ms){
-  const el=document.querySelector('#rxnBestLapOverlay');if(!el)return;
-  el.innerHTML=`<div class="rxnBestLapMark">${raceSvg('trophy')}</div><div class="rxnBestLapCopy"><div><strong>BEST LAP</strong><b>${esc(fmtMs(ms))}</b></div><span><em>${esc(pilot?.transponder||'—')}</em>${esc(pilot?.name||'—')}</span><small>${esc(eventShortLabel(ev))} · ${esc(race?.eventName||'LEGION RX')}</small></div>`;
-  el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
-  if(rxnBestLapUi.hideTimer)clearTimeout(rxnBestLapUi.hideTimer);
-  rxnBestLapUi.hideTimer=setTimeout(()=>{el.classList.remove('show');rxnBestLapUi.hideTimer=null;},4300);
-}
-function rxnCheckBestLapOverlay(race,ev,pilots,s){
-  const key=`${race?.id||''}:${ev?.key||''}`;
-  if(rxnBestLapUi.key!==key){rxnPrimeBestLapUi(race,ev,pilots,s);return;}
-  const best=rxnBestLapCandidate(pilots,s);if(!best)return;
-  if(best.ms+0.5<rxnBestLapUi.bestMs){rxnBestLapUi.bestMs=best.ms;rxnShowBestLapOverlay(race,ev,best.pilot,best.ms);}
-}
-
-function rxnRaceQueue(race,ev,events,s){
-  if(!race||!events?.length)return'';
-  const ci=Math.max(0,events.findIndex(e=>e.key===ev?.key));
-  const visible=events.slice(ci,ci+6);
-  const next=nextRaceEvent(race,ev),curLabel=r428CompactHeatLabel(ev),nextLabel=next?r428CompactHeatLabel(next):'ФИНИШ';
-  const collapsed=rxnLoadQueueCollapsed();
-  const rows=visible.map((e,offset)=>{
-    const st=eventStatus(race,e),idx=ci+offset+1,label=esc(e.label||r428CompactHeatLabel(e)),badges=rxnEventBadgeMarkup(e);
-    return `<div class="rxnRaceQueueRow ${st}"><strong>${idx}</strong><b>${label}</b><div class="rxnRaceQueueBadges">${badges}</div></div>`;
-  }).join('');
-  return `<section class="rxnRaceQueue ${collapsed?'collapsed':''}"><button class="rxnRaceQueueHead" type="button" data-action="toggle-queue-collapse">${raceSvg('list')}<span><small>ХОД СОРЕВНОВАНИЯ</small><b><i id="rxnQueuePhase">${esc(phaseLabel(s))}</i> · СЕЙЧАС ${esc(curLabel)} · ДАЛЕЕ ${esc(nextLabel)}</b></span>${raceSvg('chevron','rxnQueueChevron')}</button><div class="rxnRaceQueueList">${rows||'<div class="rxnRaceQueueEmpty">Следующих заездов нет</div>'}</div></section>`;
-}
 function rxnRaceTitle(race,ev,s){
   const label=eventShortLabel(ev)||'ЗАЕЗД';
   const grid=ev?.phase==='finals'?`<button class="rxnGridButton" type="button" data-rxn-grid-open="${esc(ev.key)}">СТАРТОВАЯ РЕШЁТКА</button>`:'';
-  const progress=`<button class="rxnCompetitionProgressBtn" type="button" data-action="toggle-events" title="Ход соревнования">${raceSvg('list')}</button>`;
-  return `<section class="rxnRaceTitle"><div><small>LEGION RX · RALLYCROSS · ${esc(LEGION_APP_DISPLAY_VERSION)}</small><h1>${esc(label)}</h1></div><div class="rxnRaceMeta">${grid}${progress}<span>${esc(race.className||'Rally-10')}</span><b id="rxnPhaseTitle">${esc(phaseLabel(s))}</b></div></section>`;
+  return `<section class="rxnRaceTitle"><div><small>LEGION RX · RALLYCROSS</small><h1>${esc(label)}</h1></div><div class="rxnRaceMeta">${grid}<span>${esc(race.className||'Rally-10')}</span><b id="rxnPhaseTitle">${esc(phaseLabel(s))}</b></div></section>`;
 }
 function rxnTimerPanel(race,ev,pilots,s,done){
   const ring=r425RingData(race,ev,pilots,s),progress=timerProgress(s,ev);
@@ -219,9 +169,9 @@ function rxnControlPanel(done,s,tie=false){return `<section class="rxnControlPan
 function cockpitView(){
   if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
   const race=state.race,ev=currentEvent(race),events=eventList(race),s=ensureSession(ev),pilots=ev?liveRanking(getEventPilots(race,ev),s):[],done=race.stage==='finished',tie=race.stage==='tie';
-  const cls=rxnColumnClass(),count=rxnMetricCount();rxnPrimeBestLapUi(race,ev,pilots,s);
-  if(tie)return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s)}<main class="rxnTieMain"><div class="rxnTieBox">${tieWidget(race)}</div>${rxnControlPanel(false,s,true)}</main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}${rxnBestLapOverlayShell()}</section>`;
-  return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s)}<main class="rxnMain"><section class="rxnRoster"><div class="rxnTable">${done?rxnFinalProtocolTable(race):rxnPilotTable(pilots,s)}</div></section><aside class="rxnSide">${rxnTimerPanel(race,ev,pilots,s,done)}${rxnControlPanel(done,s,false)}${rxnRaceQueue(race,ev,events,s)}</aside></main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}${rxnBestLapOverlayShell()}</section>`;
+  const cls=rxnColumnClass(),count=rxnMetricCount();
+  if(tie)return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s)}<main class="rxnTieMain"><div class="rxnTieBox">${tieWidget(race)}</div>${rxnControlPanel(false,s,true)}</main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
+  return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s)}<main class="rxnMain"><section class="rxnRoster"><div class="rxnTable">${done?rxnFinalProtocolTable(race):rxnPilotTable(pilots,s)}</div></section><aside class="rxnSide">${rxnTimerPanel(race,ev,pilots,s,done)}${rxnControlPanel(done,s,false)}</aside></main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
 }
 
 function rxnAnimateBoard(board,html){
@@ -246,8 +196,7 @@ function updateDynamicCockpitUI(){
   const ranked=liveRanking(getEventPilots(race,ev),s),ring=document.querySelector('#timerRing');
   if(ring)ring.style.setProperty('--ring-progress',`${timerProgress(s,ev)*3.6}deg`);
   const rd=r425RingData(race,ev,ranked,s),set=(q,v)=>{const e=document.querySelector(q);if(e)e.textContent=v;};
-  set('#r425RingMain',rd.main);set('#r425RingSub',rd.sub);set('#timerSubline',timerSubline(s,ev));set('#rxnPhaseTitle',phaseLabel(s));set('#rxnQueuePhase',phaseLabel(s));
-  rxnCheckBestLapOverlay(race,ev,ranked,s);
+  set('#r425RingMain',rd.main);set('#r425RingSub',rd.sub);set('#timerSubline',timerSubline(s,ev));set('#rxnPhaseTitle',phaseLabel(s));
   const board=document.querySelector('.rxnTable');
   if(board&&s.phase!=='finished'){
     const warmSig=Object.keys(s.warmupDetected||{}).sort().join(','),sig=ranked.map(p=>{const l=s.live[p.id]||blankLive();return`${p.id}:${l.laps}:${l.startSeen}:${Math.round(l.lastLapMs||0)}:${Math.round(r425LapAvg(l)||0)}:${l.finished}`;}).join('|')+`|W:${warmSig}`;
