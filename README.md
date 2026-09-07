@@ -1,4 +1,4 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC2
+# LEGION RX 4.2.0 CLEAN FULL APP RC3
 
 Полная модульная сборка, перенесённая с 4.1.1 OFFLINE HOTFIX FULL APP.
 

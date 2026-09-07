@@ -24,7 +24,21 @@ cfg=(ROOT/'offline-config.js').read_text(encoding='utf-8')
 assets=re.findall(r'"(\./[^"]+)"',cfg)
 missing=[a for a in assets if a!='./' and not (ROOT/a[2:]).exists()]
 checks['offline_manifest_complete']=not missing
+# Every local CSS url(...) must resolve relative to the CSS file itself.
+css_missing=[]
+for css in ROOT.rglob('*.css'):
+    css_text=css.read_text(encoding='utf-8', errors='ignore')
+    for raw in re.findall(r'url\(([^)]+)\)', css_text):
+        url=raw.strip().strip('\"\'')
+        if not url or url.startswith(('data:','http:','https:','#')):
+            continue
+        clean=url.split('?',1)[0].split('#',1)[0]
+        target=(css.parent/clean).resolve()
+        if not target.exists():
+            css_missing.append(f'{css.relative_to(ROOT)} -> {url}')
+checks['css_assets_resolve']=not css_missing
 for k,v in checks.items(): print(f'{k}: {"PASS" if v else "FAIL"}')
 if dups: print('duplicates:',dups)
 if missing: print('missing:',missing)
+if css_missing: print('css missing:',css_missing)
 sys.exit(0 if all(checks.values()) else 2)
