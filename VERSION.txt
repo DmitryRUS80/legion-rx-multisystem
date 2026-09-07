@@ -1,0 +1,7 @@
+LEGION RX 4.1.1 OFFLINE HOTFIX
+Base: 4.1.0 UI NEXT TEST 06
+Scope: offline/PWA only
+Sport core changed: NO
+LapWiz protocol changed: NO
+Free Practice logic changed: NO
+UI changed: version label only

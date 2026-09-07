@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#080c11" />
-<title>Legion RX 4.1.0 UI NEXT TEST 06</title>
+<title>Legion RX 4.1.1 OFFLINE HOTFIX</title>
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/icon-192.png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -807,7 +807,7 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
 <header class="appbar">
   <button class="brand" id="brandBtn" type="button" aria-label="Главная">
     <span class="brandMark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16h12"/><path d="M9 7h4v4H9zm4 4h4v4h-4zm4-4h3v4h-3z" fill="currentColor" stroke="none"/></svg></span>
-    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.1.0 UI NEXT TEST 06</small></span>
+    <span class="brandText"><b>LEGION <i>RX</i></b><small>4.1.1 OFFLINE HOTFIX</small></span>
   </button>
   <nav class="mainNav" id="bottomNav" aria-label="Основная навигация">
     <button type="button" data-view="home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3Z"/></svg><small data-i18n="nav.home">Главная</small></button>
@@ -833,6 +833,7 @@ html[data-theme="light"] .r425RaceMetric strong{color:#26384d}html[data-theme="l
 <div id="legionAudioHost" aria-hidden="true" style="position:fixed;width:1px;height:1px;overflow:hidden;opacity:.001;pointer-events:none"></div>
 <div id="modalHost"></div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="offline-config.js"></script>
 <script>window.addEventListener('error',function(e){var b=document.getElementById('runtimeError');if(b){b.style.display='block';b.textContent='Ошибка Legion RX: '+(e.message||'неизвестная ошибка')+' · строка '+(e.lineno||'?');}});</script>
 <script>'use strict';
 
@@ -1014,20 +1015,11 @@ class LapWizCore extends EventTarget{
   unknownBeep(){this.beep(false);}
 }
 
-const LEGION_APP_VERSION='4.1.0-ui-next-test-06';
-const LEGION_OFFLINE_CACHE='legion-rx-4-1-0-ui-next-test-04';
-const LEGION_OFFLINE_MARKER='legionrx4_offline_ready_v410_ui_next_01';
+const LEGION_APP_VERSION=LEGION_OFFLINE_CONFIG.appVersion;
+const LEGION_OFFLINE_CACHE=LEGION_OFFLINE_CONFIG.cacheName;
+const LEGION_OFFLINE_MARKER=LEGION_OFFLINE_CONFIG.markerKey;
+const LEGION_OFFLINE_ASSETS=LEGION_OFFLINE_CONFIG.assets;
 const LEGION_FLAG_CODES=`AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW`.split(/\s+/);
-const LEGION_OFFLINE_ASSETS=[
-  './','./index.html','./manifest.webmanifest','./ui-next.css','./ui-next.js',
-  './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
-  './audio/voice/prestart_10.wav','./audio/voice/good_race.wav',
-  ...Array.from({length:10},(_,i)=>`./audio/voice/countdown_${String(i+1).padStart(2,'0')}.wav`),
-  './audio/voice/warmup_01.wav','./audio/voice/warmup_02.wav','./audio/voice/warmup_03.wav','./audio/voice/warmup_04.wav','./audio/voice/warmup_05.wav','./audio/voice/warmup_30.wav',
-  './audio/voice/events/one_minute_left.wav','./audio/voice/events/call_to_start.wav','./audio/voice/events/new_best_lap.wav','./audio/voice/events/pilot_finished.wav','./audio/voice/events/heat_results.wav','./audio/voice/events/time_expired.wav','./audio/voice/events/finish_current_lap.wav','./audio/voice/events/all_pilots_finished.wav','./audio/voice/events/heat_finished.wav','./audio/voice/events/race_stopped.wav','./audio/voice/events/unknown_transponder.wav','./audio/voice/events/lapwiz_disconnected.wav',
-  './audio/system/start_race.mp3','./audio/system/bleep.mp3','./audio/system/silence.wav',
-  './flags/flags-atlas.png'
-];
 
 class OfflineReadyManager extends EventTarget{
   constructor(){
