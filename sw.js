@@ -1,9 +1,11 @@
-/* Legion RX RC13 DIRECT UI */
+/* Legion RX RC14 OSWALD */
 'use strict';
 importScripts('./offline-config.js');
 
 const CACHE=LEGION_OFFLINE_CONFIG.cacheName;
 const ASSETS=[...LEGION_OFFLINE_CONFIG.assets];
+const EXTERNAL_ASSETS=[...(LEGION_OFFLINE_CONFIG.externalAssets||[])];
+const ALL_ASSETS=[...ASSETS,...EXTERNAL_ASSETS];
 
 function mimeFor(path){
   if(/\.mp3$/i.test(path))return'audio/mpeg';
@@ -26,7 +28,7 @@ async function validateResponse(url,response){
 
 async function currentCacheComplete(){
   const cache=await caches.open(CACHE);
-  for(const url of ASSETS){
+  for(const url of ALL_ASSETS){
     const hit=await cache.match(url,{ignoreSearch:true});
     if(!hit)return false;
     try{await validateResponse(url,hit);}catch{return false;}
@@ -43,7 +45,7 @@ async function installAtomically(){
   await caches.delete(CACHE);
   const cache=await caches.open(CACHE);
   try{
-    for(const url of ASSETS){
+    for(const url of ALL_ASSETS){
       const response=await fetch(url,{cache:'reload'});
       await validateResponse(url,response);
       await cache.put(url,response.clone());
@@ -79,7 +81,10 @@ async function rangeResponse(request,fullResponse){
 async function cachedOrNetworkFull(request){
   const cached=await currentCached(request);if(cached)return cached;
   try{
-    const fullRequest=new Request(request.url,{method:'GET',headers:{'Accept':request.headers.get('Accept')||'*/*'},cache:'reload',credentials:request.credentials,mode:'same-origin'});
+    const sameOrigin=new URL(request.url).origin===self.location.origin;
+    const fullRequest=sameOrigin
+      ? new Request(request.url,{method:'GET',headers:{'Accept':request.headers.get('Accept')||'*/*'},cache:'reload',credentials:request.credentials,mode:'same-origin'})
+      : new Request(request.url,{method:'GET',headers:{'Accept':request.headers.get('Accept')||'*/*'},cache:'reload',credentials:'omit',mode:'cors'});
     const response=await fetch(fullRequest);await validateResponse(request.url,response);
     const cache=await caches.open(CACHE);await cache.put(request.url,response.clone());return response;
   }catch{return null;}
@@ -91,7 +96,9 @@ self.addEventListener('message',event=>{if(event.data?.type==='OFFLINE_READY_CLE
 
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
-  const request=event.request,url=new URL(request.url);if(url.origin!==self.location.origin)return;
+  const request=event.request,url=new URL(request.url);
+  if(EXTERNAL_ASSETS.includes(request.url)){event.respondWith((async()=>{const full=await cachedOrNetworkFull(request);return full||Response.error();})());return;}
+  if(url.origin!==self.location.origin)return;
   const isAudio=url.pathname.includes('/audio/'),isStatic=url.pathname.includes('/icons/')||url.pathname.includes('/flags/');
   if(isAudio){event.respondWith((async()=>{const full=await cachedOrNetworkFull(request);if(!full)return Response.error();return request.headers.has('range')?rangeResponse(request,full):full;})());return;}
   if(request.mode==='navigate'){

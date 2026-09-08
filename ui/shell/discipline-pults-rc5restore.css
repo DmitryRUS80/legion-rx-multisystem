@@ -2,7 +2,7 @@
 :root{
   --rxn-bg:#04111c;--rxn-bg2:#071927;--rxn-panel:#081b2a;--rxn-panel2:#0b2132;--rxn-strip:rgba(255,255,255,.055);
   --rxn-line:#173b55;--rxn-line2:#0e2a3e;--rxn-text:#f4f7f9;--rxn-muted:#7f94a4;--rxn-blue:#079eff;--rxn-green:#20e56a;
-  --rxn-yellow:#e8c238;--rxn-red:#f13a4e;--rxn-font:"Bahnschrift Condensed","Arial Narrow","Roboto Condensed","Segoe UI",Arial,sans-serif;
+  --rxn-yellow:#e8c238;--rxn-red:#f13a4e;--rxn-font:"Oswald",sans-serif;
   --appbarh:62px;--content-width:1380px;--radius-card:6px;--radius-tile:6px;--radius-button:5px;--radius-input:4px;--section-gap:8px;
 }
 *{box-sizing:border-box}

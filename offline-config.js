@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc13-direct-ui';
-  const displayVersion='4.2.0 CLEAN FULL APP RC13 DIRECT UI';
-  const cacheName='legion-rx-4-2-0-clean-full-rc13-direct-ui';
+  const appVersion='4.2.0-clean-full-rc14-oswald';
+  const displayVersion='4.2.0 CLEAN FULL APP RC14 OSWALD';
+  const cacheName='legion-rx-4-2-0-clean-full-rc14-oswald';
   const assets=[
   "./",
   "./app-bridge.js",
@@ -67,6 +67,7 @@
   "./platform/timing.js",
   "./platform/utils.js",
   "./ui/discipline-ui-rc5restore.js",
+  "./ui/fonts/oswald.css",
   "./ui/shell/bindings.js",
   "./ui/shell/current-base.css",
   "./ui/shell/current-ui.js",
@@ -77,5 +78,15 @@
   "./ui/shell/runtime-error.js",
   "./ui/themes/variant4.css"
 ];
-  root.LEGION_OFFLINE_CONFIG=Object.freeze({appVersion,displayVersion,cacheName,markerKey:'legionrx_offline_ready_'+appVersion.replace(/[^a-z0-9]+/gi,'_').toLowerCase(),assets:Object.freeze(assets)});
+  const externalAssets=[
+    "https://unpkg.com/@fontsource/oswald@5.1.0/files/oswald-cyrillic-400-normal.woff2",
+    "https://unpkg.com/@fontsource/oswald@5.1.0/files/oswald-latin-400-normal.woff2",
+    "https://unpkg.com/@fontsource/oswald@5.1.0/files/oswald-cyrillic-500-normal.woff2",
+    "https://unpkg.com/@fontsource/oswald@5.1.0/files/oswald-latin-500-normal.woff2",
+    "https://unpkg.com/@fontsource/oswald@5.1.0/files/oswald-cyrillic-600-normal.woff2",
+    "https://unpkg.com/@fontsource/oswald@5.1.0/files/oswald-latin-600-normal.woff2",
+    "https://unpkg.com/@fontsource/oswald@5.1.0/files/oswald-cyrillic-700-normal.woff2",
+    "https://unpkg.com/@fontsource/oswald@5.1.0/files/oswald-latin-700-normal.woff2"
+  ];
+  root.LEGION_OFFLINE_CONFIG=Object.freeze({appVersion,displayVersion,cacheName,externalAssets:Object.freeze(externalAssets),markerKey:'legionrx_offline_ready_'+appVersion.replace(/[^a-z0-9]+/gi,'_').toLowerCase(),assets:Object.freeze(assets)});
 })(typeof self!=='undefined'?self:window);

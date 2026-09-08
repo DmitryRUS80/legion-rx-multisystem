@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current build: **4.2.0 CLEAN FULL APP RC13 DIRECT UI**  
+Current build: **4.2.0 CLEAN FULL APP RC14 OSWALD**  
 Base: **4.1.1 OFFLINE HOTFIX FULL APP**.  
 The incomplete CLEAN RC1 is invalid and must not be used.
 
