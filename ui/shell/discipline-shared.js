@@ -18,7 +18,6 @@ function clubMarkup(club='',fallback='Без клуба'){return isLegionRXClub(
 
 function pilotNameMarkup(p){const code=pilotCountryCode(p),flag=countryFlag(code),name=String(p?.name||'—').toUpperCase();return `<span class="pilotNameLine">${flag?`<span class="countryFlag" style="--country-flag-position:${flag}" title="${esc(countryName(code))}" role="img" aria-label="${esc(countryName(code))}">${esc(code)}</span>`:''}<span>${esc(name)}</span></span>`;}
 
-function pilotMetaMarkup(p,{showId=true}={}){const club=pilotClubName(p),city=p?.city||profileForPilot(p)?.city||'';const chunks=[];if(club)chunks.push(clubMarkup(club,''));if(city)chunks.push(esc(city));if(showId)chunks.push(`ID ${esc(p?.transponder||'—')}`);return chunks.filter(Boolean).join('<span class="metaDot">·</span>');}
 
 function uiIcon(name,cls='uiIcon'){
  const paths={
@@ -66,37 +65,23 @@ function applySettings(){document.documentElement.dataset.theme=state.settings.t
 
 function stageLabel(stage){return({setup:'Настройка',qualifying:'Квалификация',tie:'Жеребьёвка',finals:'Финалы',finished:'Завершено'})[stage]||stage;}
 
-function clockNow(){return new Date().toLocaleTimeString('ru-RU',{hour12:false});}
 
-function phaseStatusText(s){const p=s?.phase||'ready';return p==='running'?'Заезд идёт':p==='finishing'?'Финишируем':p==='countdown'?'Отсчёт':p==='paused'?'Пауза':p==='finished'?'Заезд завершён':'Готовность';}
 
-function nextEventAfter(race,ev){const all=eventList(race);if(!ev)return all.find(e=>!e.saved)||null;const i=all.findIndex(e=>e.key===ev.key);return all.slice(i+1).find(e=>!e.saved)||null;}
 
-function raceBoardFooter(pilots,session){if(!session||!pilots.length)return `<span>${uiIcon('chart','miniIcon')} Ожидание старта</span><span>LapWiz / ручной резерв готовы</span>`;const ranked=liveRanking(pilots,session),leader=ranked[0],l=leader?session.live?.[leader.id]:null;const best=ranked.map(p=>({p,l:session.live?.[p.id]})).filter(x=>Number.isFinite(x.l?.bestLapMs)).sort((a,b)=>a.l.bestLapMs-b.l.bestLapMs)[0];return `<span>${uiIcon('chart','miniIcon')} Лучший круг: <b>${best?`${esc(best.p.name)} — ${fmtMs(best.l.bestLapMs)}`:'—'}</b></span><span>Последний проход: <b>${esc(session.lastPass||'—')}</b></span>`;}
 
-function timerCard(race,ev,s,done,tie){const r=ev?eventRule(race,ev):null;const cap=done?'ФИНИШ':tie?'ЖЕРЕБЬЁВКА':timerCaption(s,ev);const timer=done||tie?'00:00':displayTimer(s,ev);const total=r?.limitType==='time'?`${r.durationMin + (s?.extraMinutes||0)}:00`:r?.limitType==='laps'?`${r.targetLaps} кругов`:'—';const canStart=ev&&s?.phase==='ready';return `<section class="timerCard refPanel"><div class="timerLabel">${cap}</div><div class="timerBody"><div><div id="mainTimer" class="heroTimer">${timer}</div><div class="timerTotal">${r?.limitType==='time'?'ЗАЕЗД ':''}${total}</div>${canStart?`<button class="timerStart" data-action="start-session">${uiIcon('play','miniIcon')} СТАРТ</button>`:''}</div><div id="timerRing" class="timerRing" style="--progress:${timerProgress(s,ev)}"></div></div></section>`;}
 
-function raceStatsCard(race,ev,pilots,s){const ranked=s?liveRanking(pilots,s):pilots,leader=ranked[0],ll=leader&&s?.live?.[leader.id];const rule=ev?eventRule(race,ev):null;return `<section class="statsCard refPanel"><div class="refPanelHead compact"><h3>${uiIcon('users','panelTitleIcon')} СТАТИСТИКА ЗАЕЗДА</h3></div><div class="statsGrid"><div>${uiIcon('flag','statIcon')}<span>ЛИДЕР</span><b>${esc(leader?.name||'—')}</b></div><div>${uiIcon('refresh','statIcon')}<span>ПРОШЛО КРУГОВ</span><b>${ll?.laps||0}${rule?.limitType==='laps'?` / ${rule.targetLaps}`:''}</b></div><div>${uiIcon('clock','statIcon')}<span>ПОСЛЕДНИЙ ПРОХОД</span><b>${s?.lastPass?esc(s.lastPass.split(' · ')[0]):'—'}</b></div><div>${uiIcon('timer','statIcon')}<span>РЕЖИМ</span><b>${rule?.limitType==='time'?`${rule.durationMin+(s?.extraMinutes||0)} мин`:`${rule?.targetLaps||0} кругов`}</b></div></div></section>`;}
 
-function voiceWidget(){return collapsibleWidget('voice',`${uiIcon('speaker','widgetIcon')} ГОЛОСОВОЕ СОПРОВОЖДЕНИЕ`,`<div class="futureLines"><div><time>START</time><span>Отсчёт: ${state.settings.countdownSec}…1 → HORN</span></div><div><time>VOICE</time><span>Диктор: ${state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'}</span></div></div>`,false);}
 
-function eventsWidget(race,events,ev){const curIndex=events.findIndex(e=>e.key===ev?.key);const shown=events.filter((e,i)=>e.saved||Math.abs(i-curIndex)<=2).slice(-6);const body=`<div class="eventMiniList">${shown.map(e=>{const st=eventStatus(race,e);return `<button class="eventMini ${st}" ${e.saved?`data-show-event="${e.key}"`:''} ${e.saved?'':'disabled'}><span class="eventMiniDot"></span><span><b>${esc(e.label)}</b><small>${st==='completed'?'завершён':st==='current'?'сейчас':st==='ready'?'готов':'закрыт'}</small></span></button>`;}).join('')}</div>`;return collapsibleWidget('events',`${uiIcon('list','widgetIcon')} ХОД СОРЕВНОВАНИЯ`,body,false);}
 
-function nextEventWidget(race,next){const body=next?`<div class="nextHeatBig"><b>${esc(next.label)}</b><span>${(next.pilots||[]).length} пилотов</span><strong>${uiIcon('timer','nextClockIcon')} СЛЕДУЮЩИЙ</strong></div>`:`<div class="nextHeatBig"><b>Нет следующего заезда</b><span>Текущий этап завершается</span></div>`;return collapsibleWidget('next',`${uiIcon('flag','widgetIcon')} СЛЕДУЮЩИЙ ЗАЕЗД`,body,false);}
 
-function collapsibleWidget(key,title,body,disabled=false){const collapsed=Boolean(state.widgetCollapsed[key]);return `<section class="raceWidget ${disabled?'futureWidget':''} ${collapsed?'collapsed':''}"><button class="raceWidgetHead" type="button" ${disabled?'disabled':`data-widget-toggle="${key}"`}><span>${title}</span>${disabled?'<span class="soonTag">СКОРО</span>':uiIcon('chevronDown','collapseIcon')}</button><div class="raceWidgetBody">${body}</div></section>`;}
 
 function eventItem(race,e,i){const s=eventStatus(race,e),pilots=(e.pilots||[]).length;return `<div class="eventItem ${s}" ${s==='completed'?`data-show-event="${e.key}" style="cursor:pointer"`:''}><div class="top"><b>${i+1}. ${esc(e.label)}</b><span class="eventDot"></span></div><small>${pilots} пилотов · ${s==='completed'?'завершён · нажмите для результата':s==='current'?'текущий':s==='ready'?'готов':'закрыт'}</small></div>`;}
 
-function eventRuleText(race,ev){if(!ev)return'Нет активного события';const r=eventRule(race,ev);return r.limitType==='time'?`По времени · ${r.durationMin} мин · финиш текущего круга`:`По кругам · ${r.targetLaps} кругов`;}
 
-function gapText(ranked,session,p,index){if(!session||index===0)return index===0?'Лидер':'—';const leader=session.live?.[ranked[0].id]||blankLive(),r=session.live?.[p.id]||blankLive();if(leader.laps-r.laps>0)return `+${leader.laps-r.laps} кр.`;if(r.elapsedMs&&leader.elapsedMs)return `+${fmtMs(Math.max(0,r.elapsedMs-leader.elapsedMs))}`;return'—';}
 
 function tieWidget(race){const groups=getExactTieGroups(race);const body=`${groups.map(g=>`<div class="tieLine"><b>${g.map(p=>esc(p.name)).join(' · ')}</b></div>`).join('')}<button class="widgetAction primaryAction" data-action="tie-draw">Провести жеребьёвку и сформировать финалы</button>`;return `<section class="raceWidget"><div class="raceWidgetHead"><span>${uiIcon('refresh','widgetIcon')} ЖЕРЕБЬЁВКА</span><span class="soonTag warnTag">НУЖНО ДЕЙСТВИЕ</span></div><div class="raceWidgetBody">${body}</div></section>`;}
 
-function qualifyingStandingsTable(race){updateStandings(race);return `<div class="pilotRow header"><span>POS</span><span>ПИЛОТ</span><span>BEST 3</span><span>Q-РЕЗУЛЬТАТЫ</span><span></span><span></span><span>СТАТУС</span></div>${race.pilots.map((p,i)=>`<div class="pilotRow"><div class="pos">${i+1}</div><div class="pilotNameCell"><div class="name">${pilotNameMarkup(p)}</div><div class="sub">${pilotClubName(p)?clubMarkup(pilotClubName(p),''):''}</div></div><b class="bestLap">${p.best3}</b><span style="grid-column:4/7">${(p.qualifying||[]).map(q=>q.status==='FIN'?`${q.place} (${q.points})`:q.status).join(' · ')||'—'}</span><span class="pilotStatus"><i></i>Рейтинг</span></div>`).join('')}`;}
 
-function finalProtocolTable(race){if(!race.finalProtocol?.length)return'<div class="empty">Финальный протокол ещё не сформирован.</div>';return `<div class="pilotRow header"><span>POS</span><span>ПИЛОТ</span><span>ОЧКИ</span><span>ИСТОЧНИК</span><span></span><span></span><span>СТАТУС</span></div>${race.finalProtocol.map(r=>{const p=getPilot(race,r.pilotId);return `<div class="pilotRow"><div class="pos">${r.place}</div><div class="pilotNameCell"><div class="name">${pilotNameMarkup(p)}</div><div class="sub">${pilotClubName(p)?clubMarkup(pilotClubName(p),''):''}</div></div><b class="bestLap">${r.eventPoints}</b><span style="grid-column:4/7">${esc(r.source)}</span><span class="pilotStatus"><i></i>${esc(r.status||'FIN')}</span></div>`;}).join('')}`;}
 
 function compactFinalProtocol(race){return race.finalProtocol.slice(0,10).map(r=>`<div class="protocolLine"><span><b>${r.place}</b> ${esc(getPilot(race,r.pilotId)?.name||'—')}</span><strong>${r.eventPoints}</strong></div>`).join('');}
 
@@ -142,13 +127,9 @@ function resultsWidget(race,ev,pilots,session){if(race.stage==='finished')return
 
 function eventDrawer(race,events){return `<div class="eventDrawer ${state.mobileEvents?'open':''}"><button class="eventDrawerBackdrop" data-action="close-events" aria-label="Закрыть"></button><aside><div class="eventDrawerHead"><div><span>ХОД СОРЕВНОВАНИЯ</span><b>${esc(race.eventName)}</b></div><button class="squareConsoleBtn" data-action="close-events">×</button></div><div class="eventDrawerList">${events.map((e,i)=>eventItem(race,e,i)).join('')}</div></aside></div>`;}
 
-function bestHeatLapText(pilots,s){let best=null,name='';for(const p of pilots){const l=s?.live?.[p.id];if(Number.isFinite(l?.bestLapMs)&&(!best||l.bestLapMs<best)){best=l.bestLapMs;name=p.name;}}return best?`${name} · ${fmtMs(best)}`:'—';}
 
-function phaseLabel(s){const p=s?.phase||'ready';return p==='warmup'?'Прогрев / проверка':p==='countdown'?'Стартовый отсчёт':p==='running'?'Заезд идёт':p==='finishing'?'Финишный круг':p==='paused'?'Пауза':p==='finished'?'Заезд завершён':'Готовность';}
 
-function phaseClass(s){return ['running','finishing'].includes(s?.phase)?'live':['warmup','countdown','paused'].includes(s?.phase)?'warn':'neutral';}
 
-function timerCaption(s,ev){if(!ev)return'ГОТОВО';if(s?.phase==='warmup')return'ДО СТАРТА · ПРОГРЕВ';if(s?.phase==='countdown')return'ДО СТАРТА';if(s?.phase==='paused')return'ПАУЗА';if(['running','finishing'].includes(s?.phase))return eventRule(state.race,ev).limitType==='time'?'ДО ФИНИША':'ВРЕМЯ ЗАЕЗДА';if(s?.phase==='finished')return'ЗАЕЗД ЗАВЕРШЁН';return'ГОТОВНОСТЬ';}
 
 function displayTimer(s,ev){
   if(!ev||!s)return'00:00';
@@ -211,57 +192,25 @@ function automationWidget(){
   return widgetShell('automation','ПРЕДСТАРТОВАЯ АВТОМАТИКА','timer',`<div class="nextHeat"><b>${raceWarmupMinutes()} мин до HORN</b><span>Free Practice → проверка → 30 сек → стартовый сценарий</span><strong>РАБОТАЕТ</strong></div>`,{badge:'ACTIVE'});
 }
 
-function r425Date(value){if(!value)return'';const p=String(value).split('-');return p.length===3?`${p[2]}.${p[1]}.${p[0]}`:String(value);}
 
-function r425LapAvg(l){return lapSummary(l).avg;}
+function rxnLapAvg(l){return lapSummary(l).avg;}
 
-function r425GlobalBest(pilots,session){let best=Infinity;for(const p of pilots){const v=session?.live?.[p.id]?.bestLapMs;if(Number.isFinite(v))best=Math.min(best,v);}return Number.isFinite(best)?best:null;}
 
-function r425Pace(best,globalBest){if(!Number.isFinite(best)||!Number.isFinite(globalBest)||best<=0)return 0;return Math.max(18,Math.min(100,globalBest/best*100));}
 
-function r425PilotState(session,l,pilotId,index,pre,leaderLaps=0){
- let text='ГОТОВ',cls='';
- if(pre){if(session?.warmupDetected?.[pilotId]){text='НА ТРАССЕ';cls='green';}else{text='ОЖИДАЕТСЯ';cls='amber';}}
- else if(l.finished){text='ФИНИШ';cls='blue';}
- else if(['running','finishing'].includes(session?.phase)&&!l.startSeen){text='ЖДЁМ ЗАСЕЧКУ';cls='amber';}
- else if(['running','finishing'].includes(session?.phase)&&l.startSeen&&l.laps===0){text='СТАРТ ✓';cls='blue';}
- else if(index===0&&l.laps>0){text='ЛИДЕР';cls='green';}
- else if(['running','finishing'].includes(session?.phase)&&leaderLaps>0&&l.laps<leaderLaps){text='ОТСТАЁТ';cls='amber';}
- else if(['running','finishing'].includes(session?.phase)){text='В ГОНКЕ';cls='green';}
- else if(session?.phase==='paused'){text='ПАУЗА';cls='amber';}
- return {text,cls};
-}
 
-function r425RingData(race,ev,pilots,s){
+function rxnRingData(race,ev,pilots,s){
  const pre=['warmup','countdown'].includes(s?.phase),rule=ev?eventRule(race,ev):null,leader=pilots?.[0],ll=leader?s?.live?.[leader.id]:null;
  if(pre)return{main:`${warmupSeenCount(s)}/${pilots.length}`,sub:'НА ТРАССЕ'};
  if(rule?.limitType==='laps')return{main:`${ll?.laps||0}/${rule.targetLaps||0}`,sub:'КРУГОВ'};
  return{main:String(ll?.laps||0),sub:'КРУГОВ ЛИДЕРА'};
 }
 
-function r425TimerStats(race,ev,pilots,s){const leader=pilots?.[0],l=leader?s?.live?.[leader.id]:null,avg=r425LapAvg(l||blankLive()),rule=ev?eventRule(race,ev):null;return{best:fmtMs(l?.bestLapMs),avg:fmtMs(avg),laps:`${l?.laps||0}${rule?.limitType==='laps'?` / ${rule.targetLaps||0}`:''}`};}
 
-function r425Header(race,ev,s){
- const phase=phaseLabel(s),phaseCls=phaseClass(s)==='live'?'live':phaseClass(s)==='warn'?'warn':'blue';
- const phaseSmall=['warmup','countdown'].includes(s?.phase)?displayTimer(s,ev):phase;
- return `<header class="rally425Header" data-layout-panel="header"><button class="raceBrand" data-action="home"><strong>LEGION <i>RX</i></strong><small>RallyCross · Live Heat</small></button><div class="r425HeaderMeta"><div class="r425MetaCell">${raceSvg('trophy')}<div><b>${esc(race.eventName)}</b><small>${r425Date(race.eventDate)||'СОБЫТИЕ'}</small></div></div><div class="r425MetaCell">${raceSvg('flag')}<div><b>${esc(race.className||'Rally-10')}</b><small>КЛАСС</small></div></div><div class="r425MetaCell">${raceSvg('flag')}<div><b>${esc(eventShortLabel(ev))}</b><small>ЗАЕЗД</small></div></div><div class="r425Clock"><b id="cockpitClock">${new Date().toLocaleTimeString('ru-RU',{hour12:false})}</b><small>ВРЕМЯ</small></div></div><div class="r425TopActions"><button class="r425TopBtn ${lapwiz.connected?'ok':''}" data-quick-panel="lapwiz" title="LapWiz · ${lapwiz.connected?'подключён':'не подключён'}">${raceSvg('bluetooth')}<b>LapWiz</b><small>${lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'}</small></button><button class="r425TopBtn ${state.settings.announcerEnabled?'ok':''}" data-quick-panel="announcer" title="Диктор">${raceSvg('mic')}<b>ДИКТОР</b><small>${state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'}</small></button><button class="r425TopBtn ${phaseCls}" data-quick-panel="status" title="${esc(phase)}">${raceSvg('flag')}<b>${['warmup','countdown'].includes(s?.phase)?'РАЗМИНКА':'СТАТУС'}</b><small>${esc(phaseSmall)}</small></button><button class="r425TopBtn" data-race-skip-current="1" title="Пропустить текущий заезд">${raceSvg('next')}<b>ПРОПУСТИТЬ</b><small>ЗАЕЗД</small></button><button class="r425TopBtn dangerSoft" data-race-manage="open" title="Отмена / завершение">${raceSvg('stop')}<b>ЗАВЕРШИТЬ</b><small>ЗАЕЗДЫ</small></button><button class="r425TopBtn iconOnly" data-action="open-settings" title="Настройки">${raceSvg('settings')}</button><button class="r425TopBtn iconOnly" data-quick-panel="menu" title="Меню">${raceSvg('list')}</button></div></header>`;
-}
 
-function r425ControlButton(id,cls,attrs,icon,title,sub=''){return `<button class="r425Control ${cls||''}" data-layout-panel="${id}" ${attrs||''}>${raceSvg(icon)}<span><b>${title}</b>${sub?`<small>${sub}</small>`:''}</span></button>`;}
 
-function r425ControlGrid(done,s,tie=false){
- if(tie)return `<div class="r425Controls">${r425ControlButton('ctl-primary','blue','data-action="race-results"','chart','ТАБЛИЦА')}${r425ControlButton('ctl-pause','','disabled','pause','ПАУЗА')}${r425ControlButton('ctl-finish','','disabled','flag','ФИНИШ')}${r425ControlButton('ctl-plus','','disabled','plusClock','+1 МИН')}${r425ControlButton('ctl-manual','primary','data-action="tie-draw"','refresh','ЖЕРЕБЬЁВКА')}${r425ControlButton('ctl-stop','danger','data-action="home"','stop','ВЫХОД')}</div>`;
- if(done)return `<div class="r425Controls">${r425ControlButton('ctl-primary','blue','data-action="race-results"','chart','РЕЗУЛЬТАТЫ')}${r425ControlButton('ctl-pause','','data-action="home"','home','ГЛАВНАЯ')}${r425ControlButton('ctl-finish','','data-action="open-rx"','settings','НАСТРОЙКА')}${r425ControlButton('ctl-plus','','disabled','plusClock','+1 МИН')}${r425ControlButton('ctl-manual','','disabled','refresh','РУЧНОЙ КРУГ')}${r425ControlButton('ctl-stop','danger','data-action="complete-competition"','stop','ЗАВЕРШИТЬ')}</div>`;
- const p=s?.phase||'ready',timeRule=eventRule(state.race,currentEvent(state.race))?.limitType==='time';
- let primary;if(p==='ready')primary=r425ControlButton('ctl-primary','primary','data-action="start-session"','play','СТАРТ','ПРОГРЕВ');else if(p==='paused')primary=r425ControlButton('ctl-primary','primary','data-action="pause-session"','play','ПРОДОЛЖИТЬ');else if(p==='finished')primary=r425ControlButton('ctl-primary','blue','data-action="next-event"','next','СЛЕДУЮЩИЙ');else primary=r425ControlButton('ctl-primary','primary','disabled','play','ЗАЕЗД ИДЁТ');
- return `<div class="r425Controls">${primary}${r425ControlButton('ctl-pause','','data-action="pause-session" '+(!['running','finishing'].includes(p)?'disabled':''),'pause','ПАУЗА')}${r425ControlButton('ctl-finish','','data-action="finish-session" '+(!['running','finishing','paused'].includes(p)?'disabled':''),'flag','ФИНИШ')}${r425ControlButton('ctl-plus','blue','data-action="add-minute" '+(!timeRule||!['running','paused','finishing'].includes(p)?'disabled':''),'plusClock','+1 МИН','ДОБАВИТЬ ВРЕМЯ')}${r425ControlButton('ctl-manual','blue','data-action="manual-lap-modal" '+(!['running','finishing'].includes(p)?'disabled':''),'refresh','РУЧНОЙ КРУГ')}${r425ControlButton('ctl-stop','danger','data-action="stop-session" '+(!['warmup','countdown','running','finishing','paused'].includes(p)?'disabled':''),'stop','СТОП')}</div>`;
-}
 
-function r425QuickRows(race,ev,s){const n=nextRaceEvent(race,ev);return `<div class="r425QuickStack"><button class="r425QuickRow" data-quick-panel="next" title="Следующий заезд">${raceSvg('flag')}<b>СЛЕДУЮЩИЙ ЗАЕЗД</b><em>${n?esc(eventShortLabel(n)):'ФИНИШ'}</em>${raceSvg('chevron','widgetChevron')}</button></div>`;}
 
-function r428CompactHeatLabel(ev){if(!ev)return'—';return String(eventShortLabel(ev)).replace(/Квалификация\s*(\d+)/ig,'Q$1').replace(/Заезд\s*(\d+)/ig,'З$1').replace(/\s*[·•]\s*/g,' · ');}
 
-function r428RaceStrip(race,ev,s){const n=nextRaceEvent(race,ev),cur=r428CompactHeatLabel(ev),next=n?r428CompactHeatLabel(n):'ФИНИШ',phase=phaseLabel(s);return `<footer class="r428RaceStrip" data-layout-panel="race-strip"><button class="r428StripCell r428Flow" data-quick-panel="events" title="Ход соревнования">${raceSvg('list')}<span><small>ХОД ГОНКИ</small><b id="r428FlowPhase">${esc(phase)}</b></span></button><div class="r428StripCell r428Current">${raceSvg('flag')}<span><small>СЕЙЧАС</small><b>${esc(cur)}</b></span></div><button class="r428StripCell r428Next" data-quick-panel="next" title="Следующий заезд">${raceSvg('next')}<span><small>ДАЛЕЕ</small><b>${esc(next)}</b></span></button><button class="r428StripCell r428Results" data-action="race-results" title="Результаты">${raceSvg('chart')}<span><small>ТАБЛИЦЫ</small><b>РЕЗУЛЬТАТЫ</b></span></button></footer>`;}
 
 function quickPanelDrawer(race,ev,pilots,session,done){
  const kind=state.quickPanel;if(!kind)return'';let title='ПАНЕЛЬ',body='';
@@ -271,48 +220,11 @@ function quickPanelDrawer(race,ev,pilots,session,done){
  else if(kind==='results'){title='РЕЗУЛЬТАТЫ';body=done?widgetShell('resultsQuick','ИТОГ СОРЕВНОВАНИЯ','trophy',compactFinalProtocol(race),{badge:'ГОТОВО'}):resultsWidget(race,ev,pilots,session);}
  else if(kind==='next'){title='СЛЕДУЮЩИЙ ЗАЕЗД';body=`${nextWidget(race,ev)}`;}
  else if(kind==='events'){title='ХОД СОРЕВНОВАНИЯ';body=`${eventFlowStrip(race,eventList(race),ev)}`;}
- else if(kind==='menu'){title='МЕНЮ ПУЛЬТА';body=`<div class="r425MenuGrid"><button data-quick-panel="events">${raceSvg('list')}<span>Ход соревнования</span></button><button data-action="race-results">${raceSvg('chart')}<span>Все таблицы</span></button><button data-nav="pilots">${raceSvg('trophy')}<span>Пилоты</span></button><button data-track-action="open">${raceSvg('timer')}<span>Track Day</span></button><button data-action="open-settings">${raceSvg('settings')}<span>Настройки</span></button><button data-action="home">${raceSvg('home')}<span>Главная</span></button></div>`;}
+ else if(kind==='menu'){title='МЕНЮ ПУЛЬТА';body=`<div class="quickPanelMenuGrid"><button data-quick-panel="events">${raceSvg('list')}<span>Ход соревнования</span></button><button data-action="race-results">${raceSvg('chart')}<span>Все таблицы</span></button><button data-nav="pilots">${raceSvg('trophy')}<span>Пилоты</span></button><button data-track-action="open">${raceSvg('timer')}<span>Track Day</span></button><button data-action="open-settings">${raceSvg('settings')}<span>Настройки</span></button><button data-action="home">${raceSvg('home')}<span>Главная</span></button></div>`;}
  else return'';
  return `<div class="quickPanelOverlay"><button class="quickPanelBackdrop" data-quick-panel-close="1" aria-label="Закрыть"></button><aside class="quickPanelDrawer"><div class="quickPanelHead"><div><small>БЫСТРАЯ ПАНЕЛЬ</small><b>${title}</b></div><button class="squareConsoleBtn" data-quick-panel-close="1">×</button></div><div class="quickPanelBody">${body}</div></aside></div>`;
 }
 
-function cockpitHeader(race,ev,s){return r425Header(race,ev,s);}
 
-function controlButtons(done,s,tie=false){
- const slot=(id,cls,attrs,icon,label)=>`<button class="consoleControl ${cls||''}" data-layout-panel="${id}" ${attrs||''}>${raceSvg(icon)}<span>${label}</span></button>`;
- if(tie)return [
-  slot('ctl-pause','',`data-action="race-results"`,'chart','ТАБЛИЦА'),
-  slot('ctl-finish','',`disabled`,'pause','ПАУЗА'),
-  slot('ctl-plus','',`disabled`,'plusClock','+1 МИН'),
-  slot('ctl-primary','primary',`data-action="tie-draw"`,'refresh','ЖЕРЕБЬЁВКА'),
-  slot('ctl-manual','',`disabled`,'refresh','РУЧНОЙ КРУГ'),
-  slot('ctl-stop','danger',`data-action="home"`,'stop','ВЫХОД'),
-  slot('ctl-skip','',`disabled`,'next','ПРОПУСТИТЬ ЗАЕЗД')
- ].join('');
- if(done)return [
-  slot('ctl-pause','',`data-action="home"`,'home','ГЛАВНАЯ'),
-  slot('ctl-finish','',`data-action="open-rx"`,'settings','НАСТРОЙКА'),
-  slot('ctl-plus','primary',`data-action="race-results"`,'chart','РЕЗУЛЬТАТЫ'),
-  slot('ctl-primary','',`disabled`,'mic','ДИКТОР'),
-  slot('ctl-manual','',`disabled`,'radio','BROADCAST'),
-  slot('ctl-stop','danger',`data-action="complete-competition"`,'stop','ЗАВЕРШИТЬ'),
-  slot('ctl-skip','',`disabled`,'next','ПРОПУСТИТЬ ЗАЕЗД')
- ].join('');
- const p=s?.phase||'ready',timeRule=eventRule(state.race,currentEvent(state.race))?.limitType==='time';
- const primary=p==='ready'
-   ?slot('ctl-primary','primary',`data-action="start-session"`,'play','СТАРТ / ПРОГРЕВ')
-   :p==='finished'
-     ?slot('ctl-primary','primary',`data-action="next-event"`,'next','СЛЕДУЮЩИЙ')
-     :slot('ctl-primary','primary',`disabled`,'next','СЛЕДУЮЩИЙ');
- return [
-  slot('ctl-pause','',`data-action="pause-session" ${!['running','finishing','paused'].includes(p)?'disabled':''}`,p==='paused'?'play':'pause',p==='paused'?'ПРОДОЛЖИТЬ':'ПАУЗА'),
-  slot('ctl-finish','',`data-action="finish-session" ${!['running','finishing','paused'].includes(p)?'disabled':''}`,'flag','ФИНИШ'),
-  slot('ctl-plus','',`data-action="add-minute" ${!timeRule||!['running','paused','finishing'].includes(p)?'disabled':''}`,'plusClock','+1 МИН'),
-  primary,
-  slot('ctl-manual','primarySoft',`data-action="manual-lap-modal" ${!['running','finishing'].includes(p)?'disabled':''}`,'refresh','РУЧНОЙ КРУГ'),
-  slot('ctl-stop','danger',`data-action="stop-session" ${!['warmup','countdown','running','finishing','paused'].includes(p)?'disabled':''}`,'stop','СТОП'),
-  slot('ctl-skip','',`data-race-skip-current="1"`,'next','ПРОПУСТИТЬ ЗАЕЗД')
- ].join('');
-}
 
 function eventFlowStrip(race,events,ev){const ci=Math.max(0,events.findIndex(e=>e.key===ev?.key));const start=Math.max(0,Math.min(ci-1,Math.max(0,events.length-5)));const visible=events.slice(start,start+5);return `<div class="eventFlow"><button class="flowMenu" data-action="toggle-events">${raceSvg('list')}<span>События</span></button><div class="flowItems">${visible.map(e=>{const st=eventStatus(race,e);return `<button class="flowItem ${st}" ${(st==='completed'||st==='cancelled')?`data-show-event="${e.key}"`:''} ${st==='locked'?'disabled':''}><span class="flowDot"></span><b>${esc(e.label)}</b><small>${st==='cancelled'?'отменён':st==='completed'?'готово':st==='current'?'сейчас':st==='ready'?'далее':'закрыт'}</small></button>`;}).join('')}</div><button class="flowResults" data-action="race-results">${raceSvg('chart')}<span>Все результаты</span></button></div>`;}

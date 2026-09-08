@@ -44,6 +44,7 @@ function rxnFlagMarkup(p){
   if(!pos)return '<span class="rxnFlag rxnFlagEmpty" aria-hidden="true"></span>';
   return `<span class="rxnFlag" style="--country-flag-position:${pos}" title="${esc(countryName(code))}" aria-label="${esc(countryName(code))}"></span>`;
 }
+function rxnPilotDisplayName(p){return String(p?.name||'—').toUpperCase();}
 function rxnSplitMillisText(value,digits=rxnLoadPrecision()){
   const s=String(value??'—');
   if(!s.includes('.')||digits!==3)return esc(s);
@@ -94,12 +95,12 @@ function rxnPilotHeader(){
 function rxnPilotTable(pilots,s){
   const ev=currentEvent(state.race),rule=ev?eventRule(state.race,ev):null,target=rule?.limitType==='laps'?rule.targetLaps:null;
   const rows=pilots.map((p,i)=>{
-    const l=s?.live?.[p.id]||blankLive(),st=rxnRowState(s,l,p.id,i),avg=r425LapAvg(l),progress=rxnProgress(l,s),hot=Number.isFinite(l.lastPassPerf)&&performance.now()-l.lastPassPerf<800;
+    const l=s?.live?.[p.id]||blankLive(),st=rxnRowState(s,l,p.id,i),avg=rxnLapAvg(l),progress=rxnProgress(l,s),hot=Number.isFinite(l.lastPassPerf)&&performance.now()-l.lastPassPerf<800;
     const laps=target?`${l.laps||0}/${target}`:`${l.laps||0}`;
     return `<div class="rxnPilotRow rxnPilotData ${i===0&&l.laps>0?'leader':''} ${l.finished?'finished':''} ${hot?'hot':''}" data-pilot-id="${esc(p.id)}" data-pilot-stats="${esc(p.id)}" data-stats-context="race">
       <div class="rxnPos">${i+1}</div>
       <div class="rxnId" style="--pilot-color:${rxnPilotColor(p)}">${esc(p.transponder||i+1)}</div>
-      <div class="rxnNameCell"><div class="rxnName">${esc(p.name||'—')}</div><div class="rxnLapTrack"><i style="width:${progress.pct.toFixed(1)}%;background:${progress.color}"></i></div></div>
+      <div class="rxnNameCell"><div class="rxnName">${esc(rxnPilotDisplayName(p))}</div><div class="rxnLapTrack"><i style="width:${progress.pct.toFixed(1)}%;background:${progress.color}"></i></div></div>
       <div class="rxnFlagCell">${rxnFlagMarkup(p)}</div>
       <div class="rxnGap">${rxnGapHtml(pilots,s,p,i)}</div>
       <div class="rxnCheck ${st.cls}">${st.text}</div>
@@ -111,40 +112,77 @@ function rxnPilotTable(pilots,s){
     </div>`;
   }).join('');
   const leader=pilots[0],profile=leader?profileForPilot(leader):null,photo=profile?.photo||leader?.photo||'';
-  const hero=leader&&photo&&((s?.live?.[leader.id]?.laps||0)>0)?`<div class="rxnLeaderHero"><img src="${photo}" alt="${esc(leader.name)}"><span><small>ЛИДЕР</small><b>${esc(leader.name)}</b></span></div>`:'';
+  const hero=leader&&photo&&((s?.live?.[leader.id]?.laps||0)>0)?`<div class="rxnLeaderHero"><img src="${photo}" alt="${esc(rxnPilotDisplayName(leader))}"><span><small>ЛИДЕР</small><b>${esc(rxnPilotDisplayName(leader))}</b></span></div>`:'';
   return rxnPilotHeader()+rows+hero;
 }
 function rxnFinalProtocolTable(race){
   if(!race.finalProtocol?.length)return'<div class="rxnEmpty">Финальный протокол ещё не сформирован.</div>';
   return `<div class="rxnFinalHead"><span>POS</span><span>ПИЛОТ</span><span>ОЧКИ</span><span>ИСТОЧНИК</span></div>`+race.finalProtocol.map(r=>{
-    const p=getPilot(race,r.pilotId);return `<div class="rxnFinalRow"><b>${r.place}</b><span>${esc(p?.name||'—')}</span><strong>${r.eventPoints}</strong><small>${esc(r.source||r.status||'FIN')}</small></div>`;
+    const p=getPilot(race,r.pilotId);return `<div class="rxnFinalRow"><b>${r.place}</b><span>${esc(rxnPilotDisplayName(p))}</span><strong>${r.eventPoints}</strong><small>${esc(r.source||r.status||'FIN')}</small></div>`;
   }).join('');
 }
 function rxnTopButton({cls='',attrs='',icon='flag',title='',sub=''}){
   return `<button class="rxnTopButton ${cls}" ${attrs}>${raceSvg(icon)}${title?`<span><b>${title}</b>${sub?`<small>${sub}</small>`:''}</span>`:''}</button>`;
 }
+
 function rxnHeader(race,ev,s){
-  const phase=phaseLabel(s),phaseSmall=['warmup','countdown'].includes(s?.phase)?displayTimer(s,ev):phase;
   return `<header class="rxnTop">
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="lapwiz" title="Bluetooth / LapWiz"',icon:'bluetooth'})}
-    ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:'data-quick-panel="lapwiz"',icon:'wave',title:'LAPWIZ',sub:lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'})}
-    ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer"',icon:'mic',title:'ДИКТОР',sub:state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'})}
-    ${rxnTopButton({cls:'blue',attrs:'data-quick-panel="status"',icon:'flag',title:'СТАТУС',sub:phaseSmall})}
-    ${rxnTopButton({attrs:'data-race-skip-current="1"',icon:'next',title:'ПРОПУСТИТЬ',sub:'ЗАЕЗД'})}
-    ${rxnTopButton({cls:'danger',attrs:'data-race-manage="open"',icon:'stop',title:'ЗАВЕРШИТЬ',sub:'СОБЫТИЕ'})}
-    ${rxnTopButton({cls:'blue',attrs:'data-action="race-results"',icon:'chart',title:'РЕЗУЛЬТАТЫ'})}
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="menu" title="Меню"',icon:'list'})}
+    <div class="rxnHeaderLeft">
+      <button class="rxnHomeBrand" type="button" data-action="home" title="Главная"><span>LEGION <i>RX</i></span></button>
+      <nav class="rxnPrimaryNav" aria-label="Основная навигация">
+        <button type="button" data-action="home" title="Главная">${raceSvg('home')}<b>ГЛАВНАЯ</b></button>
+        <button type="button" data-nav="championships" title="Чемпионаты">${raceSvg('trophy')}<b>ЧЕМПИОНАТЫ</b></button>
+        <button type="button" data-nav="pilots" title="Пилоты">${uiIcon('users','raceSvg')}<b>ПИЛОТЫ</b></button>
+      </nav>
+    </div>
+    <nav class="rxnTopActions" aria-label="Пульт RallyCross">
+      ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:'data-quick-panel="lapwiz" title="LapWiz"',icon:'wave'})}
+      ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer" title="Диктор"',icon:'mic'})}
+      ${rxnTopButton({cls:'blue',attrs:'data-quick-panel="status" title="Статус"',icon:'flag'})}
+      ${rxnTopButton({attrs:'data-race-skip-current="1" title="Пропустить заезд"',icon:'next'})}
+      ${rxnTopButton({cls:'danger',attrs:'data-race-manage="open" title="Завершить событие"',icon:'stop'})}
+      ${rxnTopButton({cls:'blue',attrs:'data-action="race-results" title="Результаты"',icon:'chart'})}
+      ${rxnTopButton({attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
+      ${rxnTopButton({attrs:'data-quick-panel="menu" title="Меню"',icon:'list'})}
+    </nav>
   </header>`;
 }
-function rxnRaceTitle(race,ev,s){
-  const label=eventShortLabel(ev)||'ЗАЕЗД';
-  const grid=ev?.phase==='finals'?`<button class="rxnGridButton" type="button" data-rxn-grid-open="${esc(ev.key)}">СТАРТОВАЯ РЕШЁТКА</button>`:'';
-  return `<section class="rxnRaceTitle"><div><small>LEGION RX · RALLYCROSS</small><h1>${esc(label)}</h1></div><div class="rxnRaceMeta">${grid}<span>${esc(race.className||'Rally-10')}</span><b id="rxnPhaseTitle">${esc(phaseLabel(s))}</b></div></section>`;
+function rxnBestLapLeader(pilots,s){
+  let pilot=null,bestLapMs=Infinity;
+  for(const p of pilots||[]){
+    const value=Number(s?.live?.[p.id]?.bestLapMs);
+    if(Number.isFinite(value)&&value>0&&value<bestLapMs){pilot=p;bestLapMs=value;}
+  }
+  return{pilot,bestLapMs:Number.isFinite(bestLapMs)?bestLapMs:null};
+}
+function rxnLeaderStrip(pilots,s){
+  const best=rxnBestLapLeader(pilots,s),name=best.pilot?rxnPilotDisplayName(best.pilot):'—',time=Number.isFinite(best.bestLapMs)?fmtMs(best.bestLapMs):'—';
+  return `<div class="rxnLeaderStrip">${raceSvg('trophy')}<small>ЛИДЕР · ЛУЧШИЙ КРУГ</small><b id="rxnLeaderName">${esc(name)}</b><strong id="rxnLeaderBest">${time}</strong></div>`;
+}
+function rxnRaceBannerData(race,ev,pilots=[]){
+  const count=Math.max(0,pilots?.length||0),capacity=Math.max(0,ev?.pilots?.length||count);
+  if(!ev)return{stage:'RALLYCROSS',heat:'HEAT —/—',discipline:'RALLYCROSS',pilots:`PILOTS ${count}/${count}`};
+  if(ev.type==='qualifying'){
+    const siblings=(race?.heats||[]).slice().sort((a,b)=>(a.order||0)-(b.order||0));
+    const index=Math.max(0,siblings.findIndex(h=>String(h.key)===String(ev.key)));
+    return{stage:`Q${ev.round||1}`,heat:`HEAT ${index+1}/${Math.max(1,siblings.length)}`,discipline:'RALLYCROSS',pilots:`PILOTS ${count}/${Math.max(count,capacity)}`};
+  }
+  if(ev.type==='main'){
+    const siblings=(race?.finals||[]).filter(f=>f.type==='main').sort((a,b)=>(a.order||0)-(b.order||0));
+    const index=Math.max(0,siblings.findIndex(f=>String(f.key)===String(ev.key)));
+    return{stage:'FINAL A',heat:`HEAT ${index+1}/${Math.max(1,siblings.length)}`,discipline:'RALLYCROSS',pilots:`PILOTS ${count}/${Math.max(count,capacity)}`};
+  }
+  const stage=String(ev.label||ev.name||'FINAL').toUpperCase().replace('ЗАЕЗД ПОСЛЕДНЕГО ШАНСА','LCQ').replace('ПРЕДВАРИТЕЛЬНЫЙ ','').replace('ЗАКЛЮЧИТЕЛЬНЫЙ ','FINAL ');
+  return{stage,heat:'HEAT 1/1',discipline:'RALLYCROSS',pilots:`PILOTS ${count}/${Math.max(count,capacity)}`};
+}
+function rxnRaceTitle(race,ev,s,pilots=[]){
+  const info=rxnRaceBannerData(race,ev,pilots);
+  const grid=ev?.phase==='finals'?`<button class="rxnGridButton" type="button" data-rxn-grid-open="${esc(ev.key)}">СЕТКА</button>`:'';
+  return `<section class="rxnRaceTitle"><div class="rxnRaceTitleLeft rxnRaceBanner"><div class="rxnRaceBannerLine"><strong>${esc(info.stage)}</strong><i>·</i><span class="rxnBannerHeat">${esc(info.heat)}</span><i class="rxnBannerDisciplineSep">·</i><span class="rxnBannerDiscipline">${esc(info.discipline)}</span><i>·</i><span class="rxnBannerPilots">${esc(info.pilots)}</span></div>${grid}</div>${rxnLeaderStrip(pilots,s)}</section>`;
 }
 function rxnTimerPanel(race,ev,pilots,s,done){
-  const ring=r425RingData(race,ev,pilots,s),progress=timerProgress(s,ev);
-  return `<section class="rxnTimerPanel"><div class="rxnTimerCopy"><span>${esc(timerCaption(s,ev))}</span><strong id="mainTimer">${done?'00:00':displayTimer(s,ev)}</strong><small id="timerSubline">${ev?timerSubline(s,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="rxnRing" style="--ring-progress:${progress*3.6}deg"><div><b id="r425RingMain">${ring.main}</b><small id="r425RingSub">${ring.sub}</small></div></div></section>`;
+  const ring=rxnRingData(race,ev,pilots,s),progress=timerProgress(s,ev),classLabel=String(race?.className||'Rally-10').toUpperCase();
+  return `<section class="rxnTimerPanel"><div class="rxnTimerCopy"><span class="rxnTimerClass">${esc(classLabel)}</span><strong id="mainTimer">${done?'00:00':displayTimer(s,ev)}</strong><small id="timerSubline">${ev?timerSubline(s,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="rxnRing" style="--ring-progress:${progress*3.6}deg"><div><b id="rxnRingMain">${ring.main}</b><small id="rxnRingSub">${ring.sub}</small></div></div></section>`;
 }
 function rxnControlButton(cls,attrs,icon,title,sub=''){
   return `<button class="rxnControl ${cls}" ${attrs}>${raceSvg(icon)}<span><b>${title}</b>${sub?`<small>${sub}</small>`:''}</span></button>`;
@@ -170,8 +208,8 @@ function cockpitView(){
   if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
   const race=state.race,ev=currentEvent(race),events=eventList(race),s=ensureSession(ev),pilots=ev?liveRanking(getEventPilots(race,ev),s):[],done=race.stage==='finished',tie=race.stage==='tie';
   const cls=rxnColumnClass(),count=rxnMetricCount();
-  if(tie)return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s)}<main class="rxnTieMain"><div class="rxnTieBox">${tieWidget(race)}</div>${rxnControlPanel(false,s,true)}</main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
-  return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s)}<main class="rxnMain"><section class="rxnRoster"><div class="rxnTable">${done?rxnFinalProtocolTable(race):rxnPilotTable(pilots,s)}</div></section><aside class="rxnSide">${rxnTimerPanel(race,ev,pilots,s,done)}${rxnControlPanel(done,s,false)}</aside></main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
+  if(tie)return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s,pilots)}<main class="rxnTieMain"><div class="rxnTieBox">${tieWidget(race)}</div>${rxnControlPanel(false,s,true)}</main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
+  return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s,pilots)}<main class="rxnMain"><section class="rxnRoster"><div class="rxnTable">${done?rxnFinalProtocolTable(race):rxnPilotTable(pilots,s)}</div></section><aside class="rxnSide">${rxnTimerPanel(race,ev,pilots,s,done)}${rxnControlPanel(done,s,false)}</aside></main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
 }
 
 function rxnAnimateBoard(board,html){
@@ -194,12 +232,13 @@ function updateDynamicCockpitUI(){
   const timer=document.querySelector('#mainTimer');if(timer)timer.textContent=displayTimer(s,ev);
   if(s.phase==='countdown'&&s.warmupEndsAtPerf)s.countdownLeft=Math.max(0,Math.ceil(warmupRemainingMs(s)/1000));
   const ranked=liveRanking(getEventPilots(race,ev),s),ring=document.querySelector('#timerRing');
+  const bestLap=rxnBestLapLeader(ranked,s);
   if(ring)ring.style.setProperty('--ring-progress',`${timerProgress(s,ev)*3.6}deg`);
-  const rd=r425RingData(race,ev,ranked,s),set=(q,v)=>{const e=document.querySelector(q);if(e)e.textContent=v;};
-  set('#r425RingMain',rd.main);set('#r425RingSub',rd.sub);set('#timerSubline',timerSubline(s,ev));set('#rxnPhaseTitle',phaseLabel(s));
+  const rd=rxnRingData(race,ev,ranked,s),set=(q,v)=>{const e=document.querySelector(q);if(e)e.textContent=v;};
+  set('#rxnRingMain',rd.main);set('#rxnRingSub',rd.sub);set('#timerSubline',timerSubline(s,ev));set('#rxnLeaderName',bestLap.pilot?rxnPilotDisplayName(bestLap.pilot):'—');set('#rxnLeaderBest',Number.isFinite(bestLap.bestLapMs)?fmtMs(bestLap.bestLapMs):'—');
   const board=document.querySelector('.rxnTable');
   if(board&&s.phase!=='finished'){
-    const warmSig=Object.keys(s.warmupDetected||{}).sort().join(','),sig=ranked.map(p=>{const l=s.live[p.id]||blankLive();return`${p.id}:${l.laps}:${l.startSeen}:${Math.round(l.lastLapMs||0)}:${Math.round(r425LapAvg(l)||0)}:${l.finished}`;}).join('|')+`|W:${warmSig}`;
+    const warmSig=Object.keys(s.warmupDetected||{}).sort().join(','),sig=ranked.map(p=>{const l=s.live[p.id]||blankLive();return`${p.id}:${l.laps}:${l.startSeen}:${Math.round(l.lastLapMs||0)}:${Math.round(rxnLapAvg(l)||0)}:${l.finished}`;}).join('|')+`|W:${warmSig}`;
     if(sig!==state.rxnBoardSignature){state.rxnBoardSignature=sig;rxnAnimateBoard(board,rxnPilotTable(ranked,s));}
     rxnUpdateProgress(ranked,s);
   }
@@ -219,7 +258,7 @@ function rxnResultConfirmModal(){
   const ranked=liveRanking(getEventPilots(race,ev),s),raw=findRawEvent(ev.key),isQ=ev.type==='qualifying';
   const rows=ranked.map((p,i)=>{const l=s.live?.[p.id]||blankLive(),status=rxnSuggestedStatus(p,s);return `<div class="rxnResultEditRow" data-rxn-result-row="${esc(p.id)}">
     <div class="rxnResultPos">${i+1}</div><div class="rxnResultId" style="--pilot-color:${rxnPilotColor(p)}">${esc(p.transponder||i+1)}</div>
-    <div class="rxnResultPilot"><b>${esc(p.name||'—')}</b><small>${l.laps||0} кр. · ${rxnFormatDuration(Number(l.elapsedMs||0))}</small></div>
+    <div class="rxnResultPilot"><b>${esc(rxnPilotDisplayName(p))}</b><small>${l.laps||0} кр. · ${rxnFormatDuration(Number(l.elapsedMs||0))}</small></div>
     <select data-result-status="${esc(p.id)}" data-rxn-status="${esc(p.id)}">
       ${rxnRuleView().statuses.map(st=>`<option value="${st}" ${st===status?'selected':''}>${rxnStatusLabel(st)}</option>`).join('')}
     </select>
@@ -241,21 +280,21 @@ function rxnStartGridOrder(race,raw){return RallyCrossModeAPI.startGrid(race,raw
 function rxnStartGridModal(eventKey=''){
   const race=state.race,raw=findRawEvent(eventKey||currentEvent(race)?.key);if(!race||!raw)return;
   const order=rxnStartGridOrder(race,raw);
-  $('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal rxnGridModal"><div class="modalHead"><div><div class="sectionLabel">ПОРЯДОК ВЫЗОВА НА СТАРТ</div><h2>${esc(raw.label||raw.name||'Финал')}</h2><p>Вызов идёт по рейтингу квалификации: от лучшего результата к следующему.</p></div><button class="iconBtn" data-rxn-grid-close="1">×</button></div><div class="rxnGridList">${order.map(({pilot:p,qualificationRank,startPosition})=>`<div class="rxnGridRow"><strong>${startPosition}</strong><span class="rxnResultId" style="--pilot-color:${rxnPilotColor(p)}">${esc(p.transponder||startPosition)}</span><div><b>${esc(p.name)}</b><small>Q-рейтинг: ${qualificationRank||'—'} · стартовая позиция ${startPosition}</small></div></div>`).join('')||'<div class="rxnEmpty">Состав финала ещё не сформирован.</div>'}</div><div class="rxnResultActions"><button class="btn secondary" data-rxn-grid-close="1">ЗАКРЫТЬ</button><button class="btn primary" data-rxn-grid-confirm="${esc(raw.key)}">ПОРЯДОК ПОДТВЕРЖДЁН</button></div></div></div>`;
+  $('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal rxnGridModal"><div class="modalHead"><div><div class="sectionLabel">ПОРЯДОК ВЫЗОВА НА СТАРТ</div><h2>${esc(raw.label||raw.name||'Финал')}</h2><p>Вызов идёт по рейтингу квалификации: от лучшего результата к следующему.</p></div><button class="iconBtn" data-rxn-grid-close="1">×</button></div><div class="rxnGridList">${order.map(({pilot:p,qualificationRank,startPosition})=>`<div class="rxnGridRow"><strong>${startPosition}</strong><span class="rxnResultId" style="--pilot-color:${rxnPilotColor(p)}">${esc(p.transponder||startPosition)}</span><div><b>${esc(rxnPilotDisplayName(p))}</b><small>Q-рейтинг: ${qualificationRank||'—'} · стартовая позиция ${startPosition}</small></div></div>`).join('')||'<div class="rxnEmpty">Состав финала ещё не сформирован.</div>'}</div><div class="rxnResultActions"><button class="btn secondary" data-rxn-grid-close="1">ЗАКРЫТЬ</button><button class="btn primary" data-rxn-grid-confirm="${esc(raw.key)}">ПОРЯДОК ПОДТВЕРЖДЁН</button></div></div></div>`;
 }
 function rxnFormatMainRun(item,score){if(!item)return'—';return item.status==='FIN'?String(item.place||score||'—'):`${item.status} (${score??rxnRuleView().finalNonFinishScore})`;}
 function raceResultsModal(focusKey=''){
   const race=state.race;if(!race)return;RallyCrossModeAPI.updateStandings(race);
   const completed=eventList(race).filter(e=>e.saved),main=race.finals?.length?RallyCrossModeAPI.mainStandings(race):[],ruleView=rxnRuleView();
-  const qrows=race.pilots.map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.name)}</td>${Array.from({length:race.qualifyingCount},(_,k)=>{const q=p.qualifying.find(x=>x.round===k+1);return `<td>${q?q.status==='FIN'?`${q.place} (${q.points})`:esc(q.status):'—'}</td>`}).join('')}<td><b>${p.best3}</b></td></tr>`).join('');
-  const mainRows=main.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(getPilot(race,r.pilotId)?.name||'—')}</td>${r.results.map((x,j)=>`<td>${esc(rxnFormatMainRun(x,r.scores[j]))}</td>`).join('')}<td><b>${r.total??'—'}</b></td></tr>`).join('');
-  const eventTables=completed.map(e=>{const rows=(e.result||[]).map((r,i)=>{const p=getPilot(race,r.pilotId);return `<tr><td>${r.status==='FIN'?(r.place||i+1):esc(r.status)}</td><td>${esc(p?.name||'—')}</td><td><b class="rxnStatusText ${String(r.status||'FIN').toLowerCase()}">${esc(r.status||'FIN')}</b>${r.status==='DNF'&&r.dnfOrder?` · порядок ${r.dnfOrder}`:''}</td></tr>`;}).join('');return `<details ${focusKey===e.key?'open':''} class="card rxnResultDetails"><summary>${esc(e.label)}</summary><div class="tableWrap"><table class="table"><thead><tr><th>Место</th><th>Пилот</th><th>Статус</th></tr></thead><tbody>${rows||'<tr><td colspan="3">Заезд отменён / нет результата</td></tr>'}</tbody></table></div></details>`;}).join('');
+  const qrows=race.pilots.map((p,i)=>`<tr><td>${i+1}</td><td>${esc(rxnPilotDisplayName(p))}</td>${Array.from({length:race.qualifyingCount},(_,k)=>{const q=p.qualifying.find(x=>x.round===k+1);return `<td>${q?q.status==='FIN'?`${q.place} (${q.points})`:esc(q.status):'—'}</td>`}).join('')}<td><b>${p.best3}</b></td></tr>`).join('');
+  const mainRows=main.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(rxnPilotDisplayName(getPilot(race,r.pilotId)))}</td>${r.results.map((x,j)=>`<td>${esc(rxnFormatMainRun(x,r.scores[j]))}</td>`).join('')}<td><b>${r.total??'—'}</b></td></tr>`).join('');
+  const eventTables=completed.map(e=>{const rows=(e.result||[]).map((r,i)=>{const p=getPilot(race,r.pilotId);return `<tr><td>${r.status==='FIN'?(r.place||i+1):esc(r.status)}</td><td>${esc(rxnPilotDisplayName(p))}</td><td><b class="rxnStatusText ${String(r.status||'FIN').toLowerCase()}">${esc(r.status||'FIN')}</b>${r.status==='DNF'&&r.dnfOrder?` · порядок ${r.dnfOrder}`:''}</td></tr>`;}).join('');return `<details ${focusKey===e.key?'open':''} class="card rxnResultDetails"><summary>${esc(e.label)}</summary><div class="tableWrap"><table class="table"><thead><tr><th>Место</th><th>Пилот</th><th>Статус</th></tr></thead><tbody>${rows||'<tr><td colspan="3">Заезд отменён / нет результата</td></tr>'}</tbody></table></div></details>`;}).join('');
   $('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal rxnTablesModal"><div class="modalHead"><div><div class="sectionLabel">СПОРТИВНЫЕ РЕЗУЛЬТАТЫ · ${esc(ruleView.version)}</div><h2>${esc(race.eventName)}</h2></div><button class="iconBtn" id="closeModal">×</button></div>
     <div class="rxnRulesBar"><span>Q: ${ruleView.qualifyingPointsPreview.join(' / ')}…</span><span>BEST ${ruleView.qualifyingBestCount}</span><span>A1+A2+A3 · лучшие ${ruleView.finalBestCount}</span><span>не-FIN = ${ruleView.finalNonFinishScore}</span><span>Этап: ${ruleView.championshipEventPoints.join(' / ')}</span></div>
     <h3>Квалификационный рейтинг</h3><div class="tableWrap"><table class="table"><thead><tr><th>POS</th><th>Пилот</th>${Array.from({length:race.qualifyingCount},(_,i)=>`<th>Q${i+1}</th>`).join('')}<th>Best 3</th></tr></thead><tbody>${qrows}</tbody></table></div>
     ${main.length?`<h3>Финал A</h3><div class="tableWrap"><table class="table"><thead><tr><th>POS</th><th>Пилот</th><th>A1</th><th>A2</th><th>A3</th><th>Лучшие ${ruleView.finalBestCount}</th></tr></thead><tbody>${mainRows}</tbody></table></div>`:''}
     <h3>Завершённые заезды</h3>${eventTables||'<div class="empty">Пока нет завершённых заездов.</div>'}
-    ${race.finalProtocol?.length?`<h3>Итоговый протокол</h3><div class="tableWrap"><table class="table"><thead><tr><th>Место</th><th>Пилот</th><th>Очки этапа</th><th>Статус</th><th>Источник</th></tr></thead><tbody>${race.finalProtocol.map(r=>`<tr><td>${r.place}</td><td>${esc(getPilot(race,r.pilotId)?.name||'—')}</td><td>${r.eventPoints}</td><td>${esc(r.status||'FIN')}</td><td>${esc(r.source)}</td></tr>`).join('')}</tbody></table></div>`:''}
+    ${race.finalProtocol?.length?`<h3>Итоговый протокол</h3><div class="tableWrap"><table class="table"><thead><tr><th>Место</th><th>Пилот</th><th>Очки этапа</th><th>Статус</th><th>Источник</th></tr></thead><tbody>${race.finalProtocol.map(r=>`<tr><td>${r.place}</td><td>${esc(rxnPilotDisplayName(getPilot(race,r.pilotId)))}</td><td>${r.eventPoints}</td><td>${esc(r.status||'FIN')}</td><td>${esc(r.source)}</td></tr>`).join('')}</tbody></table></div>`:''}
   </div></div>`;$('#closeModal').onclick=closeModal;
 }
 /* Sport diagnostics live in modes/rallycross/self-test.js, not in UI. */
@@ -305,7 +344,7 @@ function rxnTrackPilotTable(td){
     return `<div class="rxnPilotRow rxnPilotData ${i===0&&l.laps>0?'leader':''}" data-pilot-id="${esc(p.id)}" data-pilot-stats="${esc(p.id)}" data-stats-context="track">
       <div class="rxnPos">${i+1}</div>
       <div class="rxnId" style="--pilot-color:${rxnPilotColor(p)}">${esc(p.transponder||i+1)}</div>
-      <div class="rxnNameCell"><div class="rxnName">${esc(p.name||'—')}</div><div class="rxnLapTrack"><i style="width:${pr.pct.toFixed(1)}%;background:${pr.color}"></i></div></div>
+      <div class="rxnNameCell"><div class="rxnName">${esc(rxnPilotDisplayName(p))}</div><div class="rxnLapTrack"><i style="width:${pr.pct.toFixed(1)}%;background:${pr.color}"></i></div></div>
       <div class="rxnFlagCell">${rxnFlagMarkup(p)}</div>
       <div class="rxnGap">${rxnTrackGapHtml(pilots,td,p,i)}</div>
       <div class="rxnCheck ${l.startSeen?'ok':''}">${st}</div>
@@ -318,18 +357,22 @@ function rxnTrackPilotTable(td){
   }).join('');
   return rxnPilotHeader()+rows;
 }
+
 function rxnTrackHeader(td){
   const active=td?.status==='active';
   return `<header class="rxnTop">
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="lapwiz" title="Bluetooth / LapWiz"',icon:'bluetooth'})}
-    ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:lapwiz.connected?'data-action="lap-disconnect"':'data-track-action="lap-connect"',icon:'wave',title:'LAPWIZ',sub:lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'})}
-    ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer"',icon:'mic',title:'ДИКТОР',sub:state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'})}
-    ${rxnTopButton({cls:active?'ok':'blue',attrs:'',icon:'flag',title:'СТАТУС',sub:active?'ПРАКТИКА':'ЗАВЕРШЕНА'})}
-    ${rxnTopButton({attrs:'data-track-action="report"',icon:'chart',title:'СТАТИСТИКА',sub:'СЕССИЯ'})}
-    ${rxnTopButton({cls:'danger',attrs:'data-track-action="finish"',icon:'stop',title:'ЗАВЕРШИТЬ',sub:'ПРАКТИКУ'})}
-    ${rxnTopButton({cls:'blue',attrs:'data-track-action="report"',icon:'chart',title:'РЕЗУЛЬТАТЫ'})}
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
-    ${rxnTopButton({cls:'iconOnly',attrs:'data-track-action="home" title="Главная"',icon:'list'})}
+    <button class="rxnHomeBrand" type="button" data-track-action="home" title="Главная"><span>LEGION <i>RX</i></span></button>
+    <nav class="rxnTopActions" aria-label="Пульт Free Practice">
+      ${rxnTopButton({cls:'iconOnly',attrs:'data-quick-panel="lapwiz" title="Bluetooth / LapWiz"',icon:'bluetooth'})}
+      ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:(lapwiz.connected?'data-action="lap-disconnect"':'data-track-action="lap-connect"')+' title="LapWiz"',icon:'wave',title:'LAPWIZ',sub:lapwiz.connected?'ПОДКЛЮЧЕН':'OFFLINE'})}
+      ${rxnTopButton({cls:state.settings.announcerEnabled?'ok':'',attrs:'data-quick-panel="announcer" title="Диктор"',icon:'mic',title:'ДИКТОР',sub:state.settings.announcerEnabled?'ВКЛ':'ВЫКЛ'})}
+      ${rxnTopButton({cls:active?'ok':'blue',attrs:'title="Статус"',icon:'flag',title:'СТАТУС',sub:active?'ПРАКТИКА':'ЗАВЕРШЕНА'})}
+      ${rxnTopButton({attrs:'data-track-action="report" title="Статистика"',icon:'chart',title:'СТАТИСТИКА',sub:'СЕССИЯ'})}
+      ${rxnTopButton({cls:'danger',attrs:'data-track-action="finish" title="Завершить практику"',icon:'stop',title:'ЗАВЕРШИТЬ',sub:'ПРАКТИКУ'})}
+      ${rxnTopButton({cls:'blue',attrs:'data-track-action="report" title="Результаты"',icon:'chart',title:'РЕЗУЛЬТАТЫ'})}
+      ${rxnTopButton({cls:'iconOnly',attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
+      ${rxnTopButton({cls:'iconOnly',attrs:'data-track-action="home" title="Главная"',icon:'list'})}
+    </nav>
   </header>`;
 }
 function rxnTrackTitle(td){

@@ -20,7 +20,7 @@ for p in ROOT.rglob('*.js'):
     for m in re.finditer(r'(?m)^\s*(?:async\s+)?function\s+([A-Za-z_$][\w$]*)\s*\(',t): funcs.setdefault(m.group(1),[]).append(str(p.relative_to(ROOT)))
 dups={k:v for k,v in funcs.items() if len(v)>1}
 checks['no_duplicate_global_functions']=not dups
-cfg=(ROOT/'offline-config.js').read_text(encoding='utf-8')
+cfg=(ROOT/'offline-manifest.js').read_text(encoding='utf-8')
 assets=re.findall(r'"(\./[^"]+)"',cfg)
 missing=[a for a in assets if a!='./' and not (ROOT/a[2:]).exists()]
 checks['offline_manifest_complete']=not missing

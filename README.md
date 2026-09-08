@@ -1,18 +1,15 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC19 READABILITY PASS
+# LEGION RX 4.2.0 CLEAN FULL APP RC20 · CLEAN FOUNDATION
 
-Current modular build based on RC18 GLOBAL THEMES.
+This is the clean foundation build for the next visual/product phase of Legion RX.
 
-- `platform/` remains the shared hardware/service layer.
-- RallyCross rules remain isolated in `modes/rallycross/`.
-- Lap-limited RallyCross finish now follows leader-finish / next-valid-pass behavior for remaining active pilots.
-- Qualification scoring, Best3, LCQ and A1/A2/A3 remain separate and unchanged.
-- Free Practice remains a separate mode.
-- Rally Sprint / Classic RC remain independent future modules.
-- `ui/` remains separate from sport rules and BLE.
-- RallyCross cockpit uses a 40 px desktop race banner, event-derived pilot occupancy, a one-line real-BEST leader strip, and uppercase pilot display names; these are UI-only.
-- Global UI now has two real themes: Dark (default, black/graphite surfaces with white icons/text) and Light (white/light surfaces with black icons/text), with the same layout and iconography. Semantic race/accent colors are preserved; lime/green is darkened only in Light theme for contrast.
-- RC19 readability pass removes the obsolete forced-white active-event button text, enlarges the one-line BEST strip, enlarges portrait race-banner typography, and raises timer/ring support labels without changing geometry or sport logic.
-- `reporting/` is a new hidden preparation layer with separate RallyCross / Practice / Rally adapters; it is not connected to UI yet and does not generate PDF.
-- Full local audio package, flags, icons and Oswald UI remain included.
+- RallyCross, Free Practice, LapWiz and sport rules are preserved from RC19.
+- Current RallyCross cockpit appearance is preserved as the visual baseline.
+- UI styles are reduced to one global component source, one palette-token source and one discipline cockpit source.
+- Dark remains the default theme; Light uses the same geometry/icons with inverted neutral colors.
+- The app starts from the complete active local PWA package; internet is not required for the active race workflow.
+- Settings contains **Обновление и Offline**: current version, offline-package state, update check and explicit install.
+- A candidate update cannot replace the active version until its complete package has downloaded successfully.
+- Safari/iPhone sound unlock remains a deliberate user tap and is independent of network/update logic.
+- `reporting/` remains hidden and ready for future RallyCross / Practice / Rally report formats.
 
-Status: RC candidate, not GOLD until physical LapWiz and cold offline-start tests on the real device pass.
+**RC20 is an RC candidate, not GOLD.** Final acceptance still requires real-device iPhone/iPad offline cold-start and physical LapWiz testing.
