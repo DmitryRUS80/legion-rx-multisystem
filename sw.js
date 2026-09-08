@@ -1,4 +1,4 @@
-/* Legion RX RC17 COCKPIT READABILITY */
+/* Legion RX RC18 GLOBAL THEMES */
 'use strict';
 importScripts('./offline-config.js');
 

@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current build: **4.2.0 CLEAN FULL APP RC17 COCKPIT READABILITY**  
+Current build: **4.2.0 CLEAN FULL APP RC18 GLOBAL THEMES**  
 Base: **4.1.1 OFFLINE HOTFIX FULL APP**.  
 The incomplete CLEAN RC1 is invalid and must not be used.
 
@@ -58,3 +58,12 @@ UI-only refinement from RC11 Variant 4: desktop header alignment, duplicate LapW
 - The leader/best-lap strip is one line and does not preselect the first pilot before a real BEST exists. It displays the pilot who actually owns the absolute session BEST.
 - Pilot display names are rendered in uppercase without changing stored pilot data. Cockpit pilot-name size is reduced to the established card-scale hierarchy.
 - `platform/`, all `modes/`, reporting, timing, LapWiz and sport rules remain unchanged.
+
+## RC18 GLOBAL THEMES
+- UI-only global theme pass; Dark is the default application appearance and Light is the same UI with inverted neutral surfaces/icons.
+- The previous `variant4.css` dark/light collision was removed at its authoritative source: Dark and Light now have separate neutral palettes instead of sharing the same light values.
+- Current RallyCross / Free Practice cockpit neutral colors are driven by the same theme state; geometry, pilot rows, race banner behavior and sport data are unchanged.
+- Semantic colors remain semantic across themes: race red, cobalt blue, magenta and amber stay unchanged. Neon lime/green is deliberately reduced only in Light theme for readable contrast on white.
+- Browser/PWA theme color follows the selected theme. Default install/background color remains Dark.
+- `platform/`, all `modes/`, `reporting/`, timing, LapWiz and sport rules remain unchanged.
+

@@ -19,3 +19,13 @@
 - Corrected RC16 RallyCross cockpit UI after real desktop testing.
 - Reduced race banner height, fixed heat pilot occupancy, made BEST owner data truthful before/after the first valid lap, forced displayed pilot names to uppercase, and reduced cockpit pilot-name scale.
 - No sport/platform/reporting changes.
+
+## RC18 GLOBAL THEMES
+- Reworked the authoritative global theme source so Dark and Light are genuinely different palettes instead of both resolving to the old light palette.
+- Dark is the default full-app appearance: black/graphite neutral surfaces and white icons/text.
+- Light uses the same components, icons, geometry and hierarchy with white/light neutral surfaces and black icons/text.
+- RallyCross and Free Practice cockpit neutral surfaces now follow the selected theme without changing sport logic or pilot-row geometry.
+- Red race banner, cobalt blue, magenta and amber accents are preserved. Lime/green is reduced only in Light for white-background contrast.
+- Browser/PWA theme color follows the selected theme.
+- No changes to `platform/`, `modes/`, `reporting/`, LapWiz or sport rules.
+

@@ -62,7 +62,7 @@ function translateStatic(){
 
 function applyUiTokens(ui=state.settings.ui){const r=document.documentElement.style;r.setProperty('--radius-card',`${ui.cardRadius}px`);r.setProperty('--radius-tile',`${ui.tileRadius}px`);r.setProperty('--radius-button',`${ui.buttonRadius}px`);r.setProperty('--radius-input',`${ui.inputRadius}px`);r.setProperty('--radius-icon',`${ui.iconRadius}px`);r.setProperty('--radius-hero',`${ui.heroRadius}px`);r.setProperty('--radius-widget',`${ui.widgetRadius}px`);r.setProperty('--radius-modal',`${ui.modalRadius}px`);r.setProperty('--card-padding',`${ui.cardPadding}px`);r.setProperty('--section-gap',`${ui.sectionGap}px`);r.setProperty('--control-height',`${ui.buttonHeight}px`);r.setProperty('--content-width',`${ui.contentWidth}px`);r.setProperty('--discipline-cols',String(ui.disciplineCols));}
 
-function applySettings(){document.documentElement.dataset.theme=state.settings.theme;document.documentElement.lang=state.settings.lang;lapwiz.sound=state.settings.lapSound;applyUiTokens();translateStatic();announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;}
+function applySettings(){document.documentElement.dataset.theme=state.settings.theme;document.documentElement.lang=state.settings.lang;const themeMeta=document.querySelector('meta[name="theme-color"]');if(themeMeta)themeMeta.content=state.settings.theme==='light'?'#f3f4f5':'#050608';lapwiz.sound=state.settings.lapSound;applyUiTokens();translateStatic();announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;}
 
 function stageLabel(stage){return({setup:'Настройка',qualifying:'Квалификация',tie:'Жеребьёвка',finals:'Финалы',finished:'Завершено'})[stage]||stage;}
 
