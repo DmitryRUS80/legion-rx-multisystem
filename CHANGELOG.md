@@ -29,3 +29,10 @@
 - Browser/PWA theme color follows the selected theme.
 - No changes to `platform/`, `modes/`, `reporting/`, LapWiz or sport rules.
 
+## RC19 READABILITY PASS
+- Fixed Light-theme active-event `ПРОДОЛЖИТЬ` visibility by removing the older forced-white button-text declaration at its existing source; no patch/override file added.
+- Increased one-line leader/BEST strip typography without changing its layout or BEST data logic.
+- Increased red race-banner typography specifically for portrait tablet and phone while preserving the existing strip geometry and race information.
+- Increased the small labels around the timer/ring for trackside readability.
+- No changes to `platform/`, `modes/`, `reporting/`, sport scoring, LapWiz or timing.
+

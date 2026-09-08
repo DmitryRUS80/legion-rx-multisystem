@@ -271,7 +271,6 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 
 
 /* 4.0.18 TEST — cleaner cockpit + movable/resizable Layout Lab */
-.liveCard .btn.primary,.heroStatus .liveCard .btn.primary{color:#fff!important;text-shadow:0 1px 1px rgba(0,0,0,.18)}
 .raceGrid.raceGridClean{grid-template-columns:minmax(0,1.85fr) minmax(300px,.72fr)}
 .raceGridClean .cleanCenterStack{display:flex;min-height:0;overflow:visible}
 .raceGridClean .cleanCenterStack .timerCard{flex:1;min-height:0;height:100%}

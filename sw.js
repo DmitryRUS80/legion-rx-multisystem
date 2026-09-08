@@ -1,4 +1,4 @@
-/* Legion RX RC18 GLOBAL THEMES */
+/* Legion RX RC19 READABILITY PASS */
 'use strict';
 importScripts('./offline-config.js');
 

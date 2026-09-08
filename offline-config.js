@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc18-global-themes';
-  const displayVersion='4.2.0 CLEAN FULL APP RC18 GLOBAL THEMES';
-  const cacheName='legion-rx-4-2-0-clean-full-rc18-global-themes';
+  const appVersion='4.2.0-clean-full-rc19-readability-pass';
+  const displayVersion='4.2.0 CLEAN FULL APP RC19 READABILITY PASS';
+  const cacheName='legion-rx-4-2-0-clean-full-rc19-readability-pass';
   const assets=[
   "./",
   "./app-bridge.js",

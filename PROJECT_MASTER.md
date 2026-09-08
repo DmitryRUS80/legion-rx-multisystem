@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current build: **4.2.0 CLEAN FULL APP RC18 GLOBAL THEMES**  
+Current build: **4.2.0 CLEAN FULL APP RC19 READABILITY PASS**  
 Base: **4.1.1 OFFLINE HOTFIX FULL APP**.  
 The incomplete CLEAN RC1 is invalid and must not be used.
 
@@ -67,3 +67,10 @@ UI-only refinement from RC11 Variant 4: desktop header alignment, duplicate LapW
 - Browser/PWA theme color follows the selected theme. Default install/background color remains Dark.
 - `platform/`, all `modes/`, `reporting/`, timing, LapWiz and sport rules remain unchanged.
 
+## RC19 READABILITY PASS
+- UI-only correction after real RC18 visual testing.
+- Removed the obsolete hard-coded white text rule from the existing active-event primary button source, so Light theme uses the intended dark button text while Dark remains white. No compensating override was added.
+- The one-line `ЛИДЕР · ЛУЧШИЙ КРУГ` strip now uses larger label/name/time typography while keeping the established single-row geometry and truthful BEST logic from RC17.
+- Portrait tablet/phone red race-banner text is substantially larger and fills the existing strip height more closely; race-banner data and height logic are unchanged.
+- Timer support labels around the main timer/ring are enlarged for trackside readability: class, phase/subline and `КРУГОВ ЛИДЕРА`.
+- `platform/`, all `modes/`, `reporting/`, RallyCross sport rules and runtime data logic are unchanged.
