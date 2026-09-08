@@ -1,4 +1,4 @@
-/* Legion RX RC15 FINISH REPORT CORE */
+/* Legion RX RC16 RACE BANNER */
 'use strict';
 importScripts('./offline-config.js');
 

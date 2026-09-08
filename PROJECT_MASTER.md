@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current build: **4.2.0 CLEAN FULL APP RC15 FINISH REPORT CORE**  
+Current build: **4.2.0 CLEAN FULL APP RC16 RACE BANNER**  
 Base: **4.1.1 OFFLINE HOTFIX FULL APP**.  
 The incomplete CLEAN RC1 is invalid and must not be used.
 
@@ -42,3 +42,10 @@ UI-only refinement from RC11 Variant 4: desktop header alignment, duplicate LapW
 - `reporting/` added as a hidden, independent preparation layer with separate `rallycross`, `practice`, and `rally` section adapters.
 - Reporting is not connected to UI or `index.html` yet and does not generate PDF.
 - RC14 UI, `platform/`, qualification scoring, LCQ and finals scoring are otherwise unchanged.
+
+## RC16 RACE BANNER
+- UI-only RallyCross cockpit refinement.
+- The left event-title strip is now a flat red compact race banner: Q/final stage, HEAT progress, RALLYCROSS and current heat occupancy.
+- The timer top caption now shows the active race class instead of duplicating the phase label.
+- Pilot rows, sport rules, `platform/`, reporting and Free Practice are unchanged.
+

@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc15-finish-report-core';
-  const displayVersion='4.2.0 CLEAN FULL APP RC15 FINISH REPORT CORE';
-  const cacheName='legion-rx-4-2-0-clean-full-rc15-finish-report-core';
+  const appVersion='4.2.0-clean-full-rc16-race-banner';
+  const displayVersion='4.2.0 CLEAN FULL APP RC16 RACE BANNER';
+  const cacheName='legion-rx-4-2-0-clean-full-rc16-race-banner';
   const assets=[
   "./",
   "./app-bridge.js",

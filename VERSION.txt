@@ -1,5 +1,5 @@
-APP VERSION: 4.2.0 CLEAN FULL APP RC15 FINISH REPORT CORE
-BUILD: 2026-09-08.02
-SPORT CORE: RallyCross lap-race finish rule updated
-REPORTING: hidden modular preparation layer added
-UI: unchanged from RC14 OSWALD
+APP VERSION: 4.2.0 CLEAN FULL APP RC16 RACE BANNER
+BUILD: 2026-09-08.03
+SPORT CORE: unchanged from RC15
+REPORTING: unchanged from RC15
+UI: RallyCross compact red race banner + timer class label
