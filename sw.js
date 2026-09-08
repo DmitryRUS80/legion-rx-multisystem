@@ -1,4 +1,4 @@
-/* Legion RX RC14 OSWALD */
+/* Legion RX RC15 FINISH REPORT CORE */
 'use strict';
 importScripts('./offline-config.js');
 

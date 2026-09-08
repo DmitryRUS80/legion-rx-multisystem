@@ -6,3 +6,5 @@
 - Final A: A1/A2/A3, best 2, non-FIN score 7.
 - Event points: 25,18,15,12,10,8,6,4,2,1.
 No rule change is allowed as a side-effect of UI work.
+
+- Lap-limited finish: when the first pilot completes the configured target laps, that pilot is FIN and the finish window opens. Every other active pilot is FIN on their next valid timing-line pass, regardless of being one or more laps behind. They do not continue until they individually reach the target-lap count.

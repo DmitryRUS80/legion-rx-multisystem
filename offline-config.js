@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc14-oswald';
-  const displayVersion='4.2.0 CLEAN FULL APP RC14 OSWALD';
-  const cacheName='legion-rx-4-2-0-clean-full-rc14-oswald';
+  const appVersion='4.2.0-clean-full-rc15-finish-report-core';
+  const displayVersion='4.2.0 CLEAN FULL APP RC15 FINISH REPORT CORE';
+  const cacheName='legion-rx-4-2-0-clean-full-rc15-finish-report-core';
   const assets=[
   "./",
   "./app-bridge.js",
@@ -66,6 +66,10 @@
   "./platform/storage.js",
   "./platform/timing.js",
   "./platform/utils.js",
+  "./reporting/core.js",
+  "./reporting/sections/practice.js",
+  "./reporting/sections/rally.js",
+  "./reporting/sections/rallycross.js",
   "./ui/discipline-ui-rc5restore.js",
   "./ui/fonts/oswald.css",
   "./ui/shell/bindings.js",

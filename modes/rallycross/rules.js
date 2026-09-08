@@ -1,16 +1,25 @@
 'use strict';
 const SPORT_RULES = Object.freeze({
-  version:'RALLYCROSS-2026.09',
+  version:'RALLYCROSS-2026.09.1',
   qualifyingPoints:Object.freeze([50,45,42,40,39,38,37,36,35,34,33,32,31,30,29,28]),
   championshipEventPoints:Object.freeze([25,18,15,12,10,8,6,4,2,1]),
   finalARuns:Object.freeze(['A1','A2','A3']),
   finalBestCount:2,
   finalNonFinishScore:7,
+  lapRaceFinishPolicy:'leader-finishes-then-next-valid-pass',
   statuses:Object.freeze(['FIN','DNF','DNS','DSQ'])
 });
 const SCORE_TABLE = SPORT_RULES.qualifyingPoints;
 const EVENT_POINTS = SPORT_RULES.championshipEventPoints;
 const FINAL_A_RUNS = SPORT_RULES.finalARuns;
+
+function lapRaceFinishDecision(rule,session,pilotLive){
+  if(rule?.limitType!=='laps')return Object.freeze({finishPilot:false,openFinishWindow:false});
+  const targetLaps=Math.max(1,Number(rule.targetLaps||0));
+  if(session?.lapFinishOpen)return Object.freeze({finishPilot:true,openFinishWindow:false});
+  if(Number(pilotLive?.laps||0)>=targetLaps)return Object.freeze({finishPilot:true,openFinishWindow:true});
+  return Object.freeze({finishPilot:false,openFinishWindow:false});
+}
 
 function makeRace(input={}){
   const now=new Date().toISOString();

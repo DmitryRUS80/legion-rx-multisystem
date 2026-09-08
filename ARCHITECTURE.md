@@ -17,6 +17,12 @@ LEGION RX
 │   ├── rally-sprint/   (disabled)
 │   └── classic-rc/     (disabled)
 ├── ui/
+├── reporting/
+│   ├── core.js
+│   └── sections/
+│       ├── rallycross.js
+│       ├── practice.js
+│       └── rally.js
 ├── app.js
 ├── boot.js
 ├── index.html
@@ -34,3 +40,8 @@ LEGION RX
 `ui/*` renders and collects explicit user input. It does not implement BLE packets or sport scoring constants. Sport data for display is obtained through the RallyCross public mode API.
 
 `app.js` routes platform events to the active mode and coordinates application actions. It contains no DOM/CSS.
+
+
+`reporting/*` is an independent output-preparation layer. It receives already-official result snapshots from a discipline/practice module and prepares section-specific report data. It must not calculate RallyCross/Practice/Rally sport results, must not talk to LapWiz, and must not own UI. PDF rendering/templates will be added later inside `reporting/`.
+
+The hidden RC15 reporting module is packaged for offline availability but is intentionally not loaded by `index.html` and has no button/screen yet.

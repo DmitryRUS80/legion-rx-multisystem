@@ -18,3 +18,8 @@
 - UI routing/bindings -> `ui/shell/router.js` + `ui/shell/bindings.js`
 - Coordination between platform/modes/UI -> `app.js`
 - Startup and bridge wiring -> `boot.js` + `app-bridge.js`
+
+- Report preparation registry (hidden, no UI yet) -> `reporting/core.js`
+- RallyCross report adapter -> `reporting/sections/rallycross.js`
+- Practice report adapter -> `reporting/sections/practice.js`
+- Rally report adapter -> `reporting/sections/rally.js`

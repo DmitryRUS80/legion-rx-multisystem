@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current build: **4.2.0 CLEAN FULL APP RC14 OSWALD**  
+Current build: **4.2.0 CLEAN FULL APP RC15 FINISH REPORT CORE**  
 Base: **4.1.1 OFFLINE HOTFIX FULL APP**.  
 The incomplete CLEAN RC1 is invalid and must not be used.
 
@@ -10,6 +10,7 @@ The incomplete CLEAN RC1 is invalid and must not be used.
 - `modes/free-practice/` = Free Practice / Track Day logic; no DOM/CSS and no RallyCross scoring.
 - `modes/rally-sprint/` and `modes/classic-rc/` = independent disabled future modules.
 - `ui/` = replaceable presentation layer; it must not contain BLE protocol or sport scoring constants.
+- `reporting/` = independent report-preparation layer; it receives already-official result snapshots and must not calculate sport results or own UI.
 - `app.js` = coordination only; no DOM/CSS.
 - `index.html` = small shell and ordered module includes, not a monolithic application.
 - No `patch.js`, `fix.css`, runtime function replacement, duplicate sport implementations or silent FIN fallback.
@@ -33,3 +34,11 @@ Runtime UI restored to the exact RC5 cockpit state before the race-progress/queu
 
 ## RC12 DESKTOP PULT
 UI-only refinement from RC11 Variant 4: desktop header alignment, duplicate LapWiz toolbar button removed, desktop main control icon/label scale increased, compact event title, leader/best-lap display strip, wider control accent bars, compact bottom display tools anchored to the panel bottom. RallyCross rules/platform modules unchanged.
+
+
+## RC15 FINISH REPORT CORE
+- RallyCross lap-limited races now use the sport rule: the first pilot to complete the target distance finishes and opens the finish window; every remaining active pilot finishes on their next valid timing-line pass, even when one or more laps down.
+- The rule decision is declared in `modes/rallycross/rules.js`; `modes/rallycross/runtime.js` only applies that decision to live passes.
+- `reporting/` added as a hidden, independent preparation layer with separate `rallycross`, `practice`, and `rally` section adapters.
+- Reporting is not connected to UI or `index.html` yet and does not generate PDF.
+- RC14 UI, `platform/`, qualification scoring, LCQ and finals scoring are otherwise unchanged.

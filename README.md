@@ -1,14 +1,15 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC3
+# LEGION RX 4.2.0 CLEAN FULL APP RC15 FINISH REPORT CORE
 
-Полная модульная сборка, перенесённая с 4.1.1 OFFLINE HOTFIX FULL APP.
+Current modular build based on RC14 OSWALD.
 
-- Сохранены текущие экраны и пульты RallyCross / Free Practice.
-- Полный локальный аудиопакет, флаги и иконки включены.
-- LapWiz отделён в `platform/lapwiz.js`.
-- RallyCross разделён на `rules.js`, `qualifying.js`, `finals.js`, `runtime.js`.
-- Free Practice — отдельный `modes/free-practice/`.
-- Rally Sprint / Classic RC — отдельные отключённые будущие модули.
-- UI не содержит BLE-протокол и спортивные константы.
-- Спортивные модули и platform не содержат DOM/CSS.
+- `platform/` remains the shared hardware/service layer.
+- RallyCross rules remain isolated in `modes/rallycross/`.
+- Lap-limited RallyCross finish now follows leader-finish / next-valid-pass behavior for remaining active pilots.
+- Qualification scoring, Best3, LCQ and A1/A2/A3 remain separate and unchanged.
+- Free Practice remains a separate mode.
+- Rally Sprint / Classic RC remain independent future modules.
+- `ui/` remains separate from sport rules and BLE.
+- `reporting/` is a new hidden preparation layer with separate RallyCross / Practice / Rally adapters; it is not connected to UI yet and does not generate PDF.
+- Full local audio package, flags, icons and Oswald UI remain included.
 
-Статус: RC, не GOLD до физической проверки LapWiz и холодного offline-start на устройстве.
+Status: RC candidate, not GOLD until physical LapWiz and cold offline-start tests on the real device pass.
