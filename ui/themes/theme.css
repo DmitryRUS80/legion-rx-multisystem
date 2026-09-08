@@ -1,0 +1,67 @@
+/* LEGION RX · THEME TOKENS · CLEAN FOUNDATION */
+:root{
+  --v4-cobalt:#0057ff;
+  --v4-magenta:#ff2d9b;
+  --v4-race-red:#df0b12;
+  --v4-amber:#ff9f0a;
+  --v4-font:"Oswald",sans-serif;
+}
+
+html[data-theme="dark"]{
+  --v4-bg:#050608;
+  --v4-surface:#0a0c0f;
+  --v4-surface2:#101318;
+  --v4-surface3:#171b21;
+  --v4-text:#f6f7f8;
+  --v4-muted:#8c939b;
+  --v4-line:#2c3036;
+  --v4-line-strong:#454a51;
+  --v4-control:#08090a;
+  --v4-control-hover:#17191d;
+  --v4-control-text:#ffffff;
+  --v4-input:#090b0e;
+  --v4-table-alt:#0e1115;
+  --v4-table-hover:#151d29;
+  --v4-green:#b6ff00;
+  --v4-green-soft:#17230a;
+  --v4-blue-soft:#101a31;
+  --v4-amber-soft:#2a210e;
+  --v4-magenta-soft:#2d1020;
+  --v4-grid:rgba(255,255,255,.025);
+  --v4-overlay:rgba(0,0,0,.76);
+  --v4-shadow:rgba(0,0,0,.58);
+  color-scheme:dark;
+}
+
+html[data-theme="light"]{
+  --v4-bg:#f3f4f5;
+  --v4-surface:#ffffff;
+  --v4-surface2:#eceff2;
+  --v4-surface3:#e2e6ea;
+  --v4-text:#08090a;
+  --v4-muted:#5e646b;
+  --v4-line:#c6cbd0;
+  --v4-line-strong:#8f959c;
+  --v4-control:#ffffff;
+  --v4-control-hover:#e9ecef;
+  --v4-control-text:#08090a;
+  --v4-input:#ffffff;
+  --v4-table-alt:#f0f2f4;
+  --v4-table-hover:#e7edff;
+  /* Neon lime is intentionally darkened only in light theme for contrast. */
+  --v4-green:#5f8500;
+  --v4-green-soft:#edf3dd;
+  --v4-blue-soft:#e8efff;
+  --v4-amber-soft:#fff0cf;
+  --v4-magenta-soft:#ffe8f4;
+  --v4-grid:rgba(0,0,0,.035);
+  --v4-overlay:rgba(0,0,0,.48);
+  --v4-shadow:rgba(16,24,32,.18);
+  color-scheme:light;
+}
+
+html[data-theme="dark"],html[data-theme="light"]{
+  --bg:var(--v4-bg);--panel:var(--v4-surface);--panel2:var(--v4-surface2);--text:var(--v4-text);--muted:var(--v4-muted);--line:var(--v4-line);
+  --blue:var(--v4-cobalt);--blueDark:#0039a9;--blue2:var(--v4-blue-soft);--green:var(--v4-green);--green2:var(--v4-green-soft);--amber:var(--v4-amber);--amber2:var(--v4-amber-soft);--red:var(--v4-magenta);--red2:var(--v4-magenta-soft);
+  --shadow:none;--shadow2:none;--radius:6px;--radius-card:5px;--radius-tile:5px;--radius-button:4px;--radius-input:4px;--radius-icon:4px;--radius-hero:5px;--radius-widget:5px;--radius-modal:6px;
+}
