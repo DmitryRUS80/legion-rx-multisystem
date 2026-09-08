@@ -13,3 +13,9 @@
 - No RallyCross rules, Free Practice logic, LapWiz/BLE, storage schema, audio logic, or race timing code changed.
 - Added an architecture test that verifies local `url(...)` references in CSS resolve to real files.
 
+
+
+## RC17 COCKPIT READABILITY
+- Corrected RC16 RallyCross cockpit UI after real desktop testing.
+- Reduced race banner height, fixed heat pilot occupancy, made BEST owner data truthful before/after the first valid lap, forced displayed pilot names to uppercase, and reduced cockpit pilot-name scale.
+- No sport/platform/reporting changes.

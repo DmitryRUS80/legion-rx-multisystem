@@ -1,4 +1,4 @@
-/* Legion RX RC16 RACE BANNER */
+/* Legion RX RC17 COCKPIT READABILITY */
 'use strict';
 importScripts('./offline-config.js');
 

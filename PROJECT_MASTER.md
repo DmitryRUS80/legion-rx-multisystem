@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current build: **4.2.0 CLEAN FULL APP RC16 RACE BANNER**  
+Current build: **4.2.0 CLEAN FULL APP RC17 COCKPIT READABILITY**  
 Base: **4.1.1 OFFLINE HOTFIX FULL APP**.  
 The incomplete CLEAN RC1 is invalid and must not be used.
 
@@ -49,3 +49,12 @@ UI-only refinement from RC11 Variant 4: desktop header alignment, duplicate LapW
 - The timer top caption now shows the active race class instead of duplicating the phase label.
 - Pilot rows, sport rules, `platform/`, reporting and Free Practice are unchanged.
 
+
+
+## RC17 COCKPIT READABILITY
+- UI-only correction after real desktop RC16 test.
+- RallyCross red race banner height reduced to 40 px on desktop; its Oswald text now fills the strip vertically with minimal edge spacing.
+- Heat occupancy no longer assumes a six-car capacity: it is derived from the current event composition (`PILOTS 3/3` for a three-pilot heat).
+- The leader/best-lap strip is one line and does not preselect the first pilot before a real BEST exists. It displays the pilot who actually owns the absolute session BEST.
+- Pilot display names are rendered in uppercase without changing stored pilot data. Cockpit pilot-name size is reduced to the established card-scale hierarchy.
+- `platform/`, all `modes/`, reporting, timing, LapWiz and sport rules remain unchanged.

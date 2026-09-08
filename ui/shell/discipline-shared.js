@@ -16,7 +16,7 @@ function countryOptions(selected=''){const sel=String(selected||'').toUpperCase(
 
 function clubMarkup(club='',fallback='Без клуба'){return isLegionRXClub(club)?`<span class="legionClubMark">LEGION <i>RX</i></span>`:esc(club||fallback);}
 
-function pilotNameMarkup(p){const code=pilotCountryCode(p),flag=countryFlag(code);return `<span class="pilotNameLine">${flag?`<span class="countryFlag" style="--country-flag-position:${flag}" title="${esc(countryName(code))}" role="img" aria-label="${esc(countryName(code))}">${esc(code)}</span>`:''}<span>${esc(p?.name||'—')}</span></span>`;}
+function pilotNameMarkup(p){const code=pilotCountryCode(p),flag=countryFlag(code),name=String(p?.name||'—').toUpperCase();return `<span class="pilotNameLine">${flag?`<span class="countryFlag" style="--country-flag-position:${flag}" title="${esc(countryName(code))}" role="img" aria-label="${esc(countryName(code))}">${esc(code)}</span>`:''}<span>${esc(name)}</span></span>`;}
 
 function pilotMetaMarkup(p,{showId=true}={}){const club=pilotClubName(p),city=p?.city||profileForPilot(p)?.city||'';const chunks=[];if(club)chunks.push(clubMarkup(club,''));if(city)chunks.push(esc(city));if(showId)chunks.push(`ID ${esc(p?.transponder||'—')}`);return chunks.filter(Boolean).join('<span class="metaDot">·</span>');}
 
