@@ -19,7 +19,10 @@ LEGION RX
 │   └── classic-rc/        # future independent mode
 ├── ui/
 │   ├── themes/theme.css   # palette tokens ONLY
-│   ├── shell/app.css      # one general application component/layout source
+│   ├── shell/app.css      # general shell/components/layout source
+│   ├── pilots/
+│   │   ├── pilot-cards.js # pilot DB cards, model tiles, editor, race picker
+│   │   └── pilot-cards.css# authoritative pilot-card component styles
 │   ├── shell/discipline-pults.css # RallyCross / Free Practice cockpit source
 │   ├── shell/views.js     # application screens
 │   ├── shell/actions.js   # UI actions/bindings
@@ -44,13 +47,14 @@ LEGION RX
 
 ## UI style architecture
 
-There are exactly three style responsibilities:
+There are four explicit style responsibilities:
 
 1. `ui/themes/theme.css` — Dark/Light palette variables only. No component overrides.
-2. `ui/shell/app.css` — general screens, forms, cards, navigation, modals and shared layout.
-3. `ui/shell/discipline-pults.css` — RallyCross / Free Practice cockpit and sport-result/grid presentation.
+2. `ui/shell/app.css` — general screens, forms, navigation, shared cards/modals and layout.
+3. `ui/pilots/pilot-cards.css` — the single authoritative style source for pilot database cards, model tiles, expanding pilot editor and race model picker.
+4. `ui/shell/discipline-pults.css` — RallyCross / Free Practice cockpit and sport-result/grid presentation.
 
-Historical `variant4.css`, `current-base.css` multi-generation race-console blocks and `*-rc5restore*` runtime names are removed from the active build.
+Historical `variant4.css`, `current-base.css` multi-generation race-console blocks and `*-rc5restore*` runtime names are removed from the active build. RC22 also removes the former pilot-card/pilot-picker implementation from `views.js`/`app.css`; the new pilot component is not an override layer.
 
 ## Offline/update architecture
 

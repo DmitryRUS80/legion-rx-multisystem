@@ -3,9 +3,8 @@ function bindView(){
  $$('[data-nav]').forEach(b=>b.addEventListener('click',()=>nav(b.dataset.nav)));
  $$('[data-action]').forEach(b=>b.addEventListener('click',()=>handleAction(b.dataset.action,b)));
  $$('[data-remove-race-pilot]').forEach(b=>b.addEventListener('click',()=>{if(state.race.stage!=='setup')return;state.race.pilots=state.race.pilots.filter(p=>p.id!==b.dataset.removeRacePilot);state.race.pilots.forEach((p,i)=>p.registrationOrder=i+1);persistRace();render();}));
- $$('[data-edit-pilot]').forEach(b=>b.addEventListener('click',()=>pilotModal(state.pilotDb.find(p=>p.id===b.dataset.editPilot))));
- $$('[data-delete-pilot]').forEach(b=>b.addEventListener('click',()=>{if(confirm('Удалить профиль из базы?')){const id=b.dataset.deletePilot;state.pilotDb=state.pilotDb.filter(p=>p.id!==id);save(KEYS.pilots,state.pilotDb);pilotVoices.remove(id).catch(()=>{});render();}}));
- $$('[data-show-event]').forEach(b=>b.addEventListener('click',()=>raceResultsModal(b.dataset.showEvent)));
+ $$('[data-edit-pilot]').forEach(b=>b.addEventListener('click',()=>pilotModal(state.pilotDb.find(p=>p.id===b.dataset.editPilot),false,b.closest('.pilotTile')?.getBoundingClientRect?.()||null)));
+  $$('[data-show-event]').forEach(b=>b.addEventListener('click',()=>raceResultsModal(b.dataset.showEvent)));
  $$('[data-widget-toggle]').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.widgetToggle;state.widgetCollapsed[k]=!state.widgetCollapsed[k];render();}));
  $$('[data-toggle-widget]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.toggleWidget;state.widgetCollapsed[id]=!state.widgetCollapsed[id];render();}));
  $$('[data-open-champ]').forEach(b=>b.addEventListener('click',()=>{state.activeChampionshipId=b.dataset.openChamp;state.champTab='stages';nav('championshipDetail');}));

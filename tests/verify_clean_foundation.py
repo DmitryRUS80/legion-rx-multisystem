@@ -35,7 +35,7 @@ checks['protected_sport_and_unchanged_platform_byte_identical_to_rc19']=not chan
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])
-checks['style_layers_exact']=all(x in index for x in ['ui/themes/theme.css','ui/shell/app.css','ui/shell/discipline-pults.css']) and index.count('rel="stylesheet"')==4 # + Oswald
+checks['style_layers_exact']=all(x in index for x in ['ui/themes/theme.css','ui/shell/app.css','ui/pilots/pilot-cards.css','ui/shell/discipline-pults.css']) and index.count('rel="stylesheet"')==5 # + Oswald; pilot cards are an isolated authoritative component layer
 
 theme=(ROOT/'ui/themes/theme.css').read_text(encoding='utf-8')
 checks['theme_is_tokens_only']=not re.search(r'\.[A-Za-z_][\w-]*\s*[,{]',theme)

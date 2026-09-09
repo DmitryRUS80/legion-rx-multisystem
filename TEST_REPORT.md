@@ -1,54 +1,95 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC21 · IOS START SAFETY — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC22 · PILOT CARDS — TEST REPORT
 
-Direct base: **RC20 CLEAN FOUNDATION**.
+Direct development base: **RC21 IOS START SAFETY**.
+Known deployed GitHub base at the start of this task: **RC20 CLEAN FOUNDATION**; therefore the GitHub upload package for RC22 is cumulative from RC20 and also carries the accepted RC21 iOS-start-safety files.
 
-## Incident reproduced by code-path audit
+## Scope
 
-RC20 coupled `START` to `ensureRaceAudioFromGesture()`. On Safari/iPhone, when local audio still needed asynchronous cache hydration, the user-activation window could be lost before media `play()`. The function then returned `false`, so the RallyCross `beginCountdown()` call was never reached. This explains the field symptom: cockpit loads, LapWiz is unavailable on iPhone as expected, but the race no longer enters warm-up/start.
+RC22 is a UI-only pilot-system rebuild:
 
-RC21 removes that coupling at the authoritative action layer instead of adding an override.
+- new tile-based pilot database card;
+- model tiles attached to each pilot profile;
+- tap-to-add / tap-to-remove model selection for race setup instead of the former race checkbox picker;
+- expanding blurred pilot editor overlay;
+- avatar upload/crop-downscale path preserving alpha when the source format contains transparency;
+- legacy pilot profiles without `models[]` remain readable through a single fallback primary model;
+- former pilot-card / race-pilot-picker implementations are removed from `ui/shell/views.js` and former pilot-card styles are removed from `ui/shell/app.css`.
 
-## RC21 changes
+TOP-3 post-finish cards are intentionally **not** part of RC22. They remain a separate future UI task.
 
-- `ui/shell/actions.js`: RallyCross START directly calls `beginCountdown()`; LapWiz connect no longer waits for announcer audio.
-- `ui/shell/views.js`: Track Day start no longer waits for announcer audio.
-- `ui/shell/offline-runtime.js`: Safari-safe audio preparation uses a two-step fallback when hydration is still required; no hydrate→play sequence is attempted inside the same user activation.
-- `platform/audio.js`: an announcement attempted while audio is locked is a silent no-op and cannot open a blocking gate over a race. Explicit audio enable/recovery still owns the gate.
-- `offline-manifest.js` / `sw.js`: new RC21 release/cache namespace for staged update delivery.
-
-## Verification
+## Architecture / regression
 
 PASS:
+
 - architecture verifier: **8/8**;
 - clean-foundation verifier: **PASS**;
-- RC21 critical-start verifier: **8/8**;
-- JavaScript syntax: **35/35 PASS**;
+- iOS START safety verifier: **PASS**;
+- pilot-card dedicated verifier: **PASS**;
+- JavaScript syntax: **36/36 PASS**;
 - RallyCross sport self-test: **16/16 PASS**, `RALLYCROSS-2026.09.1`;
-- every file under `modes/` is byte-identical to RC20;
-- RallyCross rules/runtime/qualifying/finals: **NO CHANGE**;
-- Free Practice sport module: **NO CHANGE**;
-- LapWiz protocol/core commands: **NO CHANGE**;
-- reporting contract: **NO CHANGE**;
-- CSS/theme clean foundation: **NO CHANGE**.
+- `modes/` byte-identical to RC21;
+- `app.js` byte-identical to RC21;
+- protected `platform/` logic byte-identical to RC21 except the already accepted RC21 audio safety baseline; RC22 itself does not modify platform logic;
+- `reporting/` byte-identical to RC21;
+- service-worker safe staged-update behavior unchanged; only RC22 release namespace/assets are updated.
 
-## Critical invariants now enforced
+## Pilot UI checks
 
-- Race START cannot be rejected because audio cache is incomplete.
-- Race START cannot be rejected because Safari audio is locked.
-- Track Day start cannot be rejected because Safari audio is locked.
-- LapWiz `requestDevice()` on supported browsers is no longer preceded by awaited announcer work.
-- If audio hydration is required after an explicit audio-button tap, the UI asks for a second tap rather than incorrectly trying to reuse an expired Safari user gesture.
-- A locked announcer cannot force a modal over an active race.
+PASS:
 
-## Real-device acceptance still required
+- `ui/pilots/pilot-cards.js` is loaded once and owns `pilotsView`, `pilotModal`, and `pilotPicker`;
+- old `pilotProfileCard` UI is absent;
+- pilot database cards do not expose a large text “Редактировать” button; editing is opened from the small corner icon;
+- race model selection is tile-tap based and toggles add/remove;
+- selecting another model for the same pilot replaces the previous race entry rather than duplicating the pilot;
+- editor contains country, club, city, avatar, model garage and local announcer-name controls;
+- avatar upload path accepts PNG/JPEG/WebP, downscales to max 720 px and stores WebP locally; alpha is preserved when provided by the source/canvas path;
+- Dark/Light theme tokens are reused; no pilot theme override file exists;
+- component CSS uses blur/translucency/motion and includes reduced-motion fallback;
+- no patch/hotfix/override file was added.
 
-The container cannot certify Safari itself or Web Bluetooth hardware. Required field checks after installing RC21:
-1. iPhone: open RallyCross with audio not enabled → START must immediately enter warm-up.
-2. iPhone: enable audio, then START → warm-up/race must run with sound.
-3. iPhone: background/foreground → restore audio with one explicit tap if Safari requests it; race state must remain intact.
-4. Android/Chrome or other supported Web Bluetooth device: LapWiz connect must open the device chooser directly and passes must work.
-5. Offline cold start after RC21 package reports OFFLINE READY.
+## Browser component runtime
+
+The environment blocks Chromium navigation to local HTTP/file URLs, so the complete PWA cannot be certified as a real iPhone/Safari instance here. A Chromium runtime component harness was therefore executed with the **exact RC22 `theme.css`, `pilot-cards.css` and `pilot-cards.js`** and minimal application stubs.
+
+PASS:
+
+- three pilot cards render;
+- expanded pilot editor opens;
+- multiple model editors render;
+- tapping a model adds the expected pilot/model/transponder to the race;
+- tapping the same model again removes it;
+- Dark render;
+- Light render;
+- 390 px mobile render;
+- JavaScript runtime errors: **0**.
+
+## Real-device acceptance required
+
+1. iPhone / Android: open Pilot database in Dark and Light themes.
+2. Open an existing pilot via the small edit icon; save without changing data and verify nothing is lost.
+3. Upload an avatar; close/reopen the profile and verify it remains available offline.
+4. Add a second model with its own ID/transponder/color.
+5. In race setup open the pilot picker, tap one model and verify exactly one pilot is added with that model/transponder.
+6. Tap the same model again and verify the pilot is removed.
+7. Select a different model for that pilot and verify the entry is replaced rather than duplicated.
+8. Re-run the RC21 iPhone START check: sound off → RallyCross → START must still run.
 
 ## Release status
 
-**RC21 IOS START SAFETY — static/runtime invariants verified; ready for immediate iPhone field retest.**
+**RC22 PILOT CARDS — static/runtime component checks PASS; ready for device UI acceptance.**
+
+
+## RC22 · PILOT CARDS UI verification
+
+PASS:
+- architecture verifier: 8/8;
+- clean-foundation verifier: PASS;
+- iOS START safety verifier: PASS;
+- dedicated pilot-card verifier: PASS;
+- all JavaScript files: `node --check` PASS;
+- isolated Chromium component render: database cards / editor / model picker / Dark / Light / mobile PASS with zero page errors;
+- model-tile tap adds a model to the event and second tap removes it;
+- protected `modes/`, `platform/`, `app.js` and reporting logic remain byte-identical to RC21 where declared protected.
+
+Real iPhone/Android interaction and stored user data still require field acceptance after deployment.

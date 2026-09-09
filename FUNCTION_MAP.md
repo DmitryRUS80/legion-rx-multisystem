@@ -7,7 +7,7 @@
 - Active offline package verification -> `platform/offline-core.js`
 - Safe update lifecycle -> `platform/updater.js` + `sw.js`
 - Version/cache/offline package source -> `offline-manifest.js`
-- Pilot helpers -> `platform/pilots.js`
+- Pilot helpers / data compatibility -> `platform/pilots.js`
 - App state -> `platform/state.js`
 
 - RallyCross constants/data model/finish policy -> `modes/rallycross/rules.js`
@@ -20,6 +20,7 @@
 
 - Global Dark/Light tokens -> `ui/themes/theme.css`
 - General application UI -> `ui/shell/app.css`
+- Pilot database cards / model tiles / expanding pilot editor / race model picker -> `ui/pilots/pilot-cards.js` + `ui/pilots/pilot-cards.css`
 - RallyCross + Free Practice cockpit style -> `ui/shell/discipline-pults.css`
 - General screens -> `ui/shell/views.js`
 - Routing -> `ui/shell/router.js`

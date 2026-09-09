@@ -357,16 +357,6 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 .countryFlag{position:relative;display:inline-grid;place-items:center;width:1.42em;height:1.02em;box-sizing:border-box;overflow:hidden;flex:none;border:1px solid color-mix(in srgb,var(--text) 20%,transparent);border-radius:.18em;background:#18222b;color:#aebbc5;font:800 .42em/1 var(--font);letter-spacing:.02em;box-shadow:0 1px 2px #0005;filter:saturate(.92)}
 .countryFlag:before{content:"";position:absolute;inset:0;background-image:url("../../flags/flags-atlas-rc4.png");background-position:var(--country-flag-position,0 0);background-size:1600% 1600%;background-repeat:no-repeat}
 .legionClubMark{display:inline-flex;align-items:baseline;gap:.22em;font-weight:950;font-style:italic;letter-spacing:.035em;color:color-mix(in srgb,var(--text) 76%,var(--muted));white-space:nowrap}
-.pilotProfileAvatar{width:58px;height:58px;border-radius:14px;background:var(--blue2);color:var(--blue);display:grid;place-items:center;font-size:28px;font-weight:950;overflow:hidden}
-.pilotProfileMain{min-width:0;display:grid;gap:4px}
-.pilotProfileName{font:900 22px var(--rx-display-font);min-width:0}
-.pilotProfileClub{font-size:14px;min-height:19px}
-.pilotProfileClub .legionClubMark{font-size:17px}
-.pilotProfileMeta span+span:before{content:"·";margin-right:8px}
-.pilotProfileActions{display:flex;gap:8px;align-items:center}
-.subtleDanger{background:var(--red2);color:var(--red);border:1px solid color-mix(in srgb,var(--red) 30%,var(--line))}
-.pilotEasterHint{margin-top:12px;padding:9px 11px;border:1px dashed var(--line);border-radius:var(--radius-input);background:var(--panel2);color:var(--muted);font-size:11px}
-.pilotEasterHint b{color:var(--text)}
 /* Desktop / tablet race rows: a little taller and easier to scan. */
 .trackPilotCheck b .pilotNameLine,.listRow .name .pilotNameLine{max-width:100%}
 .quickPanelMenuGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -390,12 +380,6 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
   .eventDrawer aside{top:6px;bottom:6px;left:6px;width:calc(100% - 12px)}
   .quickPanelDrawer{grid-column:1;margin:6px;max-height:78dvh;border-radius:12px}
   .quickPanelBackdrop{grid-column:1}
-  .pilotProfileCard{grid-template-columns:52px minmax(0,1fr);padding:13px;gap:11px}
-  .pilotProfileAvatar{width:48px;height:48px;font-size:24px}
-  .pilotProfileName{font-size:19px}
-  .pilotProfileActions{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}
-  .pilotProfileActions .btn{min-height:44px}
-  .pilotProfileClub .legionClubMark{font-size:15px}
   body.cockpitMode #viewHost{overflow:auto}
   .quickPanelOverlay{grid-template-columns:1fr;align-items:end;z-index:820;}
 }
@@ -413,15 +397,6 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 @media (orientation:landscape) and (max-width:900px){
   body.cockpitMode #viewHost{overflow:hidden}
 }
-.pilotVoiceBox{grid-column:1/-1;border:1px solid var(--line);border-radius:var(--radius-input);background:var(--panel2);padding:12px;display:grid;gap:9px}
-.pilotVoiceHead{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.pilotVoiceHead b{font-size:12px}
-.pilotVoiceState{font-size:10px;font-weight:850;color:var(--muted)}
-.pilotVoiceState.ready{color:var(--green)}
-.pilotVoiceState.stale{color:var(--amber)}
-.pilotVoiceActions{display:flex;gap:8px;flex-wrap:wrap}
-.pilotVoiceActions .btn{min-height:38px;height:38px}
-.pilotVoiceHint{font-size:10px;color:var(--muted);line-height:1.4}
 @media (orientation:landscape) and (max-width:950px) and (max-height:600px){
   body.cockpitMode #viewHost{overflow:hidden}
 }
@@ -442,8 +417,8 @@ body button,body input,body select,body textarea{font-family:inherit}
 .pageHeader h2{font-family:var(--rxn-font)}
 .pageHeader p{margin:7px 0 0;line-height:1.55;color:var(--rxn-muted);}
 /* Generic surfaces */
-.card,.disciplineTile,.moduleCard,.pilotProfileCard,.settingGroup,.ruleBox,.listRow,.champStageCard,.archiveCard,.formatRuleGrid{background:rgba(7,25,39,.84);border:1px solid var(--rxn-line);border-radius:5px;box-shadow:none;color:var(--rxn-text)}
-.card:hover,.moduleCard:hover,.disciplineTile:hover,.pilotProfileCard:hover{border-color:#1b638f}
+.card,.disciplineTile,.moduleCard,.settingGroup,.ruleBox,.listRow,.champStageCard,.archiveCard,.formatRuleGrid{background:rgba(7,25,39,.84);border:1px solid var(--rxn-line);border-radius:5px;box-shadow:none;color:var(--rxn-text)}
+.card:hover,.moduleCard:hover,.disciplineTile:hover:hover{border-color:#1b638f}
 .homeSectionHead{display:flex;align-items:end;justify-content:space-between;margin:18px 2px 8px;}
 .homeSectionHead h2{font-size:25px;margin:5px 0 0;font:700 23px/1 var(--rxn-font);text-transform:uppercase;}
 .disciplineGrid,.moduleGrid,.grid{gap:8px}
@@ -457,10 +432,7 @@ body button,body input,body select,body textarea{font-family:inherit}
 .btn.primary,.widgetAction.primaryAction,.miniAction.primary{background:#073a5b;border:1px solid #0b76b4;color:#fff}
 .list{display:grid;gap:4px;}
 .listRow{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--panel2);padding:9px 10px;}
-.name,.pilotProfileName{font-family:var(--rxn-font);font-weight:700}
-.pilotProfileGrid{display:grid;gap:7px;}
-.pilotProfileCard{display:grid;grid-template-columns:62px minmax(0,1fr) auto;align-items:center;gap:14px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--panel);box-shadow:var(--shadow);padding:12px;}
-.pilotProfileMeta{display:flex;gap:8px;flex-wrap:wrap;font-size:11px;color:var(--rxn-muted);}
+.name{font-family:var(--rxn-font);font-weight:700}
 .legionClubMark i{font-style:italic;color:var(--rxn-blue);}
 .settingsGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
 .settingGroup h3{margin:0 0 12px;display:flex;align-items:center;font:700 19px/1 var(--rxn-font);text-transform:uppercase;}
@@ -512,12 +484,12 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
 .liveCard small{font-size:10px;letter-spacing:.13em;color:var(--v4-control-text);}
 .liveCard .liveDot{margin-top:8px;background:var(--v4-green);box-shadow:none;}
 .liveCard .btn{grid-column:1/-1;margin-top:8px;background:var(--v4-control);color:var(--v4-control-text);border-color:var(--v4-line-strong);box-shadow:inset -6px 0 var(--v4-green);}
-.disciplineTile,.moduleCard,.card,.pilotProfileCard,.settingGroup,.ruleBox,.listRow,.champStageCard,.archiveCard,.formatRuleGrid{background:var(--v4-surface);border:1px solid var(--v4-line);border-radius:5px;box-shadow:none;color:var(--v4-text)}
-.disciplineTile:hover,.moduleCard:hover,.card:hover,.pilotProfileCard:hover{border-color:var(--v4-line-strong)}
+.disciplineTile,.moduleCard,.card,.settingGroup,.ruleBox,.listRow,.champStageCard,.archiveCard,.formatRuleGrid{background:var(--v4-surface);border:1px solid var(--v4-line);border-radius:5px;box-shadow:none;color:var(--v4-text)}
+.disciplineTile:hover,.moduleCard:hover,.card:hover:hover{border-color:var(--v4-line-strong)}
 .disciplineTile.activeDiscipline{border-color:var(--v4-line-strong);box-shadow:none;}
 .disciplineTile.activeDiscipline:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--v4-cobalt);}
 .disciplineTile.locked{background:var(--v4-surface2);opacity:.62;}
-.tileIcon,.moduleIcon,.avatar,.pilotProfileAvatar{position:relative;background:var(--v4-control);color:var(--v4-control-text);border:1px solid var(--v4-line-strong);border-radius:4px;}
+.tileIcon,.moduleIcon,.avatar{position:relative;background:var(--v4-control);color:var(--v4-control-text);border:1px solid var(--v4-line-strong);border-radius:4px;}
 .tileIcon:after,.moduleIcon:after{content:"";position:absolute;right:5px;top:5px;width:7px;height:7px;background:var(--v4-cobalt)}
 .disciplineTile.activeDiscipline .tileIcon:after{background:var(--v4-green)}
 .disciplineTile.locked .tileIcon:after{background:var(--v4-muted)}
@@ -610,7 +582,7 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
   #viewHost{top:54px;bottom:54px;}
   .cockpitMode #viewHost{top:0;bottom:0;}
   .page{width:calc(100% - 12px);padding:10px 0 28px;}
-  .disciplineGrid,.moduleGrid,.pilotProfileGrid,.settingsGrid,.grid2{grid-template-columns:1fr}
+  .disciplineGrid,.moduleGrid,.settingsGrid,.grid2{grid-template-columns:1fr}
   .heroPanel{min-height:0;border-radius:22px;grid-template-columns:1fr;padding:16px;}
   .heroCopy h1{font-size:45px;}
   .heroStatus{justify-content:stretch;}

@@ -1,7 +1,8 @@
 # LEGION RX — PROJECT MASTER
 
-Current verified development MASTER: **4.2.0 CLEAN FULL APP RC21 · IOS START SAFETY**  
-Direct base: **RC20 CLEAN FOUNDATION**.
+Current development candidate: **4.2.0 CLEAN FULL APP RC22 · PILOT CARDS**  
+Direct code base: **RC21 IOS START SAFETY**.  
+Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
 
@@ -50,3 +51,15 @@ See `TEST_REPORT.md`. Static/runtime verification is complete. Physical iPhone/i
 - Safari audio preparation and unlock are explicitly two-step when cache hydration was still needed: first tap prepares local audio, second tap unlocks playback.
 - Locked audio playback is a silent no-op and cannot place a blocking audio modal over an already running race.
 - Sport rules and RallyCross runtime are unchanged from RC20.
+
+
+## RC22 PILOT CARDS
+
+- Pilot database presentation is rebuilt as translucent tile cards with large avatar area, uppercase identity and display-only career counters.
+- The former pilot-card implementation in `ui/shell/views.js` / `ui/shell/app.css` is removed; `ui/pilots/pilot-cards.js` + `ui/pilots/pilot-cards.css` are the single authoritative component source.
+- Each pilot can hold multiple model tiles (`models[]`) with class, model name, display ID/number, transponder and tile color. Legacy profiles without `models[]` are still read through one fallback primary model.
+- Race setup no longer uses the former pilot checkbox picker: tapping a model tile adds that pilot/model; tapping it again removes it; choosing another model replaces the pilot's current race model instead of duplicating the pilot.
+- Editing is opened from one small corner icon. The pilot card expands into a blurred overlay containing avatar, country, club, city, garage/model fields and the existing local announcer-name audio controls.
+- Uploaded transparent PNG/WebP artwork keeps its alpha through the local canvas/WebP path; RC22 does not add automatic AI background removal for ordinary photographs.
+- **Post-finish TOP-3 cards are not implemented in RC22**. They are deliberately reserved for a separate UI build after pilot-card acceptance.
+- `modes/`, RallyCross rules/runtime, Free Practice sport logic, `app.js`, reporting and RC21 START/audio safety behavior are unchanged.
