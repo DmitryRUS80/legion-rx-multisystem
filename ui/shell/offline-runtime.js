@@ -41,17 +41,26 @@ function setupAudioGate(){
     if(!announcer.localAudioReady){
       const audioOk=await announcer.hydrateOfflineAudio();updateOfflineReadyUi();
       if(!audioOk){announcer.setGate(`Локальный звук недоступен: ${announcer.lastError||'аудиопакет не найден в установленной версии'}`,'err');return;}
+      announcer.setGate('Аудио подготовлено. Нажмите «Включить звук» ещё раз.','ok');
+      return;
     }
     const ok=await announcer.unlockFromGesture({confirmation:true});if(ok)toast('Звук готов');updateOfflineReadyUi();
   };
   if(!state.settings.announcerEnabled&&!state.settings.lapSound)gate.classList.add('hidden');updateOfflineReadyUi();
 }
 
-async function ensureRaceAudioFromGesture(){
+async function ensureRaceAudioFromGesture({confirmation=false}={}){
   if(!state.settings.announcerEnabled&&!state.settings.lapSound)return true;
-  if(!announcer.localAudioReady){const ok=await announcer.hydrateOfflineAudio();if(!ok){announcer.showGate('Локальный аудиопакет недоступен. Откройте «Настройки → Обновление и Offline» при стабильной сети.');toast('Локальный звук не готов');return false;}}
+  if(!announcer.localAudioReady){
+    const ok=await announcer.hydrateOfflineAudio();
+    updateOfflineReadyUi();
+    if(!ok){announcer.showGate('Локальный аудиопакет недоступен. Откройте «Настройки → Обновление и Offline» при стабильной сети.');toast('Локальный звук не готов');return false;}
+    // Safari: после await user activation уже потеряна. Нужен второй явный тап.
+    announcer.showGate('Аудио подготовлено. Нажмите «Включить звук» ещё раз.');
+    return false;
+  }
   if(announcer.unlocked)return true;
-  const ok=await announcer.unlockFromGesture({confirmation:false});
+  const ok=await announcer.unlockFromGesture({confirmation});
   if(!ok){announcer.showGate('Safari требует один тап для восстановления звука. Интернет для этого не нужен.');toast('Нужно включить звук');}
   return ok;
 }

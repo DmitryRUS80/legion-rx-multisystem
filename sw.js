@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC20 */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC21 */
 'use strict';
 importScripts('./offline-manifest.js');
 

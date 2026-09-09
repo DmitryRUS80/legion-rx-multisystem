@@ -220,7 +220,6 @@ async function startTrackDayFromUI(){
  const td=state.trackDay||newTrackDayDraft(),chosen=$$('[data-track-pilot]:checked').map(x=>x.dataset.trackPilot);if(chosen.length<1)return toast('Выберите хотя бы одного пилота');
  td.name=$('#trackName')?.value.trim()||'Track Day';td.date=$('#trackDate')?.value||new Date().toISOString().slice(0,10);td.durationMin=Number($('#trackDuration')?.value)||30;td.pitTimeoutSec=Math.max(0,Number($('#trackPitTimeout')?.value??td.pitTimeoutSec??120));td.minLapSec=Math.max(1,Math.min(60,Number($('#trackMinLapSec')?.value??td.minLapSec??state.settings.minLapSec??2)));td.pilotIds=chosen;td.pilots=chosen.map((id,i)=>{const p=state.pilotDb.find(x=>x.id===id);return p?{id:p.id,profileId:p.id,name:p.name,club:p.club||'',city:p.city||'',country:p.country||'',transponder:String(p.transponder||''),registrationOrder:i+1}:null;}).filter(Boolean);
  if(!td.pilots.length)return toast('Не удалось сформировать участников');
- if(!await ensureRaceAudioFromGesture())return;
  try{if(lapwiz.connected){if(lapwiz.running)await lapwiz.stop();await lapwiz.start({mode:'practice',limitType:'time',durationMin:960,targetLaps:0,minLapSec:trackMinLapSec(td)});}}catch(e){toast(`LapWiz: ${e.message}`);return;}
  td.status='active';td.startedAtEpoch=Date.now();td.finishedAtEpoch=null;td.elapsedFinalMs=null;td.live=Object.fromEntries(td.pilots.map(p=>[p.id,blankTrackLive()]));td.unknown={};td.lastPass='Сессия запущена · ожидаем транспондеры';state.trackDay=td;persistTrackDays();nav('trackDayCockpit');
 }

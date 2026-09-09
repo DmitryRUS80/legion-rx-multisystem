@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current verified development MASTER: **4.2.0 CLEAN FULL APP RC20 · CLEAN FOUNDATION**  
-Direct base: **RC19 READABILITY PASS**.
+Current verified development MASTER: **4.2.0 CLEAN FULL APP RC21 · IOS START SAFETY**  
+Direct base: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
 
@@ -41,3 +41,12 @@ RC19 itself used the older network-first updater. Therefore the **one-time migra
 ## Verification
 
 See `TEST_REPORT.md`. Static/runtime verification is complete. Physical iPhone/iPad Safari, installed PWA cold-start with network disabled, and real LapWiz BLE remain mandatory field acceptance tests before GOLD.
+
+
+## RC21 IOS START SAFETY
+
+- Race/Track Day start is never blocked by audio cache state or Safari media permission.
+- LapWiz connection no longer waits for announcer audio and therefore preserves the direct user gesture required by Web Bluetooth on supported browsers.
+- Safari audio preparation and unlock are explicitly two-step when cache hydration was still needed: first tap prepares local audio, second tap unlocks playback.
+- Locked audio playback is a silent no-op and cannot place a blocking audio modal over an already running race.
+- Sport rules and RallyCross runtime are unchanged from RC20.

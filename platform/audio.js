@@ -177,7 +177,7 @@ class AnnouncerEngine extends EventTarget{
   cancel(){try{window.speechSynthesis?.cancel();}catch{}this.token++;this.stopVoice();this.lastMessage='Отсчёт отменён';this.emit({message:this.lastMessage,running:false});}
   async play(key,{wait=true,force=false,volume=1}={}){
     if(!force&&!this.enabled)return false;
-    if(!this.unlocked){this.showGate('Сначала включите звук одним касанием');return false;}
+    if(!this.unlocked)return false;
     this.ensurePlayers();const src=this.assetUrl(key);if(!src)return false;
     const a=this.mainPlayer;
     try{
@@ -195,7 +195,7 @@ class AnnouncerEngine extends EventTarget{
   }
   async playBleep({force=false}={}){
     if(!force&&!this.enabled&&false)return false;
-    if(!this.unlocked){this.showGate('Сначала включите звук одним касанием');return false;}
+    if(!this.unlocked)return false;
     this.ensurePlayers();const a=this.bleepPool[this.bleepIndex++%this.bleepPool.length];
     try{
       this.setSource(a,'bleep',this.assetUrl('bleep'));a.volume=1;a.playbackRate=1;a.currentTime=0;

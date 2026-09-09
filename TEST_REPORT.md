@@ -1,84 +1,54 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC20 · CLEAN FOUNDATION — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC21 · IOS START SAFETY — TEST REPORT
 
-Direct base: **RC19 READABILITY PASS**.
+Direct base: **RC20 CLEAN FOUNDATION**.
 
-## RC20 task
+## Incident reproduced by code-path audit
 
-One foundation-only release:
-- clean the accumulated UI/CSS/runtime history without redesigning the accepted working appearance;
-- keep RallyCross, Free Practice, LapWiz and reporting contracts intact;
-- create one authoritative source per active UI/style responsibility;
-- make the installed PWA start from the active local package;
-- add safe staged updates that cannot replace the working release after an interrupted download;
-- keep Safari/iOS sound unlock as a local user-gesture operation, independent of update/network logic.
+RC20 coupled `START` to `ensureRaceAudioFromGesture()`. On Safari/iPhone, when local audio still needed asynchronous cache hydration, the user-activation window could be lost before media `play()`. The function then returned `false`, so the RallyCross `beginCountdown()` call was never reached. This explains the field symptom: cockpit loads, LapWiz is unavailable on iPhone as expected, but the race no longer enters warm-up/start.
 
-## Architecture / protected logic
+RC21 removes that coupling at the authoritative action layer instead of adding an override.
+
+## RC21 changes
+
+- `ui/shell/actions.js`: RallyCross START directly calls `beginCountdown()`; LapWiz connect no longer waits for announcer audio.
+- `ui/shell/views.js`: Track Day start no longer waits for announcer audio.
+- `ui/shell/offline-runtime.js`: Safari-safe audio preparation uses a two-step fallback when hydration is still required; no hydrate→play sequence is attempted inside the same user activation.
+- `platform/audio.js`: an announcement attempted while audio is locked is a silent no-op and cannot open a blocking gate over a race. Explicit audio enable/recovery still owns the gate.
+- `offline-manifest.js` / `sw.js`: new RC21 release/cache namespace for staged update delivery.
+
+## Verification
 
 PASS:
 - architecture verifier: **8/8**;
-- protected sport/shared logic byte-identical to RC19: **PASS**;
-- `platform/lapwiz.js`, current audio/pilot/state/storage/timing/utils logic: unchanged;
-- all `modes/` sport files: unchanged;
-- all `reporting/` contract files: unchanged;
-- `app.js`: unchanged;
-- RallyCross rules self-test `RALLYCROSS-2026.09.1`: **16/16 PASS**.
-
-RC20 adds only dedicated offline/update infrastructure in `platform/offline-core.js` and `platform/updater.js`; it does not move sport logic into platform or UI.
-
-## Clean UI/CSS audit
-
-Active style responsibilities are exactly:
-1. `ui/fonts/oswald.css` — font-face declarations;
-2. `ui/themes/theme.css` — Dark/Light palette tokens only;
-3. `ui/shell/app.css` — general application shell/screens/components;
-4. `ui/shell/discipline-pults.css` — RallyCross / Free Practice cockpit presentation.
-
-PASS:
-- historical active names `*-rc5restore*`, `variant4.css`, `current-base.css`, `current-ui.js`, `bindings.js`, `offline-audio.js`, `offline-config.js`: removed from runtime;
-- patch/hotfix/override files: **0**;
-- same-scope duplicate selectors in `app.css`: **0**;
-- same-scope duplicate selectors in `discipline-pults.css`: **0**;
-- `!important`: `theme.css` **0**, `app.css` **3**, `discipline-pults.css` **11** (remaining uses are existing responsive/state constraints, not historical cascade layers);
-- CSS parse: **PASS** for all active CSS files;
-- undefined old cockpit background token `--console-bg`: removed from active source.
-
-## JavaScript / runtime
-
+- clean-foundation verifier: **PASS**;
+- RC21 critical-start verifier: **8/8**;
 - JavaScript syntax: **35/35 PASS**;
-- synthetic browser runtime loaded the current script order without application JS exceptions;
-- Home rendered in Dark and Light;
-- Settings rendered in Dark and Light, including `Обновление и Offline`;
-- real RallyCross state was constructed in the runtime harness and current cockpit rendered in Dark and Light with current RC19 visual behavior preserved: compact race banner, `PILOTS 3/3`, uppercase pilot names and truthful one-line BEST strip.
+- RallyCross sport self-test: **16/16 PASS**, `RALLYCROSS-2026.09.1`;
+- every file under `modes/` is byte-identical to RC20;
+- RallyCross rules/runtime/qualifying/finals: **NO CHANGE**;
+- Free Practice sport module: **NO CHANGE**;
+- LapWiz protocol/core commands: **NO CHANGE**;
+- reporting contract: **NO CHANGE**;
+- CSS/theme clean foundation: **NO CHANGE**.
 
-## Offline package integrity
+## Critical invariants now enforced
 
-- local files listed by `offline-manifest.js`: **77/77 exist**;
-- local PNG/WAV/MP3 signature audit: **PASS**;
-- offline manifest / CSS asset resolution: **PASS**;
-- active release navigation: **cache-first**;
-- active JS/CSS/images/audio: **cache-first**;
-- install does **not** call `skipWaiting()` automatically;
-- candidate release installs into its own cache and is activated only by explicit user confirmation;
-- incomplete candidate cache is deleted; the active release cache is not replaced;
-- immutable external Oswald resources are first reused from an already verified active cache when available, reducing dependence on the font CDN during later updates;
-- `platform/offline-core.js` performs read-only verification and does not download an application at runtime;
-- `ВКЛЮЧИТЬ ЗВУК` does not trigger update/download logic.
+- Race START cannot be rejected because audio cache is incomplete.
+- Race START cannot be rejected because Safari audio is locked.
+- Track Day start cannot be rejected because Safari audio is locked.
+- LapWiz `requestDevice()` on supported browsers is no longer preceded by awaited announcer work.
+- If audio hydration is required after an explicit audio-button tap, the UI asks for a second tap rather than incorrectly trying to reuse an expired Safari user gesture.
+- A locked announcer cannot force a modal over an active race.
 
-## One-time migration RC19 → RC20
+## Real-device acceptance still required
 
-RC19 itself still uses the older service-worker/update generation. Therefore the first migration to RC20 must be performed with stable internet and the application should be allowed to finish installation. Once RC20 is active, subsequent RC20+ updates use the staged/atomic mechanism above.
-
-## What cannot be fully certified in this container
-
-The following remain real-device acceptance tests:
-- installed iPhone/iPad Home Screen PWA cold-start with internet disabled;
-- Safari audio unlock after cold launch and after background/foreground recovery;
-- real LapWiz BLE connect/pass/reconnect on track;
-- real GitHub Pages service-worker lifecycle during the one-time RC19 → RC20 migration.
-
-The container/browser environment does not permit a full localhost service-worker lifecycle, so those items are intentionally not reported as PASS.
+The container cannot certify Safari itself or Web Bluetooth hardware. Required field checks after installing RC21:
+1. iPhone: open RallyCross with audio not enabled → START must immediately enter warm-up.
+2. iPhone: enable audio, then START → warm-up/race must run with sound.
+3. iPhone: background/foreground → restore audio with one explicit tap if Safari requests it; race state must remain intact.
+4. Android/Chrome or other supported Web Bluetooth device: LapWiz connect must open the device chooser directly and passes must work.
+5. Offline cold start after RC21 package reports OFFLINE READY.
 
 ## Release status
 
-**RC20 CLEAN FOUNDATION — static/runtime verified, ready for device/PWA testing.**
-Sport result: **NO CHANGE**. Visual intent: **preserve current accepted RC19 appearance; future redesign continues from this cleaned foundation.**
+**RC21 IOS START SAFETY — static/runtime invariants verified; ready for immediate iPhone field retest.**

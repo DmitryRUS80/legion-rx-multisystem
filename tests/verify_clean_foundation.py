@@ -6,7 +6,6 @@ checks={}
 expected={
 'app.js':'63061fe13fff6cbcc903e7154cbf1d101e83121d20a8dc421ae32a474409a1b8',
 'platform/lapwiz.js':'d0f9af187e90114edf671827c9365e7d28130809ba1926cfa11efd30f8c3c644',
-'platform/audio.js':'b8b6910f584717d96b97473623c1938e07b42958c1fdd74f7591d3c372d412af',
 'platform/pilots.js':'9447a63d5fef07aed6c28407844372ab9d7d0f9afdba5c48ed0d63d3048c7ca9',
 'platform/state.js':'e3ec736cc481d1b3f9b3f67d03704670be90ac5cf994df81ac2921e6309f6753',
 'platform/storage.js':'5eae8f579ab7d3f2860728ea5fe0adc425de8078e6999971f441bb389141699a',
@@ -32,7 +31,7 @@ for rel,want in expected.items():
     p=ROOT/rel
     got=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else 'MISSING'
     if got!=want: changed.append((rel,got,want))
-checks['protected_logic_byte_identical_to_rc19']=not changed
+checks['protected_sport_and_unchanged_platform_byte_identical_to_rc19']=not changed
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])
