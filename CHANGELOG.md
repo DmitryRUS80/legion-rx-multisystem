@@ -55,3 +55,13 @@
 - Removed selection shake/translation and colored selection outline; selected models use a neutral translucent glass highlight.
 - RallyCross setup participant list now reuses the same model mini-card; tapping the mini-card removes that pilot/model from setup.
 - Sport rules, LapWiz, audio, offline updater and reporting are unchanged.
+
+
+## RC24 · GLASS PILOT TILES
+- Removed nested rounded borders from pilot-card internals; retained one outer translucent card surface.
+- Pilot avatar is square and frameless; flag is flat at lower-right with no border/radius/shadow.
+- Flattened model rows and aligned ID geometry to the cockpit-style 38 px ID block.
+- Selected models use neutral glass highlight only; no colored outline and no movement/shake.
+- Replaced RallyCross setup long participant rows with compact portrait tiles: avatar, lower-right flag, colored ID and compact pilot name.
+- Flattened pilot editor inputs/model blocks to line-based controls without internal rounded boxes.
+- Sport rules, LapWiz, audio safety, offline update engine and reporting: NO CHANGE.

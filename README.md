@@ -1,6 +1,6 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC23 · PILOT CARDS CORRECTION
+# LEGION RX 4.2.0 CLEAN FULL APP RC24 · GLASS PILOT TILES
 
-Direct code base: **RC21 IOS START SAFETY**.
+Direct code base: **RC23 PILOT CARDS CORRECTION**.
 
 RC22 is an isolated pilot-UI rebuild. It replaces the old pilot database card and race pilot picker instead of styling over them.
 
@@ -35,3 +35,7 @@ See `TEST_REPORT.md` for verification and real-device acceptance checks.
 
 ## RC23 correction
 RC23 is a focused UI correction over RC22. Pilot cards follow the user-approved sketch; model tiles are simplified, non-shaking and use neutral glass selection. The same model mini-card is now used in RallyCross event setup. Sport/platform logic is unchanged.
+
+
+## RC24 glass correction
+RC24 keeps the RC23 pilot-card architecture but removes the nested rounded-box look. Avatar areas are square and frameless, flags are flat in the lower-right corner, model strips are flat cockpit-style ID labels, and selected participants in RallyCross setup are compact portrait tiles instead of long rows. Selection remains tap-to-toggle with a neutral glass highlight and no shake. Sport/platform logic is unchanged.

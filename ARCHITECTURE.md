@@ -63,3 +63,7 @@ The currently active release is cache-first and never requires network to start 
 
 ### RC23 pilot-card correction
 RC23 keeps this boundary intact: pilot visual composition remains in `ui/pilots/`; `views.js` only places the reusable race-setup mini-card. No RallyCross rule, BLE, storage, audio or reporting logic is moved into the pilot UI.
+
+
+### RC24 pilot-card visual correction
+RC24 changes only the authoritative pilot UI component. Compact race participant tiles remain a presentation of already-selected race pilots; selection/storage/sport behavior is not moved into CSS or RallyCross rules. No additional style layer is introduced.

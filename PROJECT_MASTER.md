@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC23 · PILOT CARDS CORRECTION**  
-Direct code base: **RC21 IOS START SAFETY**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC24 · GLASS PILOT TILES**  
+Direct code base: **RC23 PILOT CARDS CORRECTION**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -72,3 +72,13 @@ See `TEST_REPORT.md`. Static/runtime verification is complete. Physical iPhone/i
 - Model tiles show ID + model name + class only. Transponder remains data used by the race engine/editor but is not repeated as micro-text on the display tile.
 - Selection uses a neutral glass state without colored outline or movement.
 - `pilotSetupCard()` now renders the same selected-model mini-card instead of the old avatar/listRow participant rows.
+
+
+## RC24 GLASS PILOT TILES
+- Pilot database keeps one outer translucent card; internal avatar/model/stat surfaces are flat labels on glass rather than nested rounded boxes.
+- Avatar viewport is always square and frameless; country flag sits at the avatar lower-right with no border, radius or shadow.
+- Model strips are flat 38 px ID-style rows using the pilot/model color and dark ID text, matching cockpit ID proportions more closely.
+- Selected model state is neutral glass only: no colored outline and no transform/shake.
+- RallyCross setup participants are compact portrait tiles: square avatar + lower-right flag + bottom ID/name strip. The former long participant row is removed from this component.
+- Pilot editor keeps the outer overlay but flattens internal avatar, fields, garage blocks and voice section to line-based glass controls.
+- `modes/`, `platform/`, RallyCross sport runtime, audio safety and offline update behavior are unchanged.

@@ -1,4 +1,4 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC23 · PILOT CARDS CORRECTION — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC24 · GLASS PILOT TILES — TEST REPORT
 
 Direct development base: **RC21 IOS START SAFETY**.
 Known deployed GitHub base at the start of this task: **RC20 CLEAN FOUNDATION**; therefore the GitHub upload package for RC22 is cumulative from RC20 and also carries the accepted RC21 iOS-start-safety files.
@@ -106,3 +106,20 @@ Real iPhone/Android interaction and stored user data still require field accepta
 - Protected `modes/`, `platform/`, `app.js`, reporting are unchanged from RC22/RC21 baseline except release namespace files outside those protected areas.
 
 Physical iPhone/Safari and LapWiz hardware remain device tests and cannot be certified in this container.
+
+
+## RC24 verification
+- Architecture separation: PASS.
+- Clean-foundation invariants: PASS.
+- iOS START safety invariants: PASS.
+- Pilot component authority / old-card removal: PASS.
+- Square frameless pilot avatar: PASS.
+- Flat lower-right flag with no border/radius/shadow: PASS.
+- Flat 38 px model ID strip: PASS.
+- Neutral selected-model glass state with no transform/shake: PASS.
+- Pilot editor internal fields/avatar/model blocks use flat line-based geometry: PASS.
+- RallyCross setup selected participants render as compact portrait tiles rather than long rows: PASS.
+- Chromium component runtime: Dark pilot cards / editor / picker selection / three participant tiles: PASS; page errors 0.
+- Protected `modes/`, `platform/`, `app.js`, reporting: unchanged from the protected RC21/RC23 baseline.
+
+Physical iPhone/Safari and LapWiz hardware remain mandatory device acceptance tests.

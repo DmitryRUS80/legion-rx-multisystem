@@ -38,3 +38,9 @@
 - `ui/pilots/pilot-cards.js` — authoritative `pilotCardMarkup`, `pilotModelTileMarkup`, `pilotRaceSetupTileMarkup`, pilot editor and race model picker.
 - `ui/pilots/pilot-cards.css` — authoritative database card / model mini-card / pilot editor visual source.
 - `ui/shell/views.js::pilotSetupCard()` — consumes `pilotRaceSetupTileMarkup()`; it does not define a second pilot-card visual.
+
+
+## RC24 pilot UI
+- `ui/pilots/pilot-cards.js::pilotRaceSetupTileMarkup()` — compact selected-participant portrait tile (avatar + flag + model ID + compact name).
+- `ui/pilots/pilot-cards.css` — single source for square frameless avatars, flat model strips, glass selection and flattened editor controls.
+- `ui/shell/views.js::pilotSetupCard()` only hosts the tile grid; participant visual composition remains owned by `ui/pilots/`.

@@ -44,6 +44,16 @@ function pilotFlagBadge(profile){
   return pos?`<span class="pilotTileFlag countryFlag" style="--country-flag-position:${pos}" title="${esc(countryName(code))}" aria-label="${esc(countryName(code))}"></span>`:'';
 }
 
+function pilotEditorAvatarMarkup(profile){
+  return `${pilotAvatarMarkup(profile,'pilotEditorAvatar')}${pilotFlagBadge(profile)}`;
+}
+
+function pilotCompactName(name=''){
+  const parts=String(name||'').trim().toUpperCase().split(/\s+/).filter(Boolean);
+  if(parts.length<=1)return parts[0]||'ПИЛОТ';
+  return `${parts[0]} ${parts.slice(1).map(x=>`${x[0]||''}.`).join('')}`;
+}
+
 function pilotArchiveRef(race,profileId){
   return (race?.pilots||[]).find(p=>String(p.profileId||p.id)===String(profileId))||null;
 }
@@ -161,7 +171,7 @@ function pilotModal(existing=null,addToRace=false,originRect=null){
   $('#modalHost').innerHTML=`<div class="pilotEditorBackdrop" style="${pilotEditorOriginStyle(originRect)}"><section class="pilotEditorPanel" role="dialog" aria-modal="true">
     <header class="pilotEditorHead"><div><div class="sectionLabel">ПИЛОТ</div><h2>${existing?'ПРОФИЛЬ ПИЛОТА':'НОВЫЙ ПИЛОТ'}</h2></div><button class="pilotEditorClose" id="closeModal" type="button" aria-label="Закрыть">${pilotCardIcon('close')}</button></header>
     <div class="pilotEditorHero">
-      <label class="pilotEditorAvatarButton" id="pilotAvatarButton" for="pilotAvatarFile" aria-label="Загрузить аватар"><span id="pilotEditorAvatarPreview">${pilotAvatarMarkup({...existing,photo:pendingPhoto,name:existing?.name||'RX'},'pilotEditorAvatar')}</span><i>${pilotCardIcon('camera')}</i></label>
+      <label class="pilotEditorAvatarButton" id="pilotAvatarButton" for="pilotAvatarFile" aria-label="Загрузить аватар"><span id="pilotEditorAvatarPreview">${pilotEditorAvatarMarkup({...existing,photo:pendingPhoto,name:existing?.name||'RX'})}</span><i>${pilotCardIcon('camera')}</i></label>
       <input id="pilotAvatarFile" type="file" accept="image/png,image/jpeg,image/webp" hidden>
       <div class="pilotEditorIdentity"><label><span>ФАМИЛИЯ ИМЯ</span><input id="mName" value="${esc(existing?.name||'')}" placeholder="ДМИТРИЙ КОЧЕТКОВ"></label><div class="pilotEditorIdentityGrid"><label><span>СТРАНА</span><select id="mCountry">${countryOptions(existing?.country||'')}</select></label><label><span>КЛУБ</span><input id="mClub" value="${esc(existing?.club||'')}" placeholder="LEGION RX"></label><label><span>ГОРОД</span><input id="mCity" value="${esc(existing?.city||'')}" placeholder="Пенза"></label></div></div>
     </div>
@@ -172,12 +182,13 @@ function pilotModal(existing=null,addToRace=false,originRect=null){
   </section></div>`;
   pilotRenderModelEditors(initialModels);
   $('#closeModal').onclick=closeModal;
-  $('#pilotAvatarFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{pendingPhoto=await pilotResizeAvatar(file);$('#pilotEditorAvatarPreview').innerHTML=pilotAvatarMarkup({name:$('#mName').value||existing?.name||'RX',photo:pendingPhoto},'pilotEditorAvatar');toast('Аватар загружен');}catch(err){toast(err.message);}finally{e.target.value='';}};
+  $('#pilotAvatarFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{pendingPhoto=await pilotResizeAvatar(file);$('#pilotEditorAvatarPreview').innerHTML=pilotEditorAvatarMarkup({name:$('#mName').value||existing?.name||'RX',photo:pendingPhoto,country:$('#mCountry')?.value||existing?.country||''});toast('Аватар загружен');}catch(err){toast(err.message);}finally{e.target.value='';}};
   $('#uploadPilotVoice').onclick=()=>{if(!$('#mName').value.trim())return toast('Сначала введите имя пилота');$('#pilotVoiceFile').click();};
   $('#pilotVoiceFile').onchange=async e=>{const file=e.target.files?.[0],name=$('#mName').value.trim(),status=$('#pilotVoiceState');if(!file)return;if(file.size>5*1024*1024)return toast('Файл больше 5 МБ');if(!file.type.startsWith('audio/')&&!/\.(mp3|wav|ogg)$/i.test(file.name))return toast('Выберите MP3, WAV или OGG');status.className='pilotVoiceState';status.textContent='СОХРАНЕНИЕ…';try{await pilotVoices.put(id,name,file,file.name);pendingVoice={source:'local-file',fileName:file.name,text:name,status:'ready',updatedAt:new Date().toISOString()};const idx=state.pilotDb.findIndex(p=>p.id===id);if(idx>=0){state.pilotDb[idx].voice=pendingVoice;save(KEYS.pilots,state.pilotDb);}if(existing)existing.voice=pendingVoice;status.className='pilotVoiceState ready';status.textContent='ГОТОВО ОФЛАЙН';$('#playPilotVoice').disabled=false;$('#deletePilotVoice').disabled=false;$('#uploadPilotVoice').textContent='Заменить файл';toast('Запись имени сохранена');}catch(err){status.className='pilotVoiceState stale';status.textContent='ОШИБКА';toast(err.message);}finally{e.target.value='';}};
   $('#playPilotVoice').onclick=async()=>{try{const ok=await pilotVoices.play(id);if(!ok)toast('Запись имени не найдена на этом устройстве');}catch(e){toast(`Не удалось воспроизвести: ${e.message}`);}};
   $('#deletePilotVoice').onclick=async()=>{try{await pilotVoices.remove(id);pendingVoice=null;if(existing)existing.voice=null;const idx=state.pilotDb.findIndex(p=>p.id===id);if(idx>=0){state.pilotDb[idx].voice=null;save(KEYS.pilots,state.pilotDb);}$('#pilotVoiceState').className='pilotVoiceState';$('#pilotVoiceState').textContent='НЕ ЗАГРУЖЕНО';$('#playPilotVoice').disabled=true;$('#deletePilotVoice').disabled=true;$('#uploadPilotVoice').textContent='Загрузить имя';toast('Запись имени удалена');}catch(e){toast(e.message);}};
   $('#mName').addEventListener('input',()=>{const status=$('#pilotVoiceState');if(pendingVoice?.status==='ready'&&$('#mName').value.trim()!==pendingVoice.text){status.className='pilotVoiceState stale';status.textContent='НУЖНО ОБНОВИТЬ';}});
+  $('#mCountry').addEventListener('change',()=>{$('#pilotEditorAvatarPreview').innerHTML=pilotEditorAvatarMarkup({name:$('#mName').value||existing?.name||'RX',photo:pendingPhoto,country:$('#mCountry').value});});
   if(existing)$('#deletePilotProfile').onclick=()=>{if(!confirm('Удалить профиль пилота из общей базы?'))return;state.pilotDb=state.pilotDb.filter(p=>p.id!==id);save(KEYS.pilots,state.pilotDb);pilotVoices.remove(id).catch(()=>{});closeModal();render();};
   $('#savePilotModal').onclick=()=>{
     const name=$('#mName').value.trim();if(!name)return toast('Введите имя');const models=pilotCollectEditorModels().filter(m=>m.name||m.transponder||m.number||m.className);if(!models.length)return toast('Добавьте хотя бы одну модель');
@@ -212,12 +223,13 @@ function pilotRaceSetupTileMarkup(racePilot,index){
   const sourceModels=pilotModels(profile),model=sourceModels.find(m=>String(m.id)===String(racePilot.modelId))||{
     id:String(racePilot.modelId||'race-model'),name:String(racePilot.modelName||'ОСНОВНАЯ МОДЕЛЬ'),className:String(racePilot.modelClass||''),number:String(racePilot.modelNumber||''),transponder:String(racePilot.transponder||''),uiColor:String(racePilot.uiColor||pilotStableColor(racePilot.id||index))
   };
-  return `<article class="pilotRaceSetupTile"><div class="pilotRaceSetupPilot"><strong>${index+1}</strong><span>${esc(String(racePilot.name||profile.name||'ПИЛОТ').toUpperCase())}</span>${pilotFlagBadge(profile)}</div><button type="button" class="pilotModelTile compact raceSetupModel" data-remove-race-pilot="${esc(racePilot.id)}" style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}"><span class="pilotModelId">${esc(model.number||model.transponder||'—')}</span><span class="pilotModelInfo"><b>${esc(String(model.name||'ОСНОВНАЯ МОДЕЛЬ').toUpperCase())}</b>${model.className?`<small>${esc(String(model.className).toUpperCase())}</small>`:''}</span></button></article>`;
+  const idText=model.number||model.transponder||'—',name=pilotCompactName(racePilot.name||profile.name||'ПИЛОТ');
+  return `<button type="button" class="pilotRaceSetupTile" data-remove-race-pilot="${esc(racePilot.id)}" title="${esc(String(model.name||'').toUpperCase())}${model.className?` · ${esc(String(model.className).toUpperCase())}`:''}" style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}"><span class="pilotRaceSetupPortrait">${pilotAvatarMarkup(profile,'pilotRaceSetupAvatar')}${pilotFlagBadge(profile)}</span><span class="pilotRaceSetupCaption"><b class="pilotRaceSetupId">${esc(idText)}</b><strong class="pilotRaceSetupName">${esc(name)}</strong></span></button>`;
 }
 
 function pilotPickerCardMarkup(profile){
   const selected=pilotSelectedModelId(profile),stats=pilotCareerStats(profile),models=pilotModels(profile);
-  return `<article class="pilotSelectCard ${selected?'hasSelection':''}"><div class="pilotSelectHead">${pilotAvatarMarkup(profile,'pilotSelectAvatar')}<div><small>${esc((profile.club||'БЕЗ КЛУБА').toUpperCase())}</small><b>${esc(String(profile.name||'ПИЛОТ').toUpperCase())}</b><span>${stats.races} гонок · ${stats.wins} побед</span></div>${pilotFlagBadge(profile)}</div><div class="pilotSelectModels">${models.map(m=>pilotModelTileMarkup(profile,m,{selectable:true,selected:String(selected)===String(m.id)})).join('')}</div></article>`;
+  return `<article class="pilotSelectCard ${selected?'hasSelection':''}"><div class="pilotSelectHead"><div class="pilotSelectPortrait">${pilotAvatarMarkup(profile,'pilotSelectAvatar')}${pilotFlagBadge(profile)}</div><div><small>${esc((profile.club||'БЕЗ КЛУБА').toUpperCase())}</small><b>${esc(String(profile.name||'ПИЛОТ').toUpperCase())}</b><span>${stats.races} гонок · ${stats.wins} побед</span></div></div><div class="pilotSelectModels">${models.map(m=>pilotModelTileMarkup(profile,m,{selectable:true,selected:String(selected)===String(m.id)})).join('')}</div></article>`;
 }
 
 function pilotPicker(){
