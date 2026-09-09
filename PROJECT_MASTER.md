@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC24 · GLASS PILOT TILES**  
-Direct code base: **RC23 PILOT CARDS CORRECTION**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC25 · COMPACT PILOT GRID**  
+Direct code base: **RC24 GLASS PILOT TILES**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -82,3 +82,14 @@ See `TEST_REPORT.md`. Static/runtime verification is complete. Physical iPhone/i
 - RallyCross setup participants are compact portrait tiles: square avatar + lower-right flag + bottom ID/name strip. The former long participant row is removed from this component.
 - Pilot editor keeps the outer overlay but flattens internal avatar, fields, garage blocks and voice section to line-based glass controls.
 - `modes/`, `platform/`, RallyCross sport runtime, audio safety and offline update behavior are unchanged.
+
+
+## RC25 COMPACT PILOT GRID
+- Pilot database cards are density-first: adaptive grid targets 4–5 tiles across on desktop and 2–3 on portrait mobile/tablet.
+- Database card name uses the compact uppercase presentation (`SURNAME N.`) to remain readable at tile density.
+- Avatar viewports remain square but photographs now use centered `cover` cropping; images no longer sit at the bottom or squeeze to fit the square.
+- Race picker is rebuilt as compact portrait tiles matching the accepted sketch: square avatar, lower-right flag, compact name and square model-ID stickers.
+- Model selection no longer recreates the picker modal. The same DOM stays mounted and only selected states/count update, removing the visible selection shake.
+- Pilot model identity is one user-facing field: **ID LAPWIZ**. It is stored into the legacy-compatible `number` and `transponder` properties with the same value so the unchanged timing/sport core still consumes `p.transponder`.
+- Editor is more compact; labels are larger/closer to their values; horizontal input guide-lines and duplicate transponder control are removed; model color swatch is a true square.
+- `modes/`, `platform/`, `app.js`, reporting, audio and offline/update behavior remain unchanged.

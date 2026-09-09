@@ -1,103 +1,118 @@
-/* LEGION RX · PILOT CARDS · authoritative component styles · RC24
-   Visual rule: one outer glass surface, internal content behaves like flat labels on glass.
-   No stacked rounded boxes, no colored selection outlines, no shake/scale selection motion. */
+/* LEGION RX · PILOT CARDS · authoritative component styles · RC25
+   Dense pilot grid + compact picker. One glass surface, flat labels, no nested frames.
+   Pilot model ID is the LapWiz transponder ID. */
 .pilotsPage{--pilot-glass:rgba(12,15,20,.72);--pilot-glass-strong:rgba(5,7,10,.9);--pilot-id-text:#071018}
 html[data-theme="light"] .pilotsPage{--pilot-glass:rgba(255,255,255,.72);--pilot-glass-strong:rgba(255,255,255,.92);--pilot-id-text:#071018}
-.pilotTileGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.pilotTile{position:relative;display:grid;grid-template-columns:minmax(220px,58%) minmax(160px,42%);grid-template-rows:auto auto;overflow:hidden;border:1px solid color-mix(in srgb,var(--v4-line) 70%,transparent);border-radius:8px;background:linear-gradient(135deg,color-mix(in srgb,var(--v4-surface2) 80%,transparent),color-mix(in srgb,var(--v4-surface) 64%,transparent));box-shadow:0 18px 50px color-mix(in srgb,var(--v4-shadow) 32%,transparent);isolation:isolate;transition:box-shadow .18s ease,border-color .18s ease}
-.pilotTile:hover{border-color:color-mix(in srgb,var(--v4-line-strong) 72%,transparent);box-shadow:0 24px 68px color-mix(in srgb,var(--v4-shadow) 42%,transparent)}
-.pilotTileGlass{position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,color-mix(in srgb,var(--v4-cobalt) 3%,transparent),transparent 42%,color-mix(in srgb,var(--v4-magenta) 3%,transparent));backdrop-filter:blur(20px) saturate(1.04);-webkit-backdrop-filter:blur(20px) saturate(1.04)}
-.pilotTileProfile{grid-column:1;grid-row:1;min-width:0;display:grid;grid-template-rows:auto auto;padding:10px 8px 8px 10px}
-.pilotTilePortrait{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface3) 54%,transparent)}
-.pilotTileAvatar{position:absolute;inset:0;display:grid;place-items:end center;overflow:hidden;color:var(--v4-muted)}
-.pilotTileAvatar.hasPhoto img{width:100%;height:100%;display:block;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 12px 22px rgba(0,0,0,.22))}
-.pilotAvatarPlaceholder{width:50%;height:70%;max-width:180px;max-height:200px;align-self:end;fill:color-mix(in srgb,var(--v4-muted) 48%,transparent);filter:drop-shadow(0 10px 18px rgba(0,0,0,.14))}
-.pilotTileFlag{position:absolute;right:0;left:auto;bottom:0;width:34px;height:21px;font-size:0;border:0!important;border-radius:0!important;background-image:url("../../flags/flags-atlas-rc4.png");background-size:1600% 1600%;background-position:var(--country-flag-position);background-repeat:no-repeat;box-shadow:none!important;filter:none!important}
-.pilotTileName{margin:8px 0 0;min-width:0;font:900 clamp(28px,2.55vw,42px)/.92 var(--v4-font);letter-spacing:-.025em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pilotTileStats{grid-column:2;grid-row:1;display:grid;align-content:center;gap:0;padding:24px 18px 24px 14px}
-.pilotTileStats span{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:12px;padding:12px 0;border:0;border-bottom:1px solid color-mix(in srgb,var(--v4-line) 58%,transparent)}
-.pilotTileStats span:last-child{border-bottom:0}
-.pilotTileStats small{font:900 clamp(20px,1.7vw,28px)/.94 var(--v4-font);letter-spacing:-.015em;color:var(--v4-text)}
-.pilotTileStats b{font:900 clamp(31px,2.4vw,44px)/.85 var(--v4-font);letter-spacing:-.035em;color:var(--v4-text)}
-.pilotTileEdit{position:absolute;top:10px;right:10px;width:26px;height:26px;display:grid;place-items:center;border:0;border-radius:0;background:transparent;color:color-mix(in srgb,var(--v4-text) 52%,transparent);cursor:pointer;z-index:4;transition:color .16s ease,opacity .16s ease}
+
+/* Database: dense adaptive tiles. 4–5 across on normal desktop, 2–3 on portrait mobile/tablet. */
+.pilotTileGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;align-items:start}
+.pilotTile{position:relative;display:grid;grid-template-columns:minmax(0,56%) minmax(0,44%);grid-template-rows:auto auto auto;overflow:hidden;border:1px solid color-mix(in srgb,var(--v4-line) 55%,transparent);border-radius:7px;background:linear-gradient(135deg,color-mix(in srgb,var(--v4-surface2) 74%,transparent),color-mix(in srgb,var(--v4-surface) 60%,transparent));box-shadow:0 12px 34px color-mix(in srgb,var(--v4-shadow) 24%,transparent);isolation:isolate;transition:box-shadow .16s ease,border-color .16s ease}
+.pilotTile:hover{border-color:color-mix(in srgb,var(--v4-line-strong) 66%,transparent);box-shadow:0 18px 46px color-mix(in srgb,var(--v4-shadow) 32%,transparent)}
+.pilotTileGlass{position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,color-mix(in srgb,var(--v4-cobalt) 2.5%,transparent),transparent 44%,color-mix(in srgb,var(--v4-magenta) 2.5%,transparent));backdrop-filter:blur(18px) saturate(1.03);-webkit-backdrop-filter:blur(18px) saturate(1.03)}
+.pilotTileProfile{grid-column:1;grid-row:1;min-width:0;display:block;padding:7px 5px 3px 7px}
+.pilotTilePortrait{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface3) 48%,transparent)}
+.pilotTileAvatar{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;color:var(--v4-muted)}
+.pilotTileAvatar.hasPhoto img{width:100%;height:100%;display:block;object-fit:cover;object-position:center center;filter:none}
+.pilotAvatarPlaceholder{width:48%;height:62%;max-width:150px;max-height:170px;fill:color-mix(in srgb,var(--v4-muted) 48%,transparent);filter:drop-shadow(0 8px 16px rgba(0,0,0,.12))}
+.pilotTileFlag{position:absolute;right:0;left:auto;bottom:0;width:30px;height:18px;font-size:0;border:0;border-radius:0;overflow:hidden;box-shadow:none;filter:none}
+.pilotTileFlag::before{content:"";position:absolute;inset:0;background-image:url("../../flags/flags-atlas-rc4.png");background-size:1600% 1600%;background-position:var(--country-flag-position);background-repeat:no-repeat}
+.pilotTileName{grid-column:1/-1;grid-row:2;margin:0;padding:4px 7px 3px;min-width:0;font:900 clamp(19px,1.42vw,25px)/.94 var(--v4-font);letter-spacing:-.02em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pilotTileStats{grid-column:2;grid-row:1;display:grid;align-content:center;padding:10px 9px 7px 8px}
+.pilotTileStats span{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:5px;padding:6px 0;border:0}
+.pilotTileStats small{font:900 clamp(12px,.95vw,16px)/1 var(--v4-font);color:var(--v4-text)}
+.pilotTileStats b{font:900 clamp(20px,1.45vw,28px)/.9 var(--v4-font);letter-spacing:-.025em;color:var(--v4-text)}
+.pilotTileEdit{position:absolute;top:6px;right:6px;width:24px;height:24px;display:grid;place-items:center;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface) 52%,transparent);color:color-mix(in srgb,var(--v4-text) 55%,transparent);cursor:pointer;z-index:4;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .pilotTileEdit:hover{color:var(--v4-text)}
-.pilotCardIcon{width:17px;height:17px}
-.pilotTileModels{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:4px;padding:5px 6px 6px;border:0;border-top:1px solid color-mix(in srgb,var(--v4-line) 42%,transparent);background:color-mix(in srgb,var(--v4-surface) 26%,transparent)}
-.pilotModelTile{position:relative;min-width:0;height:38px;display:grid;grid-template-columns:clamp(44px,4.2vw,58px) minmax(0,1fr);align-items:stretch;padding:0;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 30%,transparent);color:var(--v4-text);text-align:left;overflow:hidden;font-family:var(--v4-font)}
-.pilotModelTile.compact{height:38px;grid-template-columns:clamp(44px,4.2vw,58px) minmax(0,1fr)}
-.pilotModelId{display:grid;place-items:center;height:38px;min-height:38px;padding:0 4px;background:var(--pilot-model-color);color:#071018;font:800 20px/1 var(--v4-font);border:0;border-radius:1px;text-shadow:none;overflow:hidden}
-.pilotModelInfo{min-width:0;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;padding:0 10px;gap:8px}
-.pilotModelInfo b{font:800 14px/1 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pilotModelInfo small{font:700 11px/1 var(--v4-font);letter-spacing:.025em;color:var(--v4-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pilotModelTile.selectable{cursor:pointer;transition:background .14s ease,box-shadow .14s ease,filter .14s ease}
-.pilotModelTile.selectable:hover{background:color-mix(in srgb,var(--v4-text) 5%,var(--v4-surface2) 34%)}
-.pilotModelTile.selected{background:linear-gradient(110deg,color-mix(in srgb,var(--v4-text) 10%,transparent),color-mix(in srgb,var(--v4-surface2) 46%,transparent) 42%,color-mix(in srgb,var(--v4-text) 4%,transparent));box-shadow:inset 0 1px 0 color-mix(in srgb,var(--v4-text) 20%,transparent),inset 0 -1px 0 color-mix(in srgb,var(--v4-text) 7%,transparent),0 8px 24px color-mix(in srgb,var(--v4-shadow) 20%,transparent);filter:saturate(1.02);outline:0}
+.pilotCardIcon{width:16px;height:16px}
+.pilotTileModels{grid-column:1/-1;grid-row:3;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px;padding:3px 5px 5px;border:0;background:transparent}
+.pilotModelTile{position:relative;min-width:0;height:34px;display:grid;grid-template-columns:38px minmax(0,1fr);align-items:stretch;padding:0;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 28%,transparent);color:var(--v4-text);text-align:left;overflow:hidden;font-family:var(--v4-font)}
+.pilotModelTile.compact{height:34px;grid-template-columns:38px minmax(0,1fr)}
+.pilotModelId{display:grid;place-items:center;width:38px;height:34px;min-height:34px;padding:0;background:var(--pilot-model-color);color:#071018;font:800 17px/1 var(--v4-font);border:0;border-radius:0;text-shadow:none;overflow:hidden}
+.pilotModelInfo{min-width:0;display:grid;align-content:center;padding:0 6px;gap:2px}
+.pilotModelInfo b{font:800 10px/1 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pilotModelInfo small{font:700 8px/1 var(--v4-font);letter-spacing:.02em;color:var(--v4-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pilotModelTile.selectable{cursor:pointer;transition:background .12s ease,box-shadow .12s ease,filter .12s ease}
+.pilotModelTile.selectable:hover{background:color-mix(in srgb,var(--v4-text) 5%,var(--v4-surface2) 32%)}
+.pilotModelTile.selected{background:linear-gradient(110deg,color-mix(in srgb,var(--v4-text) 9%,transparent),color-mix(in srgb,var(--v4-surface2) 42%,transparent));box-shadow:inset 0 1px 0 color-mix(in srgb,var(--v4-text) 18%,transparent),0 5px 16px color-mix(in srgb,var(--v4-shadow) 16%,transparent);filter:none;outline:0}
 
-/* Selected participants in race setup: compact portrait tiles, not table rows. */
-.pilotRaceSetupGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,220px));gap:12px;align-items:start;justify-content:start}
-.pilotRaceSetupTile{appearance:none;min-width:0;width:100%;display:grid;grid-template-rows:auto 44px;padding:0;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 44%,transparent);color:var(--v4-text);overflow:hidden;text-align:left;cursor:pointer;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--v4-line) 18%,transparent);transition:background .14s ease,box-shadow .14s ease}
-.pilotRaceSetupTile:hover{background:color-mix(in srgb,var(--v4-text) 6%,var(--v4-surface2) 44%);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--v4-text) 12%,transparent),0 10px 28px color-mix(in srgb,var(--v4-shadow) 18%,transparent)}
-.pilotRaceSetupPortrait{position:relative;width:100%;aspect-ratio:1/1;display:block;overflow:hidden;background:color-mix(in srgb,var(--v4-surface3) 50%,transparent)}
-.pilotRaceSetupAvatar{position:absolute;inset:0;display:grid;place-items:end center;overflow:hidden;color:var(--v4-muted)}
-.pilotRaceSetupAvatar.hasPhoto img{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block}
-.pilotRaceSetupAvatar .pilotAvatarPlaceholder{width:50%;height:70%}
-.pilotRaceSetupPortrait .pilotTileFlag{right:0;bottom:0;width:30px;height:18px}
-.pilotRaceSetupCaption{min-width:0;height:44px;display:grid;grid-template-columns:52px minmax(0,1fr);align-items:stretch;background:color-mix(in srgb,var(--v4-surface) 26%,transparent)}
-.pilotRaceSetupId{display:grid;place-items:center;height:44px;background:var(--pilot-model-color);color:#071018;font:800 20px/1 var(--v4-font);border-radius:1px}
-.pilotRaceSetupName{min-width:0;display:flex;align-items:center;padding:0 8px;font:800 18px/1 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Selected participants already in race setup. */
+.pilotRaceSetupGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,180px));gap:9px;align-items:start;justify-content:start}
+.pilotRaceSetupTile{appearance:none;min-width:0;width:100%;display:grid;grid-template-rows:auto 38px;padding:0;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 36%,transparent);color:var(--v4-text);overflow:hidden;text-align:left;cursor:pointer;box-shadow:none;transition:background .12s ease,box-shadow .12s ease}
+.pilotRaceSetupTile:hover{background:color-mix(in srgb,var(--v4-text) 5%,var(--v4-surface2) 40%);box-shadow:0 8px 22px color-mix(in srgb,var(--v4-shadow) 15%,transparent)}
+.pilotRaceSetupPortrait{position:relative;width:100%;aspect-ratio:1/1;display:block;overflow:hidden;background:color-mix(in srgb,var(--v4-surface3) 44%,transparent)}
+.pilotRaceSetupAvatar{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;color:var(--v4-muted)}
+.pilotRaceSetupAvatar.hasPhoto img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
+.pilotRaceSetupAvatar .pilotAvatarPlaceholder{width:48%;height:62%}
+.pilotRaceSetupPortrait .pilotTileFlag{right:0;bottom:0;width:27px;height:16px}
+.pilotRaceSetupCaption{min-width:0;height:38px;display:grid;grid-template-columns:44px minmax(0,1fr);align-items:stretch;background:transparent}
+.pilotRaceSetupId{display:grid;place-items:center;width:44px;height:38px;background:var(--pilot-model-color);color:#071018;font:800 17px/1 var(--v4-font);border-radius:0}
+.pilotRaceSetupName{min-width:0;display:flex;align-items:center;padding:0 6px;font:800 14px/1 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
+/* Editor: compact glass workspace, no input guide-lines or duplicate transponder field. */
 .pilotEditorBackdrop,.pilotPickerBackdrop{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:18px;background:color-mix(in srgb,var(--v4-overlay) 84%,transparent);backdrop-filter:blur(18px) saturate(.8);-webkit-backdrop-filter:blur(18px) saturate(.8);animation:pilotBackdropIn .2s ease both}
-.pilotEditorPanel{width:min(980px,96vw);max-height:94dvh;overflow:auto;border:1px solid color-mix(in srgb,var(--v4-line-strong) 72%,transparent);border-radius:14px;background:color-mix(in srgb,var(--v4-surface) 88%,transparent);box-shadow:0 34px 110px var(--v4-shadow);animation:pilotPanelIn .34s cubic-bezier(.18,.85,.24,1.05) both;transform-origin:var(--pilot-origin-x,50%) var(--pilot-origin-y,50%)}
+.pilotEditorPanel{width:min(900px,96vw);max-height:94dvh;overflow:auto;border:1px solid color-mix(in srgb,var(--v4-line-strong) 62%,transparent);border-radius:12px;background:color-mix(in srgb,var(--v4-surface) 88%,transparent);box-shadow:0 28px 90px var(--v4-shadow);animation:pilotPanelIn .28s cubic-bezier(.18,.85,.24,1.05) both;transform-origin:var(--pilot-origin-x,50%) var(--pilot-origin-y,50%)}
 @keyframes pilotBackdropIn{from{opacity:0}to{opacity:1}}
-@keyframes pilotPanelIn{from{opacity:0;transform:translateY(24px) scale(.94);filter:blur(7px)}to{opacity:1;transform:none;filter:none}}
-.pilotEditorHead,.pilotPickerHead{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;border-bottom:1px solid color-mix(in srgb,var(--v4-line) 42%,transparent);position:sticky;top:0;z-index:8;background:color-mix(in srgb,var(--v4-surface) 88%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.pilotEditorHead h2,.pilotPickerHead h2{margin:4px 0 0;font:900 25px/.95 var(--v4-font);letter-spacing:-.02em}
-.pilotEditorClose{width:32px;height:32px;display:grid;place-items:center;flex:none;border:0;border-radius:0;background:transparent;color:var(--v4-control-text);cursor:pointer}
-.pilotEditorHero{display:grid;grid-template-columns:190px minmax(0,1fr);gap:22px;padding:20px 20px 8px}
-.pilotEditorAvatarButton{position:relative;width:190px;height:190px;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface3) 50%,transparent);overflow:hidden;cursor:pointer;color:var(--v4-text)}
-.pilotEditorAvatar{position:absolute;inset:0;display:grid;place-items:end center;color:var(--v4-muted)}
-.pilotEditorAvatar .pilotAvatarPlaceholder{width:52%;height:76%}
-.pilotEditorAvatar img{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 12px 20px rgba(0,0,0,.22))}
-.pilotEditorAvatarButton .pilotTileFlag{right:0;bottom:0;width:30px;height:18px;z-index:3}
-.pilotEditorAvatarButton>i{position:absolute;right:8px;top:8px;bottom:auto;width:32px;height:32px;display:grid;place-items:center;border:0;border-radius:0;background:rgba(0,0,0,.46);color:white;font-style:normal;backdrop-filter:blur(10px)}
-.pilotEditorIdentity{display:grid;align-content:center;gap:14px}
-.pilotEditorIdentity label,.pilotModelEditorFields label{display:grid;gap:5px;min-width:0}
-.pilotEditorIdentity label>span,.pilotModelEditorFields label>span{font:700 8px/1 var(--v4-font);letter-spacing:.14em;color:var(--v4-muted)}
-.pilotEditorIdentity input,.pilotEditorIdentity select,.pilotModelEditorFields input{width:100%;min-height:42px;border:0;border-bottom:1px solid color-mix(in srgb,var(--v4-line) 58%,transparent);border-radius:0;background:transparent;color:var(--v4-text);padding:8px 2px;font:700 14px/1 var(--v4-font);outline:none}
-.pilotEditorIdentity>label:first-child input{min-height:52px;font-size:24px;text-transform:uppercase}
-.pilotEditorIdentity input:focus,.pilotEditorIdentity select:focus,.pilotModelEditorFields input:focus{border-bottom-color:var(--v4-cobalt)}
-.pilotEditorIdentityGrid{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:14px}
-.pilotEditorSectionHead{display:flex;justify-content:space-between;align-items:end;gap:16px;padding:18px 20px 9px}
-.pilotEditorSectionHead h3{margin:4px 0 0;font:900 21px/1 var(--v4-font)}
-.pilotEditorSectionHead>small{max-width:420px;text-align:right;color:var(--v4-muted);font-size:10px;line-height:1.4}
-.pilotModelEditorGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0 20px 18px}
-.pilotModelEditor{border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 24%,transparent);overflow:hidden;box-shadow:inset 0 -1px color-mix(in srgb,var(--v4-line) 45%,transparent)}
-.pilotModelEditorTop{min-height:38px;display:grid;grid-template-columns:38px 1fr 34px;align-items:center;border:0;border-bottom:1px solid color-mix(in srgb,var(--v4-line) 36%,transparent)}
-.pilotModelColor{height:100%;background:var(--pilot-model-color);display:grid;place-items:center;overflow:hidden}.pilotModelColor input{width:46px;height:46px;border:0;padding:0;opacity:.01;cursor:pointer}
-.pilotModelEditorTop>b{padding-left:9px;font:800 10px/1 var(--v4-font);letter-spacing:.12em}
-.pilotModelEditorTop>button{width:34px;height:34px;border:0;background:transparent;color:var(--v4-muted);cursor:pointer}.pilotModelEditorTop>button:hover{color:var(--v4-text)}
-.pilotModelEditorFields{display:grid;grid-template-columns:.8fr 1.5fr .7fr 1fr;gap:10px;padding:10px 8px}
-.pilotModelEditorFields input{min-height:37px;font-size:12px}
-.pilotAddModelTile{min-height:104px;display:flex;align-items:center;justify-content:center;gap:12px;border:0;border-top:1px solid color-mix(in srgb,var(--v4-line) 36%,transparent);border-bottom:1px solid color-mix(in srgb,var(--v4-line) 36%,transparent);border-radius:0;background:transparent;color:var(--v4-muted);cursor:pointer}.pilotAddModelTile:hover{color:var(--v4-text);background:color-mix(in srgb,var(--v4-text) 3%,transparent)}
-.pilotAddModelTile svg{width:26px;height:26px}.pilotAddModelTile span{display:grid;text-align:left;gap:3px}.pilotAddModelTile b{font:800 12px/1 var(--v4-font)}.pilotAddModelTile small{font-size:9px}
-.pilotEditorVoice{margin:0 20px 14px;border:0;border-top:1px solid color-mix(in srgb,var(--v4-line) 38%,transparent);border-bottom:1px solid color-mix(in srgb,var(--v4-line) 38%,transparent);border-radius:0;background:transparent;overflow:hidden}.pilotEditorVoice summary{min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 2px;cursor:pointer;list-style:none;font:800 10px/1 var(--v4-font);letter-spacing:.11em}.pilotEditorVoice summary::-webkit-details-marker{display:none}
-.pilotVoiceState{font-size:9px;color:var(--v4-muted)}.pilotVoiceState.ready{color:var(--v4-green)}.pilotVoiceState.stale{color:var(--v4-amber)}
-.pilotVoiceBody{padding:10px 2px 12px;border-top:1px solid color-mix(in srgb,var(--v4-line) 30%,transparent)}.pilotVoiceActions{display:flex;gap:7px;flex-wrap:wrap}.pilotVoiceActions .btn{min-height:36px}.pilotVoiceHint{margin-top:7px;font-size:9px;color:var(--v4-muted)}
-.pilotEditorFoot{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-top:1px solid color-mix(in srgb,var(--v4-line) 42%,transparent);position:sticky;bottom:0;background:color-mix(in srgb,var(--v4-surface) 90%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.pilotEditorDelete{display:flex;align-items:center;gap:7px;border:0;background:transparent;color:color-mix(in srgb,var(--v4-magenta) 78%,var(--v4-text));font:700 9px/1 var(--v4-font);letter-spacing:.08em;cursor:pointer}.pilotEditorDelete svg{width:15px;height:15px}.pilotEditorSave{min-width:180px}
+@keyframes pilotPanelIn{from{opacity:0;transform:translateY(16px) scale(.97);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+.pilotEditorHead,.pilotPickerHead{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;border:0;position:sticky;top:0;z-index:8;background:color-mix(in srgb,var(--v4-surface) 88%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.pilotEditorHead h2,.pilotPickerHead h2{margin:3px 0 0;font:900 23px/.95 var(--v4-font);letter-spacing:-.02em}
+.pilotEditorClose{width:30px;height:30px;display:grid;place-items:center;flex:none;border:0;border-radius:0;background:transparent;color:var(--v4-control-text);cursor:pointer}
+.pilotEditorHero{display:grid;grid-template-columns:155px minmax(0,1fr);gap:18px;padding:12px 14px 6px}
+.pilotEditorAvatarButton{position:relative;width:155px;height:155px;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface3) 46%,transparent);overflow:hidden;cursor:pointer;color:var(--v4-text)}
+.pilotEditorAvatar{position:absolute;inset:0;display:grid;place-items:center;color:var(--v4-muted)}
+.pilotEditorAvatar .pilotAvatarPlaceholder{width:48%;height:62%}
+.pilotEditorAvatar img{width:100%;height:100%;object-fit:cover;object-position:center center;filter:none}
+.pilotEditorAvatarButton .pilotTileFlag{right:0;bottom:0;width:28px;height:17px;z-index:3}
+.pilotEditorAvatarButton>i{position:absolute;right:6px;top:6px;width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:0;background:rgba(0,0,0,.42);color:white;font-style:normal;backdrop-filter:blur(8px)}
+.pilotEditorIdentity{display:grid;align-content:center;gap:8px}
+.pilotEditorIdentity label,.pilotModelEditorFields label{display:grid;gap:2px;min-width:0}
+.pilotEditorIdentity label>span,.pilotModelEditorFields label>span{font:700 11px/1 var(--v4-font);letter-spacing:.08em;color:var(--v4-muted)}
+.pilotEditorIdentity input,.pilotEditorIdentity select,.pilotModelEditorFields input{width:100%;min-height:36px;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-text) 3%,transparent);color:var(--v4-text);padding:5px 7px;font:700 15px/1 var(--v4-font);outline:none}
+.pilotEditorIdentity>label:first-child input{min-height:44px;font-size:22px;text-transform:uppercase}
+.pilotEditorIdentity input:focus,.pilotEditorIdentity select:focus,.pilotModelEditorFields input:focus{background:color-mix(in srgb,var(--v4-cobalt) 8%,transparent)}
+.pilotEditorIdentityGrid{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:8px}
+.pilotEditorSectionHead{display:flex;justify-content:space-between;align-items:end;gap:14px;padding:12px 14px 7px}
+.pilotEditorSectionHead h3{margin:3px 0 0;font:900 20px/1 var(--v4-font)}
+.pilotEditorSectionHead>small{max-width:420px;text-align:right;color:var(--v4-muted);font:600 11px/1.25 var(--v4-font)}
+.pilotModelEditorGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 14px 10px}
+.pilotModelEditor{border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 20%,transparent);overflow:hidden;box-shadow:none}
+.pilotModelEditorTop{min-height:38px;display:grid;grid-template-columns:38px 1fr 30px;align-items:center;border:0}
+.pilotModelColor{width:38px;height:38px;background:var(--pilot-model-color);display:grid;place-items:center;overflow:hidden}.pilotModelColor input{width:38px;height:38px;border:0;padding:0;opacity:.01;cursor:pointer}
+.pilotModelEditorTop>b{padding-left:7px;font:800 11px/1 var(--v4-font);letter-spacing:.09em}
+.pilotModelEditorTop>button{width:30px;height:30px;border:0;background:transparent;color:var(--v4-muted);cursor:pointer}.pilotModelEditorTop>button:hover{color:var(--v4-text)}
+.pilotModelEditorFields{display:grid;grid-template-columns:.85fr 1.35fr .85fr;gap:6px;padding:6px}
+.pilotModelEditorFields input{min-height:34px;font-size:13px}
+.pilotAddModelTile{min-height:72px;display:flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:0;background:transparent;color:var(--v4-muted);cursor:pointer}.pilotAddModelTile:hover{color:var(--v4-text);background:color-mix(in srgb,var(--v4-text) 3%,transparent)}
+.pilotAddModelTile svg{width:23px;height:23px}.pilotAddModelTile span{display:grid;text-align:left;gap:2px}.pilotAddModelTile b{font:800 12px/1 var(--v4-font)}.pilotAddModelTile small{font-size:10px}
+.pilotEditorVoice{margin:0 14px 8px;border:0;border-radius:0;background:transparent;overflow:hidden}.pilotEditorVoice summary{min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0;cursor:pointer;list-style:none;font:800 11px/1 var(--v4-font);letter-spacing:.08em}.pilotEditorVoice summary::-webkit-details-marker{display:none}
+.pilotVoiceState{font-size:10px;color:var(--v4-muted)}.pilotVoiceState.ready{color:var(--v4-green)}.pilotVoiceState.stale{color:var(--v4-amber)}
+.pilotVoiceBody{padding:7px 0 9px;border:0}.pilotVoiceActions{display:flex;gap:7px;flex-wrap:wrap}.pilotVoiceActions .btn{min-height:34px}.pilotVoiceHint{margin-top:6px;font-size:10px;color:var(--v4-muted)}
+.pilotEditorFoot{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 14px;border:0;position:sticky;bottom:0;background:color-mix(in srgb,var(--v4-surface) 90%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.pilotEditorDelete{display:flex;align-items:center;gap:7px;border:0;background:transparent;color:color-mix(in srgb,var(--v4-magenta) 78%,var(--v4-text));font:700 10px/1 var(--v4-font);letter-spacing:.06em;cursor:pointer}.pilotEditorDelete svg{width:15px;height:15px}.pilotEditorSave{min-width:160px}
 
-.pilotPickerPanel{width:min(1180px,97vw);max-height:94dvh;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden;border:1px solid color-mix(in srgb,var(--v4-line-strong) 72%,transparent);border-radius:14px;background:color-mix(in srgb,var(--v4-surface) 88%,transparent);box-shadow:0 34px 110px var(--v4-shadow);animation:pilotPanelIn .3s cubic-bezier(.18,.85,.24,1.05) both}
-.pilotPickerHead{position:relative}.pilotPickerHead>div:first-child{min-width:0}.pilotPickerHead p{margin:5px 0 0;color:var(--v4-muted);font-size:10px}.pilotPickerCount{margin-left:auto;display:grid;text-align:right}.pilotPickerCount small{font:700 8px/1 var(--v4-font);letter-spacing:.14em;color:var(--v4-muted)}.pilotPickerCount b{font:900 29px/1 var(--v4-font)}
-.pilotSelectGrid{overflow:auto;padding:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-content:start}
-.pilotSelectCard{border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 34%,transparent);overflow:hidden;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--v4-line) 20%,transparent);transition:background .14s ease,box-shadow .14s ease}.pilotSelectCard.hasSelection{background:linear-gradient(115deg,color-mix(in srgb,var(--v4-text) 7%,transparent),color-mix(in srgb,var(--v4-surface2) 40%,transparent));box-shadow:inset 0 1px 0 color-mix(in srgb,var(--v4-text) 15%,transparent),0 10px 28px color-mix(in srgb,var(--v4-shadow) 16%,transparent)}
-.pilotSelectHead{position:relative;min-height:84px;display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;gap:11px;padding:7px 10px 7px 7px}
-.pilotSelectPortrait{position:relative;width:70px;height:70px;overflow:hidden;background:color-mix(in srgb,var(--v4-surface3) 48%,transparent)}
-.pilotSelectAvatar{position:absolute;inset:0;display:grid;place-items:end center;overflow:hidden;color:var(--v4-muted)}.pilotSelectAvatar .pilotAvatarPlaceholder{width:48%;height:72%}.pilotSelectAvatar img{width:100%;height:100%;object-fit:contain;object-position:center bottom}.pilotSelectPortrait .pilotTileFlag{right:0;bottom:0;width:26px;height:16px}
-.pilotSelectHead>div:nth-child(2){display:grid;gap:3px;min-width:0}.pilotSelectHead small{font:700 8px/1 var(--v4-font);letter-spacing:.12em;color:var(--v4-muted)}.pilotSelectHead b{font:900 20px/.95 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pilotSelectHead span{font-size:9px;color:var(--v4-muted)}
-.pilotSelectModels{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:4px;padding:5px 6px 6px;border:0;border-top:1px solid color-mix(in srgb,var(--v4-line) 30%,transparent)}
+/* Race picker: compact portrait cards like the sketch; model choice is a row of ID stickers. */
+.pilotPickerPanel{width:min(1180px,97vw);max-height:94dvh;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden;border:1px solid color-mix(in srgb,var(--v4-line-strong) 62%,transparent);border-radius:12px;background:color-mix(in srgb,var(--v4-surface) 88%,transparent);box-shadow:0 28px 90px var(--v4-shadow);animation:pilotPanelIn .24s cubic-bezier(.18,.85,.24,1.05) both}
+.pilotPickerHead{position:relative}.pilotPickerHead>div:first-child{min-width:0}.pilotPickerHead p{margin:4px 0 0;color:var(--v4-muted);font-size:10px}.pilotPickerCount{margin-left:auto;display:grid;text-align:right}.pilotPickerCount small{font:700 9px/1 var(--v4-font);letter-spacing:.1em;color:var(--v4-muted)}.pilotPickerCount b{font:900 27px/1 var(--v4-font)}
+.pilotSelectGrid{overflow:auto;padding:10px 12px 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:9px;align-content:start}
+.pilotSelectCard{min-width:0;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 28%,transparent);padding:0;overflow:hidden;box-shadow:none;transition:background .12s ease,box-shadow .12s ease}
+.pilotSelectCard.hasSelection{background:linear-gradient(120deg,color-mix(in srgb,var(--v4-text) 6%,transparent),color-mix(in srgb,var(--v4-surface2) 36%,transparent));box-shadow:0 7px 22px color-mix(in srgb,var(--v4-shadow) 14%,transparent)}
+.pilotSelectPortrait{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:color-mix(in srgb,var(--v4-surface3) 44%,transparent)}
+.pilotSelectAvatar{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;color:var(--v4-muted)}
+.pilotSelectAvatar .pilotAvatarPlaceholder{width:48%;height:62%}
+.pilotSelectAvatar img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
+.pilotSelectPortrait .pilotTileFlag{right:0;bottom:0;width:27px;height:16px}
+.pilotSelectName{display:block;padding:5px 4px 3px;font:900 18px/.95 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pilotSelectModels{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:3px 4px 6px;border:0}
+.pilotPickerModelChip{position:relative;width:42px;height:42px;display:grid;place-items:center;padding:0;border:0;border-radius:0;background:var(--pilot-model-color);color:#071018;cursor:pointer;font-family:var(--v4-font);transition:filter .1s ease,box-shadow .1s ease,opacity .1s ease}
+.pilotPickerModelChip span{font:800 18px/1 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:clip;max-width:100%;padding:0 2px}
+.pilotPickerModelChip:hover{filter:brightness(1.06)}
+.pilotPickerModelChip.selected{filter:brightness(1.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35),0 0 16px rgba(255,255,255,.16)}
 
-@media (max-width:1050px){.pilotTileGrid{grid-template-columns:1fr}.pilotSelectGrid{grid-template-columns:1fr}.pilotRaceSetupGrid{grid-template-columns:repeat(auto-fill,minmax(155px,205px))}}
+@media (min-width:1500px){.pilotTileGrid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (max-width:1050px) and (min-width:701px){.pilotTileGrid{grid-template-columns:repeat(4,minmax(0,1fr))}.pilotSelectGrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (max-width:700px){
-  .pilotsPageHeader{align-items:start}.pilotsPageHeader p{display:none}.pilotTileGrid{gap:8px}.pilotTile{grid-template-columns:minmax(150px,58%) minmax(120px,42%)}.pilotTileProfile{padding:6px}.pilotTileName{font-size:26px;margin-top:6px}.pilotTileStats{padding:12px 10px 10px 8px}.pilotTileStats span{gap:6px;padding:8px 0}.pilotTileStats small{font-size:18px}.pilotTileStats b{font-size:27px}.pilotTileFlag{width:30px;height:18px}.pilotTileModels{grid-template-columns:1fr 1fr}.pilotModelTile,.pilotModelTile.compact{grid-template-columns:44px minmax(0,1fr);height:34px}.pilotModelId{height:34px;min-height:34px;font-size:17px}.pilotModelInfo{padding:0 7px;gap:5px}.pilotModelInfo b{font-size:11px}.pilotModelInfo small{font-size:9px}.pilotEditorBackdrop,.pilotPickerBackdrop{padding:0;align-items:end}.pilotEditorPanel,.pilotPickerPanel{width:100%;max-height:96dvh;border-radius:14px 14px 0 0}.pilotEditorHero{grid-template-columns:110px minmax(0,1fr);gap:12px;padding:14px 12px 6px}.pilotEditorAvatarButton{width:110px;height:110px}.pilotEditorIdentityGrid{grid-template-columns:1fr 1fr}.pilotEditorIdentityGrid label:last-child{grid-column:1/-1}.pilotEditorIdentity>label:first-child input{font-size:19px}.pilotEditorSectionHead{padding:14px 12px 8px;align-items:start}.pilotEditorSectionHead>small{display:none}.pilotModelEditorGrid{grid-template-columns:1fr;padding:0 12px 14px}.pilotModelEditorFields{grid-template-columns:1fr 1fr}.pilotEditorVoice{margin:0 12px 12px}.pilotEditorFoot{padding:10px 12px}.pilotEditorSave{min-width:150px}.pilotSelectGrid{padding:8px}.pilotPickerHead p{display:none}.pilotPickerCount{display:none}.pilotSelectHead{grid-template-columns:60px minmax(0,1fr);min-height:72px}.pilotSelectPortrait{width:58px;height:58px}.pilotSelectHead b{font-size:18px}.pilotSelectModels{grid-template-columns:1fr 1fr}.pilotRaceSetupGrid{grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:8px}.pilotRaceSetupCaption{height:38px;grid-template-columns:44px minmax(0,1fr)}.pilotRaceSetupId{height:38px;font-size:17px}.pilotRaceSetupName{font-size:15px;padding:0 6px}.pilotRaceSetupPortrait .pilotTileFlag{width:26px;height:16px}}
-@media (max-width:460px){.pilotTile{grid-template-columns:minmax(130px,57%) minmax(100px,43%)}.pilotTileName{font-size:23px}.pilotTileStats small{font-size:16px}.pilotTileStats b{font-size:24px}.pilotTileModels,.pilotSelectModels{grid-template-columns:1fr}.pilotModelEditorFields{grid-template-columns:1fr}.pilotEditorHero{grid-template-columns:92px minmax(0,1fr)}.pilotEditorAvatarButton{width:92px;height:92px}.pilotEditorIdentityGrid{grid-template-columns:1fr}.pilotEditorIdentityGrid label:last-child{grid-column:auto}.pilotRaceSetupGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (prefers-reduced-motion:reduce){.pilotTileEdit,.pilotEditorBackdrop,.pilotEditorPanel,.pilotPickerPanel{animation:none;transition:none}}
+  .pilotsPageHeader{align-items:start}.pilotsPageHeader p{display:none}.pilotTileGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.pilotTile{grid-template-columns:minmax(0,56%) minmax(0,44%)}.pilotTileProfile{padding:5px 4px 2px}.pilotTileName{font-size:18px;padding:3px 4px 2px}.pilotTileStats{padding:7px 5px}.pilotTileStats span{padding:4px 0}.pilotTileStats small{font-size:11px}.pilotTileStats b{font-size:20px}.pilotTileFlag{width:25px;height:15px}.pilotTileModels{grid-template-columns:1fr;gap:2px;padding:2px 4px 4px}.pilotModelTile,.pilotModelTile.compact{grid-template-columns:34px minmax(0,1fr);height:30px}.pilotModelId{width:34px;height:30px;min-height:30px;font-size:15px}.pilotModelInfo{padding:0 5px}.pilotModelInfo b{font-size:9px}.pilotModelInfo small{font-size:7px}
+  .pilotEditorBackdrop,.pilotPickerBackdrop{padding:0;align-items:end}.pilotEditorPanel,.pilotPickerPanel{width:100%;max-height:96dvh;border-radius:12px 12px 0 0}.pilotEditorHero{grid-template-columns:112px minmax(0,1fr);gap:10px;padding:10px}.pilotEditorAvatarButton{width:112px;height:112px}.pilotEditorIdentityGrid{grid-template-columns:1fr 1fr}.pilotEditorIdentityGrid label:last-child{grid-column:1/-1}.pilotEditorIdentity>label:first-child input{font-size:19px}.pilotEditorIdentity label>span,.pilotModelEditorFields label>span{font-size:10px}.pilotEditorSectionHead{padding:10px 10px 6px;align-items:start}.pilotEditorSectionHead>small{display:none}.pilotModelEditorGrid{grid-template-columns:1fr;padding:0 10px 10px}.pilotModelEditorFields{grid-template-columns:.8fr 1.2fr .8fr}.pilotEditorVoice{margin:0 10px 8px}.pilotEditorFoot{padding:8px 10px}.pilotEditorSave{min-width:145px}
+  .pilotPickerHead p{display:none}.pilotPickerCount{display:none}.pilotSelectGrid{grid-template-columns:repeat(3,minmax(0,1fr));padding:7px;gap:6px}.pilotSelectName{font-size:16px}.pilotPickerModelChip{width:36px;height:36px}.pilotPickerModelChip span{font-size:16px}.pilotRaceSetupGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.pilotRaceSetupCaption{height:34px;grid-template-columns:39px minmax(0,1fr)}.pilotRaceSetupId{width:39px;height:34px;font-size:15px}.pilotRaceSetupName{font-size:12px;padding:0 5px}.pilotRaceSetupPortrait .pilotTileFlag{width:24px;height:14px}
+}
+@media (max-width:520px){.pilotTileGrid,.pilotSelectGrid,.pilotRaceSetupGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.pilotTileName{font-size:17px}.pilotTileStats small{font-size:10px}.pilotTileStats b{font-size:19px}.pilotEditorHero{grid-template-columns:96px minmax(0,1fr)}.pilotEditorAvatarButton{width:96px;height:96px}.pilotEditorIdentityGrid{grid-template-columns:1fr}.pilotEditorIdentityGrid label:last-child{grid-column:auto}.pilotModelEditorFields{grid-template-columns:1fr}.pilotEditorIdentity label>span,.pilotModelEditorFields label>span{font-size:11px}.pilotSelectName{font-size:15px}}
+@media (prefers-reduced-motion:reduce){.pilotTileEdit,.pilotEditorBackdrop,.pilotEditorPanel,.pilotPickerPanel,.pilotModelTile,.pilotPickerModelChip{animation:none;transition:none}}

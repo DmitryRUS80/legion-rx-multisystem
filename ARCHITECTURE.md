@@ -67,3 +67,7 @@ RC23 keeps this boundary intact: pilot visual composition remains in `ui/pilots/
 
 ### RC24 pilot-card visual correction
 RC24 changes only the authoritative pilot UI component. Compact race participant tiles remain a presentation of already-selected race pilots; selection/storage/sport behavior is not moved into CSS or RallyCross rules. No additional style layer is introduced.
+
+
+### RC25 pilot UI / data boundary
+RC25 does not move pilot timing identity into `platform/` or `modes/`. The pilot UI exposes one `ID LAPWIZ` field and writes the same canonical value to the existing compatibility properties `model.number`, `model.transponder`, and the selected race pilot `transponder`. RallyCross and LapWiz code remain unchanged and continue consuming the established transponder field. Picker state updates are local DOM presentation updates; sport state still changes only through the existing race-pilot selection path.

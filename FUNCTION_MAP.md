@@ -44,3 +44,10 @@
 - `ui/pilots/pilot-cards.js::pilotRaceSetupTileMarkup()` — compact selected-participant portrait tile (avatar + flag + model ID + compact name).
 - `ui/pilots/pilot-cards.css` — single source for square frameless avatars, flat model strips, glass selection and flattened editor controls.
 - `ui/shell/views.js::pilotSetupCard()` only hosts the tile grid; participant visual composition remains owned by `ui/pilots/`.
+
+
+## RC25 pilot UI
+- `ui/pilots/pilot-cards.js::pilotModels()` — compatibility normalization for a single user-facing LapWiz ID; old visible `number` is preferred when legacy `number` and `transponder` disagree, then both compatibility properties are emitted with the same canonical value.
+- `ui/pilots/pilot-cards.js::pilotPickerModelChipMarkup()` — compact square model-ID sticker inside the race picker.
+- `ui/pilots/pilot-cards.js::pilotSyncPickerState()` — updates selected model/count in-place; does not recreate the modal.
+- `ui/pilots/pilot-cards.css` — authoritative dense database grid, compact picker, centered avatar crop and compact editor geometry.

@@ -65,3 +65,14 @@
 - Replaced RallyCross setup long participant rows with compact portrait tiles: avatar, lower-right flag, colored ID and compact pilot name.
 - Flattened pilot editor inputs/model blocks to line-based controls without internal rounded boxes.
 - Sport rules, LapWiz, audio safety, offline update engine and reporting: NO CHANGE.
+
+
+## RC25 · COMPACT PILOT GRID
+- Repacked pilot database cards into a dense adaptive grid: 4–5 per desktop row, 2–3 on portrait mobile/tablet.
+- Database pilot names use compact uppercase format to avoid truncating full names in dense tiles.
+- Fixed uploaded-avatar positioning: square viewport with centered `object-fit: cover`; no bottom drift or squeezed image.
+- Rebuilt race pilot selection as compact portrait tiles with square model-ID stickers, matching the accepted sketch instead of wide rows/cards.
+- Removed selection shake by replacing full picker re-render with in-place state/count updates.
+- Consolidated model number/transponder editing into one `ID LAPWIZ` field; the same ID is mirrored to compatibility `number`/`transponder` fields so unchanged LapWiz/RallyCross code continues to use `transponder`.
+- Made pilot editor more compact, increased micro-label size/proximity, removed horizontal input guide-lines and made the ID color swatch square.
+- Sport rules, LapWiz protocol, audio, offline updater, reporting and cockpit UI: NO CHANGE.

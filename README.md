@@ -1,6 +1,6 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC24 · GLASS PILOT TILES
+# LEGION RX 4.2.0 CLEAN FULL APP RC25 · COMPACT PILOT GRID
 
-Direct code base: **RC23 PILOT CARDS CORRECTION**.
+Direct code base: **RC24 GLASS PILOT TILES**.
 
 RC22 is an isolated pilot-UI rebuild. It replaces the old pilot database card and race pilot picker instead of styling over them.
 
@@ -39,3 +39,14 @@ RC23 is a focused UI correction over RC22. Pilot cards follow the user-approved 
 
 ## RC24 glass correction
 RC24 keeps the RC23 pilot-card architecture but removes the nested rounded-box look. Avatar areas are square and frameless, flags are flat in the lower-right corner, model strips are flat cockpit-style ID labels, and selected participants in RallyCross setup are compact portrait tiles instead of long rows. Selection remains tap-to-toggle with a neutral glass highlight and no shake. Sport/platform logic is unchanged.
+
+
+## RC25 compact pilot workflow
+- Pilot database: 4–5 compact glass tiles per desktop row; 2–3 per portrait mobile/tablet depending on width.
+- Photos use square centered cover-crop; placeholder remains the neutral human silhouette.
+- Race picker: compact portrait cards with ID stickers instead of wide pilot rows.
+- Model tap updates selection in-place; the picker is not rebuilt and does not shake.
+- Model editor has one `ID LAPWIZ` field. That value is the transponder ID used by LapWiz and is mirrored into legacy `number`/`transponder` properties only for compatibility with the unchanged core.
+- Editor guide-lines and duplicate transponder input are removed; labels are larger and closer to values.
+
+Sport/platform/offline/audio/reporting logic is unchanged.

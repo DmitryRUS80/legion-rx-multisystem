@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc24-glass-pilot-tiles';
-  const displayVersion='4.2.0 CLEAN FULL APP RC24 · GLASS PILOT TILES';
-  const cacheName='legion-rx-4-2-0-clean-full-rc24-glass-pilot-tiles';
+  const appVersion='4.2.0-clean-full-rc25-compact-pilot-grid';
+  const displayVersion='4.2.0 CLEAN FULL APP RC25 · COMPACT PILOT GRID';
+  const cacheName='legion-rx-4-2-0-clean-full-rc25-compact-pilot-grid';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',
