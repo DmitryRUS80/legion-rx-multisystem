@@ -16,7 +16,7 @@ function rallySetupView(){
  </div></div></section>`;
 }
 
-function pilotSetupCard(race){return `<article class="card"><div class="pageHeader" style="margin:0 0 12px"><div><div class="sectionLabel">ПИЛОТЫ</div><h2>Участники · ${race.pilots.length}</h2></div>${race.stage==='setup'?`<div class="btnRow"><button class="btn secondary" data-action="add-db-pilot">Из базы</button><button class="btn primary" data-action="quick-pilot">＋ Новый</button></div>`:''}</div><div class="list">${race.pilots.length?race.pilots.map((p,i)=>`<div class="listRow"><div class="avatar">${nameInitials(p.name)}</div><div class="grow"><div class="name">${i+1}. ${pilotNameMarkup(p)}</div><div class="sub">${clubMarkup(pilotClubName(p),'Без клуба')} · транспондер ${esc(p.transponder||'не назначен')}</div></div>${race.stage==='setup'?`<button class="btn secondary" data-remove-race-pilot="${p.id}">Убрать</button>`:''}</div>`).join(''):`<div class="empty">Добавьте минимум двух пилотов.</div>`}</div></article>`;}
+function pilotSetupCard(race){return `<article class="card"><div class="pageHeader" style="margin:0 0 12px"><div><div class="sectionLabel">ПИЛОТЫ</div><h2>Участники · ${race.pilots.length}</h2></div>${race.stage==='setup'?`<div class="btnRow"><button class="btn secondary" data-action="add-db-pilot">Из базы</button><button class="btn primary" data-action="quick-pilot">＋ Новый</button></div>`:''}</div><div class="pilotRaceSetupGrid">${race.pilots.length?race.pilots.map((p,i)=>pilotRaceSetupTileMarkup(p,i)).join(''):`<div class="empty">Добавьте минимум двух пилотов.</div>`}</div></article>`;}
 
 function formatSetupCard(race){
  const rs=race.raceSettings||{};

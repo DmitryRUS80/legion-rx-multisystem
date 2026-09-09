@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc22-pilot-cards';
-  const displayVersion='4.2.0 CLEAN FULL APP RC22 · PILOT CARDS';
-  const cacheName='legion-rx-4-2-0-clean-full-rc22-pilot-cards';
+  const appVersion='4.2.0-clean-full-rc23-pilot-cards-correction';
+  const displayVersion='4.2.0 CLEAN FULL APP RC23 · PILOT CARDS CORRECTION';
+  const cacheName='legion-rx-4-2-0-clean-full-rc23-pilot-cards-correction';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

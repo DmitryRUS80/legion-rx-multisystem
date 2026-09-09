@@ -1,4 +1,4 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC22 · PILOT CARDS — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC23 · PILOT CARDS CORRECTION — TEST REPORT
 
 Direct development base: **RC21 IOS START SAFETY**.
 Known deployed GitHub base at the start of this task: **RC20 CLEAN FOUNDATION**; therefore the GitHub upload package for RC22 is cumulative from RC20 and also carries the accepted RC21 iOS-start-safety files.
@@ -93,3 +93,16 @@ PASS:
 - protected `modes/`, `platform/`, `app.js` and reporting logic remain byte-identical to RC21 where declared protected.
 
 Real iPhone/Android interaction and stored user data still require field acceptance after deployment.
+
+
+## RC23 verification
+- Architecture separation: PASS.
+- Clean foundation invariants: PASS.
+- iOS START safety invariants: PASS.
+- Pilot component authority / old-card removal: PASS.
+- RC23 layout assertions (name below avatar, silhouette placeholder, clean model text, neutral selected glass, race-setup model-card reuse): PASS.
+- JavaScript syntax check across all project `.js` files: PASS.
+- Chromium component runtime: pilot database cards render; silhouette placeholder renders; model tap adds/removes; selected state uses no checkmark; race setup uses the same mini-card and removes through existing `data-remove-race-pilot` action path. PASS.
+- Protected `modes/`, `platform/`, `app.js`, reporting are unchanged from RC22/RC21 baseline except release namespace files outside those protected areas.
+
+Physical iPhone/Safari and LapWiz hardware remain device tests and cannot be certified in this container.

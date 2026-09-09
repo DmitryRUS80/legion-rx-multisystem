@@ -30,14 +30,18 @@ function pilotModels(profile){
   return [{id:'primary',name:String(profile?.modelName||'ОСНОВНАЯ МОДЕЛЬ'),className:String(profile?.modelClass||''),number:String(profile?.modelNumber||''),transponder:String(profile?.transponder||''),uiColor:String(profile?.uiColor||pilotStableColor(profile?.id||profile?.name||'RX'))}];
 }
 
+function pilotAvatarPlaceholderMarkup(){
+  return `<svg class="pilotAvatarPlaceholder" viewBox="0 0 120 140" aria-hidden="true"><circle cx="60" cy="39" r="24"/><path d="M19 132c2-36 17-58 41-58s39 22 41 58H19Z"/></svg>`;
+}
+
 function pilotAvatarMarkup(profile,cls='pilotTileAvatar'){
   const photo=String(profile?.photo||'').trim();
-  return `<div class="${cls} ${photo?'hasPhoto':''}">${photo?`<img src="${esc(photo)}" alt="${esc(String(profile?.name||'Пилот').toUpperCase())}">`:`<span>${esc(nameInitials(profile?.name||''))}</span>`}</div>`;
+  return `<div class="${cls} ${photo?'hasPhoto':'placeholder'}">${photo?`<img src="${esc(photo)}" alt="${esc(String(profile?.name||'Пилот').toUpperCase())}">`:pilotAvatarPlaceholderMarkup()}</div>`;
 }
 
 function pilotFlagBadge(profile){
   const code=pilotCountryCode(profile),pos=countryFlag(code);
-  return pos?`<span class="pilotTileFlag countryFlag" style="--country-flag-position:${pos}" title="${esc(countryName(code))}" aria-label="${esc(countryName(code))}">${esc(code)}</span>`:'';
+  return pos?`<span class="pilotTileFlag countryFlag" style="--country-flag-position:${pos}" title="${esc(countryName(code))}" aria-label="${esc(countryName(code))}"></span>`:'';
 }
 
 function pilotArchiveRef(race,profileId){
@@ -66,12 +70,11 @@ function pilotCareerStats(profile){
 }
 
 function pilotModelTileMarkup(profile,model,{selectable=false,selected=false,compact=false}={}){
-  const idText=model.number||model.transponder||'—';
+  const idText=model.number||model.transponder||'—',modelName=String(model.name||'').trim(),className=String(model.className||'').trim();
   const cls=['pilotModelTile',selectable?'selectable':'',selected?'selected':'',compact?'compact':''].filter(Boolean).join(' ');
-  return `<button type="button" class="${cls}" ${selectable?`data-race-model-toggle="${esc(profile.id)}" data-model-id="${esc(model.id)}"`: 'tabindex="-1"'} style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}">
+  return `<button type="button" class="${cls}" ${selectable?`data-race-model-toggle="${esc(profile.id)}" data-model-id="${esc(model.id)}" aria-pressed="${selected?'true':'false'}"`:'tabindex="-1"'} style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}">
     <span class="pilotModelId">${esc(idText)}</span>
-    <span class="pilotModelInfo"><small>${esc((model.className||'МОДЕЛЬ').toUpperCase())}</small><b>${esc((model.name||'МОДЕЛЬ').toUpperCase())}</b>${model.transponder?`<em>TP ${esc(model.transponder)}</em>`:''}</span>
-    ${selected?'<i class="pilotModelSelectedMark">✓</i>':''}
+    <span class="pilotModelInfo"><b>${esc((modelName||'ОСНОВНАЯ МОДЕЛЬ').toUpperCase())}</b>${className?`<small>${esc(className.toUpperCase())}</small>`:''}</span>
   </button>`;
 }
 
@@ -79,11 +82,9 @@ function pilotCardMarkup(profile){
   const stats=pilotCareerStats(profile),models=pilotModels(profile);
   return `<article class="pilotTile" data-pilot-card="${esc(profile.id)}">
     <div class="pilotTileGlass"></div>
-    <div class="pilotTilePortrait">${pilotAvatarMarkup(profile)}${pilotFlagBadge(profile)}</div>
-    <div class="pilotTileIdentity">
-      <div class="pilotTileEyebrow">${esc((profile.club||'БЕЗ КЛУБА').toUpperCase())}</div>
-      <h2>${esc(String(profile.name||'ПИЛОТ').toUpperCase())}</h2>
-      <div class="pilotTilePlace">${[profile.city,countryName(profile.country||'')].filter(Boolean).map(esc).join(' · ')||'LEGION RX DRIVER'}</div>
+    <div class="pilotTileProfile">
+      <div class="pilotTilePortrait">${pilotAvatarMarkup(profile)}${pilotFlagBadge(profile)}</div>
+      <h2 class="pilotTileName">${esc(String(profile.name||'ПИЛОТ').toUpperCase())}</h2>
     </div>
     <div class="pilotTileStats" aria-label="Статистика пилота">
       <span><small>ГОНКИ</small><b>${stats.races}</b></span>
@@ -204,6 +205,14 @@ function pilotToggleRaceModel(profileId,modelId,refresh=true){
     if(idx>=0)state.race.pilots[idx]=racePilot;else state.race.pilots.push(racePilot);
   }
   state.race.pilots.forEach((p,i)=>p.registrationOrder=i+1);persistRace();if(refresh)pilotPicker();
+}
+
+function pilotRaceSetupTileMarkup(racePilot,index){
+  const profile=state.pilotDb.find(p=>String(p.id)===String(racePilot.profileId||racePilot.id))||racePilot;
+  const sourceModels=pilotModels(profile),model=sourceModels.find(m=>String(m.id)===String(racePilot.modelId))||{
+    id:String(racePilot.modelId||'race-model'),name:String(racePilot.modelName||'ОСНОВНАЯ МОДЕЛЬ'),className:String(racePilot.modelClass||''),number:String(racePilot.modelNumber||''),transponder:String(racePilot.transponder||''),uiColor:String(racePilot.uiColor||pilotStableColor(racePilot.id||index))
+  };
+  return `<article class="pilotRaceSetupTile"><div class="pilotRaceSetupPilot"><strong>${index+1}</strong><span>${esc(String(racePilot.name||profile.name||'ПИЛОТ').toUpperCase())}</span>${pilotFlagBadge(profile)}</div><button type="button" class="pilotModelTile compact raceSetupModel" data-remove-race-pilot="${esc(racePilot.id)}" style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}"><span class="pilotModelId">${esc(model.number||model.transponder||'—')}</span><span class="pilotModelInfo"><b>${esc(String(model.name||'ОСНОВНАЯ МОДЕЛЬ').toUpperCase())}</b>${model.className?`<small>${esc(String(model.className).toUpperCase())}</small>`:''}</span></button></article>`;
 }
 
 function pilotPickerCardMarkup(profile){

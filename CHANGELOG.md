@@ -44,3 +44,14 @@
 - Pilot editing opens as a blurred expanding overlay from the card; country, club, city, avatar and model garage are edited there.
 - Race setup no longer uses checkbox-style pilot selection: tapping a model tile adds/removes that model from the active event.
 - Existing sport logic, LapWiz, audio, offline update engine and reporting remain unchanged from RC21.
+
+
+## RC23 · PILOT CARDS CORRECTION
+- Rebuilt the pilot database card to follow the accepted user sketch: avatar on the left, pilot name directly below it, large RACES/WINS/RECORDS typography on the right.
+- Replaced letter initials with a neutral transparent human silhouette placeholder.
+- Pilot flags now use the same square-corner atlas presentation as RallyCross cockpit rows.
+- Model tiles now show only the model name and its class; removed generic MODEL/TP micro-labels from the display tile.
+- Model ID blocks use the same flat color / dark ID text / near-square proportions as the cockpit pilot ID block.
+- Removed selection shake/translation and colored selection outline; selected models use a neutral translucent glass highlight.
+- RallyCross setup participant list now reuses the same model mini-card; tapping the mini-card removes that pilot/model from setup.
+- Sport rules, LapWiz, audio, offline updater and reporting are unchanged.

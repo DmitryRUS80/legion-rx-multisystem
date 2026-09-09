@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC22 · PILOT CARDS**  
+Current development candidate: **4.2.0 CLEAN FULL APP RC23 · PILOT CARDS CORRECTION**  
 Direct code base: **RC21 IOS START SAFETY**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
@@ -63,3 +63,12 @@ See `TEST_REPORT.md`. Static/runtime verification is complete. Physical iPhone/i
 - Uploaded transparent PNG/WebP artwork keeps its alpha through the local canvas/WebP path; RC22 does not add automatic AI background removal for ordinary photographs.
 - **Post-finish TOP-3 cards are not implemented in RC22**. They are deliberately reserved for a separate UI build after pilot-card acceptance.
 - `modes/`, RallyCross rules/runtime, Free Practice sport logic, `app.js`, reporting and RC21 START/audio safety behavior are unchanged.
+
+
+## RC23 PILOT CARDS CORRECTION
+- `ui/pilots/pilot-cards.js` + `pilot-cards.css` remain the single authoritative pilot-card component source. No second card implementation or override layer was added.
+- Database card geometry follows the accepted sketch: avatar left, uppercase name below avatar, large races/wins/records block right.
+- Empty avatars use a neutral human silhouette; transparent uploaded PNG/WebP artwork remains transparent after local resize.
+- Model tiles show ID + model name + class only. Transponder remains data used by the race engine/editor but is not repeated as micro-text on the display tile.
+- Selection uses a neutral glass state without colored outline or movement.
+- `pilotSetupCard()` now renders the same selected-model mini-card instead of the old avatar/listRow participant rows.

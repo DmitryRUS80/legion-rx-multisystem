@@ -32,3 +32,9 @@
 
 - Hidden report registry -> `reporting/core.js`
 - Report adapters -> `reporting/sections/rallycross.js`, `practice.js`, `rally.js`
+
+
+## RC23 pilot UI
+- `ui/pilots/pilot-cards.js` — authoritative `pilotCardMarkup`, `pilotModelTileMarkup`, `pilotRaceSetupTileMarkup`, pilot editor and race model picker.
+- `ui/pilots/pilot-cards.css` — authoritative database card / model mini-card / pilot editor visual source.
+- `ui/shell/views.js::pilotSetupCard()` — consumes `pilotRaceSetupTileMarkup()`; it does not define a second pilot-card visual.

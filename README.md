@@ -1,4 +1,4 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC22 · PILOT CARDS
+# LEGION RX 4.2.0 CLEAN FULL APP RC23 · PILOT CARDS CORRECTION
 
 Direct code base: **RC21 IOS START SAFETY**.
 
@@ -31,3 +31,7 @@ Post-finish TOP-3 cards are **not** included yet. They stay as the next separate
 - reporting contract: **NO CHANGE**.
 
 See `TEST_REPORT.md` for verification and real-device acceptance checks.
+
+
+## RC23 correction
+RC23 is a focused UI correction over RC22. Pilot cards follow the user-approved sketch; model tiles are simplified, non-shaking and use neutral glass selection. The same model mini-card is now used in RallyCross event setup. Sport/platform logic is unchanged.

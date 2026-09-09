@@ -59,3 +59,7 @@ Historical `variant4.css`, `current-base.css` multi-generation race-console bloc
 ## Offline/update architecture
 
 The currently active release is cache-first and never requires network to start a race. A candidate update is downloaded into its own cache by the new service worker. It cannot replace the active release unless its complete offline package installs successfully and the user explicitly confirms installation in Settings. Interrupted downloads leave the active release untouched.
+
+
+### RC23 pilot-card correction
+RC23 keeps this boundary intact: pilot visual composition remains in `ui/pilots/`; `views.js` only places the reusable race-setup mini-card. No RallyCross rule, BLE, storage, audio or reporting logic is moved into the pilot UI.
