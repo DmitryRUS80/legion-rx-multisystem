@@ -67,3 +67,9 @@
 - `ui/pilots/pilot-cards.js::pilotPersistEditorColor()` — immediate model-color persistence for an existing pilot and matching active race presentation snapshot.
 - `ui/shell/views.js::competitionFinishConfirmModal()` — iOS-safe in-app completion confirmation.
 - `app.js::completeCompetition(confirmed=false)` — archives/clears a completed competition; UI may pass `true` after its own confirmation without putting DOM code in `app.js`.
+
+
+## RC27 changed UI functions
+- `pilotRenderModelEditors()` — live LapWiz ID text inside the existing color square.
+- `appBackgroundThemeColor()` / `applyAppBackground()` — theme-aware rendering of a user-selected background hue.
+- `.pilotSelectCard.hasSelection` / `.pilotPickerModelChip.selected` — perimeter glow only; no layout change.

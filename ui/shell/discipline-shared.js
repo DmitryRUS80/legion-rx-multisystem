@@ -62,9 +62,15 @@ function translateStatic(){
 function applyUiTokens(ui=state.settings.ui){const r=document.documentElement.style;r.setProperty('--radius-card',`${ui.cardRadius}px`);r.setProperty('--radius-tile',`${ui.tileRadius}px`);r.setProperty('--radius-button',`${ui.buttonRadius}px`);r.setProperty('--radius-input',`${ui.inputRadius}px`);r.setProperty('--radius-icon',`${ui.iconRadius}px`);r.setProperty('--radius-hero',`${ui.heroRadius}px`);r.setProperty('--radius-widget',`${ui.widgetRadius}px`);r.setProperty('--radius-modal',`${ui.modalRadius}px`);r.setProperty('--card-padding',`${ui.cardPadding}px`);r.setProperty('--section-gap',`${ui.sectionGap}px`);r.setProperty('--control-height',`${ui.buttonHeight}px`);r.setProperty('--content-width',`${ui.contentWidth}px`);r.setProperty('--discipline-cols',String(ui.disciplineCols));}
 
 function appBackgroundFallbackColor(){return state.settings.theme==='light'?'#f3f4f5':'#050608';}
+function appBackgroundThemeColor(base,theme=state.settings.theme){
+ const m=/^#([0-9a-f]{6})$/i.exec(String(base||'').trim());if(!m)return appBackgroundFallbackColor();
+ const n=parseInt(m[1],16),rgb=[(n>>16)&255,(n>>8)&255,n&255],target=theme==='light'?[255,255,255]:[0,0,0],keep=theme==='light'?.22:.34;
+ const out=rgb.map((v,i)=>Math.round(v*keep+target[i]*(1-keep)));
+ return '#'+out.map(v=>v.toString(16).padStart(2,'0')).join('');
+}
 function applyAppBackground(){
  const r=document.documentElement.style,color=String(state.settings.backgroundColor||'').trim(),image=String(state.settings.backgroundImage||'').trim();
- r.setProperty('--app-page-bg-color',color||appBackgroundFallbackColor());
+ r.setProperty('--app-page-bg-color',color?appBackgroundThemeColor(color):appBackgroundFallbackColor());
  r.setProperty('--app-page-bg-image',image?`url("${image.replace(/"/g,'%22')}")`:'none');
 }
 function resizeAppBackground(file){

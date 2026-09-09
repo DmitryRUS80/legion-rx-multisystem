@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC26 · PILOT FLOW & UI SAFETY */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC27 · PRACTICE GLOW & LIVE THEME */
 'use strict';
 importScripts('./offline-manifest.js');
 

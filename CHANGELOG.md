@@ -1,3 +1,12 @@
+# LEGION RX CHANGELOG
+
+## RC27 · PRACTICE GLOW & LIVE THEME
+
+- Free Practice selection now gives both the selected pilot tile and selected model ID tile a perimeter glow only; no extra border, wrapper or layout shift.
+- Custom page background color is now a theme-aware hue seed: Dark and Light automatically derive dark/light variants while preserving the selected color character.
+- Model editor color square now shows the LapWiz ID as soon as the ID field is filled; the same square remains the live color picker.
+- No sport rules, Free Practice sport core, RallyCross runtime, LapWiz protocol, audio, reporting or finish/start behavior changed.
+
 # LEGION RX — CHANGELOG
 
 ## RC20 · CLEAN FOUNDATION

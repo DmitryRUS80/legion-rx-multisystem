@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc26-pilot-flow-ui-safety';
-  const displayVersion='4.2.0 CLEAN FULL APP RC26 · PILOT FLOW & UI SAFETY';
-  const cacheName='legion-rx-4-2-0-clean-full-rc26-pilot-flow-ui-safety';
+  const appVersion='4.2.0-clean-full-rc27-practice-glow-live-theme';
+  const displayVersion='4.2.0 CLEAN FULL APP RC27 · PRACTICE GLOW & LIVE THEME';
+  const cacheName='legion-rx-4-2-0-clean-full-rc27-practice-glow-live-theme';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

@@ -1,4 +1,4 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC26 · PILOT FLOW & UI SAFETY
+# LEGION RX 4.2.0 CLEAN FULL APP RC27 · PRACTICE GLOW & LIVE THEME
 
 Direct code base: **RC25 COMPACT PILOT GRID**.
 
@@ -65,3 +65,10 @@ Sport/platform/offline/audio/reporting logic is unchanged.
 - Dark/light mode applies immediately.
 - Existing pilot model color applies/persists immediately from the color picker.
 - Completed-race “ЗАВЕРШИТЬ” uses an in-app confirmation path for iPhone/Safari reliability.
+
+## RC27 practice/theme UI pass
+
+- Free Practice selected pilot and selected model tiles glow around their existing perimeter without adding layout frames.
+- A custom page background color is stored as the chosen base hue and automatically rendered as a dark or light variant when the theme changes.
+- The model editor color square shows the current LapWiz ID live while the ID is typed.
+- Sport modules and LapWiz protocol are unchanged.

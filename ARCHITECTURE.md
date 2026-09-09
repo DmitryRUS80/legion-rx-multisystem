@@ -82,3 +82,7 @@ RC26 keeps pilot/model selection presentation in `ui/pilots/`. RallyCross setup 
 - Dark/light switching is persisted and applied immediately in the UI shell; it does not wait for the general settings Save button.
 - Pilot model color changes are previewed immediately in the authoritative pilot component and persisted immediately for existing profiles. The selected active race snapshot receives only the color presentation field; transponder/sport identity is unchanged.
 - The completed-competition button uses an in-app confirmation modal on the UI side. `app.js::completeCompetition(confirmed)` remains DOM-free and owns only archival/state completion. This avoids relying on the native Safari `confirm()` path for the cockpit button.
+
+
+## RC27 UI boundary
+RC27 changes only pilot-selection presentation and shell background rendering. Free Practice rules remain in `modes/free-practice/`; selection UI remains in `ui/pilots/`; theme/background rendering remains in `ui/shell/`.

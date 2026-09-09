@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC26 · PILOT FLOW & UI SAFETY**  
+Current development candidate: **4.2.0 CLEAN FULL APP RC27 · PRACTICE GLOW & LIVE THEME**  
 Direct code base: **RC25 COMPACT PILOT GRID**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
@@ -102,3 +102,8 @@ See `TEST_REPORT.md`. Static/runtime verification is complete. Physical iPhone/i
 - Free Practice setup no longer uses the legacy checkbox/list pilot rows. It consumes the same compact pilot/model tile component used by RallyCross selection.
 - A Free Practice selection stores the chosen model metadata in the Track Day setup snapshot and passes that model's existing LapWiz ID into the unchanged Free Practice runtime. `modes/free-practice/index.js` is byte-identical to RC25.
 - No RallyCross rule, BLE protocol, audio/offline engine or reporting contract changes.
+
+
+## RC27 PRACTICE GLOW & LIVE THEME
+
+UI-only refinement on the RC26 foundation: Free Practice selection visibility, theme-aware custom background color, and live LapWiz ID preview inside the model color square. No sports-core changes.

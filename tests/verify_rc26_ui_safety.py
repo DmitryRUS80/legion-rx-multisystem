@@ -13,7 +13,7 @@ checks['background_color_applies_immediately']='appBgColor' in views and "bgColo
 checks['background_image_local_and_replaceable']=all(x in views for x in ['appBgFile','appBgUpload','appBgClear']) and 'resizeAppBackground(file)' in actions and 'backgroundImage' in shared
 checks['legacy_page_stripes_removed']='background-size:100% 32px' not in appcss and 'linear-gradient(var(--v4-grid) 1px,transparent 1px)' not in appcss
 checks['background_is_centered_cover']='background-size:cover' in appcss and 'background-position:center center' in appcss
-checks['model_color_live_visual']='host.oninput=e=>' in pilot and "section.style.setProperty('--pilot-model-color',input.value)" in pilot
+checks['model_color_live_visual']='host.oninput=e=>' in pilot and "section.style.setProperty('--pilot-model-color',field.value)" in pilot
 checks['model_color_live_persist']='pilotPersistEditorColor' in pilot and 'save(KEYS.pilots,state.pilotDb)' in pilot
 checks['model_color_updates_active_race']='racePilot.uiColor=color' in pilot and 'persistRace()' in pilot
 checks['ios_finish_uses_app_modal']="if(action==='complete-competition')return competitionFinishConfirmModal()" in actions and 'completeCompetition(true)' in views

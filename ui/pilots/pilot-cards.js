@@ -127,7 +127,7 @@ function pilotEditorOriginStyle(rect){
 function pilotModelEditorMarkup(model,index){
   const color=model.uiColor||pilotStableColor(model.id||index),lapwizId=String(model.number||model.transponder||'');
   return `<section class="pilotModelEditor" data-editor-model="${esc(model.id)}" style="--pilot-model-color:${esc(color)}">
-    <div class="pilotModelEditorTop"><span class="pilotModelColor"><input type="color" data-model-field="uiColor" value="${esc(color)}" aria-label="Цвет ID"></span><b>МОДЕЛЬ ${index+1}</b><button type="button" data-remove-model="${esc(model.id)}" aria-label="Удалить модель">${pilotCardIcon('close')}</button></div>
+    <div class="pilotModelEditorTop"><span class="pilotModelColor" data-model-id-preview="${esc(lapwizId)}"><b>${esc(lapwizId)}</b><input type="color" data-model-field="uiColor" value="${esc(color)}" aria-label="Цвет ID"></span><b>МОДЕЛЬ ${index+1}</b><button type="button" data-remove-model="${esc(model.id)}" aria-label="Удалить модель">${pilotCardIcon('close')}</button></div>
     <div class="pilotModelEditorFields">
       <label><span>КЛАСС</span><input data-model-field="className" value="${esc(model.className||'')}" placeholder="SC10"></label>
       <label><span>МОДЕЛЬ</span><input data-model-field="name" value="${esc(model.name||'')}" placeholder="KKPIT KONE"></label>
@@ -161,7 +161,12 @@ function pilotPersistEditorColor(profileId,modelId,color){
 function pilotRenderModelEditors(models,profileId=''){
   const host=$('#pilotModelEditors');if(!host)return;
   host.innerHTML=models.map((m,i)=>pilotModelEditorMarkup(m,i)).join('')+`<button type="button" class="pilotAddModelTile" id="pilotAddModel">${pilotCardIcon('plus')}<span><b>ДОБАВИТЬ МОДЕЛЬ</b><small>Класс · модель · ID LapWiz</small></span></button>`;
-  host.oninput=e=>{const input=e.target.closest?.('[data-model-field="uiColor"]');if(!input)return;const section=input.closest('[data-editor-model]');if(!section)return;section.style.setProperty('--pilot-model-color',input.value);if(profileId)pilotPersistEditorColor(profileId,section.dataset.editorModel,input.value);};
+  host.oninput=e=>{
+    const field=e.target.closest?.('[data-model-field]');if(!field)return;
+    const section=field.closest('[data-editor-model]');if(!section)return;
+    if(field.dataset.modelField==='uiColor'){section.style.setProperty('--pilot-model-color',field.value);if(profileId)pilotPersistEditorColor(profileId,section.dataset.editorModel,field.value);return;}
+    if(field.dataset.modelField==='lapwizId'){const preview=section.querySelector('.pilotModelColor');if(preview){const id=field.value.trim();preview.dataset.modelIdPreview=id;const label=preview.querySelector('b');if(label)label.textContent=id;}}
+  };
   host.querySelectorAll('[data-remove-model]').forEach(b=>b.onclick=()=>{
     const current=pilotCollectEditorModels().filter(m=>String(m.id)!==String(b.dataset.removeModel));
     pilotRenderModelEditors(current.length?current:[{id:uid('model'),name:'ОСНОВНАЯ МОДЕЛЬ',className:'',number:'',transponder:'',uiColor:pilotStableColor(Date.now())}],profileId);
