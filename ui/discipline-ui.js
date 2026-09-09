@@ -409,7 +409,7 @@ function updateTrackDayDynamicUI(){
 function rxnTrackManualLapModal(){
   const td=ensureTrackDayState(state.trackDay);if(!td||td.status!=='active')return toast('Ручной круг доступен во время свободной практики');
   const pilots=rankTrackPilots(td);
-  $('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal manualLapModal"><div class="modalHead"><div><div class="sectionLabel">FREE PRACTICE · РУЧНОЙ РЕЗЕРВ</div><h2>Кому добавить проход?</h2></div><button class="iconBtn" id="closeModal">×</button></div><div class="manualPilotGrid">${pilots.map(p=>{const l=td.live?.[p.id]||blankTrackLive();return `<button data-rxn-track-pilot="${esc(p.id)}"><span>${nameInitials(p.name)}</span><b>${pilotNameMarkup(p)}</b><em>${l.laps||0} кругов</em></button>`;}).join('')}</div></div></div>`;
+  $('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal manualLapModal"><div class="modalHead"><div><div class="sectionLabel">FREE PRACTICE · РУЧНОЙ РЕЗЕРВ</div><h2>Кому добавить проход?</h2></div><button class="iconBtn" id="closeModal">×</button></div><div class="manualPilotGrid">${pilots.map(p=>{const l=td.live?.[p.id]||blankTrackLive();return pilotActionTileMarkup(p,{laps:l.laps||0,attr:`data-rxn-track-pilot="${esc(p.id)}"`});}).join('')}</div></div></div>`;
   $('#closeModal').onclick=closeModal;
   $$('[data-rxn-track-pilot]').forEach(b=>b.onclick=()=>{const p=trackPilot(td,b.dataset.rxnTrackPilot);if(p){processTrackPass(p.transponder,null,'MANUAL');toast(`Ручной проход: ${p.name}`);closeModal();}});
 }

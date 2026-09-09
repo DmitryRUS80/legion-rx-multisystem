@@ -4,11 +4,11 @@ ROOT=Path(__file__).resolve().parents[1]
 checks={}
 
 expected={
-'app.js':'23f6f23ed9bfca4dbfb72cd065a11ebcdd13b405193edcdf77e7990cfaf37cef',
+'app.js':'e8d6378c4b0e9e994845e303ecc4d10be38648c7b8d9998a072b3bc6d981c6c2',
 'platform/lapwiz.js':'d0f9af187e90114edf671827c9365e7d28130809ba1926cfa11efd30f8c3c644',
 'platform/pilots.js':'9447a63d5fef07aed6c28407844372ab9d7d0f9afdba5c48ed0d63d3048c7ca9',
 'platform/state.js':'e3ec736cc481d1b3f9b3f67d03704670be90ac5cf994df81ac2921e6309f6753',
-'platform/storage.js':'5eae8f579ab7d3f2860728ea5fe0adc425de8078e6999971f441bb389141699a',
+'platform/storage.js':'c6a007eacc91b80d680518d07be51532a5ac8a02b990142bf6c49e409d9a7927',
 'platform/timing.js':'2f906ea408b3dca79a7dc74b19eed99c0a88d2559e24146a52a02b350ea8a9c8',
 'platform/utils.js':'488d5cc91485d8511fa46b7c043cb21d61048ee3d9caf0a3e03724493432fecd',
 'modes/rallycross/rules.js':'80c8a70c6d9e4bf51c0f7838a9dd0f519fb79f5e0d169f7ab4138ff0a188e3a0',
@@ -31,7 +31,7 @@ for rel,want in expected.items():
     p=ROOT/rel
     got=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else 'MISSING'
     if got!=want: changed.append((rel,got,want))
-checks['protected_sport_and_unchanged_platform_byte_identical_to_rc19']=not changed
+checks['protected_foundation_hashes_match_rc28']=not changed
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])

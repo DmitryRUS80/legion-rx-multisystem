@@ -15,9 +15,9 @@ checks['theme_switch_reapplies_background']="darkToggle.addEventListener('change
 checks['model_id_preview_markup']='data-model-id-preview' in pilot and '<b>${esc(lapwizId)}</b>' in pilot
 checks['model_id_preview_live_update']="field.dataset.modelField==='lapwizId'" in pilot and 'label.textContent=id' in pilot
 checks['model_id_preview_keeps_color_picker']="data-model-field=\"uiColor\"" in pilot and '.pilotModelColor input' in css
-# Protected product logic remains byte-identical to RC26.
+# Protected sport/LapWiz/audio/reporting logic remains unchanged; app completion safety evolves in RC28.
 expected={
-'app.js':'23f6f23ed9bfca4dbfb72cd065a11ebcdd13b405193edcdf77e7990cfaf37cef',
+
 'platform/lapwiz.js':'d0f9af187e90114edf671827c9365e7d28130809ba1926cfa11efd30f8c3c644',
 'platform/audio.js':'1ffb1838fda888f6c9e213866f6fd20f3b7b6e402ba72fe56740fc3c5cd9dcb7',
 'modes/free-practice/index.js':'aa43d3a87f0e9286635dbb5bbcfc7647dac310ea30d24af80bb9fe9cdd20845a',

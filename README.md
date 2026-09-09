@@ -1,4 +1,4 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC27 · PRACTICE GLOW & LIVE THEME
+# LEGION RX 4.2.0 CLEAN FULL APP RC28 · MANUAL PILOT TILES & IOS STORAGE SAFETY
 
 Direct code base: **RC25 COMPACT PILOT GRID**.
 
@@ -72,3 +72,11 @@ Sport/platform/offline/audio/reporting logic is unchanged.
 - A custom page background color is stored as the chosen base hue and automatically rendered as a dark or light variant when the theme changes.
 - The model editor color square shows the current LapWiz ID live while the ID is typed.
 - Sport modules and LapWiz protocol are unchanged.
+
+
+## RC28 manual cockpit cards + iPhone finish storage safety
+- Manual pass/lap dialogs in RallyCross and Free Practice use the same compact pilot tile: LapWiz ID square, uppercase name, flag and lap count.
+- Old initials-based manual picker visuals are removed.
+- iPhone race completion no longer archives duplicate base64 pilot photos. Existing old snapshots are compacted automatically.
+- If Safari storage is still genuinely full after compaction, the race stays active/completed instead of being cleared, and the operator is told that local storage must be freed.
+- Sport rules, LapWiz protocol and reporting are unchanged.

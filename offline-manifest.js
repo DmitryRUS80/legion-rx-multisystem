@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc27-practice-glow-live-theme';
-  const displayVersion='4.2.0 CLEAN FULL APP RC27 · PRACTICE GLOW & LIVE THEME';
-  const cacheName='legion-rx-4-2-0-clean-full-rc27-practice-glow-live-theme';
+  const appVersion='4.2.0-clean-full-rc28-manual-pilot-tiles-ios-storage';
+  const displayVersion='4.2.0 CLEAN FULL APP RC28 · MANUAL PILOT TILES & IOS STORAGE SAFETY';
+  const cacheName='legion-rx-4-2-0-clean-full-rc28-manual-pilot-tiles-ios-storage';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

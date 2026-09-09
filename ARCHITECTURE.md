@@ -86,3 +86,12 @@ RC26 keeps pilot/model selection presentation in `ui/pilots/`. RallyCross setup 
 
 ## RC27 UI boundary
 RC27 changes only pilot-selection presentation and shell background rendering. Free Practice rules remain in `modes/free-practice/`; selection UI remains in `ui/pilots/`; theme/background rendering remains in `ui/shell/`.
+
+
+## RC28 manual action / storage boundary
+
+- `ui/pilots/pilot-cards.js::pilotActionTileMarkup()` is the single shared visual component for choosing a pilot from cockpit manual-lap/manual-pass dialogs. RallyCross and Free Practice dialogs only supply pilot state/lap counts and action attributes; they do not define separate pilot-card visuals.
+- `ui/pilots/pilot-cards.css` owns the matching ID/name/flag action-tile style. The old initials-based `.manualPilotGrid button` composition has been removed from `ui/shell/app.css`.
+- Pilot avatars remain owned by the pilot database (`KEYS.pilots`). `platform/storage.js` stores race/archive/Track Day snapshots without duplicated embedded `data:image/...` pilot photos. `profileId` remains the link back to the pilot profile for current avatar presentation.
+- Storage compaction is a persistence concern only. It does not change RallyCross results, lap timing, LapWiz IDs, scoring or reporting contracts.
+- Completed-race archival is transactional at the application coordination layer: the active race is cleared only after the compact archive snapshot has been persisted successfully.

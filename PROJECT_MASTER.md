@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC27 · PRACTICE GLOW & LIVE THEME**  
-Direct code base: **RC25 COMPACT PILOT GRID**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC28 · MANUAL PILOT TILES & IOS STORAGE SAFETY**  
+Direct code base: **RC27 PRACTICE GLOW & LIVE THEME**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -107,3 +107,12 @@ See `TEST_REPORT.md`. Static/runtime verification is complete. Physical iPhone/i
 ## RC27 PRACTICE GLOW & LIVE THEME
 
 UI-only refinement on the RC26 foundation: Free Practice selection visibility, theme-aware custom background color, and live LapWiz ID preview inside the model color square. No sports-core changes.
+
+
+## RC28 MANUAL PILOT TILES & IOS STORAGE SAFETY
+- Manual pilot choice inside active cockpits now has one shared card presentation everywhere currently implemented: colored LapWiz ID square, uppercase name, country flag and current lap count. Old initials/manual picker card markup is removed.
+- The iPhone finish `QuotaExceededError` was traced to duplicated base64 pilot avatars inside persisted race/practice snapshots and accumulated archive history. Pilot photos remain in the pilot DB only; race/Track Day persistence stores lightweight references/identity/result data.
+- Legacy stored race/archive/Track Day snapshots are compacted automatically at startup.
+- A quota failure during completed-race archival no longer clears the current race. The archive is committed first; only successful persistence clears the cockpit.
+- `modes/`, RallyCross sport runtime/rules, Free Practice sport core, LapWiz protocol, audio and reporting are unchanged.
+- RC28 remains a candidate until real iPhone finish/archive and field LapWiz acceptance are confirmed.

@@ -73,3 +73,12 @@
 - `pilotRenderModelEditors()` — live LapWiz ID text inside the existing color square.
 - `appBackgroundThemeColor()` / `applyAppBackground()` — theme-aware rendering of a user-selected background hue.
 - `.pilotSelectCard.hasSelection` / `.pilotPickerModelChip.selected` — perimeter glow only; no layout change.
+
+
+## RC28 manual pilot / storage safety
+- `ui/pilots/pilot-cards.js::pilotActionTileMarkup()` — shared compact cockpit action card: LapWiz ID square + name + flag + lap count.
+- `ui/shell/views.js::manualLapModal()` / `manualPassPicker()` — RallyCross manual action dialogs consuming the shared pilot tile.
+- `ui/discipline-ui.js::rxnTrackManualLapModal()` — Free Practice manual action dialog consuming the same shared pilot tile.
+- `platform/storage.js::compactRaceForStorage()` / `compactTrackDayForStorage()` — remove duplicated embedded pilot avatar payloads from race/practice persistence snapshots while preserving pilot/result identity.
+- `platform/storage.js::compactLegacyStorage()` — one-time/automatic compaction of older local snapshots and quota-retry support.
+- `app.js::archiveCurrentRace()` / `completeCompetition()` — persist a compact archive snapshot before clearing the active race; archival failure leaves the active completed race in place.

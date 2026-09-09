@@ -1,5 +1,14 @@
 # LEGION RX CHANGELOG
 
+## RC28 · MANUAL PILOT TILES & IOS STORAGE SAFETY
+
+- Replaced the old initials-based manual-lap/manual-pass picker cards with one shared cockpit pilot action tile: colored LapWiz ID square + uppercase pilot name + country flag + current lap count.
+- The shared action tile is used by RallyCross manual lap/pass dialogs and Free Practice manual pass dialog; old manual picker card CSS is removed from the general shell.
+- Fixed the iPhone `QuotaExceededError` seen when completing a race. Race/archive/Track Day persistence no longer duplicates base64 pilot photos that already belong to the pilot database.
+- Existing legacy archive/practice snapshots are compacted automatically on startup before application state is loaded.
+- Storage writes retry once after legacy compaction when Safari reports quota exhaustion. If archival still cannot be persisted, the active completed race is NOT cleared and the operator receives a readable storage message instead of losing the race.
+- RallyCross sport rules/runtime, Free Practice sport core, LapWiz protocol, audio and reporting remain unchanged.
+
 ## RC27 · PRACTICE GLOW & LIVE THEME
 
 - Free Practice selection now gives both the selected pilot tile and selected model ID tile a perimeter glow only; no extra border, wrapper or layout shift.

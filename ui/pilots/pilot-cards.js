@@ -48,6 +48,19 @@ function pilotFlagBadge(profile){
   return pos?`<span class="pilotTileFlag" style="--country-flag-position:${pos}" title="${esc(countryName(code))}" aria-label="${esc(countryName(code))}"></span>`:'';
 }
 
+function pilotActionFlagMarkup(profile){
+  const code=pilotCountryCode(profile),pos=countryFlag(code);
+  return pos?`<span class="pilotActionFlag" style="--country-flag-position:${pos}" title="${esc(countryName(code))}" aria-label="${esc(countryName(code))}"></span>`:'';
+}
+function pilotActionModel(p,profile){
+  const models=pilotModels(profile||p),tp=String(p?.transponder||'');
+  return models.find(m=>String(m.transponder||m.number||'')===tp)||models.find(m=>String(m.id||'')===String(p?.modelId||''))||models[0]||null;
+}
+function pilotActionTileMarkup(p,{laps=0,attr='',disabled=false,word='кругов'}={}){
+  const profile=profileForPilot(p)||p,model=pilotActionModel(p,profile),idText=String(p?.transponder||model?.transponder||model?.number||'—'),color=String(p?.uiColor||model?.uiColor||pilotStableColor(p?.id||idText)),name=String(p?.name||profile?.name||'ПИЛОТ').toUpperCase();
+  return `<button type="button" class="pilotActionTile" ${attr} ${disabled?'disabled':''} style="--pilot-model-color:${esc(color)}"><span class="pilotActionId">${esc(idText)}</span><span class="pilotActionCopy"><strong>${esc(name)}</strong><span class="pilotActionMeta">${pilotActionFlagMarkup(profile)}<em>${Number(laps)||0} ${esc(word)}</em></span></span></button>`;
+}
+
 function pilotTeamBadge(profile){
   const club=String(profile?.club||'').trim();if(!club)return'';
   if(isLegionRXClub(club))return `<span class="pilotTileTeam legion">LEGION <i>RX</i></span>`;
