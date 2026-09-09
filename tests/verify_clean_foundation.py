@@ -4,7 +4,7 @@ ROOT=Path(__file__).resolve().parents[1]
 checks={}
 
 expected={
-'app.js':'63061fe13fff6cbcc903e7154cbf1d101e83121d20a8dc421ae32a474409a1b8',
+'app.js':'23f6f23ed9bfca4dbfb72cd065a11ebcdd13b405193edcdf77e7990cfaf37cef',
 'platform/lapwiz.js':'d0f9af187e90114edf671827c9365e7d28130809ba1926cfa11efd30f8c3c644',
 'platform/pilots.js':'9447a63d5fef07aed6c28407844372ab9d7d0f9afdba5c48ed0d63d3048c7ca9',
 'platform/state.js':'e3ec736cc481d1b3f9b3f67d03704670be90ac5cf994df81ac2921e6309f6753',

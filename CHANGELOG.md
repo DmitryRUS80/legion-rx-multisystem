@@ -76,3 +76,19 @@
 - Consolidated model number/transponder editing into one `ID LAPWIZ` field; the same ID is mirrored to compatibility `number`/`transponder` fields so unchanged LapWiz/RallyCross code continues to use `transponder`.
 - Made pilot editor more compact, increased micro-label size/proximity, removed horizontal input guide-lines and made the ID color swatch square.
 - Sport rules, LapWiz protocol, audio, offline updater, reporting and cockpit UI: NO CHANGE.
+
+
+## RC26 · PILOT PRACTICE TILES
+- Avatar upload now performs a true centered square crop by the short side before saving the local image.
+- Added compact team label on the pilot avatar lower-left; empty team leaves the avatar clean.
+- Model selection tiles now show the model class below each colored LapWiz ID square.
+- Replaced the legacy Free Practice pilot checkbox/list rows with the same compact pilot/model tile selector used by the new pilot UI.
+- Free Practice setup now carries the selected model's LapWiz ID into its participant snapshot while leaving `modes/free-practice/` unchanged.
+- Removed obsolete `trackPilotCheck` / `trackPilotPicker` CSS rules from the global shell.
+- No RallyCross rule/runtime, LapWiz protocol, audio/offline engine or reporting changes.
+
+- Removed the striped page background outside the race cockpit and added immediate local background color/image controls in Settings.
+- Dark/light theme now switches and persists immediately, without waiting for “Save settings”.
+- Existing-pilot model color now changes visually and persists immediately from the color picker; no profile Save is required for color alone.
+- Completed RallyCross “ЗАВЕРШИТЬ” now opens an in-app confirmation and completes through a confirmed DOM-free core path, avoiding the native iPhone/Safari confirm dependency.
+- Added dedicated RC26 UI-safety regression checks; RallyCross sport modules, Free Practice sport module, LapWiz platform code and reporting remain unchanged.

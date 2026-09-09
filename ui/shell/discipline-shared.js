@@ -61,7 +61,28 @@ function translateStatic(){
 
 function applyUiTokens(ui=state.settings.ui){const r=document.documentElement.style;r.setProperty('--radius-card',`${ui.cardRadius}px`);r.setProperty('--radius-tile',`${ui.tileRadius}px`);r.setProperty('--radius-button',`${ui.buttonRadius}px`);r.setProperty('--radius-input',`${ui.inputRadius}px`);r.setProperty('--radius-icon',`${ui.iconRadius}px`);r.setProperty('--radius-hero',`${ui.heroRadius}px`);r.setProperty('--radius-widget',`${ui.widgetRadius}px`);r.setProperty('--radius-modal',`${ui.modalRadius}px`);r.setProperty('--card-padding',`${ui.cardPadding}px`);r.setProperty('--section-gap',`${ui.sectionGap}px`);r.setProperty('--control-height',`${ui.buttonHeight}px`);r.setProperty('--content-width',`${ui.contentWidth}px`);r.setProperty('--discipline-cols',String(ui.disciplineCols));}
 
-function applySettings(){document.documentElement.dataset.theme=state.settings.theme;document.documentElement.lang=state.settings.lang;const themeMeta=document.querySelector('meta[name="theme-color"]');if(themeMeta)themeMeta.content=state.settings.theme==='light'?'#f3f4f5':'#050608';lapwiz.sound=state.settings.lapSound;applyUiTokens();translateStatic();announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;}
+function appBackgroundFallbackColor(){return state.settings.theme==='light'?'#f3f4f5':'#050608';}
+function applyAppBackground(){
+ const r=document.documentElement.style,color=String(state.settings.backgroundColor||'').trim(),image=String(state.settings.backgroundImage||'').trim();
+ r.setProperty('--app-page-bg-color',color||appBackgroundFallbackColor());
+ r.setProperty('--app-page-bg-image',image?`url("${image.replace(/"/g,'%22')}")`:'none');
+}
+function resizeAppBackground(file){
+ return new Promise((resolve,reject)=>{
+  if(!file)return resolve('');
+  if(file.size>12*1024*1024)return reject(new Error('Изображение больше 12 МБ'));
+  const reader=new FileReader();reader.onerror=()=>reject(new Error('Не удалось прочитать фон'));
+  reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error('Не удалось открыть фон'));img.onload=()=>{
+   const srcW=Math.max(1,img.naturalWidth),srcH=Math.max(1,img.naturalHeight),maxSide=1600,scale=Math.min(1,maxSide/Math.max(srcW,srcH));
+   const outW=Math.max(1,Math.round(srcW*scale)),outH=Math.max(1,Math.round(srcH*scale));
+   const canvas=document.createElement('canvas');canvas.width=outW;canvas.height=outH;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,outW,outH);
+   let data=canvas.toDataURL('image/webp',.72);if(!data||data==='data:,')data=String(reader.result||'');
+   if(data.length>1_200_000)return reject(new Error('Фоновое изображение слишком тяжёлое после обработки'));
+   resolve(data);
+  };img.src=String(reader.result||'');};reader.readAsDataURL(file);
+ });
+}
+function applySettings(){document.documentElement.dataset.theme=state.settings.theme;document.documentElement.lang=state.settings.lang;const themeMeta=document.querySelector('meta[name="theme-color"]');if(themeMeta)themeMeta.content=state.settings.theme==='light'?'#f3f4f5':'#050608';lapwiz.sound=state.settings.lapSound;applyUiTokens();applyAppBackground();translateStatic();announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;}
 
 function stageLabel(stage){return({setup:'Настройка',qualifying:'Квалификация',tie:'Жеребьёвка',finals:'Финалы',finished:'Завершено'})[stage]||stage;}
 

@@ -48,6 +48,12 @@ function pilotFlagBadge(profile){
   return pos?`<span class="pilotTileFlag" style="--country-flag-position:${pos}" title="${esc(countryName(code))}" aria-label="${esc(countryName(code))}"></span>`:'';
 }
 
+function pilotTeamBadge(profile){
+  const club=String(profile?.club||'').trim();if(!club)return'';
+  if(isLegionRXClub(club))return `<span class="pilotTileTeam legion">LEGION <i>RX</i></span>`;
+  return `<span class="pilotTileTeam">${esc(club.toUpperCase())}</span>`;
+}
+
 function pilotEditorAvatarMarkup(profile){
   return `${pilotAvatarMarkup(profile,'pilotEditorAvatar')}${pilotFlagBadge(profile)}`;
 }
@@ -86,7 +92,7 @@ function pilotCareerStats(profile){
 function pilotModelTileMarkup(profile,model,{selectable=false,selected=false,compact=false}={}){
   const idText=model.transponder||model.number||'—',modelName=String(model.name||'').trim(),className=String(model.className||'').trim();
   const cls=['pilotModelTile',selectable?'selectable':'',selected?'selected':'',compact?'compact':''].filter(Boolean).join(' ');
-  return `<button type="button" class="${cls}" ${selectable?`data-race-model-toggle="${esc(profile.id)}" data-model-id="${esc(model.id)}" aria-pressed="${selected?'true':'false'}"`:'tabindex="-1"'} style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}">
+  return `<button type="button" class="${cls}" data-pilot-profile-id="${esc(profile.id)}" data-pilot-model-id="${esc(model.id)}" ${selectable?`data-race-model-toggle="${esc(profile.id)}" data-model-id="${esc(model.id)}" aria-pressed="${selected?'true':'false'}"`:'tabindex="-1"'} style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}">
     <span class="pilotModelId">${esc(idText)}</span>
     <span class="pilotModelInfo"><b>${esc((modelName||'ОСНОВНАЯ МОДЕЛЬ').toUpperCase())}</b>${className?`<small>${esc(className.toUpperCase())}</small>`:''}</span>
   </button>`;
@@ -96,7 +102,7 @@ function pilotCardMarkup(profile){
   const stats=pilotCareerStats(profile),models=pilotModels(profile);
   return `<article class="pilotTile" data-pilot-card="${esc(profile.id)}">
     <div class="pilotTileGlass"></div>
-    <div class="pilotTileProfile"><div class="pilotTilePortrait">${pilotAvatarMarkup(profile)}${pilotFlagBadge(profile)}</div></div>
+    <div class="pilotTileProfile"><div class="pilotTilePortrait">${pilotAvatarMarkup(profile)}${pilotTeamBadge(profile)}${pilotFlagBadge(profile)}</div></div>
     <div class="pilotTileStats" aria-label="Статистика пилота">
       <span><small>ГОНКИ</small><b>${stats.races}</b></span>
       <span><small>ПОБЕДЫ</small><b>${stats.wins}</b></span>
@@ -143,14 +149,24 @@ function pilotCollectEditorModels(){
   });
 }
 
-function pilotRenderModelEditors(models){
+function pilotPersistEditorColor(profileId,modelId,color){
+  const profile=state.pilotDb.find(p=>String(p.id)===String(profileId));if(!profile)return;
+  const list=Array.isArray(profile.models)?profile.models:[],model=list.find(m=>String(m.id)===String(modelId));
+  if(model)model.uiColor=color;else profile.uiColor=color;
+  save(KEYS.pilots,state.pilotDb);
+  const racePilot=state.race?.pilots?.find(p=>String(p.profileId||p.id)===String(profileId)&&(!p.modelId||String(p.modelId)===String(modelId)));
+  if(racePilot){racePilot.uiColor=color;persistRace();}
+  document.querySelectorAll('[data-pilot-profile-id][data-pilot-model-id]').forEach(el=>{if(String(el.dataset.pilotProfileId)===String(profileId)&&String(el.dataset.pilotModelId)===String(modelId))el.style.setProperty('--pilot-model-color',color);});
+}
+function pilotRenderModelEditors(models,profileId=''){
   const host=$('#pilotModelEditors');if(!host)return;
   host.innerHTML=models.map((m,i)=>pilotModelEditorMarkup(m,i)).join('')+`<button type="button" class="pilotAddModelTile" id="pilotAddModel">${pilotCardIcon('plus')}<span><b>ДОБАВИТЬ МОДЕЛЬ</b><small>Класс · модель · ID LapWiz</small></span></button>`;
+  host.oninput=e=>{const input=e.target.closest?.('[data-model-field="uiColor"]');if(!input)return;const section=input.closest('[data-editor-model]');if(!section)return;section.style.setProperty('--pilot-model-color',input.value);if(profileId)pilotPersistEditorColor(profileId,section.dataset.editorModel,input.value);};
   host.querySelectorAll('[data-remove-model]').forEach(b=>b.onclick=()=>{
     const current=pilotCollectEditorModels().filter(m=>String(m.id)!==String(b.dataset.removeModel));
-    pilotRenderModelEditors(current.length?current:[{id:uid('model'),name:'ОСНОВНАЯ МОДЕЛЬ',className:'',number:'',transponder:'',uiColor:pilotStableColor(Date.now())}]);
+    pilotRenderModelEditors(current.length?current:[{id:uid('model'),name:'ОСНОВНАЯ МОДЕЛЬ',className:'',number:'',transponder:'',uiColor:pilotStableColor(Date.now())}],profileId);
   });
-  $('#pilotAddModel').onclick=()=>{const current=pilotCollectEditorModels();current.push({id:uid('model'),name:`МОДЕЛЬ ${current.length+1}`,className:'',number:'',transponder:'',uiColor:pilotStableColor(Date.now()+current.length)});pilotRenderModelEditors(current);};
+  $('#pilotAddModel').onclick=()=>{const current=pilotCollectEditorModels();current.push({id:uid('model'),name:`МОДЕЛЬ ${current.length+1}`,className:'',number:'',transponder:'',uiColor:pilotStableColor(Date.now()+current.length)});pilotRenderModelEditors(current,profileId);};
 }
 
 function pilotResizeAvatar(file){
@@ -159,8 +175,11 @@ function pilotResizeAvatar(file){
     if(file.size>8*1024*1024)return reject(new Error('Изображение больше 8 МБ'));
     const reader=new FileReader();reader.onerror=()=>reject(new Error('Не удалось прочитать изображение'));
     reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error('Не удалось открыть изображение'));img.onload=()=>{
-      const max=720,scale=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight)),w=Math.max(1,Math.round(img.naturalWidth*scale)),h=Math.max(1,Math.round(img.naturalHeight*scale));
-      const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.clearRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);
+      // Save the avatar itself as a centered square. The short side fills the square;
+      // only the long side is cropped, equally from both ends.
+      const srcW=Math.max(1,img.naturalWidth),srcH=Math.max(1,img.naturalHeight),side=Math.min(srcW,srcH);
+      const sx=Math.max(0,(srcW-side)/2),sy=Math.max(0,(srcH-side)/2),out=Math.max(1,Math.min(720,side));
+      const canvas=document.createElement('canvas');canvas.width=out;canvas.height=out;const ctx=canvas.getContext('2d');ctx.clearRect(0,0,out,out);ctx.drawImage(img,sx,sy,side,side,0,0,out,out);
       let data=canvas.toDataURL('image/webp',.86);if(!data||data==='data:,')data=String(reader.result||'');
       if(data.length>1_600_000)return reject(new Error('Аватар слишком большой после обработки'));
       resolve(data);
@@ -176,14 +195,14 @@ function pilotModal(existing=null,addToRace=false,originRect=null){
     <div class="pilotEditorHero">
       <label class="pilotEditorAvatarButton" id="pilotAvatarButton" for="pilotAvatarFile" aria-label="Загрузить аватар"><span id="pilotEditorAvatarPreview">${pilotEditorAvatarMarkup({...existing,photo:pendingPhoto,name:existing?.name||'RX'})}</span><i>${pilotCardIcon('camera')}</i></label>
       <input id="pilotAvatarFile" type="file" accept="image/png,image/jpeg,image/webp" hidden>
-      <div class="pilotEditorIdentity"><label><span>ФАМИЛИЯ ИМЯ</span><input id="mName" value="${esc(existing?.name||'')}" placeholder="ДМИТРИЙ КОЧЕТКОВ"></label><div class="pilotEditorIdentityGrid"><label><span>СТРАНА</span><select id="mCountry">${countryOptions(existing?.country||'')}</select></label><label><span>КЛУБ</span><input id="mClub" value="${esc(existing?.club||'')}" placeholder="LEGION RX"></label><label><span>ГОРОД</span><input id="mCity" value="${esc(existing?.city||'')}" placeholder="Пенза"></label></div></div>
+      <div class="pilotEditorIdentity"><label><span>ФАМИЛИЯ ИМЯ</span><input id="mName" value="${esc(existing?.name||'')}" placeholder="ДМИТРИЙ КОЧЕТКОВ"></label><div class="pilotEditorIdentityGrid"><label><span>СТРАНА</span><select id="mCountry">${countryOptions(existing?.country||'')}</select></label><label><span>КЛУБ</span><input id="mClub" value="${esc(existing?.club||'')}"></label><label><span>ГОРОД</span><input id="mCity" value="${esc(existing?.city||'')}" placeholder="Пенза"></label></div></div>
     </div>
     <div class="pilotEditorSectionHead"><div><div class="sectionLabel">ГАРАЖ</div><h3>МОДЕЛИ ПИЛОТА</h3></div><small>В соревнование модель выбирается одним нажатием по её плитке.</small></div>
     <div class="pilotModelEditorGrid" id="pilotModelEditors"></div>
     <details class="pilotEditorVoice"><summary><span>ИМЯ ДЛЯ ДИКТОРА</span><em id="pilotVoiceState" class="pilotVoiceState ${voiceStale?'stale':voiceReady?'ready':''}">${voiceStale?'ИМЯ ИЗМЕНЕНО':voiceReady?'ГОТОВО ОФЛАЙН':'НЕ ЗАГРУЖЕНО'}</em></summary><div class="pilotVoiceBody"><input id="pilotVoiceFile" type="file" accept="audio/mpeg,audio/mp3,audio/wav,audio/x-wav,audio/ogg,.mp3,.wav,.ogg" hidden><div class="pilotVoiceActions"><button class="btn primary" id="uploadPilotVoice" type="button">${voiceReady?'Заменить файл':'Загрузить имя'}</button><button class="btn secondary" id="playPilotVoice" type="button" ${voiceReady?'':'disabled'}>▶ Прослушать</button><button class="btn danger" id="deletePilotVoice" type="button" ${voiceReady?'':'disabled'}>Удалить запись</button></div><div class="pilotVoiceHint">MP3, WAV или OGG до 5 МБ. Файл хранится локально и работает офлайн.</div></div></details>
     <footer class="pilotEditorFoot">${existing?`<button class="pilotEditorDelete" id="deletePilotProfile" type="button">${pilotCardIcon('trash')} УДАЛИТЬ ПРОФИЛЬ</button>`:'<span></span>'}<button class="btn primary pilotEditorSave" id="savePilotModal" type="button">СОХРАНИТЬ</button></footer>
   </section></div>`;
-  pilotRenderModelEditors(initialModels);
+  pilotRenderModelEditors(initialModels,existing?String(id):'');
   $('#closeModal').onclick=closeModal;
   $('#pilotAvatarFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{pendingPhoto=await pilotResizeAvatar(file);$('#pilotEditorAvatarPreview').innerHTML=pilotEditorAvatarMarkup({name:$('#mName').value||existing?.name||'RX',photo:pendingPhoto,country:$('#mCountry')?.value||existing?.country||''});toast('Аватар загружен');}catch(err){toast(err.message);}finally{e.target.value='';}};
   $('#uploadPilotVoice').onclick=()=>{if(!$('#mName').value.trim())return toast('Сначала введите имя пилота');$('#pilotVoiceFile').click();};
@@ -226,16 +245,16 @@ function pilotRaceSetupTileMarkup(racePilot,index){
   const sourceModels=pilotModels(profile),model=sourceModels.find(m=>String(m.id)===String(racePilot.modelId))||{
     id:String(racePilot.modelId||'race-model'),name:String(racePilot.modelName||'ОСНОВНАЯ МОДЕЛЬ'),className:String(racePilot.modelClass||''),number:String(racePilot.modelNumber||''),transponder:String(racePilot.transponder||''),uiColor:String(racePilot.uiColor||pilotStableColor(racePilot.id||index))
   };
-  const idText=model.transponder||model.number||'—',name=pilotCompactName(racePilot.name||profile.name||'ПИЛОТ');
-  return `<button type="button" class="pilotRaceSetupTile" data-remove-race-pilot="${esc(racePilot.id)}" title="${esc(String(model.name||'').toUpperCase())}${model.className?` · ${esc(String(model.className).toUpperCase())}`:''}" style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}"><span class="pilotRaceSetupPortrait">${pilotAvatarMarkup(profile,'pilotRaceSetupAvatar')}${pilotFlagBadge(profile)}</span><span class="pilotRaceSetupCaption"><b class="pilotRaceSetupId">${esc(idText)}</b><strong class="pilotRaceSetupName">${esc(name)}</strong></span></button>`;
+  const idText=model.transponder||model.number||'—',name=pilotCompactName(racePilot.name||profile.name||'ПИЛОТ'),className=String(model.className||'').trim().toUpperCase();
+  return `<button type="button" class="pilotRaceSetupTile" data-remove-race-pilot="${esc(racePilot.id)}" title="${esc(String(model.name||'').toUpperCase())}${className?` · ${esc(className)}`:''}" style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}"><span class="pilotRaceSetupPortrait">${pilotAvatarMarkup(profile,'pilotRaceSetupAvatar')}${pilotFlagBadge(profile)}</span><span class="pilotRaceSetupCaption"><span class="pilotRaceSetupModel"><b class="pilotRaceSetupId">${esc(idText)}</b>${className?`<small>${esc(className)}</small>`:''}</span><strong class="pilotRaceSetupName">${esc(name)}</strong></span></button>`;
 }
 
-
-function pilotPickerModelChipMarkup(profile,model,selected=false){
-  const idText=model.transponder||model.number||'—';
-  const title=[String(model.name||'').toUpperCase(),String(model.className||'').toUpperCase()].filter(Boolean).join(' · ');
-  return `<button type="button" class="pilotPickerModelChip ${selected?'selected':''}" data-race-model-toggle="${esc(profile.id)}" data-model-id="${esc(model.id)}" aria-pressed="${selected?'true':'false'}" title="${esc(title)}" style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}"><span>${esc(idText)}</span></button>`;
+function pilotPickerModelChipMarkup(profile,model,selected=false,mode='race'){
+  const idText=model.transponder||model.number||'—',className=String(model.className||'').trim().toUpperCase();
+  const title=[String(model.name||'').toUpperCase(),className].filter(Boolean).join(' · '),dataAttr=mode==='practice'?'data-track-model-toggle':'data-race-model-toggle';
+  return `<button type="button" class="pilotPickerModelChip ${selected?'selected':''}" ${dataAttr}="${esc(profile.id)}" data-model-id="${esc(model.id)}" aria-pressed="${selected?'true':'false'}" title="${esc(title)}" style="--pilot-model-color:${esc(model.uiColor||pilotStableColor(model.id))}"><span class="pilotPickerModelId">${esc(idText)}</span>${className?`<small class="pilotPickerModelClass">${esc(className)}</small>`:''}</button>`;
 }
+
 
 function pilotSyncPickerState(){
   const count=$('.pilotPickerCount b');if(count)count.textContent=String(state.race?.pilots?.length||0);
@@ -265,3 +284,17 @@ function pilotPicker(){
   $('#closeModal').onclick=()=>{closeModal();render();};
   $$('[data-race-model-toggle]').forEach(b=>b.onclick=()=>pilotToggleRaceModel(b.dataset.raceModelToggle,b.dataset.modelId,true));
 }
+
+
+function pilotPracticeSelectionMap(td){
+  if(!td)return{};td.practiceModelIds=td.practiceModelIds&&typeof td.practiceModelIds==='object'?td.practiceModelIds:{};td.pilotIds=Array.isArray(td.pilotIds)?td.pilotIds:[];
+  for(const id of td.pilotIds){if(!td.practiceModelIds[id]){const profile=state.pilotDb.find(p=>String(p.id)===String(id));const first=profile?pilotModels(profile)[0]:null;if(first)td.practiceModelIds[id]=first.id;}}
+  return td.practiceModelIds;
+}
+function pilotPracticeSelectedModelId(td,profile){if(!td||!profile)return'';const map=pilotPracticeSelectionMap(td);return (td.pilotIds||[]).some(id=>String(id)===String(profile.id))?String(map[profile.id]||pilotModels(profile)[0]?.id||''):'';}
+function pilotPracticeCardMarkup(profile,td){const selected=pilotPracticeSelectedModelId(td,profile),models=pilotModels(profile);return `<article class="pilotSelectCard pilotPracticeCard ${selected?'hasSelection':''}" data-practice-profile="${esc(profile.id)}"><div class="pilotSelectPortrait">${pilotAvatarMarkup(profile,'pilotSelectAvatar')}${pilotFlagBadge(profile)}</div><strong class="pilotSelectName">${esc(pilotCompactName(profile.name||'ПИЛОТ'))}</strong><div class="pilotSelectModels">${models.map(m=>pilotPickerModelChipMarkup(profile,m,String(selected)===String(m.id),'practice')).join('')}</div></article>`;}
+function pilotPracticeGridMarkup(td){pilotPracticeSelectionMap(td);return state.pilotDb.length?state.pilotDb.map(p=>pilotPracticeCardMarkup(p,td)).join(''):'<div class="empty">В общей базе пока нет пилотов. Сначала добавьте их в разделе «Пилоты».</div>';}
+function pilotSyncPracticePickerState(){const td=state.trackDay;if(!td)return;const badge=$('.trackPilotSelectedCount');if(badge)badge.textContent=`${(td.pilotIds||[]).length} выбрано`;$$('.pilotPracticeCard[data-practice-profile]').forEach(card=>{const profile=state.pilotDb.find(p=>String(p.id)===String(card.dataset.practiceProfile)),selected=profile?pilotPracticeSelectedModelId(td,profile):'';card.classList.toggle('hasSelection',Boolean(selected));card.querySelectorAll('[data-track-model-toggle]').forEach(btn=>{const on=String(btn.dataset.modelId)===String(selected);btn.classList.toggle('selected',on);btn.setAttribute('aria-pressed',on?'true':'false');});});}
+function pilotTogglePracticeModel(profileId,modelId,refresh=true){const td=state.trackDay||newTrackDayDraft();state.trackDay=td;const profile=state.pilotDb.find(p=>String(p.id)===String(profileId));if(!profile)return;const model=pilotModels(profile).find(m=>String(m.id)===String(modelId));if(!model)return;const map=pilotPracticeSelectionMap(td),selected=pilotPracticeSelectedModelId(td,profile),idx=(td.pilotIds||[]).findIndex(id=>String(id)===String(profileId));if(String(selected)===String(model.id)){if(idx>=0)td.pilotIds.splice(idx,1);delete map[profile.id];}else{if(idx<0)td.pilotIds.push(profile.id);map[profile.id]=model.id;}persistTrackDays();if(refresh)pilotSyncPracticePickerState();}
+function pilotSelectAllPracticeModels(){const td=state.trackDay||newTrackDayDraft();state.trackDay=td;td.pilotIds=state.pilotDb.map(p=>p.id);td.practiceModelIds={};for(const p of state.pilotDb){const first=pilotModels(p)[0];if(first)td.practiceModelIds[p.id]=first.id;}persistTrackDays();pilotSyncPracticePickerState();}
+function pilotPracticeParticipants(td){const map=pilotPracticeSelectionMap(td);return (td.pilotIds||[]).map((id,i)=>{const profile=state.pilotDb.find(p=>String(p.id)===String(id));if(!profile)return null;const models=pilotModels(profile),model=models.find(m=>String(m.id)===String(map[profile.id]))||models[0];if(!model)return null;return{id:profile.id,profileId:profile.id,name:profile.name,club:profile.club||'',city:profile.city||'',country:profile.country||'',photo:profile.photo||'',transponder:String(model.transponder||model.number||profile.transponder||''),modelId:model.id,modelName:model.name,modelClass:model.className,modelNumber:model.number,uiColor:model.uiColor,registrationOrder:i+1};}).filter(Boolean);}

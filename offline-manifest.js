@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc25-compact-pilot-grid';
-  const displayVersion='4.2.0 CLEAN FULL APP RC25 · COMPACT PILOT GRID';
-  const cacheName='legion-rx-4-2-0-clean-full-rc25-compact-pilot-grid';
+  const appVersion='4.2.0-clean-full-rc26-pilot-flow-ui-safety';
+  const displayVersion='4.2.0 CLEAN FULL APP RC26 · PILOT FLOW & UI SAFETY';
+  const cacheName='legion-rx-4-2-0-clean-full-rc26-pilot-flow-ui-safety';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

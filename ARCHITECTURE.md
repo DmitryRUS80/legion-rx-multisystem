@@ -71,3 +71,14 @@ RC24 changes only the authoritative pilot UI component. Compact race participant
 
 ### RC25 pilot UI / data boundary
 RC25 does not move pilot timing identity into `platform/` or `modes/`. The pilot UI exposes one `ID LAPWIZ` field and writes the same canonical value to the existing compatibility properties `model.number`, `model.transponder`, and the selected race pilot `transponder`. RallyCross and LapWiz code remain unchanged and continue consuming the established transponder field. Picker state updates are local DOM presentation updates; sport state still changes only through the existing race-pilot selection path.
+
+
+### RC26 pilot/practice UI boundary
+RC26 keeps pilot/model selection presentation in `ui/pilots/`. RallyCross setup and Free Practice setup both consume that component. The selected Free Practice model is converted by the UI setup layer into the existing Track Day participant snapshot (`transponder`, model metadata); `modes/free-practice/` remains unchanged and continues to process only the participant/transponder data it already owns. Avatar center-cropping is a pilot UI media-preparation concern and does not touch timing/storage architecture.
+
+
+### RC26 live UI / finish safety boundary
+- Application page background is a UI-shell setting only: solid color or a locally stored compressed image. The old page stripe/grid background is removed outside the RallyCross/Practice cockpit. Sport modules do not read this setting.
+- Dark/light switching is persisted and applied immediately in the UI shell; it does not wait for the general settings Save button.
+- Pilot model color changes are previewed immediately in the authoritative pilot component and persisted immediately for existing profiles. The selected active race snapshot receives only the color presentation field; transponder/sport identity is unchanged.
+- The completed-competition button uses an in-app confirmation modal on the UI side. `app.js::completeCompetition(confirmed)` remains DOM-free and owns only archival/state completion. This avoids relying on the native Safari `confirm()` path for the cockpit button.

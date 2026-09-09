@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC25 · COMPACT PILOT GRID**  
-Direct code base: **RC24 GLASS PILOT TILES**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC26 · PILOT FLOW & UI SAFETY**  
+Direct code base: **RC25 COMPACT PILOT GRID**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -93,3 +93,12 @@ See `TEST_REPORT.md`. Static/runtime verification is complete. Physical iPhone/i
 - Pilot model identity is one user-facing field: **ID LAPWIZ**. It is stored into the legacy-compatible `number` and `transponder` properties with the same value so the unchanged timing/sport core still consumes `p.transponder`.
 - Editor is more compact; labels are larger/closer to their values; horizontal input guide-lines and duplicate transponder control are removed; model color swatch is a true square.
 - `modes/`, `platform/`, `app.js`, reporting, audio and offline/update behavior remain unchanged.
+
+
+## RC26 PILOT PRACTICE TILES
+- Uploaded avatars are now physically saved as centered square crops: the short side fills the square and only the long side is cropped equally from both ends. Existing display surfaces keep centered `cover` behavior.
+- Pilot cards can show the club/team label inside the avatar at lower-left; an empty team produces no label. Country flag remains lower-right.
+- Race model selectors now show the vehicle class directly under each colored LapWiz ID square.
+- Free Practice setup no longer uses the legacy checkbox/list pilot rows. It consumes the same compact pilot/model tile component used by RallyCross selection.
+- A Free Practice selection stores the chosen model metadata in the Track Day setup snapshot and passes that model's existing LapWiz ID into the unchanged Free Practice runtime. `modes/free-practice/index.js` is byte-identical to RC25.
+- No RallyCross rule, BLE protocol, audio/offline engine or reporting contract changes.

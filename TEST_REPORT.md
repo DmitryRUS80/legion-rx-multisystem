@@ -1,76 +1,61 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC25 · COMPACT PILOT GRID — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC26 · PILOT FLOW & UI SAFETY — TEST REPORT
 
-Direct code base: **RC24 GLASS PILOT TILES**.
+Direct code base: **RC25 COMPACT PILOT GRID**.
 
 ## Scope
+RC26 is an isolated UI/workflow correction. It changes pilot cards/selectors, Free Practice setup selection, page background/theme behavior and the completed-competition confirmation path. RallyCross sport rules/runtime, Free Practice sport module, LapWiz platform protocol, audio engine, staged offline updater and reporting logic are not redesigned.
 
-RC25 is a pilot-UI correction only:
-
-- dense adaptive pilot database grid: 4–5 tiles across on desktop, 2–3 on portrait mobile/tablet;
-- square avatar viewports with centered `object-fit: cover` photo crop;
-- flat lower-right flag without border/radius/shadow;
-- compact race-picker portrait tiles matching the accepted sketch;
-- model selection updated in place with no shake/full picker re-render;
-- one user-facing `ID LAPWIZ` field; it is the transponder ID used by the unchanged timing core;
-- compact pilot editor with larger/closer field labels, no horizontal guide-lines and square model-color swatch;
-- compact participant tiles reused in race setup.
-
-## Architecture / protected logic
-
+## Static / architecture regression
 PASS:
+- `tests/verify_architecture.py` — 8/8 architecture invariants.
+- `tests/verify_clean_foundation.py` — clean CSS/runtime/offline foundation.
+- `tests/verify_ios_start_safety.py` — START remains independent from audio; iOS completed-competition confirmation path is present.
+- `tests/verify_pilot_cards.py` — authoritative pilot component, compact grid/pickers, single LapWiz ID, centered avatar crop, Practice tile reuse.
+- `tests/verify_rc26_ui_safety.py` — immediate theme/background/color behavior, stripe removal, in-app finish confirmation and protected boundaries.
+- JavaScript syntax — all runtime JS PASS.
+- RallyCross self-test remains 16/16 PASS through the unchanged sport module.
 
-- architecture verifier: **8/8**;
-- clean-foundation invariants: **PASS**;
-- iOS START safety invariants: **PASS**;
-- pilot-component verifier: **PASS**;
-- RallyCross sport self-test: **16/16 PASS**;
-- JavaScript syntax: **36/36 PASS**;
-- `modes/`, `platform/`, `app.js` and `reporting/`: **byte-identical to the protected baseline**;
-- no patch/hotfix/override file added;
-- `ui/pilots/pilot-cards.js` + `pilot-cards.css` remain the single authoritative pilot-card implementation.
-
-## UI checks
-
+## Pilot / Practice UI checks
 PASS:
+- vertical and horizontal source photos are square-cropped from the exact center by the short side before storage; display surfaces also use centered `cover`;
+- Legion RX team badge uses the black branded mark; another club shows its literal name; empty club shows nothing; no explanatory Easter-egg hint is rendered;
+- race model selection shows the vehicle class under the colored LapWiz ID;
+- Free Practice no longer uses the legacy checkbox/list pilot cards and uses the same compact pilot/model tiles;
+- selected Practice model carries that model's existing LapWiz ID/class into the Track Day participant snapshot; `modes/free-practice/` remains unchanged;
+- selected tiles do not use shake/transform selection animation.
 
-- desktop pilot database renders at least 4 columns and 5 columns on wide desktop;
-- 390 px portrait layout renders 2 columns;
-- uploaded photos fill a square viewport without distortion and remain centered;
-- placeholder is a neutral human silhouette;
-- pilot name is compact uppercase under the avatar;
-- race picker uses compact square portrait tiles and square model-ID stickers;
-- selected model has neutral glass highlight, no colored outline and no transform/shake;
-- selection updates without rebuilding the picker DOM;
-- race setup uses compact portrait participant tiles instead of legacy long rows;
-- editor exposes a single `ID LAPWIZ` field and mirrors that value to compatibility `number`/`transponder` properties only for the unchanged core;
-- no duplicate transponder input;
-- model color swatch is square;
-- editor labels are larger and closer to values; horizontal input guide-lines are absent;
-- pilot flag styling is component-local and no `!important` override is required.
+## Immediate UI behavior
+PASS:
+- dark/light switch persists and applies immediately without the general Save button;
+- background color applies/persists immediately;
+- local background image can be uploaded, compressed, applied and removed; legacy non-cockpit stripe background is removed;
+- existing pilot model color changes visually and persists immediately without saving the full profile; matching active-race presentation color is updated without changing its transponder identity.
 
-## Browser component runtime
+## iPhone completion safety
+PASS in the browser/component harness:
+- completed RallyCross `ЗАВЕРШИТЬ` opens an application modal rather than relying on native `confirm()` from the cockpit action;
+- modal confirmation calls `completeCompetition(true)`;
+- `app.js` stays DOM-free and archives/clears the race through the existing completion path.
+Physical iPhone standalone-PWA acceptance is still required.
 
-Chromium component harness using the exact RC25 pilot JS/CSS: **PASS**.
+## Protected boundaries
+Byte-identical to the RC25 accepted baseline:
+- all `modes/` sport modules, including RallyCross and Free Practice;
+- all `platform/` modules, including LapWiz/audio/offline/storage;
+- reporting core/sections.
 
-Verified:
+`app.js` has one intentional orchestration change only: `completeCompetition(confirmed=false)` accepts the UI-confirmed path. No DOM access was introduced.
 
-- desktop dense grid;
-- portrait mobile grid;
-- compact editor;
-- compact race picker;
-- in-place select/remove/switch behavior;
-- canonical selected race transponder equals the visible model ID;
-- JavaScript page errors: **0**.
+## Browser/component execution
+PASS:
+- exact RC26 pilot component behavior;
+- race/Practice tile selection and model snapshot;
+- centered avatar crop with pixel-level vertical and horizontal center-crop test;
+- local background helper and color application;
+- live pilot model-color persistence;
+- completed-competition in-app modal → archive/clear behavior;
+- page errors: 0.
 
-Complete PWA navigation through local HTTP is blocked in this execution environment (`ERR_BLOCKED_BY_ADMINISTRATOR`). Physical iPhone/Android PWA acceptance therefore remains required.
+Full localhost PWA navigation is blocked by the execution environment (`ERR_BLOCKED_BY_ADMINISTRATOR`), therefore real Home Screen iPhone/iPad offline, Safari media gesture and physical LapWiz BLE remain device acceptance tests.
 
-## Real-device acceptance
-
-1. Upload a portrait photo and confirm centered square crop.
-2. Confirm 2-column phone portrait grid and 4–5-column desktop/tablet grid.
-3. Select/remove/switch models and confirm the picker does not shake or redraw.
-4. Confirm the visible model ID is the same LapWiz transponder ID used in the race.
-5. Confirm race setup shows compact portrait tiles, not legacy long rows.
-6. Re-run iPhone safety check: sound off → RallyCross → START must still start the race.
-
-**Release status: RC25 static/component/runtime checks PASS; ready for real-device UI acceptance.**
+**Release status: RC26 static/component regression PASS; ready for real-device acceptance.**

@@ -295,11 +295,6 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 .trackTile{border-color:color-mix(in srgb,var(--green) 34%,var(--line))}
 .trackInfoNote{margin-top:14px;padding:12px 14px;border:1px solid var(--line);background:var(--panel2);border-radius:var(--radius-input);font-size:12px;color:var(--muted);line-height:1.5}
 .compactHeader{align-items:center;margin-bottom:12px;margin:0 0 10px;}
-.trackPilotPicker{display:grid;gap:8px;max-height:420px;overflow:auto}
-.trackPilotCheck{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:var(--radius-input);background:var(--panel2);cursor:pointer}
-.trackPilotCheck input{width:18px;height:18px}
-.trackPilotCheck>span:last-child{display:grid;gap:2px}
-.trackPilotCheck small{color:var(--muted)}
 .pitMetric{color:var(--amber)}
 .manageCards{display:grid;gap:12px}
 .manageCards section{border:1px solid var(--line);border-radius:var(--radius-card);padding:14px;background:var(--panel2)}
@@ -358,7 +353,7 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 .countryFlag:before{content:"";position:absolute;inset:0;background-image:url("../../flags/flags-atlas-rc4.png");background-position:var(--country-flag-position,0 0);background-size:1600% 1600%;background-repeat:no-repeat}
 .legionClubMark{display:inline-flex;align-items:baseline;gap:.22em;font-weight:950;font-style:italic;letter-spacing:.035em;color:color-mix(in srgb,var(--text) 76%,var(--muted));white-space:nowrap}
 /* Desktop / tablet race rows: a little taller and easier to scan. */
-.trackPilotCheck b .pilotNameLine,.listRow .name .pilotNameLine{max-width:100%}
+.listRow .name .pilotNameLine{max-width:100%}
 .quickPanelMenuGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .quickPanelMenuGrid svg{width:20px;height:20px;color:var(--blue)}
 /* Light companion theme */
@@ -402,7 +397,7 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 }
 *{box-sizing:border-box;}
 html,body{margin:0;height:100%;font-family:"Oswald",sans-serif;background:var(--rxn-bg);color:var(--rxn-text);}
-body{overflow:hidden;font-family:var(--rxn-font);background-image:linear-gradient(var(--rxn-grid) 1px,transparent 1px),linear-gradient(90deg,var(--rxn-grid) 1px,transparent 1px);background-size:8px 8px;}
+body{overflow:hidden;font-family:var(--rxn-font);background-image:none;}
 body button,body input,body select,body textarea{font-family:inherit}
 /* App shell: same visual language as cockpit */
 .mainNav{display:flex;align-items:center;gap:3px;margin-left:8px;}
@@ -436,6 +431,13 @@ body button,body input,body select,body textarea{font-family:inherit}
 .legionClubMark i{font-style:italic;color:var(--rxn-blue);}
 .settingsGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
 .settingGroup h3{margin:0 0 12px;display:flex;align-items:center;font:700 19px/1 var(--rxn-font);text-transform:uppercase;}
+.backgroundSettingGrid{display:grid;grid-template-columns:minmax(120px,.55fr) minmax(0,1.45fr);gap:10px;margin-top:12px;align-items:end}
+.backgroundColorField{display:grid;gap:5px}.backgroundColorField>span,.backgroundImageField>span{font:800 10px/1 var(--v4-font);letter-spacing:.08em;color:var(--v4-muted)}
+.backgroundColorField input[type=color]{width:100%;height:42px;padding:0;border:0;border-radius:0;background:transparent;cursor:pointer}
+.backgroundImageField{display:grid;gap:5px}.backgroundImageActions{display:flex;gap:7px;flex-wrap:wrap}.backgroundImageActions .btn{min-height:42px}
+.backgroundImageState{font:700 9px/1.2 var(--v4-font);color:var(--v4-muted);min-height:12px}
+@media(max-width:620px){.backgroundSettingGrid{grid-template-columns:1fr}.backgroundImageActions .btn{flex:1}}
+
 /* Modal / drawers */
 .manualPilotBtn,.resultEditRow,.resultPreview,.trackReportPilot{background:#081b2a;border:1px solid var(--rxn-line);border-radius:4px;color:var(--rxn-text)}
 .quickPanelOverlay{position:fixed;inset:0;display:grid;grid-template-columns:1fr minmax(330px,430px);z-index:600;}
@@ -447,7 +449,7 @@ body button,body input,body select,body textarea{font-family:inherit}
 .audioGate{position:fixed;inset:0;z-index:10000;backdrop-filter:blur(12px);display:grid;place-items:center;padding:22px;background:rgba(1,5,8,.92);}
 .audioGateCard{width:min(420px,100%);padding:24px;text-align:center;background:#071722;border:1px solid #1b4f70;border-radius:6px;box-shadow:none;}
 .audioGateBtn{width:100%;min-height:56px;color:white;font:inherit;font-weight:900;font-size:15px;cursor:pointer;border-radius:4px;background:#073a5b;border:1px solid #0d79b8;}
-body:not(.cockpitMode){background:var(--v4-bg);color:var(--v4-text);background-image:linear-gradient(var(--v4-grid) 1px,transparent 1px);background-size:100% 32px}
+body:not(.cockpitMode){background-color:var(--app-page-bg-color,var(--v4-bg));color:var(--v4-text);background-image:var(--app-page-bg-image,none);background-size:cover;background-position:center center;background-repeat:no-repeat}
 body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode) select,body:not(.cockpitMode) textarea{font-family:var(--v4-font)}
 /* ===== APP BAR / NAV ===== */
 .appbar{display:flex;align-items:center;position:fixed;left:0;right:0;top:0;z-index:50;height:var(--appbarh);padding:7px 12px;gap:12px;background:color-mix(in srgb,var(--v4-surface) 98%,transparent);border-bottom:1px solid var(--v4-line-strong);box-shadow:none;backdrop-filter:none;}

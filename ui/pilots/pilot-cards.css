@@ -1,5 +1,6 @@
-/* LEGION RX · PILOT CARDS · authoritative component styles · RC25
-   Dense pilot grid + compact picker. One glass surface, flat labels, no nested frames.
+/* LEGION RX · PILOT CARDS · authoritative component styles · RC26
+   Center-cropped avatars + compact race/practice model pickers.
+   One glass surface, flat labels, no nested legacy pilot cards.
    Pilot model ID is the LapWiz transponder ID. */
 .pilotsPage{--pilot-glass:rgba(12,15,20,.72);--pilot-glass-strong:rgba(5,7,10,.9);--pilot-id-text:#071018}
 html[data-theme="light"] .pilotsPage{--pilot-glass:rgba(255,255,255,.72);--pilot-glass-strong:rgba(255,255,255,.92);--pilot-id-text:#071018}
@@ -16,6 +17,9 @@ html[data-theme="light"] .pilotsPage{--pilot-glass:rgba(255,255,255,.72);--pilot
 .pilotAvatarPlaceholder{width:48%;height:62%;max-width:150px;max-height:170px;fill:color-mix(in srgb,var(--v4-muted) 48%,transparent);filter:drop-shadow(0 8px 16px rgba(0,0,0,.12))}
 .pilotTileFlag{position:absolute;right:0;left:auto;bottom:0;width:30px;height:18px;font-size:0;border:0;border-radius:0;overflow:hidden;box-shadow:none;filter:none}
 .pilotTileFlag::before{content:"";position:absolute;inset:0;background-image:url("../../flags/flags-atlas-rc4.png");background-size:1600% 1600%;background-position:var(--country-flag-position);background-repeat:no-repeat}
+.pilotTileTeam{position:absolute;left:0;bottom:0;z-index:3;max-width:calc(100% - 36px);padding:3px 5px 2px;color:white;font:800 9px/1 var(--v4-font);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 3px rgba(0,0,0,.85);background:transparent}
+.pilotTileTeam.legion{padding:4px 6px 3px;background:#07090d;color:#fff;text-shadow:none;font-weight:950;font-style:italic;letter-spacing:.035em}
+.pilotTileTeam.legion i{font-style:italic;color:#1488ff}
 .pilotTileName{grid-column:1/-1;grid-row:2;margin:0;padding:4px 7px 3px;min-width:0;font:900 clamp(19px,1.42vw,25px)/.94 var(--v4-font);letter-spacing:-.02em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pilotTileStats{grid-column:2;grid-row:1;display:grid;align-content:center;padding:10px 9px 7px 8px}
 .pilotTileStats span{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:5px;padding:6px 0;border:0}
@@ -30,22 +34,24 @@ html[data-theme="light"] .pilotsPage{--pilot-glass:rgba(255,255,255,.72);--pilot
 .pilotModelId{display:grid;place-items:center;width:38px;height:34px;min-height:34px;padding:0;background:var(--pilot-model-color);color:#071018;font:800 17px/1 var(--v4-font);border:0;border-radius:0;text-shadow:none;overflow:hidden}
 .pilotModelInfo{min-width:0;display:grid;align-content:center;padding:0 6px;gap:2px}
 .pilotModelInfo b{font:800 10px/1 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pilotModelInfo small{font:700 8px/1 var(--v4-font);letter-spacing:.02em;color:var(--v4-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pilotModelInfo small{font:700 9px/1 var(--v4-font);letter-spacing:.02em;color:var(--v4-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pilotModelTile.selectable{cursor:pointer;transition:background .12s ease,box-shadow .12s ease,filter .12s ease}
 .pilotModelTile.selectable:hover{background:color-mix(in srgb,var(--v4-text) 5%,var(--v4-surface2) 32%)}
 .pilotModelTile.selected{background:linear-gradient(110deg,color-mix(in srgb,var(--v4-text) 9%,transparent),color-mix(in srgb,var(--v4-surface2) 42%,transparent));box-shadow:inset 0 1px 0 color-mix(in srgb,var(--v4-text) 18%,transparent),0 5px 16px color-mix(in srgb,var(--v4-shadow) 16%,transparent);filter:none;outline:0}
 
 /* Selected participants already in race setup. */
 .pilotRaceSetupGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,180px));gap:9px;align-items:start;justify-content:start}
-.pilotRaceSetupTile{appearance:none;min-width:0;width:100%;display:grid;grid-template-rows:auto 38px;padding:0;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 36%,transparent);color:var(--v4-text);overflow:hidden;text-align:left;cursor:pointer;box-shadow:none;transition:background .12s ease,box-shadow .12s ease}
+.pilotRaceSetupTile{appearance:none;min-width:0;width:100%;display:grid;grid-template-rows:auto 56px;padding:0;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 36%,transparent);color:var(--v4-text);overflow:hidden;text-align:left;cursor:pointer;box-shadow:none;transition:background .12s ease,box-shadow .12s ease}
 .pilotRaceSetupTile:hover{background:color-mix(in srgb,var(--v4-text) 5%,var(--v4-surface2) 40%);box-shadow:0 8px 22px color-mix(in srgb,var(--v4-shadow) 15%,transparent)}
 .pilotRaceSetupPortrait{position:relative;width:100%;aspect-ratio:1/1;display:block;overflow:hidden;background:color-mix(in srgb,var(--v4-surface3) 44%,transparent)}
 .pilotRaceSetupAvatar{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;color:var(--v4-muted)}
 .pilotRaceSetupAvatar.hasPhoto img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
 .pilotRaceSetupAvatar .pilotAvatarPlaceholder{width:48%;height:62%}
 .pilotRaceSetupPortrait .pilotTileFlag{right:0;bottom:0;width:27px;height:16px}
-.pilotRaceSetupCaption{min-width:0;height:38px;display:grid;grid-template-columns:44px minmax(0,1fr);align-items:stretch;background:transparent}
-.pilotRaceSetupId{display:grid;place-items:center;width:44px;height:38px;background:var(--pilot-model-color);color:#071018;font:800 17px/1 var(--v4-font);border-radius:0}
+.pilotRaceSetupCaption{min-width:0;height:56px;display:grid;grid-template-columns:46px minmax(0,1fr);align-items:stretch;background:transparent}
+.pilotRaceSetupModel{width:46px;display:grid;grid-template-rows:44px 12px;justify-items:start;align-content:start}
+.pilotRaceSetupId{display:grid;place-items:center;width:44px;height:44px;background:var(--pilot-model-color);color:#071018;font:800 17px/1 var(--v4-font);border-radius:0}
+.pilotRaceSetupModel small{width:46px;padding-top:2px;font:800 9px/1 var(--v4-font);color:var(--v4-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
 .pilotRaceSetupName{min-width:0;display:flex;align-items:center;padding:0 6px;font:800 14px/1 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* Editor: compact glass workspace, no input guide-lines or duplicate transponder field. */
@@ -92,7 +98,8 @@ html[data-theme="light"] .pilotsPage{--pilot-glass:rgba(255,255,255,.72);--pilot
 /* Race picker: compact portrait cards like the sketch; model choice is a row of ID stickers. */
 .pilotPickerPanel{width:min(1180px,97vw);max-height:94dvh;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden;border:1px solid color-mix(in srgb,var(--v4-line-strong) 62%,transparent);border-radius:12px;background:color-mix(in srgb,var(--v4-surface) 88%,transparent);box-shadow:0 28px 90px var(--v4-shadow);animation:pilotPanelIn .24s cubic-bezier(.18,.85,.24,1.05) both}
 .pilotPickerHead{position:relative}.pilotPickerHead>div:first-child{min-width:0}.pilotPickerHead p{margin:4px 0 0;color:var(--v4-muted);font-size:10px}.pilotPickerCount{margin-left:auto;display:grid;text-align:right}.pilotPickerCount small{font:700 9px/1 var(--v4-font);letter-spacing:.1em;color:var(--v4-muted)}.pilotPickerCount b{font:900 27px/1 var(--v4-font)}
-.pilotSelectGrid{overflow:auto;padding:10px 12px 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:9px;align-content:start}
+.pilotSelectGrid{overflow:auto;padding:10px 12px 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,170px));gap:9px;align-content:start;justify-content:start}
+.pilotPracticeGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,170px));gap:9px;align-items:start;justify-content:start;max-height:470px;overflow:auto;padding:2px}
 .pilotSelectCard{min-width:0;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 28%,transparent);padding:0;overflow:hidden;box-shadow:none;transition:background .12s ease,box-shadow .12s ease}
 .pilotSelectCard.hasSelection{background:linear-gradient(120deg,color-mix(in srgb,var(--v4-text) 6%,transparent),color-mix(in srgb,var(--v4-surface2) 36%,transparent));box-shadow:0 7px 22px color-mix(in srgb,var(--v4-shadow) 14%,transparent)}
 .pilotSelectPortrait{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:color-mix(in srgb,var(--v4-surface3) 44%,transparent)}
@@ -102,17 +109,18 @@ html[data-theme="light"] .pilotsPage{--pilot-glass:rgba(255,255,255,.72);--pilot
 .pilotSelectPortrait .pilotTileFlag{right:0;bottom:0;width:27px;height:16px}
 .pilotSelectName{display:block;padding:5px 4px 3px;font:900 18px/.95 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pilotSelectModels{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:3px 4px 6px;border:0}
-.pilotPickerModelChip{position:relative;width:42px;height:42px;display:grid;place-items:center;padding:0;border:0;border-radius:0;background:var(--pilot-model-color);color:#071018;cursor:pointer;font-family:var(--v4-font);transition:filter .1s ease,box-shadow .1s ease,opacity .1s ease}
-.pilotPickerModelChip span{font:800 18px/1 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:clip;max-width:100%;padding:0 2px}
+.pilotPickerModelChip{position:relative;width:46px;min-height:56px;display:grid;grid-template-rows:42px 14px;justify-items:start;align-items:start;padding:0;border:0;border-radius:0;background:transparent;color:var(--v4-text);cursor:pointer;font-family:var(--v4-font);transition:filter .1s ease,box-shadow .1s ease,background .1s ease,opacity .1s ease}
+.pilotPickerModelId{width:42px;height:42px;display:grid;place-items:center;background:var(--pilot-model-color);color:#071018;font:800 18px/1 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:clip;padding:0 2px}
+.pilotPickerModelClass{width:46px;padding-top:2px;font:800 9px/1 var(--v4-font);color:var(--v4-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
 .pilotPickerModelChip:hover{filter:brightness(1.06)}
-.pilotPickerModelChip.selected{filter:brightness(1.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35),0 0 16px rgba(255,255,255,.16)}
+.pilotPickerModelChip.selected{filter:brightness(1.08);background:color-mix(in srgb,var(--v4-text) 6%,transparent);box-shadow:0 0 18px color-mix(in srgb,var(--v4-text) 14%,transparent)}
 
 @media (min-width:1500px){.pilotTileGrid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 @media (max-width:1050px) and (min-width:701px){.pilotTileGrid{grid-template-columns:repeat(4,minmax(0,1fr))}.pilotSelectGrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (max-width:700px){
-  .pilotsPageHeader{align-items:start}.pilotsPageHeader p{display:none}.pilotTileGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.pilotTile{grid-template-columns:minmax(0,56%) minmax(0,44%)}.pilotTileProfile{padding:5px 4px 2px}.pilotTileName{font-size:18px;padding:3px 4px 2px}.pilotTileStats{padding:7px 5px}.pilotTileStats span{padding:4px 0}.pilotTileStats small{font-size:11px}.pilotTileStats b{font-size:20px}.pilotTileFlag{width:25px;height:15px}.pilotTileModels{grid-template-columns:1fr;gap:2px;padding:2px 4px 4px}.pilotModelTile,.pilotModelTile.compact{grid-template-columns:34px minmax(0,1fr);height:30px}.pilotModelId{width:34px;height:30px;min-height:30px;font-size:15px}.pilotModelInfo{padding:0 5px}.pilotModelInfo b{font-size:9px}.pilotModelInfo small{font-size:7px}
+  .pilotsPageHeader{align-items:start}.pilotsPageHeader p{display:none}.pilotTileGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.pilotPracticeGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.pilotTile{grid-template-columns:minmax(0,56%) minmax(0,44%)}.pilotTileProfile{padding:5px 4px 2px}.pilotTileName{font-size:18px;padding:3px 4px 2px}.pilotTileStats{padding:7px 5px}.pilotTileStats span{padding:4px 0}.pilotTileStats small{font-size:11px}.pilotTileStats b{font-size:20px}.pilotTileFlag{width:25px;height:15px}.pilotTileModels{grid-template-columns:1fr;gap:2px;padding:2px 4px 4px}.pilotModelTile,.pilotModelTile.compact{grid-template-columns:34px minmax(0,1fr);height:30px}.pilotModelId{width:34px;height:30px;min-height:30px;font-size:15px}.pilotModelInfo{padding:0 5px}.pilotModelInfo b{font-size:9px}.pilotModelInfo small{font-size:8px}
   .pilotEditorBackdrop,.pilotPickerBackdrop{padding:0;align-items:end}.pilotEditorPanel,.pilotPickerPanel{width:100%;max-height:96dvh;border-radius:12px 12px 0 0}.pilotEditorHero{grid-template-columns:112px minmax(0,1fr);gap:10px;padding:10px}.pilotEditorAvatarButton{width:112px;height:112px}.pilotEditorIdentityGrid{grid-template-columns:1fr 1fr}.pilotEditorIdentityGrid label:last-child{grid-column:1/-1}.pilotEditorIdentity>label:first-child input{font-size:19px}.pilotEditorIdentity label>span,.pilotModelEditorFields label>span{font-size:10px}.pilotEditorSectionHead{padding:10px 10px 6px;align-items:start}.pilotEditorSectionHead>small{display:none}.pilotModelEditorGrid{grid-template-columns:1fr;padding:0 10px 10px}.pilotModelEditorFields{grid-template-columns:.8fr 1.2fr .8fr}.pilotEditorVoice{margin:0 10px 8px}.pilotEditorFoot{padding:8px 10px}.pilotEditorSave{min-width:145px}
-  .pilotPickerHead p{display:none}.pilotPickerCount{display:none}.pilotSelectGrid{grid-template-columns:repeat(3,minmax(0,1fr));padding:7px;gap:6px}.pilotSelectName{font-size:16px}.pilotPickerModelChip{width:36px;height:36px}.pilotPickerModelChip span{font-size:16px}.pilotRaceSetupGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.pilotRaceSetupCaption{height:34px;grid-template-columns:39px minmax(0,1fr)}.pilotRaceSetupId{width:39px;height:34px;font-size:15px}.pilotRaceSetupName{font-size:12px;padding:0 5px}.pilotRaceSetupPortrait .pilotTileFlag{width:24px;height:14px}
+  .pilotPickerHead p{display:none}.pilotPickerCount{display:none}.pilotSelectGrid{grid-template-columns:repeat(3,minmax(0,1fr));padding:7px;gap:6px}.pilotSelectName{font-size:16px}.pilotPickerModelChip{width:40px;min-height:50px;grid-template-rows:36px 14px}.pilotPickerModelId{width:36px;height:36px;font-size:16px}.pilotPickerModelClass{width:40px;font-size:8px}.pilotRaceSetupGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.pilotRaceSetupCaption{height:50px;grid-template-columns:40px minmax(0,1fr)}.pilotRaceSetupModel{width:40px;grid-template-rows:38px 12px}.pilotRaceSetupId{width:38px;height:38px;font-size:15px}.pilotRaceSetupModel small{width:40px;font-size:8px}.pilotRaceSetupName{font-size:12px;padding:0 5px}.pilotRaceSetupPortrait .pilotTileFlag{width:24px;height:14px}
 }
-@media (max-width:520px){.pilotTileGrid,.pilotSelectGrid,.pilotRaceSetupGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.pilotTileName{font-size:17px}.pilotTileStats small{font-size:10px}.pilotTileStats b{font-size:19px}.pilotEditorHero{grid-template-columns:96px minmax(0,1fr)}.pilotEditorAvatarButton{width:96px;height:96px}.pilotEditorIdentityGrid{grid-template-columns:1fr}.pilotEditorIdentityGrid label:last-child{grid-column:auto}.pilotModelEditorFields{grid-template-columns:1fr}.pilotEditorIdentity label>span,.pilotModelEditorFields label>span{font-size:11px}.pilotSelectName{font-size:15px}}
+@media (max-width:520px){.pilotTileGrid,.pilotSelectGrid,.pilotPracticeGrid,.pilotRaceSetupGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.pilotTileName{font-size:17px}.pilotTileStats small{font-size:10px}.pilotTileStats b{font-size:19px}.pilotEditorHero{grid-template-columns:96px minmax(0,1fr)}.pilotEditorAvatarButton{width:96px;height:96px}.pilotEditorIdentityGrid{grid-template-columns:1fr}.pilotEditorIdentityGrid label:last-child{grid-column:auto}.pilotModelEditorFields{grid-template-columns:1fr}.pilotEditorIdentity label>span,.pilotModelEditorFields label>span{font-size:11px}.pilotSelectName{font-size:15px}}
 @media (prefers-reduced-motion:reduce){.pilotTileEdit,.pilotEditorBackdrop,.pilotEditorPanel,.pilotPickerPanel,.pilotModelTile,.pilotPickerModelChip{animation:none;transition:none}}

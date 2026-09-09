@@ -51,3 +51,19 @@
 - `ui/pilots/pilot-cards.js::pilotPickerModelChipMarkup()` — compact square model-ID sticker inside the race picker.
 - `ui/pilots/pilot-cards.js::pilotSyncPickerState()` — updates selected model/count in-place; does not recreate the modal.
 - `ui/pilots/pilot-cards.css` — authoritative dense database grid, compact picker, centered avatar crop and compact editor geometry.
+
+
+## RC26 pilot/practice UI
+- `ui/pilots/pilot-cards.js::pilotResizeAvatar()` — canonical centered square avatar crop at upload time.
+- `ui/pilots/pilot-cards.js::pilotPickerModelChipMarkup()` — colored LapWiz ID square + visible model class for RallyCross/Practice selectors.
+- `ui/pilots/pilot-cards.js::pilotPracticeGridMarkup()` / `pilotTogglePracticeModel()` / `pilotPracticeParticipants()` — Free Practice setup tile UI and conversion of the selected model into the existing Track Day participant snapshot.
+- `ui/shell/views.js::trackDaySetupView()` — hosts the reusable practice tile grid; no legacy checkbox pilot rows.
+- `ui/shell/actions.js::bind415()` — binds Practice model-tile taps; no sport scoring/timing logic is added here.
+
+
+## RC26 live UI / background / finish safety
+- `ui/shell/discipline-shared.js::applyAppBackground()` — applies the local page background color/image; `resizeAppBackground()` prepares an uploaded image before local settings storage.
+- `ui/shell/actions.js::bindView()` — instant dark/light toggle, instant page background color, background image upload/remove. These are UI settings only.
+- `ui/pilots/pilot-cards.js::pilotPersistEditorColor()` — immediate model-color persistence for an existing pilot and matching active race presentation snapshot.
+- `ui/shell/views.js::competitionFinishConfirmModal()` — iOS-safe in-app completion confirmation.
+- `app.js::completeCompetition(confirmed=false)` — archives/clears a completed competition; UI may pass `true` after its own confirmation without putting DOM code in `app.js`.

@@ -1,6 +1,6 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC25 · COMPACT PILOT GRID
+# LEGION RX 4.2.0 CLEAN FULL APP RC26 · PILOT FLOW & UI SAFETY
 
-Direct code base: **RC24 GLASS PILOT TILES**.
+Direct code base: **RC25 COMPACT PILOT GRID**.
 
 RC22 is an isolated pilot-UI rebuild. It replaces the old pilot database card and race pilot picker instead of styling over them.
 
@@ -50,3 +50,18 @@ RC24 keeps the RC23 pilot-card architecture but removes the nested rounded-box l
 - Editor guide-lines and duplicate transponder input are removed; labels are larger and closer to values.
 
 Sport/platform/offline/audio/reporting logic is unchanged.
+
+
+## RC26 pilot/practice workflow
+- Avatar upload creates a centered square crop based on the short image side; vertical and horizontal photos no longer drift inside the square.
+- Pilot card team label sits inside the avatar at lower-left; no team means no label. Flag remains lower-right.
+- RallyCross model selection shows model class beneath the colored LapWiz ID square.
+- Free Practice now uses the same compact pilot/model selection tiles instead of the old checkbox/list rows. The chosen model's LapWiz ID is used for the Track Day participant.
+- Sport modules, LapWiz protocol, audio safety, staged offline updater and reporting are unchanged.
+
+
+### RC26 additional UI behavior
+- App pages have no legacy stripe background. Settings can apply a solid background color or a locally stored background image immediately.
+- Dark/light mode applies immediately.
+- Existing pilot model color applies/persists immediately from the color picker.
+- Completed-race “ЗАВЕРШИТЬ” uses an in-app confirmation path for iPhone/Safari reliability.
