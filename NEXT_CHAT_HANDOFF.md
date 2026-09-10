@@ -1,9 +1,9 @@
-# LEGION RX — NEXT CHAT HANDOFF · RC29
+# LEGION RX — NEXT CHAT HANDOFF · RC30
 
-**Date:** 2026-09-09  
-**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC29_RALLYCROSS_RUNOFF_TIEBREAK_FULL.zip`  
-**Base:** RC28 MANUAL PILOT TILES & IOS STORAGE SAFETY  
-**Status:** RC29 automated regression PASS; **real iPhone + LapWiz acceptance still required**.
+**Date:** 2026-09-10  
+**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC30_START_ORDER_SELECTION_OUTLINE_FULL.zip`  
+**Base:** RC29 RALLYCROSS RUNOFF TIEBREAK  
+**Status:** RC30 automated regression PASS; **real iPhone + LapWiz acceptance still required**.
 
 ---
 
@@ -11,7 +11,7 @@
 
 Do **not** rebuild Legion RX from memory and do not use an older archive as the source.
 
-1. Unpack the latest **RC29 FULL**.
+1. Unpack the latest **RC30 FULL**.
 2. Read, in this order:
    - `NEXT_CHAT_HANDOFF.md` (this file if copied into the project/package)
    - `PROJECT_MASTER.md`
@@ -208,9 +208,9 @@ User uploads through the GitHub web interface. Preserve paths. Upload **contents
 
 ---
 
-# 6. CURRENT RC29 RALLYCROSS SPORT RULES
+# 6. CURRENT RALLYCROSS SPORT RULES — RC29 RULESET UNCHANGED IN RC30
 
-RC29 intentionally changes the RallyCross sport module. This is a sport-core build, not a UI patch.
+RC30 preserves the RC29 RallyCross scoring/run-off rules. RC30 changes only the prepared start-order bridge, announcer consumption of that order, live equal-state presentation stability, and shared selected-state UI styling.
 
 ## Qualification
 - Qualification points: existing table preserved (`50,45,42,40,39...`, through the existing continuation).
@@ -338,22 +338,32 @@ Current pilot-card direction:
 - models are selected by tapping model tiles, not checkboxes;
 - selected model/pilot state must not shake or move layout.
 
-### Pending visual correction NOT YET IMPLEMENTED IN RC29
-The user rejected the current bright/blue selection glow.
+### RC30 selected-state correction — IMPLEMENTED
+The rejected bright/blue selection glow is removed.
 
-Next UI build must change selected-state everywhere to:
-- **very thin subtle light outline only**;
-- no blue fill;
-- no thick glow;
+Current shared selected-state language:
+- very thin neutral/light 1 px outline;
+- only a restrained 5 px soft halo;
+- no blue fill or blue glow;
 - no extra wrapper/border nesting;
 - no transform/shake/layout shift;
-- theme-aware subtle light/dark contrast.
+- implemented directly in authoritative `ui/pilots/pilot-cards.css`.
 
-Apply one shared selected-state language to relevant pilot/model selectors (Race setup, Free Practice and other shared picker tiles) by editing authoritative component styles, not by adding override CSS.
-
-This UI correction was requested **before** RC29 sport work but intentionally remains pending so RC29 could stay focused on sport rules.
+Applied to the shared race/practice pilot card and model selection selectors.
 
 ---
+
+# 9A. RC30 OFFICIAL START ORDER
+
+The official pre-start order is now one prepared source: `modes/rallycross/index.js::getEventStartPilots()`.
+
+- Qualification: preserve the exact `event.pilots` order produced by the qualification heat builder. Do not re-sort by registration order in UI/audio.
+- Finals and current non-qualifying start events: use the existing qualification-rating grid order. Do not add a second announcer-specific sort.
+- `RallyCrossModeAPI.startPilots()` / `startGrid()` expose that order to UI.
+- `announceStartCall()` speaks that exact order.
+- `liveRanking()` preserves supplied start order while lap/time values are equal, then reorders normally from live timing.
+
+This is presentation/start-call synchronization only; it does not alter Q points, BEST 3, LCQ, Final A scoring or run-off rules.
 
 # 10. MANUAL PILOT ACTION TILES
 
@@ -478,84 +488,71 @@ Minimum UI regression:
 
 If sport logic changes, additionally run full sport tests and specific scenario tests.
 
-For RC29 currently validated:
+For RC30 currently validated:
 - architecture PASS;
 - clean foundation PASS;
 - iOS START/finish safety PASS;
 - pilot UI regression PASS;
 - RC26/27/28 regression PASS;
 - RC29 static sport checks PASS;
-- RC29 behavior: **28/28 PASS**;
+- RC29 run-off behavior remains **28/28 PASS**;
+- RC30 start-order/selection behavior: **12/12 PASS**;
 - RallyCross self-test: **18/18 PASS**;
-- JavaScript syntax: **38/38 PASS**;
+- JavaScript syntax: **39/39 PASS**;
 - offline manifest: no missing local file.
 
 Never describe a real iPhone/LapWiz hardware test as PASS unless the user physically ran it. Container/browser tests cannot reproduce every Safari gesture/storage/BLE behavior.
 
 ---
 
-# 15. RC29 FILE SCOPE VS RC28
+# 15. RC30 FILE SCOPE VS RC29
 
-RC29 changed/added only the files necessary for RallyCross equality/run-off behavior, related presentation/routing, release metadata and tests.
-
-Sport-authoritative changes include:
+Runtime/code changes:
 
 ```text
-modes/rallycross/rules.js
-modes/rallycross/qualifying.js
-modes/rallycross/finals.js
-modes/rallycross/runtime.js
 modes/rallycross/index.js
-modes/rallycross/self-test.js
-```
-
-Supporting UI routing/presentation:
-
-```text
+modes/rallycross/audio-actions.js
+modes/rallycross/runtime.js
 ui/discipline-ui.js
-ui/shell/discipline-shared.js
-ui/shell/actions.js
+ui/shell/views.js
+ui/pilots/pilot-cards.css
 ```
 
-New focused tests:
+Focused/new regression work:
 
 ```text
-tests/verify_rc29_rallycross_runoffs.py
-tests/verify_rc29_rallycross_runoffs.js
+tests/verify_rc30_start_order_selection.js
+tests/verify_clean_foundation.py
+tests/verify_ios_start_safety.py
+tests/verify_pilot_cards.py
+tests/verify_rc27_ui_safety.py
+tests/README.md
 ```
 
-Release/offline/docs/tests hashes were updated as required.
-
-Protected unchanged areas include:
-- `modes/free-practice/index.js` byte-identical to RC28;
-- `modes/classic-rc/index.js` byte-identical;
-- `modes/rally-sprint/index.js` byte-identical;
-- `modes/rallycross/audio-actions.js` byte-identical;
-- LapWiz protocol unchanged;
-- RC28 storage/quota path unchanged;
-- reporting unchanged.
+Release/offline/docs metadata are updated as required. Protected unchanged areas include RallyCross `rules.js` / `qualifying.js` / `finals.js`, Free Practice sport core, LapWiz protocol/platform audio, RC28 storage safety and reporting.
 
 ---
 
 # 16. IMMEDIATE NEXT-CHAT CHECKLIST
 
-1. Load **RC29 FULL** and this handoff.
+1. Load **RC30 FULL** and this handoff.
 2. Read the project docs before touching code.
-3. Treat RC29 as **candidate**, not GOLD, until device acceptance.
+3. Treat RC30 as **candidate**, not GOLD, until device acceptance.
 4. First real acceptance test:
    - exact qualification tie -> `ПЕРЕЗАЕЗД` only tied pilots -> zero extra Q points/result;
    - exact Final A tie -> run-off only tied pilots -> no A4/no extra final score -> only disputed positions reorder;
    - event points assigned from resolved final order.
-5. After RC29 sport acceptance, the next pending UI correction is the **selected tile style**: replace ugly bright blue glow/fill with a thin subtle light outline, no layout movement.
-6. Keep every future build focused and output FULL + delta GitHub ZIP.
+5. Verify start-call order on device: qualification pult order = spoken order; Final A qualification-rating order = spoken order.
+6. RC30 selected tile style is already implemented; do not reintroduce blue fill/glow.
+7. Keep every future build focused and output FULL + delta GitHub ZIP.
 
 ---
 
 # 17. START PROMPT FOR THE NEXT CHAT
 
-Copy/paste this as the first message after attaching RC29 FULL + this handoff:
+Copy/paste this as the first message after attaching RC30 FULL + this handoff:
 
-> Продолжаем LEGION RX. Загруженная RC29 FULL — текущий исходник-кандидат. Сначала прочитай NEXT_CHAT_HANDOFF.md, PROJECT_MASTER.md, ARCHITECTURE.md, FUNCTION_MAP.md, SPORT_RULES.md, TEST_REPORT.md, VERSION.txt и CHANGELOG.md и исследуй реальные авторитетные файлы. Ничего не пересобирай по памяти. Архитектура обязательна: UI != SPORT RULES != LAPWIZ != STORAGE. Никаких patch/override, одна функция/стиль — один источник. Каждый релиз отдавай двумя архивами: FULL и UPLOAD_TO_GITHUB только с изменёнными файлами. RC29 имеет новую логику квалификационных и финальных перезаездов без дополнительных очков; сначала считай её кандидатом до физического теста на iPhone/LapWiz. Не трогай работающие модули без необходимости.
+> Продолжаем LEGION RX. Загруженная RC30 FULL — текущий исходник-кандидат. Сначала прочитай NEXT_CHAT_HANDOFF.md, PROJECT_MASTER.md, ARCHITECTURE.md, FUNCTION_MAP.md, SPORT_RULES.md, TEST_REPORT.md, VERSION.txt и CHANGELOG.md и исследуй реальные авторитетные файлы. Ничего не пересобирай по памяти. Архитектура обязательна: UI != SPORT RULES != LAPWIZ != STORAGE. Никаких patch/override, одна функция/стиль — один источник. Каждый релиз отдавай двумя архивами: FULL и UPLOAD_TO_GITHUB только с изменёнными файлами. RC30 сохраняет RC29 перезаезды без дополнительных очков и синхронизирует официальный порядок старта между пультом и диктором; сначала считай её кандидатом до физического теста на iPhone/LapWiz. Не трогай работающие модули без необходимости.
 
 ---
 

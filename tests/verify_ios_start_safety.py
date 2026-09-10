@@ -16,21 +16,21 @@ checks['trackday_start_not_blocked_by_audio']=bool(track and 'ensureRaceAudioFro
 checks['safari_two_tap_after_hydration']="Нажмите «Включить звук» ещё раз" in off and 'return false;' in off
 checks['locked_audio_is_nonblocking']=audio.count('if(!this.unlocked)return false;')>=2 and "Сначала включите звук одним касанием" not in audio
 cfg=(ROOT/'offline-manifest.js').read_text(encoding='utf-8')
-checks['new_cache_namespace']='rc29-rallycross-runoff-tiebreak' in cfg
+checks['new_cache_namespace']='rc30-start-order-selection-outline' in cfg
 
 checks['ios_finish_uses_in_app_confirm']="action==='complete-competition'" in actions and 'competitionFinishConfirmModal()' in actions
 views=(ROOT/'ui/shell/views.js').read_text(encoding='utf-8')
 app=(ROOT/'app.js').read_text(encoding='utf-8')
 checks['ios_finish_confirm_commits_without_native_dialog']='finishCompetitionConfirm' in views and 'completeCompetition(true)' in views and 'function completeCompetition(confirmed=false)' in app
 
-# RC29 intentionally changes RallyCross sport rules. Unrelated sport modes and RallyCross audio actions must remain byte-identical.
-expected_modes={'modes/classic-rc/index.js': 'ade4c33308e6d31ec1987d61635058917aea54c9fc0a8bd476cc824407af9bb4', 'modes/free-practice/index.js': 'aa43d3a87f0e9286635dbb5bbcfc7647dac310ea30d24af80bb9fe9cdd20845a', 'modes/rally-sprint/index.js': '1f72a94e0f765212b98bd7af6b24589c1108001bcfaa9fcfc3db7fd97b025a71', 'modes/rallycross/audio-actions.js': 'f2d9ccfc4bcdb85bb759840153c9e844787dfcaca2f6a9c723cec3b38875f67a'}
+# RC30 intentionally changes only RallyCross start-call ordering. Unrelated modes and platform audio remain byte-identical.
+expected_modes={'modes/classic-rc/index.js': 'ade4c33308e6d31ec1987d61635058917aea54c9fc0a8bd476cc824407af9bb4', 'modes/free-practice/index.js': 'aa43d3a87f0e9286635dbb5bbcfc7647dac310ea30d24af80bb9fe9cdd20845a', 'modes/rally-sprint/index.js': '1f72a94e0f765212b98bd7af6b24589c1108001bcfaa9fcfc3db7fd97b025a71', 'platform/audio.js':'1ffb1838fda888f6c9e213866f6fd20f3b7b6e402ba72fe56740fc3c5cd9dcb7'}
 changed=[]
 for rel,want in expected_modes.items():
     p=ROOT/rel
     got=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else 'MISSING'
     if got!=want: changed.append(rel)
-checks['unrelated_sport_and_audio_actions_unchanged']=not changed
+checks['unrelated_sport_and_platform_audio_unchanged']=not changed
 for k,v in checks.items(): print(f'{k}: {"PASS" if v else "FAIL"}')
 if changed: print('unexpected changes:',changed)
 sys.exit(0 if all(checks.values()) else 2)

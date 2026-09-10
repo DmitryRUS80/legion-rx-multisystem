@@ -37,7 +37,7 @@ html[data-theme="light"] .pilotsPage{--pilot-glass:rgba(255,255,255,.72);--pilot
 .pilotModelInfo small{font:700 9px/1 var(--v4-font);letter-spacing:.02em;color:var(--v4-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pilotModelTile.selectable{cursor:pointer;transition:background .12s ease,box-shadow .12s ease,filter .12s ease}
 .pilotModelTile.selectable:hover{background:color-mix(in srgb,var(--v4-text) 5%,var(--v4-surface2) 32%)}
-.pilotModelTile.selected{background:linear-gradient(110deg,color-mix(in srgb,var(--v4-text) 9%,transparent),color-mix(in srgb,var(--v4-surface2) 42%,transparent));box-shadow:inset 0 1px 0 color-mix(in srgb,var(--v4-text) 18%,transparent),0 5px 16px color-mix(in srgb,var(--v4-shadow) 16%,transparent);filter:none;outline:0}
+.pilotModelTile.selected{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--v4-line-strong) 34%,white 66%),0 0 5px color-mix(in srgb,white 18%,transparent);filter:none;outline:0}
 
 /* Selected participants already in race setup. */
 .pilotRaceSetupGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,180px));gap:9px;align-items:start;justify-content:start}
@@ -101,7 +101,7 @@ html[data-theme="light"] .pilotsPage{--pilot-glass:rgba(255,255,255,.72);--pilot
 .pilotSelectGrid{overflow:auto;padding:10px 12px 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,170px));gap:9px;align-content:start;justify-content:start}
 .pilotPracticeGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,170px));gap:9px;align-items:start;justify-content:start;max-height:470px;overflow:auto;padding:2px}
 .pilotSelectCard{min-width:0;border:0;border-radius:0;background:color-mix(in srgb,var(--v4-surface2) 28%,transparent);padding:0;overflow:hidden;box-shadow:none;transition:background .12s ease,box-shadow .12s ease,filter .12s ease}
-.pilotSelectCard.hasSelection{background:linear-gradient(120deg,color-mix(in srgb,var(--v4-cobalt) 7%,transparent),color-mix(in srgb,var(--v4-surface2) 38%,transparent));box-shadow:0 0 15px color-mix(in srgb,var(--v4-cobalt) 42%,transparent),inset 0 0 14px color-mix(in srgb,var(--v4-cobalt) 14%,transparent);filter:brightness(1.04)}
+.pilotSelectCard.hasSelection{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--v4-line-strong) 34%,white 66%),0 0 5px color-mix(in srgb,white 18%,transparent);filter:none}
 .pilotSelectPortrait{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:color-mix(in srgb,var(--v4-surface3) 44%,transparent)}
 .pilotSelectAvatar{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;color:var(--v4-muted)}
 .pilotSelectAvatar .pilotAvatarPlaceholder{width:48%;height:62%}
@@ -113,7 +113,7 @@ html[data-theme="light"] .pilotsPage{--pilot-glass:rgba(255,255,255,.72);--pilot
 .pilotPickerModelId{width:42px;height:42px;display:grid;place-items:center;background:var(--pilot-model-color);color:#071018;font:800 18px/1 var(--v4-font);white-space:nowrap;overflow:hidden;text-overflow:clip;padding:0 2px}
 .pilotPickerModelClass{width:46px;padding-top:2px;font:800 9px/1 var(--v4-font);color:var(--v4-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
 .pilotPickerModelChip:hover{filter:brightness(1.06)}
-.pilotPickerModelChip.selected{filter:brightness(1.09);background:color-mix(in srgb,var(--v4-cobalt) 8%,transparent);box-shadow:0 0 12px color-mix(in srgb,var(--v4-cobalt) 58%,transparent),inset 0 0 10px color-mix(in srgb,var(--v4-cobalt) 16%,transparent)}
+.pilotPickerModelChip.selected{filter:none;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--v4-line-strong) 34%,white 66%),0 0 5px color-mix(in srgb,white 18%,transparent)}
 
 
 /* Shared cockpit pilot action tile: one source for manual lap/pass pickers in every active mode. */

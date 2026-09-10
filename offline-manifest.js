@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc29-rallycross-runoff-tiebreak';
-  const displayVersion='4.2.0 CLEAN FULL APP RC29 · RALLYCROSS RUNOFF TIEBREAK';
-  const cacheName='legion-rx-4-2-0-clean-full-rc29-rallycross-runoff-tiebreak';
+  const appVersion='4.2.0-clean-full-rc30-start-order-selection-outline';
+  const displayVersion='4.2.0 CLEAN FULL APP RC30 · START ORDER + SELECTION OUTLINE';
+  const cacheName='legion-rx-4-2-0-clean-full-rc30-start-order-selection-outline';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

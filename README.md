@@ -1,6 +1,14 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC29 · RALLYCROSS RUNOFF TIEBREAK
+# LEGION RX 4.2.0 CLEAN FULL APP RC30 · START ORDER + SELECTION OUTLINE
 
-Direct code base: **RC28 MANUAL PILOT TILES & IOS STORAGE SAFETY**.
+Direct code base: **RC29 RALLYCROSS RUNOFF TIEBREAK**.
+
+## RC30 current release
+
+- RallyCross has one official pre-start order source. Qualification uses the order already prepared by the qualification heat builder; finals use the existing qualification-rating grid order.
+- The cockpit and announcer consume that same order. Before timing separates pilots, the cockpit no longer reverts to registration order.
+- Selected pilot/model tiles in RallyCross setup and Free Practice use a thin neutral light outline with a restrained halo; the previous blue selected fill/glow is removed.
+- RC29 run-off rules, scoring, LapWiz protocol, iOS START/storage safety, offline-update behavior and reporting are unchanged.
+
 
 RC22 is an isolated pilot-UI rebuild. It replaces the old pilot database card and race pilot picker instead of styling over them.
 

@@ -6,8 +6,10 @@ pilot=(ROOT/'ui/pilots/pilot-cards.js').read_text(encoding='utf-8')
 css=(ROOT/'ui/pilots/pilot-cards.css').read_text(encoding='utf-8')
 shared=(ROOT/'ui/shell/discipline-shared.js').read_text(encoding='utf-8')
 actions=(ROOT/'ui/shell/actions.js').read_text(encoding='utf-8')
-checks['practice_card_perimeter_glow']='.pilotSelectCard.hasSelection' in css and '0 0 15px' in css and 'var(--v4-cobalt)' in css
-checks['practice_model_perimeter_glow']='.pilotPickerModelChip.selected' in css and '0 0 12px' in css and 'var(--v4-cobalt)' in css
+card_sel=re.search(r'\.pilotSelectCard\.hasSelection\{([^}]*)\}',css)
+model_sel=re.search(r'\.pilotPickerModelChip\.selected\{([^}]*)\}',css)
+checks['practice_card_thin_neutral_outline']=bool(card_sel and 'inset 0 0 0 1px' in card_sel.group(1) and '0 0 5px' in card_sel.group(1) and 'var(--v4-cobalt)' not in card_sel.group(1) and 'background:' not in card_sel.group(1))
+checks['practice_model_thin_neutral_outline']=bool(model_sel and 'inset 0 0 0 1px' in model_sel.group(1) and '0 0 5px' in model_sel.group(1) and 'var(--v4-cobalt)' not in model_sel.group(1) and 'background:' not in model_sel.group(1))
 sel=re.search(r'\.pilotPickerModelChip\.selected\{([^}]*)\}',css)
 checks['selection_has_no_transform']=bool(sel and 'transform' not in sel.group(1))
 checks['theme_aware_custom_background']='function appBackgroundThemeColor(' in shared and "theme==='light'?.22:.34" in shared and 'appBackgroundThemeColor(color)' in shared

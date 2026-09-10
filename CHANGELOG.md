@@ -1,5 +1,14 @@
 # LEGION RX CHANGELOG
 
+## RC30 · START ORDER + SELECTION OUTLINE
+
+- Added one authoritative RallyCross pre-start pilot order shared by cockpit presentation, start-grid view and announcer call sequence.
+- Qualification keeps the sport-generated `event.pilots` order exactly as prepared by the qualification heat builder.
+- Finals keep the existing qualification-rating start order; the announcer no longer performs a separate private sort.
+- Live cockpit ranking now preserves the official start order while lap/time data is equal, then continues to reorder normally from actual race timing.
+- Race/practice pilot and model selection removed the blue fill/glow. Selected pilot/model tiles now use a thin neutral light outline with only a very small halo and no transform/layout movement.
+- RallyCross scoring, qualification points, LCQ/finals generation, RC29 run-offs, LapWiz, storage, Free Practice sport logic and reporting are unchanged.
+
 ## RC28 · MANUAL PILOT TILES & IOS STORAGE SAFETY
 
 - Replaced the old initials-based manual-lap/manual-pass picker cards with one shared cockpit pilot action tile: colored LapWiz ID square + uppercase pilot name + country flag + current lap count.

@@ -1,3 +1,53 @@
+# LEGION RX 4.2.0 CLEAN FULL APP RC30 · START ORDER + SELECTION OUTLINE — TEST REPORT
+
+## Scope
+Two focused corrections over RC29: synchronize the official RallyCross pre-start order between sport data, cockpit and announcer; replace the rejected blue pilot/model selection glow with a thin neutral light outline. RallyCross scoring/run-off rules are unchanged.
+
+## RC30 behavior verification
+- Qualification start order preserves the exact sport-generated `event.pilots` sequence: PASS.
+- Finals start order follows the existing qualification-rating grid logic: PASS.
+- Cockpit at zero/equal timing preserves official start order instead of registration order: PASS.
+- Live timing still reorders pilots normally when laps/time differ: PASS.
+- Start-call announcer consumes the same authoritative start order and has no separate finals sort: PASS.
+- RallyCross manual pilot pickers consume the same start/live ordering: PASS.
+- Selected pilot card uses thin neutral 1 px outline + restrained 5 px halo, no blue fill/glow: PASS.
+- Selected model tile/chip uses the same selected-state language: PASS.
+- No transform/layout movement in selected state: PASS.
+
+## Automated regression
+- `verify_architecture.py`: PASS.
+- `verify_clean_foundation.py`: PASS with RC30 intended RallyCross hashes.
+- `verify_ios_start_safety.py`: PASS; START/audio/storage safety preserved.
+- `verify_pilot_cards.py`: PASS.
+- `verify_rc26_ui_safety.py`: PASS.
+- `verify_rc27_ui_safety.py`: PASS with RC30 neutral selected-state contract.
+- `verify_rc28_manual_storage.py`: PASS.
+- `verify_rc28_storage_behavior.js`: PASS.
+- `verify_rc29_rallycross_runoffs.py`: PASS.
+- `verify_rc29_rallycross_runoffs.js`: **28/28 PASS**.
+- `verify_rc30_start_order_selection.js`: **12/12 PASS**.
+- RallyCross boot self-test remains **18/18 PASS**, rule version `RALLYCROSS-2026.09.2`.
+- JavaScript syntax: **39/39 PASS**.
+- Offline manifest local assets: PASS / no missing local file.
+- No duplicate global functions / no DOM inside sport core / no BLE protocol inside UI: PASS.
+
+## Protected unchanged areas
+- `modes/rallycross/rules.js`, `qualifying.js`, `finals.js`, `self-test.js`: scoring/run-off rules unchanged from RC29.
+- `modes/free-practice/index.js`: unchanged.
+- `modes/classic-rc/index.js`: unchanged.
+- `modes/rally-sprint/index.js`: unchanged.
+- `platform/audio.js`: unchanged; RC30 only changes RallyCross audio action ordering.
+- LapWiz protocol: unchanged.
+- Storage / RC28 quota-safe archive path: unchanged.
+- Reporting modules: unchanged.
+
+## Real-device acceptance still required
+Container tests cannot reproduce physical LapWiz/Bluetooth/Safari timing. On device verify: (1) a qualification heat whose prepared order differs from registration order is shown and spoken in exactly the same 1→N order; (2) a Final A grid is shown and spoken in qualification-rating order; (3) RC29 qualification/Final A run-off acceptance still behaves with zero extra points/results.
+
+---
+
+## Previous report snapshot (RC29)
+
 # LEGION RX 4.2.0 CLEAN FULL APP RC29 · RALLYCROSS RUNOFF TIEBREAK — TEST REPORT
 
 ## Scope

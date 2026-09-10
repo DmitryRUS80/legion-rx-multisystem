@@ -207,7 +207,7 @@ function rxnDisplayTools(){return `<div class="rxnDisplayTools">${rxnColumnToggl
 function rxnControlPanel(done,s,tie=false){return `<section class="rxnControlPanel">${rxnControlGrid(done,s,tie)}${rxnDisplayTools()}</section>`;}
 function cockpitView(){
   if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
-  const race=state.race,ev=currentEvent(race),events=eventList(race),s=ensureSession(ev),pilots=ev?liveRanking(getEventPilots(race,ev),s):[],done=race.stage==='finished',tie=race.stage==='tie';
+  const race=state.race,ev=currentEvent(race),events=eventList(race),s=ensureSession(ev),pilots=ev?liveRanking(RallyCrossModeAPI.startPilots(race,ev),s):[],done=race.stage==='finished',tie=race.stage==='tie';
   const cls=rxnColumnClass(),count=rxnMetricCount();
   if(tie)return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s,pilots)}<main class="rxnTieMain"><div class="rxnTieBox">${tieWidget(race)}</div>${rxnControlPanel(false,s,true)}</main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
   return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s,pilots)}<main class="rxnMain"><section class="rxnRoster"><div class="rxnTable">${done?rxnFinalProtocolTable(race):rxnPilotTable(pilots,s)}</div></section><aside class="rxnSide">${rxnTimerPanel(race,ev,pilots,s,done)}${rxnControlPanel(done,s,false)}</aside></main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
@@ -232,7 +232,7 @@ function updateDynamicCockpitUI(){
   const race=state.race,ev=currentEvent(race),s=state.session;if(!race||!ev||!s)return;
   const timer=document.querySelector('#mainTimer');if(timer)timer.textContent=displayTimer(s,ev);
   if(s.phase==='countdown'&&s.warmupEndsAtPerf)s.countdownLeft=Math.max(0,Math.ceil(warmupRemainingMs(s)/1000));
-  const ranked=liveRanking(getEventPilots(race,ev),s),ring=document.querySelector('#timerRing');
+  const ranked=liveRanking(RallyCrossModeAPI.startPilots(race,ev),s),ring=document.querySelector('#timerRing');
   const bestLap=rxnBestLapLeader(ranked,s);
   if(ring)ring.style.setProperty('--ring-progress',`${timerProgress(s,ev)*3.6}deg`);
   const rd=rxnRingData(race,ev,ranked,s),set=(q,v)=>{const e=document.querySelector(q);if(e)e.textContent=v;};
@@ -256,7 +256,7 @@ function rxnSuggestedStatus(p,s){const l=s?.live?.[p.id]||blankLive();return(!l.
 function rxnResultConfirmModal(){
   const race=state.race,ev=currentEvent(race),s=state.session;
   if(!race||!ev||s?.phase!=='finished')return toast('Сначала завершите текущий заезд');
-  const ranked=liveRanking(getEventPilots(race,ev),s),raw=findRawEvent(ev.key),isTie=Boolean(ev.tieBreak),isQ=ev.type==='qualifying'&&!isTie;
+  const ranked=liveRanking(RallyCrossModeAPI.startPilots(race,ev),s),raw=findRawEvent(ev.key),isTie=Boolean(ev.tieBreak),isQ=ev.type==='qualifying'&&!isTie;
   const rows=ranked.map((p,i)=>{const l=s.live?.[p.id]||blankLive(),status=rxnSuggestedStatus(p,s);return `<div class="rxnResultEditRow" data-rxn-result-row="${esc(p.id)}">
     <div class="rxnResultPos">${i+1}</div><div class="rxnResultId" style="--pilot-color:${rxnPilotColor(p)}">${esc(p.transponder||i+1)}</div>
     <div class="rxnResultPilot"><b>${esc(rxnPilotDisplayName(p))}</b><small>${l.laps||0} кр. · ${rxnFormatDuration(Number(l.elapsedMs||0))}</small></div>
@@ -273,7 +273,7 @@ function rxnResultConfirmModal(){
 }
 function rxnSaveConfirmedResult(){
   const race=state.race,ev=currentEvent(race),s=state.session;if(!race||!ev||s?.phase!=='finished')return toast('Сначала завершите текущий заезд');
-  const ranked=liveRanking(getEventPilots(race,ev),s);let dnfOrder=0;
+  const ranked=liveRanking(RallyCrossModeAPI.startPilots(race,ev),s);let dnfOrder=0;
   const result=ranked.map((p,i)=>{const row=document.querySelector(`[data-rxn-result-row="${CSS.escape(String(p.id))}"]`);const status=row?.querySelector('[data-result-status]')?.value;const place=Number(row?.querySelector('[data-result-place]')?.value||i+1);if(!RallyCrossModeAPI.isValidStatus(status))throw new Error(`Не выбран статус: ${p.name}`);return{pilotId:p.id,status,place:status==='FIN'?place:null,dnfOrder:status==='DNF'?++dnfOrder:null};});
   try{commitCurrentEventResult(result);toast('Результат сохранён. Следующий заезд подготовлен.');closeModal();}catch(e){toast(e.message);}
 }
@@ -450,7 +450,7 @@ document.addEventListener('click',e=>{
     document.querySelectorAll('[data-rxn-precision]').forEach(x=>x.classList.toggle('active',Number(x.dataset.rxnPrecision)===n));
     const race=state.race,ev=currentEvent(race),s=state.session;
     if(race&&ev&&s&&state?.view==='cockpit'){
-      const ranked=liveRanking(getEventPilots(race,ev),s),board=document.querySelector('.rxnTable');
+      const ranked=liveRanking(RallyCrossModeAPI.startPilots(race,ev),s),board=document.querySelector('.rxnTable');
       if(board&&s.phase!=='finished')rxnAnimateBoard(board,rxnPilotTable(ranked,s));
     }
     if(state?.view==='trackDayCockpit'){const td=ensureTrackDayState(state.trackDay),board=document.querySelector('#trackPilotBoard');if(td&&board)rxnAnimateBoard(board,rxnTrackPilotTable(td));}

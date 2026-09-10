@@ -72,7 +72,7 @@
 ## RC27 changed UI functions
 - `pilotRenderModelEditors()` — live LapWiz ID text inside the existing color square.
 - `appBackgroundThemeColor()` / `applyAppBackground()` — theme-aware rendering of a user-selected background hue.
-- `.pilotSelectCard.hasSelection` / `.pilotPickerModelChip.selected` — perimeter glow only; no layout change.
+- `.pilotSelectCard.hasSelection` / `.pilotPickerModelChip.selected` / `.pilotModelTile.selected` — RC30 thin neutral light outline + subtle halo only; no blue fill and no layout change.
 
 
 ## RC28 manual pilot / storage safety
@@ -90,3 +90,10 @@
 - `compareMainStandingsCore()` — Final A BEST-2 sum -> best place -> laps/time -> second counted result.
 - `createFinalRunoffs()` — creates a run-off only for exact Final A tie groups.
 - `saveFinalEvent()` tie-break branch — stores run-off order only and then rebuilds the official final protocol.
+
+## RC30 start-order bridge
+- `modes/rallycross/index.js::getEventStartPilots()` — single authoritative pre-start order: qualification preserves prepared heat order; finals use current qualification rating.
+- `RallyCrossModeAPI.startPilots()` — public read adapter used by cockpit/manual UI before `liveRanking()`.
+- `modes/rallycross/runtime.js::liveRanking()` — live timing sort; when live values are equal, preserves the supplied official start order instead of falling back to registration order.
+- `modes/rallycross/audio-actions.js::announceStartCall()` — speaks `getEventStartPilots()` in sequence; no duplicate finals sorting.
+

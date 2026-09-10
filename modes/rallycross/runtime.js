@@ -1,5 +1,5 @@
 'use strict';
-function liveRanking(pilots,session){if(!session)return pilots;return [...pilots].sort((a,b)=>{const A=session.live?.[a.id]||blankLive(),B=session.live?.[b.id]||blankLive();if(B.laps!==A.laps)return B.laps-A.laps;if(A.finished!==B.finished)return A.finished?-1:1;return (A.elapsedMs||Infinity)-(B.elapsedMs||Infinity)||(a.registrationOrder||999)-(b.registrationOrder||999);});}
+function liveRanking(pilots,session){if(!session)return pilots;const startOrder=new Map((pilots||[]).map((p,i)=>[String(p.id),i]));return [...pilots].sort((a,b)=>{const A=session.live?.[a.id]||blankLive(),B=session.live?.[b.id]||blankLive();if(B.laps!==A.laps)return B.laps-A.laps;if(A.finished!==B.finished)return A.finished?-1:1;const ae=A.elapsedMs||Infinity,be=B.elapsedMs||Infinity;if(ae!==be)return ae-be;return(startOrder.get(String(a.id))??9999)-(startOrder.get(String(b.id))??9999);});}
 
 function sessionElapsed(s){if(!s)return 0;if(Number.isFinite(s.elapsedFinalMs))return s.elapsedFinalMs;const base=Number(s.elapsedBeforePause)||0;if(s.phase==='paused'||!s.startedAtPerf)return base;return base+(performance.now()-s.startedAtPerf);}
 

@@ -103,3 +103,10 @@ RC27 changes only pilot-selection presentation and shell background rendering. F
 - The UI only labels a run-off and saves its FIN/DNF/DNS/DSQ order. It contains no tie-break arithmetic.
 - No random draw or registration-order fallback is allowed to resolve an official sport tie. Registration/qualification order may be used only for temporary stable display while the run-off is still unresolved.
 - Run-offs reuse the established timing/LapWiz runtime; there is no duplicate timing implementation and no new BLE path.
+
+## RC30 start-order / selection boundary
+- `modes/rallycross/index.js::getEventStartPilots()` owns prepared pre-start order only; it does not calculate qualification points or final results. Qualification consumes the already-generated heat sequence; finals consume the existing qualification rank.
+- UI reads this order through `RallyCrossModeAPI.startPilots()` / `startGrid()` and may apply live timing ranking on top. UI does not create a second grid algorithm.
+- `modes/rallycross/audio-actions.js` consumes the same prepared order and therefore has no independent pilot sorting policy.
+- `ui/pilots/pilot-cards.css` remains the only owner of pilot/model picker selected-state visuals. RC30 edits those authoritative selectors directly; no patch/override stylesheet is added.
+

@@ -8,7 +8,7 @@ function queueRaceVoice(task){const run=raceVoiceQueue.then(task,task);raceVoice
 
 function announceService(key){if(!state.settings.announcerEnabled||!state.settings.voiceService)return Promise.resolve(false);return queueRaceVoice(()=>announcer.play(key,{wait:true}));}
 
-function announceStartCall(ev){if(!state.settings.announcerEnabled||!state.settings.voiceStartCall)return Promise.resolve(false);let pilots=getEventPilots(state.race,ev);if(ev&&ev.type!=='qualifying'){const rank=qualificationRankMap(state.race);pilots=[...pilots].sort((a,b)=>(rank.get(String(a.id))||9999)-(rank.get(String(b.id))||9999));}return queueRaceVoice(async()=>{await announcer.play('warmup_1',{wait:true});await announcer.play('callToStart',{wait:true});await playPilotVoiceSequence(pilots,{initialDelay:250});return true;});}
+function announceStartCall(ev){if(!state.settings.announcerEnabled||!state.settings.voiceStartCall)return Promise.resolve(false);const pilots=getEventStartPilots(state.race,ev);return queueRaceVoice(async()=>{await announcer.play('warmup_1',{wait:true});await announcer.play('callToStart',{wait:true});await playPilotVoiceSequence(pilots,{initialDelay:250});return true;});}
 
 function announceBestLap(p){if(!state.settings.announcerEnabled||!state.settings.voiceBestLap)return Promise.resolve(false);return queueRaceVoice(async()=>{await announcer.play('newBestLap',{wait:true});await playPilotVoice(p,{delay:160});return true;});}
 
