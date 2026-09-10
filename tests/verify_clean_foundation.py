@@ -11,13 +11,13 @@ expected={
 'platform/storage.js':'c6a007eacc91b80d680518d07be51532a5ac8a02b990142bf6c49e409d9a7927',
 'platform/timing.js':'2f906ea408b3dca79a7dc74b19eed99c0a88d2559e24146a52a02b350ea8a9c8',
 'platform/utils.js':'488d5cc91485d8511fa46b7c043cb21d61048ee3d9caf0a3e03724493432fecd',
-'modes/rallycross/rules.js':'80c8a70c6d9e4bf51c0f7838a9dd0f519fb79f5e0d169f7ab4138ff0a188e3a0',
-'modes/rallycross/qualifying.js':'15ba4a3768a3d389b2c968032935ac809f2bad551e4206c658c1b997c3ba3be9',
-'modes/rallycross/finals.js':'160a93c2cd3ddfa58fbb7b661578076ba6b7a4904f915e966a2e41007d4e8bb1',
-'modes/rallycross/index.js':'c9fb3c90f8dab5233d98dfa55384aa6c4329c9d38b53a547340e9ed44ff94386',
+'modes/rallycross/rules.js':'d840388a9e0a148909cac826b184fb88d513c0edbb4a354585ee74362cbb6db3',
+'modes/rallycross/qualifying.js':'bebee6a92a488e5bcdf768740bfba6413a92e3a921a346aef4c11388738c63eb',
+'modes/rallycross/finals.js':'7f057ef596b26573be59efb30fc5760b6ca1d36acac6228a8a275305d828b440',
+'modes/rallycross/index.js':'768fabb156cdc557d7b5a11debfb008d7575d303760497074b48c290cd4d61b2',
 'modes/rallycross/audio-actions.js':'f2d9ccfc4bcdb85bb759840153c9e844787dfcaca2f6a9c723cec3b38875f67a',
-'modes/rallycross/runtime.js':'608b9e54ec3e7b288fec5824f37621a1555bf639115f6047bbaf29e81f1eebfd',
-'modes/rallycross/self-test.js':'004f5e6f4d5adfc9dd37af3050cb4a7e3b486b36cd9b157fada9879482800037',
+'modes/rallycross/runtime.js':'fe247ed9a55a1bb81ed3fed5029bc180fed652de2c3907cb24983c6a8f8cdac3',
+'modes/rallycross/self-test.js':'3f2be9c50b3a4b158505abd64f95ffd7d10856323a7fd7fb8e31f579cad1113a',
 'modes/free-practice/index.js':'aa43d3a87f0e9286635dbb5bbcfc7647dac310ea30d24af80bb9fe9cdd20845a',
 'modes/rally-sprint/index.js':'1f72a94e0f765212b98bd7af6b24589c1108001bcfaa9fcfc3db7fd97b025a71',
 'modes/classic-rc/index.js':'ade4c33308e6d31ec1987d61635058917aea54c9fc0a8bd476cc824407af9bb4',
@@ -31,7 +31,7 @@ for rel,want in expected.items():
     p=ROOT/rel
     got=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else 'MISSING'
     if got!=want: changed.append((rel,got,want))
-checks['protected_foundation_hashes_match_rc28']=not changed
+checks['protected_foundation_hashes_match_rc29']=not changed
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])

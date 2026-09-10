@@ -1,6 +1,6 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC28 · MANUAL PILOT TILES & IOS STORAGE SAFETY
+# LEGION RX 4.2.0 CLEAN FULL APP RC29 · RALLYCROSS RUNOFF TIEBREAK
 
-Direct code base: **RC25 COMPACT PILOT GRID**.
+Direct code base: **RC28 MANUAL PILOT TILES & IOS STORAGE SAFETY**.
 
 RC22 is an isolated pilot-UI rebuild. It replaces the old pilot database card and race pilot picker instead of styling over them.
 
@@ -80,3 +80,12 @@ Sport/platform/offline/audio/reporting logic is unchanged.
 - iPhone race completion no longer archives duplicate base64 pilot photos. Existing old snapshots are compacted automatically.
 - If Safari storage is still genuinely full after compaction, the race stays active/completed instead of being cleared, and the operator is told that local storage must be freed.
 - Sport rules, LapWiz protocol and reporting are unchanged.
+
+
+## RC29 RallyCross tie resolution
+- Removed the qualification random draw.
+- Qualification exact equality now automatically creates a run-off containing only the tied pilots. The run-off adds no Q points and does not become an extra qualification result.
+- Final A BEST-2 equality is resolved by best counted place, then laps/time of that result, then the second counted result and its laps/time.
+- Only an exact remaining equality creates a Final A run-off. The run-off does not become A4 and has no bonus points; it only fixes the order inside the disputed final positions.
+- Normal event/championship points are assigned after that final order is known.
+- Free Practice, LapWiz protocol, audio, storage, reporting and RC28 iPhone quota safety are unchanged.

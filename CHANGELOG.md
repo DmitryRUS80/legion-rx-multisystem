@@ -110,3 +110,14 @@
 - Existing-pilot model color now changes visually and persists immediately from the color picker; no profile Save is required for color alone.
 - Completed RallyCross “ЗАВЕРШИТЬ” now opens an in-app confirmation and completes through a confirmed DOM-free core path, avoiding the native iPhone/Safari confirm dependency.
 - Added dedicated RC26 UI-safety regression checks; RallyCross sport modules, Free Practice sport module, LapWiz platform code and reporting remain unchanged.
+
+
+## RC29 · RALLYCROSS RUNOFF TIEBREAK
+- Removed random qualification draw and the visible `ЖЕРЕБЬЁВКА` action.
+- Removed the old latest-round/registration fallback as an official qualification tie resolver.
+- Qualification exact equality now creates real run-off events for tied pilots only; run-off results change local order only and add no Q points/results.
+- Final A ranking now follows BEST 2 sum -> best counted place -> laps/time of best counted run -> second counted result/laps/time.
+- Exact Final A equality creates a run-off for the tied pilots only. It is not A4, adds no bonus points and is excluded from scored `finalResults`.
+- Official event points are assigned only after run-off-resolved final positions are known.
+- Added dedicated static and behavioral regression tests for qualification/final run-offs; focused suite now covers 28 scenarios, including middle-table and three-way ties.
+- Free Practice, LapWiz, audio, storage/reporting and RC28 iPhone archive safety are unchanged.

@@ -10,6 +10,8 @@ function runRallyCrossSelfTest(){
  eq('Lap finish: leader opens window',lapRaceFinishDecision(lapRule,{lapFinishOpen:false},{laps:7}).openFinishWindow,true);
  eq('Lap finish: lapped pilot next pass FIN',lapRaceFinishDecision(lapRule,{lapFinishOpen:true},{laps:5}).finishPilot,true);
  eq('Lap finish: time race unchanged',lapRaceFinishDecision({limitType:'time',targetLaps:7},{lapFinishOpen:true},{laps:7}).finishPilot,false);
+ eq('Qualification random draw removed',typeof runTieDraw,'undefined');
+ eq('Tie policy',RallyCrossModeAPI.ruleView().tiePolicy,'runoff-only-no-extra-points');
  return{ok:tests.every(x=>x.ok),version:SPORT_RULES.version,tests};
 }
 window.LegionRXSportDiagnostics=runRallyCrossSelfTest;const rallyCrossBootTest=runRallyCrossSelfTest();if(!rallyCrossBootTest.ok)console.error('LEGION RX SPORT RULES SELF-TEST FAILED',rallyCrossBootTest);else console.info('LEGION RX SPORT RULES OK',rallyCrossBootTest.version);

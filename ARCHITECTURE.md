@@ -95,3 +95,11 @@ RC27 changes only pilot-selection presentation and shell background rendering. F
 - Pilot avatars remain owned by the pilot database (`KEYS.pilots`). `platform/storage.js` stores race/archive/Track Day snapshots without duplicated embedded `data:image/...` pilot photos. `profileId` remains the link back to the pilot profile for current avatar presentation.
 - Storage compaction is a persistence concern only. It does not change RallyCross results, lap timing, LapWiz IDs, scoring or reporting contracts.
 - Completed-race archival is transactional at the application coordination layer: the active race is cleared only after the compact archive snapshot has been persisted successfully.
+
+
+## RC29 RallyCross run-off boundary
+- All equality resolution remains inside `modes/rallycross/`: qualification tie detection/order is owned by `qualifying.js`; Final A comparison/run-off order is owned by `finals.js`; runtime only routes the official result to the correct sport function.
+- A run-off is an ordinary RallyCross timing event but **not** a scoring event. Qualification run-offs never call `savePilotResult()`. Final A run-offs never append to `pilot.finalResults`.
+- The UI only labels a run-off and saves its FIN/DNF/DNS/DSQ order. It contains no tie-break arithmetic.
+- No random draw or registration-order fallback is allowed to resolve an official sport tie. Registration/qualification order may be used only for temporary stable display while the run-off is still unresolved.
+- Run-offs reuse the established timing/LapWiz runtime; there is no duplicate timing implementation and no new BLE path.

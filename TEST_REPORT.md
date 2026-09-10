@@ -1,3 +1,58 @@
+# LEGION RX 4.2.0 CLEAN FULL APP RC29 · RALLYCROSS RUNOFF TIEBREAK — TEST REPORT
+
+## Scope
+Focused RallyCross sport-rule change only: remove random draw and resolve exact aggregate ties by real run-offs. Free Practice sport logic, LapWiz protocol, audio, storage, reporting and RC28 iPhone quota-safe archival are not redesigned.
+
+## Rule verification
+- Qualification BEST 3 points and existing finishing-position/discarded-result countback preserved: PASS.
+- Latest-round fallback removed as an official tie resolver: PASS.
+- Random draw implementation/action removed: PASS.
+- Exact qualification tie creates run-off for tied pilots only: PASS.
+- Qualification run-off writes no qualification result and adds no Q points: PASS.
+- Final A BEST 2 sum preserved: PASS.
+- Equal Final A sum -> better individual counted place: PASS.
+- Still equal -> more laps / lower elapsed time of best counted result: PASS.
+- Still equal -> second counted result and laps/time: PASS.
+- Three-way exact Final A tie -> one run-off containing only the three disputed pilots: PASS.
+- Middle-table qualification tie -> run-off contains only the tied pilots; positions above/below remain unchanged: PASS.
+- Exact remaining Final A equality creates run-off for tied pilots only: PASS.
+- Final run-off is not appended to scored `pilot.finalResults`: PASS.
+- Final run-off has no event points of its own: PASS.
+- Official event points are assigned only from the resolved final protocol: PASS.
+- User screenshot case (`2,3,4 places all total 5`): pilot with `1+4` ranks above `2+3`; only the still-exact `2+3` pair receives a run-off: PASS.
+
+## Automated regression
+- `verify_architecture.py`: PASS.
+- `verify_clean_foundation.py`: PASS with RC29 intended RallyCross hashes.
+- `verify_ios_start_safety.py`: PASS; iOS START/finish confirmation behavior preserved.
+- `verify_pilot_cards.py`: PASS; pilot UI remains intact.
+- `verify_rc26_ui_safety.py`: PASS.
+- `verify_rc27_ui_safety.py`: PASS.
+- `verify_rc28_manual_storage.py`: PASS.
+- `verify_rc28_storage_behavior.js`: PASS.
+- `verify_rc29_rallycross_runoffs.py`: PASS.
+- `verify_rc29_rallycross_runoffs.js`: **28/28 PASS**.
+- RallyCross boot self-test: **18/18 PASS**, rule version `RALLYCROSS-2026.09.2`.
+- JavaScript syntax: **38/38 PASS**.
+- Offline manifest local assets: PASS / no missing local file.
+- No duplicate global functions / no DOM inside sport core / no BLE protocol inside UI: PASS.
+
+## Protected unchanged areas
+- `modes/free-practice/index.js`: byte-identical to RC28.
+- `modes/classic-rc/index.js`: byte-identical to RC28.
+- `modes/rally-sprint/index.js`: byte-identical to RC28.
+- `modes/rallycross/audio-actions.js`: byte-identical to RC28.
+- LapWiz platform protocol: unchanged.
+- Storage / RC28 quota-safe archive path: unchanged.
+- Reporting modules: unchanged.
+
+## Device acceptance still required
+Container tests can validate calculations and event flow but cannot reproduce a physical LapWiz race. On the device, force one exact qualification tie and one exact Final A tie, verify that the next current event is labelled `ПЕРЕЗАЕЗД`, contains only the tied pilots, and that no extra Q/final score is added after saving it.
+
+---
+
+## Previous report snapshot (RC28)
+
 # LEGION RX 4.2.0 CLEAN FULL APP RC28 · MANUAL PILOT TILES & IOS STORAGE SAFETY — TEST REPORT
 
 ## Scope

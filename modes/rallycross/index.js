@@ -10,7 +10,7 @@ function eventStatus(race,event){if(event.cancelled)return'cancelled';if(event.s
 function eventRule(race,event){
   if(!event)return null;
   const rs=race.raceSettings||{};
-  if(event.type==='qualifying'){
+  if(event.type==='qualifying'&&!event.tieBreak){
     const limitType=rs.qualificationLimitType||'time';
     return {mode:'qualification',limitType,durationMin:limitType==='time'?Number(rs.qualificationMinutes||5):0,targetLaps:limitType==='laps'?Number(rs.qualificationLaps||8):0,minLapSec:Number(rs.minLapSec||2),finishCurrentLap:true};
   }
@@ -32,6 +32,7 @@ const RallyCrossModeAPI=Object.freeze({
       finalRuns:[...SPORT_RULES.finalARuns],
       finalBestCount:SPORT_RULES.finalBestCount,
       finalNonFinishScore:SPORT_RULES.finalNonFinishScore,
+      tiePolicy:'runoff-only-no-extra-points',
       championshipEventPoints:[...SPORT_RULES.championshipEventPoints]
     });
   },

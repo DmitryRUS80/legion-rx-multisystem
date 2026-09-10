@@ -90,7 +90,7 @@ function resizeAppBackground(file){
 }
 function applySettings(){document.documentElement.dataset.theme=state.settings.theme;document.documentElement.lang=state.settings.lang;const themeMeta=document.querySelector('meta[name="theme-color"]');if(themeMeta)themeMeta.content=state.settings.theme==='light'?'#f3f4f5':'#050608';lapwiz.sound=state.settings.lapSound;applyUiTokens();applyAppBackground();translateStatic();announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;}
 
-function stageLabel(stage){return({setup:'Настройка',qualifying:'Квалификация',tie:'Жеребьёвка',finals:'Финалы',finished:'Завершено'})[stage]||stage;}
+function stageLabel(stage){return({setup:'Настройка',qualifying:'Квалификация',tie:'Перезаезд',finals:'Финалы',finished:'Завершено'})[stage]||stage;}
 
 
 
@@ -106,7 +106,7 @@ function eventItem(race,e,i){const s=eventStatus(race,e),pilots=(e.pilots||[]).l
 
 
 
-function tieWidget(race){const groups=getExactTieGroups(race);const body=`${groups.map(g=>`<div class="tieLine"><b>${g.map(p=>esc(p.name)).join(' · ')}</b></div>`).join('')}<button class="widgetAction primaryAction" data-action="tie-draw">Провести жеребьёвку и сформировать финалы</button>`;return `<section class="raceWidget"><div class="raceWidgetHead"><span>${uiIcon('refresh','widgetIcon')} ЖЕРЕБЬЁВКА</span><span class="soonTag warnTag">НУЖНО ДЕЙСТВИЕ</span></div><div class="raceWidgetBody">${body}</div></section>`;}
+function tieWidget(race){const groups=getExactTieGroups(race);const body=`${groups.map(g=>`<div class="tieLine"><b>${g.map(p=>esc(p.name)).join(' · ')}</b></div>`).join('')}<button class="widgetAction primaryAction" data-action="tie-runoff">Сформировать перезаезд</button>`;return `<section class="raceWidget"><div class="raceWidgetHead"><span>${uiIcon('refresh','widgetIcon')} ПЕРЕЗАЕЗД</span><span class="soonTag warnTag">РАВЕНСТВО</span></div><div class="raceWidgetBody">${body}</div></section>`;}
 
 
 

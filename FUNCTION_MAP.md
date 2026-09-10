@@ -11,8 +11,8 @@
 - App state -> `platform/state.js`
 
 - RallyCross constants/data model/finish policy -> `modes/rallycross/rules.js`
-- Qualification / BEST 3 / ties -> `modes/rallycross/qualifying.js`
-- LCQ / A1 A2 A3 / final protocol -> `modes/rallycross/finals.js`
+- Qualification / BEST 3 / exact-tie run-off ordering -> `modes/rallycross/qualifying.js`
+- LCQ / A1 A2 A3 / BEST-2 equality criteria / Final A run-offs / final protocol -> `modes/rallycross/finals.js`
 - RallyCross live lifecycle -> `modes/rallycross/runtime.js`
 - RallyCross public mode API -> `modes/rallycross/index.js`
 - RallyCross voice events -> `modes/rallycross/audio-actions.js`
@@ -82,3 +82,11 @@
 - `platform/storage.js::compactRaceForStorage()` / `compactTrackDayForStorage()` — remove duplicated embedded pilot avatar payloads from race/practice persistence snapshots while preserving pilot/result identity.
 - `platform/storage.js::compactLegacyStorage()` — one-time/automatic compaction of older local snapshots and quota-retry support.
 - `app.js::archiveCurrentRace()` / `completeCompetition()` — persist a compact archive snapshot before clearing the active race; archival failure leaves the active completed race in place.
+
+
+## RC29 run-off functions
+- `comparePilotsWithoutRunoff()` — qualification sport comparison only; 0 means a real unresolved tie.
+- `createQualificationRunoffs()` / `saveQualificationRunoffEvent()` — run only tied qualification pilots; write local order only, no Q points.
+- `compareMainStandingsCore()` — Final A BEST-2 sum -> best place -> laps/time -> second counted result.
+- `createFinalRunoffs()` — creates a run-off only for exact Final A tie groups.
+- `saveFinalEvent()` tie-break branch — stores run-off order only and then rebuilds the official final protocol.

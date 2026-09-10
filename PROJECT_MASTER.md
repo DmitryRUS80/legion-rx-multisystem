@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC28 · MANUAL PILOT TILES & IOS STORAGE SAFETY**  
-Direct code base: **RC27 PRACTICE GLOW & LIVE THEME**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC29 · RALLYCROSS RUNOFF TIEBREAK**  
+Direct code base: **RC28 MANUAL PILOT TILES & IOS STORAGE SAFETY**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -116,3 +116,12 @@ UI-only refinement on the RC26 foundation: Free Practice selection visibility, t
 - A quota failure during completed-race archival no longer clears the current race. The archive is committed first; only successful persistence clears the cockpit.
 - `modes/`, RallyCross sport runtime/rules, Free Practice sport core, LapWiz protocol, audio and reporting are unchanged.
 - RC28 remains a candidate until real iPhone finish/archive and field LapWiz acceptance are confirmed.
+
+
+## RC29 RALLYCROSS RUN-OFF TIEBREAK
+- Random qualification draw is removed from the executable RallyCross rules and UI.
+- Qualification keeps BEST 3 + finishing-position countback + discarded-result quality. If those criteria are still exactly equal, the tied pilots get a real run-off. The run-off does not write qualification points/results; it stores ordering only inside that tie group.
+- Final A keeps A1/A2/A3 with BEST 2. Equal BEST-2 totals are separated by: best counted place -> laps/time of that run -> second counted result -> laps/time. Exact equality creates a Final A run-off.
+- Final run-off result is not appended to `pilot.finalResults` and has no event points of its own. It only resolves the disputed final positions; normal event points are assigned afterward from the official final protocol.
+- Run-off events use the normal RallyCross runtime/LapWiz path and current final race limit settings. No parallel scoring engine is added.
+- Free Practice, LapWiz protocol, audio, storage/reporting contracts and RC28 iOS storage safety are unchanged.
