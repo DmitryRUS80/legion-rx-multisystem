@@ -1,5 +1,16 @@
 # LEGION RX CHANGELOG
 
+## RC34 · LIVE PILOT STATS BROADCAST
+
+- Refined the RC33 pilot lap-statistics window into a compact broadcast-style live card.
+- Landscape card is approximately half the roster width; portrait may use the available roster width. It never enters the right timer/control pult.
+- Header now shows shared avatar/flag/team, colored LapWiz transponder ID, full pilot name, `POS / BEST / AVG`, live `LAPS / TIME`.
+- Open stats refresh from the existing RallyCross / Free Practice UI tickers; position, time, averages, lap counts and newly completed laps remain live.
+- Removed guide lines from the header metrics and removed the yellow average-lap highlight.
+- Lap rows are neutral translucent rows with white values; only BEST text is green and WORST text uses the existing magenta finish accent.
+- Background roster remains visible and continues updating through only a light dim/blur.
+- Free Practice judge lap deletion/correction history is preserved. No sport, LapWiz, audio, storage or reporting logic changed.
+
 ## RC33 · PILOT LAP STATS UI
 
 - Replaced the legacy pilot lap-statistics modal with one cockpit-native presentation source.

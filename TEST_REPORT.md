@@ -1,48 +1,24 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC33 · PILOT LAP STATS UI — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC34 · LIVE PILOT STATS BROADCAST — TEST REPORT
 
 ## Scope
-Focused UI-only replacement of the pilot lap-statistics window over RC32. Preserve timing data, RallyCross scoring/runtime, Free Practice lap logic and judge deletion, RC30 start order/announcer, RC31 column behavior, RC32 skip/state safety, LapWiz, audio, storage and reporting.
+Focused UI refinement over RC33. Preserve RC29 scoring/run-offs, RC30 start order/announcer, RC31 column repair, RC32 skip/state safety, RC33 legacy stats removal, Free Practice judge deletion, LapWiz, audio, storage and reporting.
 
-## RC32 root-cause regression context (preserved)
-- Skipping all standard qualification heats left every pilot with no qualifying record. The strict RC29 equality detector interpreted equal zero totals as a real sport tie and generated a qualification run-off. Cancelling that run-off generated another one.
-- A cancelled Final A run had `saved=true` and `result=[]`; `buildMainStandingItems()` converted the missing result for every pilot to DNS, score 7. Skipping A1/A2/A3 therefore manufactured an exact tie and a Final A run-off. Cancelling that run-off recreated the same run-off indefinitely.
-- With large fields, cancelling every preliminary LCQ could yield `winners=[]` and create a downstream `LCQ-F` with zero pilots.
+## RC34 live pilot-statistics verification
+- `tests/verify_rc34_live_pilot_stats.py`: **17/17 PASS**.
+- Confirms one live refresh path, refresh calls from both existing cockpit tickers, live POS/BEST/AVG/LAPS/TIME, full pilot name, colored transponder ID, compact landscape geometry, portrait roster-bounded geometry, light blur/dim, no metric guide lines, no average-row highlight, neutral rows, BEST green text, WORST magenta text and preserved Free Practice delete.
 
-## RC33 pilot lap-statistics UI verification
-- `tests/verify_rc33_pilot_stats_ui.py`: **16/16 PASS**.
-- Confirms active race PLACE uses the same `startPilots + liveRanking` source as the cockpit.
-- Confirms Free Practice PLACE uses `rankTrackPilots`.
-- Confirms the overlay bounds come from `.rxnRoster`, old lap-stat UI classes are removed, BEST/AVG/WORST colors map to green/yellow/magenta, and Free Practice lap deletion remains wired.
-
-## RC32 behavior verification
-- `tests/verify_rc32_skip_flow.js`: **11/11 PASS**.
-- All qualification heats skipped with no recorded result -> no artificial run-off; finals become available.
-- A1/A2/A3 skipped -> cancelled runs are absent results, not DNS=7; no artificial Final A run-off; competition reaches finished protocol.
-- 18-pilot preliminary cancellation path -> no zero-pilot downstream event and no limbo.
-- Genuine exact equality from real saved Final A results -> mandatory run-off still created.
-- Mandatory real run-off -> low-level cancellation and management skip cannot create a retry chain.
-- Explicit `Завершить спортивную часть` -> exits even an unresolved real run-off and leaves `stage=finished`, `lifecycleStatus=completed` and a complete protocol for archive.
-
-## Full automated regression
-- Architecture / clean foundation: PASS.
-- iOS START / finish safety: PASS.
-- Pilot cards / RC26 / RC27 / RC28 regressions: PASS.
-- RC29 static run-off checks: PASS.
+## Preserved focused regressions
+- RC33 pilot-stats foundation: **10/10 PASS**.
+- RC32 skip/state flow: **11/11 PASS**.
 - RC29 run-off behavior: **28/28 PASS**.
 - RC30 official start-order / announcer / selection: **12/12 PASS**.
 - RC31 column-grid contract: PASS.
-- RC32 skip/state flow: **11/11 PASS**.
-- JavaScript syntax: **40/40 PASS**.
-- Offline manifest local assets: PASS / no missing local file.
 
-## Protected unchanged runtime areas
-- `modes/rallycross/rules.js`, `index.js`, `audio-actions.js`, `self-test.js`: byte-identical to RC31.
-- `ui/discipline-ui.js`, `ui/shell/discipline-pults.css`, `ui/pilots/pilot-cards.css`: byte-identical to RC31.
-- `modes/free-practice/index.js`: byte-identical to RC31.
-- LapWiz, platform audio, storage and reporting: byte-identical to RC31.
+## Protected runtime scope
+Changed runtime files: `ui/shell/views.js`, `ui/discipline-ui.js`, `ui/shell/discipline-pults.css` only. No files under `modes/`, `platform/`, `reporting/`, `ui/pilots/` are changed from RC33. Offline metadata changes only for the RC34 release namespace.
 
 ## Real-device acceptance still required
-On iPhone/PWA and Android: skip several qualification heats, skip A-runs, exercise multi-skip on a larger event, and verify there is never `PILOTS 0/0` for an active event or an endless run-off sequence. For a genuine run-off, `Пропустить` must refuse it; `Завершить спортивную часть` must still end the competition and expose the normal archive completion controls. Also recheck RC30 spoken start order and RC31 column toggles.
+On landscape desktop/Android/iPhone/tablet: open a pilot while a race/practice session is running and verify the card occupies only the roster, the right pult is untouched, underlying rows remain visible/live, `TIME` continues counting, `POS/AVG/LAPS` update, and a new pass appends a lap without closing the card. In portrait verify the card stays above the lower control area because it remains bounded by the roster.
 
 ---
 

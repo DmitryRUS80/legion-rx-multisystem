@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc33-pilot-lap-stats-ui';
-  const displayVersion='4.2.0 CLEAN FULL APP RC33 · PILOT LAP STATS UI';
-  const cacheName='legion-rx-4-2-0-clean-full-rc33-pilot-lap-stats-ui';
+  const appVersion='4.2.0-clean-full-rc34-live-pilot-stats-broadcast';
+  const displayVersion='4.2.0 CLEAN FULL APP RC34 · LIVE PILOT STATS BROADCAST';
+  const cacheName='legion-rx-4-2-0-clean-full-rc34-live-pilot-stats-broadcast';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

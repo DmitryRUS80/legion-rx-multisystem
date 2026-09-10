@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC33 · PILOT LAP STATS UI**  
-Direct code base: **RC32 SKIP FLOW STATE SAFETY**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC34 · LIVE PILOT STATS BROADCAST**  
+Direct code base: **RC33 PILOT LAP STATS UI**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -21,6 +21,16 @@ Executable rules remain in `modes/rallycross/`. RC20 does **not** change any spo
 ## Current approved visual direction
 
 The current RC19/RC20 RallyCross cockpit is the preserved visual baseline. Further design work should make the race line, pilot presentation, BEST LAP cards, pre-start grid and results look like a compact motorsport TV broadcast while retaining trackside readability and fast operator control.
+
+## RC34 LIVE PILOT STATS BROADCAST
+
+- `pilotLapStatsModal()` remains the single open/render entry point; `refreshPilotLapStatsModal()` is the single live refresh path for an already-open card.
+- Existing RallyCross (120 ms) and Free Practice (250 ms) UI tickers refresh the card; no second sport/timing loop is introduced.
+- Landscape width is compact (~half the roster), portrait uses the available roster rectangle only, so the control pult remains outside the overlay geometry.
+- Header: shared avatar/flag/team, colored LapWiz ID, full pilot name, `POS / BEST / AVG`, live `LAPS / TIME`.
+- Lap rows remain neutral/translucent; only BEST text is green and WORST text is magenta. The average-lap row highlight is removed.
+- The roster beneath stays visible and continues to update through a light blur/dim. Free Practice judge lap deletion remains wired to the existing mode function.
+- No RallyCross scoring/runtime, Free Practice timing logic, LapWiz, audio, storage or reporting behavior changes.
 
 ## RC33 PILOT LAP STATS UI
 

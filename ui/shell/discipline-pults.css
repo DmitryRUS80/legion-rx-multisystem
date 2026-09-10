@@ -387,82 +387,75 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 .rxnStatusText.dns{color:var(--rxn-status-dns)}
 .rxnStatusText.dsq{color:var(--rxn-status-dsq)}
 /* ===== /SPORT RESULT / GRID ===== */
-/* ===== PILOT LAP STATS · AUTHORITATIVE COCKPIT OVERLAY ===== */
+/* ===== PILOT LAP STATS · AUTHORITATIVE LIVE BROADCAST CARD ===== */
 .rxnPilotStatsViewport{position:fixed;z-index:1200;overflow:hidden;isolation:isolate;font-family:var(--rxn-font);color:var(--rxn-text)}
-.rxnPilotStatsDim{position:absolute;inset:0;background:color-mix(in srgb,var(--rxn-bg) 28%,transparent);backdrop-filter:blur(2px) saturate(.88);-webkit-backdrop-filter:blur(2px) saturate(.88)}
-.rxnPilotStatsSheet{position:absolute;inset:0;display:grid;grid-template-rows:auto auto auto minmax(0,1fr) auto;min-width:0;min-height:0;padding:10px 12px 10px;gap:7px;background:color-mix(in srgb,var(--rxn-modal-panel) 86%,transparent);backdrop-filter:blur(5px) saturate(.94);-webkit-backdrop-filter:blur(5px) saturate(.94);overflow:hidden}
-.rxnPilotStatsHero{position:relative;display:grid;grid-template-columns:clamp(116px,14vw,156px) minmax(0,1fr) 36px;gap:12px;align-items:stretch;min-width:0}
-.rxnPilotStatsProfile{min-width:0;display:grid;grid-template-rows:auto auto;align-content:start;gap:5px}
-.rxnPilotStatsPortrait{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:color-mix(in srgb,var(--rxn-panel2) 72%,transparent)}
+.rxnPilotStatsDim{position:absolute;inset:0;background:color-mix(in srgb,var(--rxn-bg) 10%,transparent);backdrop-filter:blur(1.4px) saturate(.92);-webkit-backdrop-filter:blur(1.4px) saturate(.92)}
+.rxnPilotStatsSheet{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:clamp(420px,52%,620px);max-width:calc(100% - 12px);height:min(540px,calc(100% - 16px));min-width:0;min-height:0;display:grid;grid-template-rows:auto auto auto auto minmax(0,1fr) auto;padding:9px 10px 10px;gap:6px;overflow:hidden;border:1px solid color-mix(in srgb,var(--rxn-line-strong) 38%,transparent);border-radius:3px;background:color-mix(in srgb,var(--rxn-modal-panel) 78%,transparent);backdrop-filter:blur(7px) saturate(.94);-webkit-backdrop-filter:blur(7px) saturate(.94);box-shadow:0 12px 34px color-mix(in srgb,#000 30%,transparent)}
+.rxnPilotStatsHero{position:relative;display:grid;grid-template-columns:132px minmax(0,1fr);gap:12px;align-items:stretch;min-width:0}
+.rxnPilotStatsPortrait{position:relative;width:132px;height:132px;overflow:hidden;background:color-mix(in srgb,var(--rxn-panel2) 68%,transparent)}
 .rxnPilotStatsAvatar{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;color:var(--rxn-muted)}
 .rxnPilotStatsAvatar.hasPhoto img{width:100%;height:100%;display:block;object-fit:cover;object-position:center center;filter:none}
 .rxnPilotStatsPortrait .pilotAvatarPlaceholder{width:48%;height:62%}
-.rxnPilotStatsPortrait .pilotTileFlag{right:0;bottom:0;width:30px;height:18px}
+.rxnPilotStatsPortrait .pilotTileFlag{right:0;bottom:0;width:29px;height:17px}
 .rxnPilotStatsPortrait .pilotTileTeam{left:0;bottom:0}
-.rxnPilotStatsProfile h2{margin:0;min-width:0;font:900 clamp(20px,1.65vw,27px)/.94 var(--rxn-font);letter-spacing:-.025em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--rxn-text)}
-.rxnPilotStatsMetrics{min-width:0;display:grid;align-content:center}
-.rxnPilotStatsMetrics span{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:10px;padding:8px 3px;border-bottom:1px solid color-mix(in srgb,var(--rxn-line-strong) 42%,transparent)}
-.rxnPilotStatsMetrics span:last-child{border-bottom:0}
-.rxnPilotStatsMetrics small{font:800 clamp(11px,.9vw,15px)/1 var(--rxn-font);letter-spacing:.025em;color:var(--rxn-muted);text-transform:uppercase;white-space:nowrap}
-.rxnPilotStatsMetrics b{font:900 clamp(23px,1.85vw,32px)/.9 var(--rxn-font);letter-spacing:-.035em;color:var(--rxn-text);font-variant-numeric:tabular-nums;white-space:nowrap}
-.rxnPilotStatsClose{align-self:start;width:34px;height:34px;padding:0;border:1px solid color-mix(in srgb,var(--rxn-line-strong) 55%,transparent);border-radius:2px;background:color-mix(in srgb,var(--rxn-control-bg) 72%,transparent);color:var(--rxn-text);font:700 21px/1 var(--rxn-font);cursor:pointer}
+.rxnPilotStatsMetrics{min-width:0;display:grid;align-content:center;gap:2px;padding:2px 38px 2px 0}
+.rxnPilotStatsMetrics span{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:10px;padding:4px 0;border:0}
+.rxnPilotStatsMetrics small{font:700 12px/1 var(--rxn-font);letter-spacing:.055em;color:var(--rxn-muted);text-transform:uppercase;white-space:nowrap}
+.rxnPilotStatsMetrics b{font:800 clamp(22px,2vw,29px)/.92 var(--rxn-font);letter-spacing:-.025em;color:var(--rxn-text);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rxnPilotStatsClose{position:absolute;right:0;top:0;width:31px;height:31px;padding:0;border:1px solid color-mix(in srgb,var(--rxn-line-strong) 48%,transparent);border-radius:2px;background:color-mix(in srgb,var(--rxn-control-bg) 66%,transparent);color:var(--rxn-text);font:700 18px/1 var(--rxn-font);cursor:pointer}
 .rxnPilotStatsClose:hover{background:var(--rxn-control-hover);border-color:var(--rxn-control-border-hover)}
-.rxnPilotStatsSubline{min-width:0;padding:3px 1px 4px;font:700 10px/1 var(--rxn-font);letter-spacing:.05em;color:var(--rxn-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase}
-.rxnPilotStatsLapHead,.rxnPilotStatsLap{display:grid;grid-template-columns:62px minmax(112px,190px) minmax(0,1fr);align-items:center;gap:0;min-width:0;padding:0 10px}
-.rxnPilotStatsSheet.track .rxnPilotStatsLapHead,.rxnPilotStatsSheet.track .rxnPilotStatsLap{grid-template-columns:62px minmax(112px,190px) minmax(0,1fr) 42px}
-.rxnPilotStatsLapHead{min-height:27px;background:color-mix(in srgb,var(--rxn-row-head) 88%,transparent);border-bottom:1px solid var(--rxn-line);font:800 9px/1 var(--rxn-font);letter-spacing:.04em;color:var(--rxn-muted);text-transform:uppercase}
+.rxnPilotStatsIdentity{min-width:0;display:grid;grid-template-columns:54px minmax(0,1fr);align-items:stretch;gap:7px}
+.rxnPilotStatsId{width:54px;min-height:42px;display:grid;place-items:center;padding:0 3px;background:var(--pilot-color);color:var(--rxn-id-text);font:900 21px/1 var(--rxn-font);font-variant-numeric:tabular-nums;overflow:hidden;white-space:nowrap}
+.rxnPilotStatsIdentity strong{min-width:0;display:flex;align-items:center;padding:2px 0;font:800 clamp(19px,1.7vw,25px)/.95 var(--rxn-font);letter-spacing:-.02em;color:var(--rxn-text);text-transform:uppercase;white-space:normal;overflow-wrap:anywhere}
+.rxnPilotStatsRaceLine{min-width:0;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:11px;padding:2px 1px 4px;color:var(--rxn-muted);font:700 9px/1 var(--rxn-font);letter-spacing:.045em;text-transform:uppercase}
+.rxnPilotStatsRaceLine>span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rxnPilotStatsRaceLine>b{display:flex;align-items:baseline;gap:4px;color:var(--rxn-text);font:800 11px/1 var(--rxn-font);white-space:nowrap}
+.rxnPilotStatsRaceLine small{color:var(--rxn-muted);font:700 8px/1 var(--rxn-font);letter-spacing:.04em}
+.rxnPilotStatsRaceLine i{font-style:normal;font-variant-numeric:tabular-nums}
+.rxnPilotStatsLapHead,.rxnPilotStatsLap{display:grid;grid-template-columns:42px 116px minmax(0,1fr);align-items:center;gap:0;min-width:0;padding:0 7px}
+.rxnPilotStatsSheet.track .rxnPilotStatsLapHead,.rxnPilotStatsSheet.track .rxnPilotStatsLap{grid-template-columns:42px 116px minmax(0,1fr) 31px}
+.rxnPilotStatsLapHead{min-height:22px;background:transparent;border:0;font:700 8px/1 var(--rxn-font);letter-spacing:.055em;color:var(--rxn-muted);text-transform:uppercase}
 .rxnPilotStatsLapHead span:nth-child(2),.rxnPilotStatsLap strong{text-align:left}
-.rxnPilotStatsLaps{min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--rxn-scrollbar) transparent}
-.rxnPilotStatsLap{position:relative;min-height:43px;background:color-mix(in srgb,var(--rxn-row) 82%,transparent);border-bottom:1px solid var(--rxn-row-border);box-shadow:inset 0 0 0 0 transparent}
-.rxnPilotStatsLap:nth-child(even){background:color-mix(in srgb,var(--rxn-row-alt) 84%,transparent)}
-.rxnPilotStatsLapNo{font:700 18px/1 var(--rxn-font);color:var(--rxn-text);font-variant-numeric:tabular-nums}
-.rxnPilotStatsLap strong{font:800 clamp(19px,1.4vw,24px)/1 var(--rxn-font);letter-spacing:-.02em;color:var(--rxn-text);font-variant-numeric:tabular-nums}
-.rxnPilotStatsLap em{justify-self:start;font:800 10px/1 var(--rxn-font);font-style:normal;letter-spacing:.035em;color:var(--rxn-muted);text-transform:uppercase}
-.rxnPilotStatsLap.best{background:color-mix(in srgb,var(--rxn-green) 13%,var(--rxn-row));box-shadow:inset 4px 0 var(--rxn-green)}
+.rxnPilotStatsLaps{min-height:0;overflow:auto;display:grid;align-content:start;gap:2px;scrollbar-width:thin;scrollbar-color:var(--rxn-scrollbar) transparent}
+.rxnPilotStatsLap{position:relative;min-height:36px;background:color-mix(in srgb,var(--rxn-row) 66%,transparent);border:0;box-shadow:none}
+.rxnPilotStatsLap:nth-child(even){background:color-mix(in srgb,var(--rxn-row-alt) 68%,transparent)}
+.rxnPilotStatsLapNo{font:700 15px/1 var(--rxn-font);color:var(--rxn-text);font-variant-numeric:tabular-nums}
+.rxnPilotStatsLap strong{font:800 18px/1 var(--rxn-font);letter-spacing:-.02em;color:var(--rxn-text);font-variant-numeric:tabular-nums}
+.rxnPilotStatsLap em{justify-self:start;font:700 8px/1 var(--rxn-font);font-style:normal;letter-spacing:.045em;color:var(--rxn-muted);text-transform:uppercase}
 .rxnPilotStatsLap.best strong,.rxnPilotStatsLap.best em{color:var(--rxn-green)}
-.rxnPilotStatsLap.average{background:color-mix(in srgb,var(--rxn-yellow) 13%,var(--rxn-row));box-shadow:inset 4px 0 var(--rxn-yellow)}
-.rxnPilotStatsLap.average strong,.rxnPilotStatsLap.average em{color:var(--rxn-yellow)}
-.rxnPilotStatsLap.worst{background:color-mix(in srgb,var(--rxn-magenta) 12%,var(--rxn-row));box-shadow:inset 4px 0 var(--rxn-magenta)}
 .rxnPilotStatsLap.worst strong,.rxnPilotStatsLap.worst em{color:var(--rxn-magenta)}
-.rxnPilotStatsLapRemove{justify-self:end;width:34px;height:32px;padding:0;border:1px solid color-mix(in srgb,var(--rxn-magenta) 46%,transparent);border-radius:2px;background:color-mix(in srgb,var(--rxn-magenta) 10%,transparent);color:var(--rxn-magenta);font:800 19px/1 var(--rxn-font);cursor:pointer}
-.rxnPilotStatsLapRemove:hover{background:color-mix(in srgb,var(--rxn-magenta) 22%,transparent);color:var(--rxn-text)}
-.rxnPilotStatsEmpty{min-height:64px;display:grid;place-items:center;color:var(--rxn-muted);font:800 11px/1 var(--rxn-font);letter-spacing:.05em}
-.rxnPilotStatsCorrections{max-height:82px;overflow:auto;padding:5px 3px 0;border-top:1px solid var(--rxn-line);display:grid;gap:4px;color:var(--rxn-muted)}
-.rxnPilotStatsCorrections b{font:800 9px/1 var(--rxn-font);letter-spacing:.04em;color:var(--rxn-text)}
-.rxnPilotStatsCorrections span{font:700 9px/1.2 var(--rxn-font);letter-spacing:.02em}
-.rxnPilotStatsGlobal{display:grid;place-items:center;padding:18px;background:color-mix(in srgb,var(--rxn-bg) 24%,transparent);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
-.rxnPilotStatsGlobalFrame{position:relative;width:min(900px,96vw);height:min(760px,92vh);overflow:hidden}
-.rxnPilotStatsGlobalFrame .rxnPilotStatsSheet{position:absolute;inset:0}
+.rxnPilotStatsLapRemove{justify-self:end;width:26px;height:25px;padding:0;border:1px solid color-mix(in srgb,var(--rxn-magenta) 36%,transparent);border-radius:2px;background:transparent;color:var(--rxn-magenta);font:800 16px/1 var(--rxn-font);cursor:pointer}
+.rxnPilotStatsLapRemove:hover{background:color-mix(in srgb,var(--rxn-magenta) 12%,transparent);color:var(--rxn-text)}
+.rxnPilotStatsEmpty{min-height:56px;display:grid;place-items:center;color:var(--rxn-muted);font:700 9px/1 var(--rxn-font);letter-spacing:.05em}
+.rxnPilotStatsCorrectionsHost:empty{display:none}
+.rxnPilotStatsCorrections{max-height:54px;overflow:auto;padding:3px 1px 0;display:flex;flex-wrap:wrap;gap:5px 9px;color:var(--rxn-muted)}
+.rxnPilotStatsCorrections b{font:700 8px/1 var(--rxn-font);letter-spacing:.04em;color:var(--rxn-text)}
+.rxnPilotStatsCorrections span{font:600 8px/1 var(--rxn-font);letter-spacing:.02em}
+.rxnPilotStatsGlobal{display:grid;place-items:center;padding:18px;background:color-mix(in srgb,var(--rxn-bg) 12%,transparent);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px)}
+.rxnPilotStatsGlobalFrame{position:relative;width:min(620px,96vw);height:min(560px,92vh);overflow:hidden}
+.rxnPilotStatsGlobalFrame .rxnPilotStatsSheet{top:0;left:0;transform:none;width:100%;max-width:none;height:100%}
 @media (max-width:900px){
-  .rxnPilotStatsSheet{padding:8px 9px 8px;gap:5px}
-  .rxnPilotStatsHero{grid-template-columns:clamp(92px,15vw,126px) minmax(0,1fr) 32px;gap:8px}
-  .rxnPilotStatsProfile h2{font-size:clamp(17px,2.25vw,22px)}
-  .rxnPilotStatsMetrics span{padding:6px 2px}
-  .rxnPilotStatsMetrics small{font-size:9px}
-  .rxnPilotStatsMetrics b{font-size:clamp(18px,2.7vw,25px)}
-  .rxnPilotStatsClose{width:30px;height:30px;font-size:18px}
-  .rxnPilotStatsLapHead,.rxnPilotStatsLap{grid-template-columns:48px minmax(92px,150px) minmax(0,1fr);padding:0 7px}
-  .rxnPilotStatsSheet.track .rxnPilotStatsLapHead,.rxnPilotStatsSheet.track .rxnPilotStatsLap{grid-template-columns:48px minmax(92px,150px) minmax(0,1fr) 38px}
-  .rxnPilotStatsLap{min-height:38px}
-  .rxnPilotStatsLapNo{font-size:16px}
-  .rxnPilotStatsLap strong{font-size:18px}
-  .rxnPilotStatsLap em{font-size:8px}
-  .rxnPilotStatsLapRemove{width:30px;height:28px;font-size:17px}
+  .rxnPilotStatsSheet{width:clamp(360px,58%,520px);padding:8px;gap:5px}
+  .rxnPilotStatsHero{grid-template-columns:108px minmax(0,1fr);gap:9px}
+  .rxnPilotStatsPortrait{width:108px;height:108px}
+  .rxnPilotStatsMetrics{padding-right:33px}.rxnPilotStatsMetrics small{font-size:9px}.rxnPilotStatsMetrics b{font-size:20px}
+  .rxnPilotStatsClose{width:28px;height:28px;font-size:16px}
+  .rxnPilotStatsIdentity{grid-template-columns:46px minmax(0,1fr);gap:6px}.rxnPilotStatsId{width:46px;min-height:36px;font-size:18px}.rxnPilotStatsIdentity strong{font-size:18px}
+  .rxnPilotStatsRaceLine{gap:7px;font-size:8px}.rxnPilotStatsRaceLine>b{font-size:9px}.rxnPilotStatsRaceLine small{font-size:7px}
+  .rxnPilotStatsLapHead,.rxnPilotStatsLap{grid-template-columns:35px 96px minmax(0,1fr);padding:0 5px}.rxnPilotStatsSheet.track .rxnPilotStatsLapHead,.rxnPilotStatsSheet.track .rxnPilotStatsLap{grid-template-columns:35px 96px minmax(0,1fr) 28px}
+  .rxnPilotStatsLap{min-height:32px}.rxnPilotStatsLapNo{font-size:13px}.rxnPilotStatsLap strong{font-size:16px}.rxnPilotStatsLap em{font-size:7px}.rxnPilotStatsLapRemove{width:24px;height:23px;font-size:14px}
+}
+@media (orientation:portrait){
+  .rxnPilotStatsSheet{top:4px;width:calc(100% - 8px);max-width:none;height:calc(100% - 8px)}
 }
 @media (max-width:560px){
-  .rxnPilotStatsHero{grid-template-columns:78px minmax(0,1fr) 28px;gap:7px}
-  .rxnPilotStatsProfile h2{font-size:15px}
-  .rxnPilotStatsPortrait .pilotTileFlag{width:24px;height:14px}
-  .rxnPilotStatsPortrait .pilotTileTeam{font-size:7px;max-width:calc(100% - 28px)}
-  .rxnPilotStatsMetrics small{font-size:8px}
-  .rxnPilotStatsMetrics b{font-size:17px}
-  .rxnPilotStatsClose{width:27px;height:27px;font-size:16px}
-  .rxnPilotStatsSubline{font-size:8px}
-  .rxnPilotStatsLapHead,.rxnPilotStatsLap{grid-template-columns:38px 90px minmax(0,1fr);padding:0 5px}
-  .rxnPilotStatsSheet.track .rxnPilotStatsLapHead,.rxnPilotStatsSheet.track .rxnPilotStatsLap{grid-template-columns:38px 90px minmax(0,1fr) 34px}
-  .rxnPilotStatsLap{min-height:34px}
-  .rxnPilotStatsLapNo{font-size:14px}
-  .rxnPilotStatsLap strong{font-size:16px}
+  .rxnPilotStatsSheet{padding:6px;gap:4px}
+  .rxnPilotStatsHero{grid-template-columns:82px minmax(0,1fr);gap:7px}.rxnPilotStatsPortrait{width:82px;height:82px}.rxnPilotStatsPortrait .pilotTileFlag{width:23px;height:14px}.rxnPilotStatsPortrait .pilotTileTeam{font-size:7px;max-width:calc(100% - 25px)}
+  .rxnPilotStatsMetrics{padding-right:29px}.rxnPilotStatsMetrics span{padding:2px 0}.rxnPilotStatsMetrics small{font-size:8px}.rxnPilotStatsMetrics b{font-size:17px}.rxnPilotStatsClose{width:25px;height:25px;font-size:15px}
+  .rxnPilotStatsIdentity{grid-template-columns:40px minmax(0,1fr);gap:5px}.rxnPilotStatsId{width:40px;min-height:31px;font-size:16px}.rxnPilotStatsIdentity strong{font-size:15px}
+  .rxnPilotStatsRaceLine{grid-template-columns:minmax(0,1fr) auto auto;gap:5px;font-size:7px}.rxnPilotStatsRaceLine>b{font-size:8px}.rxnPilotStatsRaceLine small{display:none}
+  .rxnPilotStatsLapHead,.rxnPilotStatsLap{grid-template-columns:30px 82px minmax(0,1fr);padding:0 4px}.rxnPilotStatsSheet.track .rxnPilotStatsLapHead,.rxnPilotStatsSheet.track .rxnPilotStatsLap{grid-template-columns:30px 82px minmax(0,1fr) 26px}
+  .rxnPilotStatsLap{min-height:29px}.rxnPilotStatsLapNo{font-size:12px}.rxnPilotStatsLap strong{font-size:14px}.rxnPilotStatsLap em{font-size:6px}
 }
 /* ===== /PILOT LAP STATS ===== */
 /* ===== /TRACK DAY JUDGE LAP CORRECTION ===== */

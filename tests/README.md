@@ -1,6 +1,11 @@
 # Regression helpers
 Run `python3 tests/verify_architecture.py` after every structural/UI change. It enforces the hard architecture boundaries and checks the offline manifest.
 
+## RC34
+
+- `verify_rc34_live_pilot_stats.py` checks the compact live broadcast card: one live refresh path, existing ticker integration, live POS/BEST/AVG/LAPS/TIME, full name + colored transponder ID, landscape/portrait roster geometry, subtle background blur, neutral lap rows, BEST/WORST-only accents and preserved Free Practice lap delete.
+- Expected focused result: **17/17 PASS**.
+
 ## RC33
 
 - `verify_rc33_pilot_stats_ui.py` checks the new roster-bounded pilot lap-statistics UI, authoritative ranking sources, shared pilot-card avatar markup, BEST/AVG/WORST accent mapping, removal of the legacy stats UI, and preservation of Free Practice judge lap deletion.

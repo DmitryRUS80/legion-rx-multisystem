@@ -243,6 +243,7 @@ function updateDynamicCockpitUI(){
     if(sig!==state.rxnBoardSignature){state.rxnBoardSignature=sig;rxnAnimateBoard(board,rxnPilotTable(ranked,s));}
     rxnUpdateProgress(ranked,s);
   }
+  refreshPilotLapStatsModal();
 }
 
 
@@ -406,6 +407,7 @@ function updateTrackDayDynamicUI(){
     if(sig!==td._rxnBoardSig){td._rxnBoardSig=sig;rxnAnimateBoard(board,rxnTrackPilotTable(td));}
     document.querySelectorAll('.rxnPilotData[data-pilot-id]').forEach(row=>{const p=pilots.find(x=>String(x.id)===String(row.dataset.pilotId));if(!p)return;const l=td.live?.[p.id]||blankTrackLive(),pr=rxnTrackProgress(l,td),fill=row.querySelector('.rxnLapTrack i');if(fill){fill.style.width=`${pr.pct.toFixed(1)}%`;fill.style.background=pr.color;}});
   }
+  refreshPilotLapStatsModal();
 }
 function rxnTrackManualLapModal(){
   const td=ensureTrackDayState(state.trackDay);if(!td||td.status!=='active')return toast('Ручной круг доступен во время свободной практики');

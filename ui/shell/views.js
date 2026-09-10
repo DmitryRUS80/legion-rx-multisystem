@@ -125,41 +125,97 @@ function showRaceResultsById(raceId){const r=(state.race?.id===raceId?state.race
 
 function archiveView(){const rows=[...state.archive].sort((a,b)=>String(b.completedAt||b.updatedAt||'').localeCompare(String(a.completedAt||a.updatedAt||'')));return `<section class="page"><div class="pageHeader"><div><div class="sectionLabel">АРХИВ</div><h1>Завершённые соревнования</h1><p>Полные снимки гонок. Их можно вернуть в работу вместе с результатами, настройками и историей заездов.</p></div></div><div class="archiveGrid">${rows.length?rows.map(r=>`<article class="card archiveCard"><div class="sectionLabel">${esc(r.eventDate||'—')}</div><h2>${esc(r.eventName)}</h2><p>${stageLabel(r.stage)} · ${r.pilots?.length||0} пилотов${r.eventLocation?` · ${esc(r.eventLocation)}`:''}</p><div class="btnRow"><button class="btn primary" data-restore-archive="${r.id}">Восстановить в работу</button><button class="btn danger" data-delete-archive="${r.id}">Удалить</button></div></article>`).join(''):`<div class="card empty">Архив пока пуст.</div>`}</div></section>`;}
 
-function pilotLapStatsModal(pilotId,context='race',refId=''){
-  let p=null,times=[],title='',statsLive=null,trackRef=null,position='—';
+let pilotStatsLiveView=null;
+
+function pilotStatsFmtLap(ms){
+  if(!Number.isFinite(ms))return'—';
+  return typeof rxnFormatDuration==='function'?rxnFormatDuration(ms):fmtMs(ms);
+}
+function pilotStatsSnapshot(pilotId,context='race',refId=''){
+  let p=null,times=[],title='',trackRef=null,position='—',laps=0,targetLaps=0,elapsedMs=0;
   if(context==='track'){
-    const td=refId?(state.trackDays||[]).find(x=>String(x.id)===String(refId)):state.trackDay;if(!td)return;ensureTrackDayState(td);trackRef=td;p=trackPilot(td,pilotId);const l=td.live?.[pilotId]||blankTrackLive();statsLive=l;times=lapArray(l);title=td.name||'FREE PRACTICE';const ranked=rankTrackPilots(td),idx=ranked.findIndex(x=>String(x.id)===String(pilotId));if(idx>=0)position=String(idx+1);
+    const td=refId?(state.trackDays||[]).find(x=>String(x.id)===String(refId)):state.trackDay;
+    if(!td)return null;
+    ensureTrackDayState(td);trackRef=td;p=trackPilot(td,pilotId);
+    const l=td.live?.[pilotId]||blankTrackLive();times=lapArray(l);laps=Number(l.laps||times.length||0);
+    title=td.name||'FREE PRACTICE';elapsedMs=td.status==='active'?trackElapsed(td):Number(td.elapsedFinalMs||trackElapsed(td)||0);
+    const ranked=rankTrackPilots(td),idx=ranked.findIndex(x=>String(x.id)===String(pilotId));if(idx>=0)position=String(idx+1);
   }else if(context==='raceEvent'){
-    const raw=findRawEvent(refId);if(!raw)return;p=getPilot(state.race,pilotId);const l=raw.lapStats?.[pilotId]||{};times=lapArray(l);title=raw.label||'ЗАЕЗД';const result=(raw.result||[]).find(x=>String(x.pilotId)===String(pilotId));if(result?.place)position=String(result.place);
+    const raw=findRawEvent(refId);if(!raw)return null;
+    p=getPilot(state.race,pilotId);const l=raw.lapStats?.[pilotId]||{};times=lapArray(l);laps=Number(l.laps||times.length||0);title=raw.label||'ЗАЕЗД';
+    const result=(raw.result||[]).find(x=>String(x.pilotId)===String(pilotId));if(result?.place)position=String(result.place);
+    elapsedMs=Number(result?.elapsedMs||l.elapsedMs||times.reduce((a,b)=>a+b,0)||0);
+    const rule=eventRule(state.race,raw);if(rule?.limitType==='laps')targetLaps=Number(rule.targetLaps||0);
   }else{
-    const ev=currentEvent(state.race),raw=ev?findRawEvent(ev.key):null;p=getPilot(state.race,pilotId);let l=state.session?.live?.[pilotId];if(!l&&raw?.lapStats?.[pilotId])l=raw.lapStats[pilotId];times=lapArray(l);title=ev?.label||'ТЕКУЩИЙ ЗАЕЗД';const ranked=ev?liveRanking(RallyCrossModeAPI.startPilots(state.race,ev),state.session):[];const idx=ranked.findIndex(x=>String(x.id)===String(pilotId));if(idx>=0)position=String(idx+1);
+    const ev=currentEvent(state.race),raw=ev?findRawEvent(ev.key):null;
+    p=getPilot(state.race,pilotId);let l=state.session?.live?.[pilotId];if(!l&&raw?.lapStats?.[pilotId])l=raw.lapStats[pilotId];l=l||blankLive();
+    times=lapArray(l);laps=Number(l.laps||times.length||0);title=ev?.label||'ТЕКУЩИЙ ЗАЕЗД';elapsedMs=sessionElapsed(state.session);
+    const ranked=ev?liveRanking(RallyCrossModeAPI.startPilots(state.race,ev),state.session):[],idx=ranked.findIndex(x=>String(x.id)===String(pilotId));if(idx>=0)position=String(idx+1);
+    const rule=eventRule(state.race,ev);if(rule?.limitType==='laps')targetLaps=Number(rule.targetLaps||0);
   }
-  if(!p)return;
+  if(!p)return null;
   const summary=lapSummary({lapTimes:times}),trackMode=context==='track';
-  const profileName=esc(pilotCompactName(p.name||'ПИЛОТ'));
-  const portrait=`<div class="rxnPilotStatsPortrait">${pilotAvatarMarkup(p,'rxnPilotStatsAvatar')}${pilotTeamBadge(p)}${pilotFlagBadge(p)}</div>`;
-  const rows=times.map((ms,i)=>{
+  return{p,times,title,trackRef,position,laps,targetLaps,elapsedMs,summary,trackMode};
+}
+function pilotStatsLapRows(data){
+  const {times,summary,trackMode,trackRef,p}=data;
+  return times.map((ms,i)=>{
     let cls='',tag='';
-    if(ms===summary.best){cls='best';tag='ЛУЧШИЙ';}
-    else if(ms===summary.worst){cls='worst';tag='ХУДШИЙ';}
-    else if(i===summary.avgIndex){cls='average';tag='СРЕДНИЙ';}
-    return `<div class="rxnPilotStatsLap ${cls}"><span class="rxnPilotStatsLapNo">${i+1}</span><strong>${fmtMs(ms)}</strong><em>${tag}</em>${trackMode?`<button class="rxnPilotStatsLapRemove" type="button" title="Убрать круг" aria-label="Убрать круг ${i+1}" data-track-lap-remove="1" data-track-id="${esc(trackRef?.id||'')}" data-pilot-id="${esc(p.id)}" data-lap-index="${i}" data-lap-ms="${ms}">×</button>`:''}</div>`;
+    if(ms===summary.best){cls='best';tag='BEST';}
+    else if(ms===summary.worst&&summary.worst!==summary.best){cls='worst';tag='WORST';}
+    return `<div class="rxnPilotStatsLap ${cls}"><span class="rxnPilotStatsLapNo">${i+1}</span><strong>${pilotStatsFmtLap(ms)}</strong><em>${tag}</em>${trackMode?`<button class="rxnPilotStatsLapRemove" type="button" title="Убрать круг" aria-label="Убрать круг ${i+1}" data-track-lap-remove="1" data-track-id="${esc(trackRef?.id||'')}" data-pilot-id="${esc(p.id)}" data-lap-index="${i}" data-lap-ms="${ms}">×</button>`:''}</div>`;
   }).join('');
-  const corrections=trackMode?trackDayCorrectionLog(trackRef,p.id):[];
-  const correctionHtml=trackMode&&corrections.length?`<div class="rxnPilotStatsCorrections"><b>КОРРЕКЦИИ СУДЬИ · ${corrections.length}</b>${corrections.slice().reverse().map(c=>`<span>КРУГ ${Number(c.lapNumber||0)} · ${fmtMs(Number(c.lapMs))} · ${new Date(c.removedAt).toLocaleString('ru-RU')}</span>`).join('')}</div>`:'';
-  const hero=`<div class="rxnPilotStatsHero"><div class="rxnPilotStatsProfile">${portrait}<h2>${profileName}</h2></div><div class="rxnPilotStatsMetrics"><span><small>МЕСТО</small><b>${position}</b></span><span><small>ЛУЧШИЙ КРУГ</small><b>${fmtMs(summary.best)}</b></span><span><small>СРЕДНИЙ КРУГ</small><b>${fmtMs(summary.avg)}</b></span></div><button class="rxnPilotStatsClose" type="button" data-pilot-stats-close="1" aria-label="Закрыть">×</button></div>`;
-  const body=`<section class="rxnPilotStatsSheet ${trackMode?'track':''}">${hero}<div class="rxnPilotStatsSubline">${esc(String(title).toUpperCase())}</div><div class="rxnPilotStatsLapHead"><span>КРУГ</span><span>ВРЕМЯ</span><span>ОТМЕТКА</span>${trackMode?'<span></span>':''}</div><div class="rxnPilotStatsLaps">${rows||'<div class="rxnPilotStatsEmpty">ПОКА НЕТ ЗАВЕРШЁННЫХ КРУГОВ</div>'}</div>${correctionHtml}</section>`;
-  const roster=document.querySelector('.rxnCockpit .rxnRoster');
-  const host=$('#modalHost');if(!host)return;
-  if(roster&&(context==='race'||context==='track')){
-    const r=roster.getBoundingClientRect();
-    host.innerHTML=`<div class="rxnPilotStatsViewport" style="left:${Math.round(r.left)}px;top:${Math.round(r.top)}px;width:${Math.round(r.width)}px;height:${Math.round(r.height)}px"><div class="rxnPilotStatsDim" data-pilot-stats-close="1"></div>${body}</div>`;
-  }else{
-    host.innerHTML=`<div class="modalBackdrop rxnPilotStatsGlobal" data-pilot-stats-close="1"><div class="rxnPilotStatsGlobalFrame" data-pilot-stats-frame="1">${body}</div></div>`;
+}
+function pilotStatsCorrectionsMarkup(data){
+  if(!data.trackMode)return'';
+  const corrections=trackDayCorrectionLog(data.trackRef,data.p.id);
+  return corrections.length?`<div class="rxnPilotStatsCorrections"><b>КОРРЕКЦИИ · ${corrections.length}</b>${corrections.slice().reverse().map(c=>`<span>КРУГ ${Number(c.lapNumber||0)} · ${pilotStatsFmtLap(Number(c.lapMs))}</span>`).join('')}</div>`:'';
+}
+function pilotStatsBindLapDelete(){
+  $$('[data-track-lap-remove]').forEach(b=>b.onclick=()=>{
+    const td=(state.trackDays||[]).find(x=>String(x.id)===String(b.dataset.trackId))||(state.trackDay&&String(state.trackDay.id)===String(b.dataset.trackId)?state.trackDay:null);if(!td)return toast('Track Day не найден');
+    const pp=trackPilot(td,b.dataset.pilotId),lapNo=Number(b.dataset.lapIndex)+1,ms=Number(b.dataset.lapMs);
+    if(!confirm(`Убрать круг ${lapNo} (${pilotStatsFmtLap(ms)}) у ${pp?.name||'пилота'}?\n\nКруг будет исключён из статистики, а BEST/AVG/LAST пересчитаются.`))return;
+    const res=removeTrackDayLap(td,b.dataset.pilotId,Number(b.dataset.lapIndex));if(!res.ok)return toast(res.error);
+    toast(`Круг ${res.lapNumber} удалён · новый BEST ${pilotStatsFmtLap(res.bestLapMs)}`);
+    refreshPilotLapStatsModal(true);
+  });
+}
+function pilotStatsUpdateBounds(){
+  const viewport=document.querySelector('.rxnPilotStatsViewport'),roster=document.querySelector('.rxnCockpit .rxnRoster');if(!viewport||!roster)return;
+  const r=roster.getBoundingClientRect();viewport.style.left=`${Math.round(r.left)}px`;viewport.style.top=`${Math.round(r.top)}px`;viewport.style.width=`${Math.round(r.width)}px`;viewport.style.height=`${Math.round(r.height)}px`;
+}
+function refreshPilotLapStatsModal(forceRows=false){
+  if(!pilotStatsLiveView)return;
+  const root=document.querySelector('[data-pilot-stats-root="1"]');if(!root){pilotStatsLiveView=null;return;}
+  const data=pilotStatsSnapshot(pilotStatsLiveView.pilotId,pilotStatsLiveView.context,pilotStatsLiveView.refId);if(!data)return;
+  const set=(sel,val)=>{const el=root.querySelector(sel);if(el&&el.textContent!==String(val))el.textContent=String(val);};
+  set('[data-stats-pos]',data.position);set('[data-stats-best]',pilotStatsFmtLap(data.summary.best));set('[data-stats-avg]',pilotStatsFmtLap(data.summary.avg));
+  set('[data-stats-laps]',data.targetLaps?`${data.laps}/${data.targetLaps}`:String(data.laps));set('[data-stats-time]',fmtClock(data.elapsedMs));
+  const sig=data.times.map(v=>Math.round(Number(v)||0)).join(',');const list=root.querySelector('.rxnPilotStatsLaps');
+  if(list&&(forceRows||root.dataset.lapSig!==sig)){
+    const scroll=list.scrollTop,stickBottom=(list.scrollHeight-list.clientHeight-list.scrollTop)<28;list.innerHTML=pilotStatsLapRows(data)||'<div class="rxnPilotStatsEmpty">ПОКА НЕТ ЗАВЕРШЁННЫХ КРУГОВ</div>';root.dataset.lapSig=sig;list.scrollTop=stickBottom?list.scrollHeight:scroll;pilotStatsBindLapDelete();
+    const corr=root.querySelector('.rxnPilotStatsCorrectionsHost');if(corr)corr.innerHTML=pilotStatsCorrectionsMarkup(data);
   }
-  $$('[data-pilot-stats-close]').forEach(b=>b.onclick=e=>{e.stopPropagation();closeModal();});
+  pilotStatsUpdateBounds();
+}
+function closePilotLapStatsModal(){pilotStatsLiveView=null;closeModal();}
+function pilotLapStatsModal(pilotId,context='race',refId=''){
+  const data=pilotStatsSnapshot(pilotId,context,refId);if(!data)return;
+  const {p,summary,trackMode}=data,fullName=esc(String(p.name||'ПИЛОТ').toUpperCase()),idText=esc(String(p.transponder||'—'));
+  const portrait=`<div class="rxnPilotStatsPortrait">${pilotAvatarMarkup(p,'rxnPilotStatsAvatar')}${pilotTeamBadge(p)}${pilotFlagBadge(p)}</div>`;
+  const hero=`<div class="rxnPilotStatsHero">${portrait}<div class="rxnPilotStatsMetrics"><span><small>POS</small><b data-stats-pos>${data.position}</b></span><span><small>BEST</small><b data-stats-best>${pilotStatsFmtLap(summary.best)}</b></span><span><small>AVG</small><b data-stats-avg>${pilotStatsFmtLap(summary.avg)}</b></span></div><button class="rxnPilotStatsClose" type="button" data-pilot-stats-close="1" aria-label="Закрыть">×</button></div>`;
+  const identity=`<div class="rxnPilotStatsIdentity"><span class="rxnPilotStatsId" style="--pilot-color:${rxnPilotColor(p)}">${idText}</span><strong>${fullName}</strong></div>`;
+  const raceLine=`<div class="rxnPilotStatsRaceLine"><span>${esc(String(data.title).toUpperCase())}</span><b><small>LAPS</small><i data-stats-laps>${data.targetLaps?`${data.laps}/${data.targetLaps}`:data.laps}</i></b><b><small>TIME</small><i data-stats-time>${fmtClock(data.elapsedMs)}</i></b></div>`;
+  const body=`<section class="rxnPilotStatsSheet ${trackMode?'track':''}" data-pilot-stats-root="1" data-lap-sig="${data.times.map(v=>Math.round(Number(v)||0)).join(',')}">${hero}${identity}${raceLine}<div class="rxnPilotStatsLapHead"><span>LAP</span><span>TIME</span><span></span>${trackMode?'<span></span>':''}</div><div class="rxnPilotStatsLaps">${pilotStatsLapRows(data)||'<div class="rxnPilotStatsEmpty">ПОКА НЕТ ЗАВЕРШЁННЫХ КРУГОВ</div>'}</div><div class="rxnPilotStatsCorrectionsHost">${pilotStatsCorrectionsMarkup(data)}</div></section>`;
+  const roster=document.querySelector('.rxnCockpit .rxnRoster'),host=$('#modalHost');if(!host)return;
+  pilotStatsLiveView={pilotId:String(pilotId),context,refId:String(refId||'')};
+  if(roster&&(context==='race'||context==='track')){
+    const r=roster.getBoundingClientRect();host.innerHTML=`<div class="rxnPilotStatsViewport" style="left:${Math.round(r.left)}px;top:${Math.round(r.top)}px;width:${Math.round(r.width)}px;height:${Math.round(r.height)}px"><div class="rxnPilotStatsDim" data-pilot-stats-close="1"></div>${body}</div>`;
+  }else host.innerHTML=`<div class="modalBackdrop rxnPilotStatsGlobal" data-pilot-stats-close="1"><div class="rxnPilotStatsGlobalFrame" data-pilot-stats-frame="1">${body}</div></div>`;
+  $$('[data-pilot-stats-close]').forEach(b=>b.onclick=e=>{e.stopPropagation();closePilotLapStatsModal();});
   const frame=document.querySelector('[data-pilot-stats-frame]');if(frame)frame.onclick=e=>e.stopPropagation();
-  if(trackMode)$$('[data-track-lap-remove]').forEach(b=>b.onclick=()=>{const td=(state.trackDays||[]).find(x=>String(x.id)===String(b.dataset.trackId))||(state.trackDay&&String(state.trackDay.id)===String(b.dataset.trackId)?state.trackDay:null);if(!td)return toast('Track Day не найден');const pp=trackPilot(td,b.dataset.pilotId),lapNo=Number(b.dataset.lapIndex)+1,ms=Number(b.dataset.lapMs);if(!confirm(`Убрать круг ${lapNo} (${fmtMs(ms)}) у ${pp?.name||'пилота'}?\n\nКруг будет исключён из статистики, а BEST/AVG/LAST пересчитаются.`))return;const res=removeTrackDayLap(td,b.dataset.pilotId,Number(b.dataset.lapIndex));if(!res.ok)return toast(res.error);toast(`Круг ${res.lapNumber} удалён · новый BEST ${fmtMs(res.bestLapMs)}`);pilotLapStatsModal(b.dataset.pilotId,'track',b.dataset.trackId);});
+  pilotStatsBindLapDelete();refreshPilotLapStatsModal();
 }
 
 function trackDayReportModal(td){if(!td)return;ensureTrackDayState(td);const ranked=rankTrackPilots(td),best=trackBest(td),fixes=(td.corrections||[]).filter(c=>c?.type==='lap_removed').length;$('#modalHost').innerHTML=`<div class="modalBackdrop"><div class="modal trackReportModal"><div class="modalHead"><div><div class="sectionLabel">TRACK DAY · ОТЧЁТ</div><h2>${esc(td.name)}</h2><p>${esc(td.date||'')} · ${td.durationMin} мин · лучший круг ${best?`${esc(best.pilot.name)} ${fmtMs(best.ms)}`:'—'}${fixes?` · коррекций судьи ${fixes}`:''}</p></div><button class="iconBtn" id="closeModal">×</button></div><div class="trackReportList">${ranked.map((p,i)=>{const l=td.live?.[p.id]||blankTrackLive(),s=lapSummary(l);return `<button class="trackReportPilot" data-pilot-stats="${p.id}" data-stats-context="track" data-track-id="${td.id}"><strong>${i+1}</strong><span><b>${pilotNameMarkup(p)}</b><small>${l.laps||0} кругов · PIT ${l.pitCount||0}${(l.totalPitMs||0)>0?` · ${fmtClock(l.totalPitMs)}`:''}</small></span><span><small>Лучший</small><b>${fmtMs(s.best)}</b></span><span><small>Средний</small><b>${fmtMs(s.avg)}</b></span><span><small>Последний</small><b>${fmtMs(l.lastLapMs)}</b></span></button>`;}).join('')}</div></div></div>`;$('#closeModal').onclick=closeModal;bind415PilotStats();}

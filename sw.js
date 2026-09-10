@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC33 · PILOT LAP STATS UI */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC34 · LIVE PILOT STATS BROADCAST */
 'use strict';
 importScripts('./offline-manifest.js');
 

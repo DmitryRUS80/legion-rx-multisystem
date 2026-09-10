@@ -1,8 +1,12 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC33 · PILOT LAP STATS UI
+# LEGION RX 4.2.0 CLEAN FULL APP RC34 · LIVE PILOT STATS BROADCAST
 
-Direct code base: **RC32 SKIP FLOW STATE SAFETY**.
+Direct code base: **RC33 PILOT LAP STATS UI**.
 
-## RC33 current release
+## RC34 current release
+
+RC34 refines only the pilot lap-statistics presentation introduced in RC33. In landscape the live card is approximately half of the roster width and never covers the right timer/control pult; in portrait it may use the available roster width, which already ends above the lower controls. The header uses shared avatar/flag/team markup, a colored LapWiz transponder ID tile, the full pilot name, and compact broadcast labels `POS / BEST / AVG` plus live `LAPS / TIME`. While the card is open it is refreshed by the existing RallyCross / Free Practice UI tickers, so position, elapsed time, average, laps and newly completed lap rows continue changing in real time. Lap rows remain neutral/translucent with white values; only BEST text is green and WORST text is magenta. The old yellow average-lap highlight is removed. The roster under the card stays visible and live through a very light dim/blur. No sport, LapWiz, audio, storage or reporting code is changed.
+
+## RC33 previous release
 
 RC33 is a UI-only replacement of the pilot lap-statistics window. During active RallyCross and Free Practice, tapping a pilot opens a compact branded overlay constrained to the roster area only; the timer/control pult is never covered. The hero reuses the pilot-card avatar/flag/team language and shows current PLACE / BEST / AVG with normal foreground values. Lap rows are flat cockpit rows: BEST green, the lap closest to AVG yellow, WORST magenta. Free Practice judge lap deletion and correction history are preserved. The old lap-summary cards/table/modal styling is removed from this component rather than overridden. RallyCross scoring/runtime, RC30 start order/announcer, RC31 column repair, RC32 skip safety, LapWiz, audio, storage and reporting are unchanged.
 

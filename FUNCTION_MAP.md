@@ -129,3 +129,19 @@ Tap pilot row
 ```
 
 Free Practice delete remains `removeTrackDayLap()`; RC33 adds no duplicate lap calculation or sport rule.
+
+## RC34 live pilot statistics flow
+
+```text
+Tap pilot row
+  -> pilotLapStatsModal()
+      -> pilotStatsSnapshot() reads existing race/practice state
+      -> compact broadcast card in .rxnRoster only
+Existing UI ticker
+  -> updateDynamicCockpitUI() / updateTrackDayDynamicUI()
+  -> refreshPilotLapStatsModal()
+      -> POS / BEST / AVG / LAPS / TIME refresh
+      -> lap rows rebuild only when lap-time signature changes
+```
+
+No new sport/timing loop is created. Free Practice delete remains `removeTrackDayLap()`.

@@ -126,3 +126,7 @@ RC27 changes only pilot-selection presentation and shell background rendering. F
 ## RC33 pilot lap-statistics UI boundary
 
 Pilot lap statistics remain a presentation concern. `ui/shell/views.js` reads already-computed live/practice state and the authoritative ranking adapters; it does not calculate RallyCross points or alter lap data. `ui/shell/discipline-pults.css` owns the one cockpit-native overlay style. During active cockpit use the overlay is constrained to the rendered roster rectangle, so no alternate cockpit geometry or second pult layer is introduced. Free Practice lap deletion continues to call the existing `removeTrackDayLap()` mode function.
+
+## RC34 live pilot-statistics presentation boundary
+
+RC34 remains UI-only. `ui/shell/views.js` owns the open-card markup/data projection and one live refresh function. `ui/discipline-ui.js` merely invokes that refresh from the already-existing RallyCross and Free Practice UI tickers; no new timing loop, sport rule or persistence path is created. `ui/shell/discipline-pults.css` remains the single owner of the card geometry and visuals. The overlay is always bounded by `.rxnRoster`, so control-panel geometry is never covered.
