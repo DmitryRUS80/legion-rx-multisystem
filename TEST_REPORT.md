@@ -1,37 +1,42 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC31 · COLUMN GRID REPAIR — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC32 · SKIP FLOW STATE SAFETY — TEST REPORT
 
 ## Scope
-Focused UI-only repair over RC30: restore the existing GAP / ✓ / BEST / AVG / LAST / LAPS cockpit toggles for RallyCross and Free Practice without changing sport rules, start-order logic, announcer behavior or picker visuals.
+Focused RallyCross administrative-state repair over RC31. Restore safe `Пропустить заезд` / multi-skip / `Завершить спортивную часть` transitions without changing official RC29 scoring, real run-off criteria, RC30 start order/announcer, RC31 cockpit column behavior, Free Practice, LapWiz or storage.
 
-## Root cause verified
-- RC20, RC29 and RC30 `ui/shell/discipline-pults.css` are byte-identical.
-- `rxnColumnClass()` already emitted `rxnHide-*` classes and `rxnMetricCount()` already reduced the explicit grid track count.
-- No CSS selector existed for those `rxnHide-*` classes, so disabled metric elements remained visible and CSS Grid placed overflow cells into an implicit second row.
-- This exactly reproduces AVG/LAST/LAPS appearing over the beginning of the pilot row when metrics are disabled.
+## Root cause reproduced
+- Skipping all standard qualification heats left every pilot with no qualifying record. The strict RC29 equality detector interpreted equal zero totals as a real sport tie and generated a qualification run-off. Cancelling that run-off generated another one.
+- A cancelled Final A run had `saved=true` and `result=[]`; `buildMainStandingItems()` converted the missing result for every pilot to DNS, score 7. Skipping A1/A2/A3 therefore manufactured an exact tie and a Final A run-off. Cancelling that run-off recreated the same run-off indefinitely.
+- With large fields, cancelling every preliminary LCQ could yield `winners=[]` and create a downstream `LCQ-F` with zero pilots.
 
-## RC31 behavior verification
-- `rxnHide-gap` -> GAP header/data cells hidden: PASS.
-- `rxnHide-check` -> ✓ header/data cells hidden: PASS.
-- `rxnHide-best` -> BEST hidden: PASS.
-- `rxnHide-avg` -> AVG hidden: PASS.
-- `rxnHide-last` -> LAST hidden: PASS.
-- `rxnHide-laps` -> LAPS hidden: PASS.
-- Remaining enabled metric columns keep one grid row and expand into available width: PASS.
-- Same authoritative row/CSS works in RallyCross and Free Practice: PASS.
-- Browser smoke: all 64 metric toggle combinations PASS at 1786×860 desktop, 1316×741 Android/common landscape, 1024×700 landscape and 900×1200 tablet portrait.
-- RC30 start-order/announcer test remains **12/12 PASS**.
-- RC29 RallyCross run-off behavior remains **28/28 PASS**.
+## RC32 behavior verification
+- `tests/verify_rc32_skip_flow.js`: **11/11 PASS**.
+- All qualification heats skipped with no recorded result -> no artificial run-off; finals become available.
+- A1/A2/A3 skipped -> cancelled runs are absent results, not DNS=7; no artificial Final A run-off; competition reaches finished protocol.
+- 18-pilot preliminary cancellation path -> no zero-pilot downstream event and no limbo.
+- Genuine exact equality from real saved Final A results -> mandatory run-off still created.
+- Mandatory real run-off -> low-level cancellation and management skip cannot create a retry chain.
+- Explicit `Завершить спортивную часть` -> exits even an unresolved real run-off and leaves `stage=finished`, `lifecycleStatus=completed` and a complete protocol for archive.
 
-## Protected unchanged areas
-- `ui/discipline-ui.js`: unchanged from RC30.
-- `modes/rallycross/index.js`, `runtime.js`, `audio-actions.js`: unchanged from RC30; start order/announcer correction preserved.
-- `ui/pilots/pilot-cards.css`: unchanged from RC30; thin neutral selected-state preserved.
-- RallyCross `rules.js`, `qualifying.js`, `finals.js`, `self-test.js`: unchanged.
-- `modes/free-practice/index.js`: unchanged.
-- LapWiz, platform audio, storage, reporting: unchanged.
+## Full automated regression
+- Architecture / clean foundation: PASS.
+- iOS START / finish safety: PASS.
+- Pilot cards / RC26 / RC27 / RC28 regressions: PASS.
+- RC29 static run-off checks: PASS.
+- RC29 run-off behavior: **28/28 PASS**.
+- RC30 official start-order / announcer / selection: **12/12 PASS**.
+- RC31 column-grid contract: PASS.
+- RC32 skip/state flow: **11/11 PASS**.
+- JavaScript syntax: **40/40 PASS**.
+- Offline manifest local assets: PASS / no missing local file.
+
+## Protected unchanged runtime areas
+- `modes/rallycross/rules.js`, `index.js`, `audio-actions.js`, `self-test.js`: byte-identical to RC31.
+- `ui/discipline-ui.js`, `ui/shell/discipline-pults.css`, `ui/pilots/pilot-cards.css`: byte-identical to RC31.
+- `modes/free-practice/index.js`: byte-identical to RC31.
+- LapWiz, platform audio, storage and reporting: byte-identical to RC31.
 
 ## Real-device acceptance still required
-On iPhone/PWA and Android verify RallyCross + Free Practice with several combinations (for example all on; BEST only; GAP+✓+BEST; AVG+LAST off; all metrics off/on again). Disabled columns must disappear, enabled columns must remain on one line and spread across the right side, and no values may appear over POS/ID/PILOT. Also keep the RC30 spoken start-order device check.
+On iPhone/PWA and Android: skip several qualification heats, skip A-runs, exercise multi-skip on a larger event, and verify there is never `PILOTS 0/0` for an active event or an endless run-off sequence. For a genuine run-off, `Пропустить` must refuse it; `Завершить спортивную часть` must still end the competition and expose the normal archive completion controls. Also recheck RC30 spoken start order and RC31 column toggles.
 
 ---
 

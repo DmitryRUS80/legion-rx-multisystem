@@ -1,6 +1,6 @@
-# LEGION RX — RALLYCROSS SPORT RULES · RC31 (rules unchanged from RC29)
+# LEGION RX — RALLYCROSS SPORT RULES · RC32 (official scoring unchanged from RC29)
 
-RC31 changes only cockpit column presentation. RC30 start-order/audio synchronization remains preserved. Scoring, BEST-3, LCQ/finals and run-off rules below remain the RC29 ruleset `RALLYCROSS-2026.09.2`.
+RC32 changes administrative cancellation/state handling only. Official scoring, BEST-3, LCQ/finals and genuine run-off rules below remain the RC29 ruleset `RALLYCROSS-2026.09.2`. A cancelled/unrun heat is not itself a sport result and therefore cannot manufacture a mandatory equality/run-off.
 
 ## Qualification
 - Q points: 50,45,42,40,39...28 through 16th; current continuation after 16th preserved pending explicit decision.

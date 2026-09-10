@@ -1,6 +1,10 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC31 · COLUMN GRID REPAIR
+# LEGION RX 4.2.0 CLEAN FULL APP RC32 · SKIP FLOW STATE SAFETY
 
 Direct code base: **RC30 START ORDER + SELECTION OUTLINE**.
+
+## RC32 current release
+
+RC32 is a focused RallyCross administrative-state repair over RC31. Normal qualification/final scoring and genuine RC29 run-offs are unchanged. The repair prevents skipped/cancelled events from manufacturing fake ties, prevents empty downstream LCQ events, blocks mandatory run-offs from being skipped into retry loops, and restores a deterministic force-finish path that always leaves the competition archiveable. RC30 start order/announcer, RC31 cockpit column repair, Free Practice, LapWiz, storage and reporting remain untouched.
 
 ## RC31 current release
 

@@ -19,7 +19,7 @@ function classifiedForAdvancement(result){return result.filter(i=>i.status==='FI
 
 function setMainGrid(race,lastTwo){const qTop4=race.pilots.slice(0,4).map(p=>p.id),grid=[...qTop4,...lastTwo].slice(0,6);FINAL_A_RUNS.forEach((name,index)=>{const f=finalByName(race,name);if(f){f.pilots=[...grid];f.basePilots=[...grid];f.enabled=index===0;}});}
 
-function processPreliminaryRound(race,round){const finals=race.finals.filter(f=>f.type==='prelim'&&f.round===round);if(!finals.length||!finals.every(f=>f.saved))return;const winners=finals.map(f=>classifiedForAdvancement(f.result)[0]?.pilotId).filter(Boolean);if(winners.length<=6){if(!finalByName(race,`LCQ-F${round}`))race.finals.push(createFinal(`LCQ-F${round}`,winners,{type:'final-lcq',label:'Заключительный LCQ',round:round+1,order:500+round,enabled:true,advanceCount:2}));}else{const next=round+1;if(!race.finals.some(f=>f.type==='prelim'&&f.round===next))createPreliminaryRound(race,winners,next,100+next*50);}}
+function processPreliminaryRound(race,round){const finals=race.finals.filter(f=>f.type==='prelim'&&f.round===round);if(!finals.length||!finals.every(f=>f.saved))return;const winners=finals.map(f=>classifiedForAdvancement(f.result)[0]?.pilotId).filter(Boolean);if(!winners.length){setMainGrid(race,[]);return;}if(winners.length<=6){if(!finalByName(race,`LCQ-F${round}`))race.finals.push(createFinal(`LCQ-F${round}`,winners,{type:'final-lcq',label:'Заключительный LCQ',round:round+1,order:500+round,enabled:true,advanceCount:2}));}else{const next=round+1;if(!race.finals.some(f=>f.type==='prelim'&&f.round===next))createPreliminaryRound(race,winners,next,100+next*50);}}
 
 function advanceFinalists(race,final){if(final.type==='single-lcq'){setMainGrid(race,classifiedForAdvancement(final.result).slice(0,2).map(i=>i.pilotId));return;}if(final.type==='dual-lcq'){const pair=race.finals.filter(f=>f.type==='dual-lcq');if(pair.every(f=>f.saved)){const rank=qualificationRankMap(race),w=pair.map(f=>classifiedForAdvancement(f.result)[0]?.pilotId).filter(Boolean).sort((a,b)=>(rank.get(String(a))||9999)-(rank.get(String(b))||9999));setMainGrid(race,w);}return;}if(final.type==='prelim'){processPreliminaryRound(race,final.round);return;}if(final.type==='final-lcq'){setMainGrid(race,classifiedForAdvancement(final.result).slice(0,2).map(i=>i.pilotId));return;}if(final.type==='main'){const idx=FINAL_A_RUNS.indexOf(final.name);if(idx<2){const n=finalByName(race,FINAL_A_RUNS[idx+1]);if(n)n.enabled=true;}else buildFinalProtocol(race);}}
 
@@ -52,7 +52,7 @@ function compareRunPerformance(a,b){
 function buildMainStandingItems(race){
   const rank=qualificationRankMap(race),main=FINAL_A_RUNS.map(n=>finalByName(race,n)).filter(Boolean),pilotIds=main[0]?.pilots||[];
   return pilotIds.map(pilotId=>{
-    const runs=main.map((f,index)=>{const result=f.saved?(f.result.find(i=>String(i.pilotId)===String(pilotId))||{status:'DNS'}):null;return{index,final:f,result,score:result?mainRunScore(result):null,performance:finalRunPerformance(f,pilotId)};});
+    const runs=main.map((f,index)=>{const result=f.saved&&!f.cancelled?(f.result.find(i=>String(i.pilotId)===String(pilotId))||{status:'DNS'}):null;return{index,final:f,result,score:result?mainRunScore(result):null,performance:finalRunPerformance(f,pilotId)};});
     const countedRuns=runs.filter(r=>Number.isFinite(r.score)).sort((a,b)=>a.score-b.score||compareRunPerformance(a,b)||a.index-b.index).slice(0,SPORT_RULES.finalBestCount);
     const bestTwo=countedRuns.map(r=>r.score),total=bestTwo.length?bestTwo.reduce((s,v)=>s+v,0):null;
     return{pilotId,results:runs.map(r=>r.result),scores:runs.map(r=>r.score),runs,countedRuns,bestTwo,total,qRank:rank.get(String(pilotId))||9999};
@@ -84,7 +84,10 @@ function compareMainStandings(race,a,b){
 function buildMainStandings(race){return buildMainStandingItems(race).sort((a,b)=>compareMainStandings(race,a,b));}
 
 function getMainExactTieGroups(race){
-  const rows=buildMainStandingItems(race).sort((a,b)=>compareMainStandings(race,a,b)),groups=[];
+  /* Cancelled/unrun Final A events are not sport results. Rows with no counted
+     Final A result cannot create a mandatory run-off merely because all totals
+     are null after administrative skips. */
+  const rows=buildMainStandingItems(race).filter(i=>(i.countedRuns||[]).length>0).sort((a,b)=>compareMainStandings(race,a,b)),groups=[];
   for(let i=0;i<rows.length;){let g=[rows[i]],j=i+1;while(j<rows.length&&compareMainStandingsCore(rows[i],rows[j])===0){g.push(rows[j]);j++;}if(g.length>1)groups.push(g);i=j;}
   return groups;
 }

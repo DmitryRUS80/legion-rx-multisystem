@@ -1,5 +1,17 @@
 # LEGION RX CHANGELOG
 
+## RC32 · SKIP FLOW STATE SAFETY
+
+- Reproduced the operator skip regression introduced by strict run-off handling: cancelled qualification/final events could manufacture exact ties and create endless mandatory run-offs.
+- Qualification run-offs now require equality backed by at least one recorded qualifying result; a group with no recorded qualifying data because heats were skipped does not create a sport run-off.
+- Cancelled Final A runs are excluded from BEST-2 scoring instead of being interpreted as DNS=7 for every pilot.
+- Exact Final A run-offs are still created normally when real saved Final A results remain exactly tied under the RC29 criteria.
+- Cancelling all preliminary LCQ events no longer creates a downstream event with zero pilots; the final grid falls back to the already-qualified top four when nobody advances from the cancelled preliminary path.
+- Mandatory qualification/final run-offs cannot be administratively skipped into an endless retry chain. The operator must run the tie-break or use explicit early sport finish.
+- `Завершить спортивную часть` is again a true administrative escape: it cancels remaining unsaved events without normal sport advancement, preserves current Final A ordering when real Final A data exists, and creates an archiveable completed protocol.
+- No UI redesign, LapWiz, Free Practice core, platform audio/storage, RC30 start-order/announcer, RC31 column-grid or pilot/model selection changes.
+
+
 ## RC31 · COLUMN GRID REPAIR
 
 - Repaired the existing cockpit column-toggle contract in the authoritative `ui/shell/discipline-pults.css`; no patch/override layer was added.

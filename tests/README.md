@@ -1,6 +1,11 @@
 # Regression helpers
 Run `python3 tests/verify_architecture.py` after every structural/UI change. It enforces the hard architecture boundaries and checks the offline manifest.
 
+## RC32
+
+- `verify_rc32_skip_flow.js` reproduces and guards the operator skip regression: empty qualification cancellations, cancelled Final A, large-field preliminary LCQ cancellation, mandatory run-off skip protection, and force-finish recovery.
+- Expected focused result: **11/11 PASS**.
+
 ## RC31
 - `verify_rc31_column_grid.py` — verifies that each existing cockpit `rxnHide-*` toggle class maps to `display:none` for the matching metric cell in the authoritative cockpit stylesheet, and that RallyCross / Free Practice still share the same row component.
 - Browser smoke used for RC31 acceptance checks all 64 GAP/✓/BEST/AVG/LAST/LAPS combinations at desktop, Android-landscape and tablet viewports; visible cells remain in one grid row.

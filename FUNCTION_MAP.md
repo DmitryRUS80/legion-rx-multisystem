@@ -100,4 +100,13 @@
 - `ui/discipline-ui.js::rxnColumnClass()` / `rxnMetricCount()` — existing saved operator visibility state and visible metric count.
 - `ui/shell/discipline-pults.css::.rxnCockpit.rxnHide-*` — authoritative visibility mapping for GAP / ✓ / BEST / AVG / LAST / LAPS in both RallyCross and Free Practice rows.
 - No RallyCross rule/order calculation and no Free Practice timing logic lives in the column-toggle layer.
+## RC32 skip / cancel / force-finish flow
+
+- `modes/rallycross/runtime.js::markRawEventCancelled(raw)` — one low-level mutation for an administrative cancellation.
+- `modes/rallycross/runtime.js::cancelRawEvent(raw)` — cancels only ordinary events, then invokes the existing qualification/final advancement path; mandatory tie-breaks are protected.
+- `modes/rallycross/runtime.js::skipRaceEvents(count)` — skips ordinary current events and stops cleanly when the next event is a required run-off.
+- `modes/rallycross/runtime.js::forceFinishCompetition()` — administrative terminal path; cancels every remaining unsaved event without recursive sport advancement and builds an archiveable protocol.
+- `modes/rallycross/qualifying.js::getExactTieGroups(race)` — no run-off for an all-empty qualification group created only by skipped heats.
+- `modes/rallycross/finals.js::buildMainStandingItems(race)` — cancelled Final A runs have no score; saved real results retain normal FIN/DNF/DNS/DSQ scoring.
+- `modes/rallycross/finals.js::processPreliminaryRound(race, round)` — zero preliminary winners seed no empty LCQ; existing top-four qualified grid proceeds.
 

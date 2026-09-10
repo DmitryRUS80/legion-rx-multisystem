@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC31 · COLUMN GRID REPAIR */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC32 · SKIP FLOW STATE SAFETY */
 'use strict';
 importScripts('./offline-manifest.js');
 

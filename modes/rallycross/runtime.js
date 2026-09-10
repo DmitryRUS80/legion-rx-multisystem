@@ -137,21 +137,62 @@ function findRawEvent(key){return state.race?.heats?.find(x=>x.key===key)||state
 
 function finalizeQualifyingIfNeeded(race){return finalizeQualificationOrCreateRunoffs(race);}
 
-function cancelRawEvent(raw){if(!raw||raw.saved)return;raw.saved=true;raw.cancelled=true;raw.cancelledAt=new Date().toISOString();raw.result=[];raw.enabled=false;if(raw.type==='qualifying'||raw.type==='qualification-tiebreak')finalizeQualifyingIfNeeded(state.race);else if(raw.tieBreak&&raw.tieScope==='final'){try{buildFinalProtocol(state.race);}catch(e){console.warn('runoff cancel advance',e);}}else{try{advanceFinalists(state.race,raw);}catch(e){console.warn('cancel advance',e);}}}
+function markRawEventCancelled(raw){if(!raw||raw.saved)return false;raw.saved=true;raw.cancelled=true;raw.cancelledAt=new Date().toISOString();raw.result=[];raw.enabled=false;return true;}
+
+function cancelRawEvent(raw){
+  if(!raw||raw.saved||raw.tieBreak)return false;
+  if(!markRawEventCancelled(raw))return false;
+  if(raw.type==='qualifying')finalizeQualifyingIfNeeded(state.race);
+  else{try{advanceFinalists(state.race,raw);}catch(e){console.warn('cancel advance',e);}}
+  return true;
+}
 
 async function stopActiveRaceForManagement(){announcer.cancel();clearPrestartTimers?.();if(state.session&&['warmup','countdown','running','finishing','paused'].includes(state.session.phase)){if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){console.warn(e);}}}state.session=null;}
 
-async function skipRaceEvents(count=1){if(!state.race)return;await stopActiveRaceForManagement();let skipped=0;for(let i=0;i<count;i++){const ev=currentEvent(state.race);if(!ev)break;const raw=findRawEvent(ev.key);if(!raw)break;cancelRawEvent(raw);skipped++;}persistRace();toast(`Отменено заездов: ${skipped}`);closeModal();render();}
+async function skipRaceEvents(count=1){
+  if(!state.race)return;await stopActiveRaceForManagement();let skipped=0,blockedRunoff=false;
+  for(let i=0;i<count;i++){
+    const ev=currentEvent(state.race);if(!ev)break;
+    if(ev.tieBreak){blockedRunoff=true;break;}
+    const raw=findRawEvent(ev.key);if(!raw||!cancelRawEvent(raw))break;skipped++;
+  }
+  persistRace();
+  if(blockedRunoff)toast(skipped?`Отменено заездов: ${skipped}. Следующий обязательный перезаезд нельзя пропустить.`:'Обязательный перезаезд нельзя пропустить. Проведите его или завершите спортивную часть досрочно.');
+  else toast(`Отменено заездов: ${skipped}`);
+  closeModal();render();
+}
 
 async function cancelCurrentQualRound(){const ev=currentEvent(state.race);if(!ev||ev.type!=='qualifying')return toast('Сейчас не квалификационный заезд');if(!confirm(`Отменить всю квалификационную серию Q${ev.round}? Результаты этой серии не будут учитываться.`))return;await stopActiveRaceForManagement();state.race.heats.filter(h=>h.round===ev.round&&!h.saved).forEach(cancelRawEvent);finalizeQualifyingIfNeeded(state.race);persistRace();closeModal();render();}
 
 async function finishQualificationNow(){const ev=currentEvent(state.race);if(!ev||state.race.stage!=='qualifying')return toast('Квалификация уже завершена');if(!confirm('Отменить все оставшиеся квалификационные заезды и перейти к финальной части по уже полученным результатам?'))return;await stopActiveRaceForManagement();standardQualifyingHeats(state.race).filter(h=>!h.saved).forEach(h=>{h.saved=true;h.cancelled=true;h.result=[];h.enabled=false;});finalizeQualificationOrCreateRunoffs(state.race);persistRace();closeModal();render();}
 
-async function forceFinishCompetition(){if(!state.race)return;if(!confirm('Завершить спортивную часть соревнования сейчас? Все оставшиеся заезды будут отмечены как отменённые.'))return;await stopActiveRaceForManagement();if(state.race.stage==='tie'){resolveQualificationTie(state.race);persistRace();closeModal();toast('Сначала проведите перезаезд спорных мест.');return render();}let guard=0;while(currentEvent(state.race)&&guard++<80){const ev=currentEvent(state.race);if(ev?.tieBreak)break;cancelRawEvent(findRawEvent(ev.key));}const qTies=standardQualifyingHeats(state.race).every(h=>h.saved)?getExactTieGroups(state.race).filter(g=>!qualificationTieGroupResolved(state.race,g)):[];if(qTies.length){createQualificationRunoffs(state.race);persistRace();closeModal();toast('Сначала проведите перезаезд спорных мест.');return render();}if(FINAL_A_RUNS.every(n=>finalByName(state.race,n)?.saved)){const fTies=getMainExactTieGroups(state.race).filter(g=>!finalTieGroupResolved(state.race,g));if(fTies.length){createFinalRunoffs(state.race);persistRace();closeModal();toast('Сначала проведите финальный перезаезд спорных мест.');return render();}}if(state.race.stage!=='finished'){updateStandings(state.race);state.race.finalProtocol=state.race.pilots.map((p,i)=>({place:i+1,pilotId:p.id,status:'FIN',source:'Досрочное завершение',eventPoints:EVENT_POINTS[i]||0}));state.race.stage='finished';state.race.lifecycleStatus='completed';state.race.completedAt=new Date().toISOString();}persistRace();closeModal();toast('Соревнование завершено досрочно');render();}
+async function forceFinishCompetition(){
+  if(!state.race)return;
+  if(!confirm('Завершить спортивную часть соревнования сейчас? Все оставшиеся заезды будут отмечены как отменённые.'))return;
+  await stopActiveRaceForManagement();
+  const race=state.race;
+  /* Administrative finish is intentionally not normal sport progression: it must
+     be able to leave any unfinished state, including a required run-off, without
+     creating another event. */
+  [...(race.heats||[]),...(race.finals||[])].forEach(raw=>{if(!raw.saved)markRawEventCancelled(raw);});
+  updateStandings(race);
+  const hasMainResult=FINAL_A_RUNS.some(name=>{const f=finalByName(race,name);return f&&f.saved&&!f.cancelled&&Array.isArray(f.result)&&f.result.length>0;});
+  let ordered=[...race.pilots];
+  if(hasMainResult){
+    const byId=new Map(race.pilots.map(p=>[String(p.id),p])),seen=new Set();
+    ordered=[];
+    buildMainStandings(race).forEach(row=>{const p=byId.get(String(row.pilotId));if(p&&!seen.has(String(p.id))){ordered.push(p);seen.add(String(p.id));}});
+    race.pilots.forEach(p=>{if(!seen.has(String(p.id))){ordered.push(p);seen.add(String(p.id));}});
+  }
+  race.finalProtocol=ordered.map((p,i)=>({place:i+1,pilotId:p.id,status:'FIN',source:'Досрочное завершение',eventPoints:EVENT_POINTS[i]||0}));
+  race.stage='finished';race.lifecycleStatus='completed';race.completedAt=new Date().toISOString();
+  persistRace();closeModal();toast('Соревнование завершено досрочно');render();
+}
 
 async function quickSkipCurrentRace(){
   const ev=currentEvent(state.race);
   if(!ev)return toast('Нет активного заезда');
+  if(ev.tieBreak)return toast('Обязательный перезаезд нельзя пропустить. Проведите его или завершите спортивную часть досрочно.');
   if(!confirm(`Пропустить «${ev.label}»? Заезд будет отмечен как отменённый, результат не сохранится, приложение перейдёт к следующему.`))return;
   return skipRaceEvents(1);
 }

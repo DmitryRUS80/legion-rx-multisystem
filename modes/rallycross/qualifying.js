@@ -45,7 +45,15 @@ function updateStandings(race){race.pilots.forEach(calculateBest3);race.pilots.s
 
 function getExactTieGroups(race){
   updateStandings(race);const groups=[];
-  for(let i=0;i<race.pilots.length;){let g=[race.pilots[i]],j=i+1;while(j<race.pilots.length&&comparePilotsWithoutRunoff(race,race.pilots[i],race.pilots[j])===0){g.push(race.pilots[j]);j++;}if(g.length>1)groups.push(g);i=j;}
+  for(let i=0;i<race.pilots.length;){
+    let g=[race.pilots[i]],j=i+1;
+    while(j<race.pilots.length&&comparePilotsWithoutRunoff(race,race.pilots[i],race.pilots[j])===0){g.push(race.pilots[j]);j++;}
+    /* A run-off resolves an equality produced by recorded sport results. If every
+       pilot in the group has no qualifying record at all (for example all heats
+       were administratively skipped), there is no sport result to break. */
+    if(g.length>1&&g.some(p=>Array.isArray(p.qualifying)&&p.qualifying.length>0))groups.push(g);
+    i=j;
+  }
   return groups;
 }
 

@@ -114,4 +114,11 @@ RC27 changes only pilot-selection presentation and shell background rendering. F
 - `ui/discipline-ui.js` owns only the operator's column visibility state and calculates the visible metric count; it does not own cockpit geometry.
 - `ui/shell/discipline-pults.css` is the single authoritative owner of RallyCross / Free Practice pilot-row grid geometry and the `rxnHide-*` presentation rules.
 - RC31 adds the missing selectors directly to that stylesheet. No patch/override stylesheet, duplicate row renderer or sport/platform change is introduced.
+## RC32 administrative race-state boundary
+
+- `modes/rallycross/runtime.js` owns operator skip/cancel/force-finish transitions; UI only issues commands.
+- A cancelled event is an administrative absence of a result, not an implicit DNS result for all pilots.
+- Genuine run-off creation remains in qualification/final sport modules and still requires an equality derived from recorded sport results.
+- Explicit force-finish does not execute ordinary advancement callbacks: it marks remaining events cancelled and terminates the lifecycle directly, preventing recursive event creation.
+- No patch layer or alternate state machine is introduced.
 

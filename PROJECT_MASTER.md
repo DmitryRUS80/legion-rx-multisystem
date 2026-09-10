@@ -1,6 +1,6 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC31 · COLUMN GRID REPAIR**  
+Current development candidate: **4.2.0 CLEAN FULL APP RC32 · SKIP FLOW STATE SAFETY**  
 Direct code base: **RC30 START ORDER + SELECTION OUTLINE**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
@@ -21,6 +21,10 @@ Executable rules remain in `modes/rallycross/`. RC20 does **not** change any spo
 ## Current approved visual direction
 
 The current RC19/RC20 RallyCross cockpit is the preserved visual baseline. Further design work should make the race line, pilot presentation, BEST LAP cards, pre-start grid and results look like a compact motorsport TV broadcast while retaining trackside readability and fast operator control.
+
+## RC32 SKIP FLOW STATE SAFETY
+
+RC32 repairs only the RallyCross administrative cancellation/skip/force-finish state machine. Cancelled/unrun events are not allowed to masquerade as equal sport results, zero-pilot downstream LCQ events are not generated, a genuine mandatory run-off cannot be skipped into an infinite retry chain, and explicit force-finish can always terminate and archive the event. Official RC29 scoring and real run-off criteria remain unchanged.
 
 ## RC31 COLUMN GRID REPAIR
 

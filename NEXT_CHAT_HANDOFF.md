@@ -1,9 +1,9 @@
-# LEGION RX — NEXT CHAT HANDOFF · RC31
+# LEGION RX — NEXT CHAT HANDOFF · RC32
 
 **Date:** 2026-09-10  
-**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC31_COLUMN_GRID_REPAIR_FULL.zip`  
+**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC32_SKIP_FLOW_STATE_SAFETY_FULL.zip`  
 **Base:** RC30 START ORDER + SELECTION OUTLINE  
-**Status:** RC31 automated regression PASS; **real iPhone + LapWiz + Android acceptance still required**.
+**Status:** RC32 automated regression PASS; **real iPhone + LapWiz + Android acceptance still required**.
 
 ---
 
@@ -11,7 +11,7 @@
 
 Do **not** rebuild Legion RX from memory and do not use an older archive as the source.
 
-1. Unpack the latest **RC31 FULL**.
+1. Unpack the latest **RC32 FULL**.
 2. Read, in this order:
    - `NEXT_CHAT_HANDOFF.md` (this file if copied into the project/package)
    - `PROJECT_MASTER.md`
@@ -482,6 +482,20 @@ Protected RC30 behavior:
 - RallyCross rules/run-offs unchanged;
 - Free Practice sport core unchanged.
 
+
+# 13B. RC32 SKIP / CANCEL STATE SAFETY
+
+RC32 is a focused RallyCross state-machine repair over RC31. The reported failure was reproduced: skipping A1/A2/A3 could convert every cancelled run into implicit DNS=7, manufacture an exact Final A tie, and each skipped tie-break then generated another tie-break forever. Skipping all qualification heats could create the same all-zero run-off loop. With large fields, cancelling all preliminary LCQ heats could create a zero-pilot final LCQ.
+
+RC32 fixes the authoritative sources only:
+- cancelled qualification with no recorded results does not create a run-off;
+- cancelled Final A runs are absent results, not DNS;
+- zero preliminary winners do not create a zero-pilot downstream LCQ;
+- a genuine run-off produced by real saved results remains mandatory and cannot be skipped into a retry chain;
+- explicit force-finish is an administrative terminal path and can exit even an unresolved real run-off without recursively creating another event.
+
+Official scoring / BEST-3 / BEST-2 / genuine RC29 run-off criteria remain unchanged. RC30 start order/announcer and RC31 column-grid repair are preserved.
+
 # 14. TEST POLICY
 
 Every build must run the project tests relevant to its scope plus baseline regression.
@@ -504,7 +518,7 @@ Minimum UI regression:
 
 If sport logic changes, additionally run full sport tests and specific scenario tests.
 
-For RC31 currently validated:
+For RC32 currently validated:
 - architecture PASS;
 - clean foundation PASS;
 - iOS START/finish safety PASS;
@@ -514,8 +528,9 @@ For RC31 currently validated:
 - RC29 run-off behavior remains **28/28 PASS**;
 - RC30 start-order/selection behavior preserved: **12/12 PASS**;
 - RC31 column-grid contract: PASS; all 64 toggle combinations browser-smoked on desktop/Android-landscape/tablet viewports;
+- RC32 skip/state regression: **11/11 PASS**;
 - RallyCross self-test: **18/18 PASS**;
-- JavaScript syntax: **39/39 PASS**;
+- JavaScript syntax: **40/40 PASS**;
 - offline manifest: no missing local file.
 
 Never describe a real iPhone/LapWiz hardware test as PASS unless the user physically ran it. Container/browser tests cannot reproduce every Safari gesture/storage/BLE behavior.
@@ -542,11 +557,28 @@ Release/offline/docs metadata are updated as required. `ui/discipline-ui.js`, al
 
 ---
 
+
+# 15B. RC32 FILE SCOPE VS RC31
+
+Authoritative runtime/sport files changed:
+```text
+modes/rallycross/qualifying.js
+modes/rallycross/finals.js
+modes/rallycross/runtime.js
+```
+
+New focused test:
+```text
+tests/verify_rc32_skip_flow.js
+```
+
+Release/offline/docs/test metadata changed as required. Protected unchanged runtime areas include RC30 start-order/audio files (`modes/rallycross/index.js`, `audio-actions.js`, `ui/discipline-ui.js`), RC31 cockpit CSS, Free Practice, LapWiz, platform audio/storage and reporting.
+
 # 16. IMMEDIATE NEXT-CHAT CHECKLIST
 
-1. Load **RC31 FULL** and this handoff.
+1. Load **RC32 FULL** and this handoff.
 2. Read the project docs before touching code.
-3. Treat RC31 as **candidate**, not GOLD, until device acceptance.
+3. Treat RC32 as **candidate**, not GOLD, until device acceptance.
 4. First real acceptance test:
    - exact qualification tie -> `ПЕРЕЗАЕЗД` only tied pilots -> zero extra Q points/result;
    - exact Final A tie -> run-off only tied pilots -> no A4/no extra final score -> only disputed positions reorder;
@@ -554,16 +586,17 @@ Release/offline/docs metadata are updated as required. `ui/discipline-ui.js`, al
 5. Verify start-call order on device: qualification pult order = spoken order; Final A qualification-rating order = spoken order.
 6. RC30 selected tile style remains implemented; do not reintroduce blue fill/glow.
 7. Verify cockpit column toggles in RallyCross and Free Practice: disabled metric disappears, remaining metrics expand, no second-row overlap.
-8. Keep every future build focused and output FULL + delta GitHub ZIP.
+8. Verify RC32 skip safety on device: skipped qualification/A-runs do not create fake run-offs; no active event may show `PILOTS 0/0`; a genuine run-off refuses skip; explicit sport finish still reaches archiveable completion.
+9. Keep every future build focused and output FULL + delta GitHub ZIP.
 
 
 ---
 
 # 17. START PROMPT FOR THE NEXT CHAT
 
-Copy/paste this as the first message after attaching RC31 FULL + this handoff:
+Copy/paste this as the first message after attaching RC32 FULL + this handoff:
 
-> Продолжаем LEGION RX. Загруженная RC31 FULL — текущий исходник-кандидат. Сначала прочитай NEXT_CHAT_HANDOFF.md, PROJECT_MASTER.md, ARCHITECTURE.md, FUNCTION_MAP.md, SPORT_RULES.md, TEST_REPORT.md, VERSION.txt и CHANGELOG.md и исследуй реальные авторитетные файлы. Ничего не пересобирай по памяти. Архитектура обязательна: UI != SPORT RULES != LAPWIZ != STORAGE. Никаких patch/override, одна функция/стиль — один источник. Каждый релиз отдавай двумя архивами: FULL и UPLOAD_TO_GITHUB только с изменёнными файлами. RC31 сохраняет RC30 порядок старта/диктора и тонкую подсветку выбора и восстанавливает корректную работу GAP/✓/BEST/AVG/LAST/LAPS через единственный authoritative cockpit CSS. Считай её кандидатом до физического теста iPhone/LapWiz/Android. Не трогай работающие модули без необходимости.
+> Продолжаем LEGION RX. Загруженная RC32 FULL — текущий исходник-кандидат. Сначала прочитай NEXT_CHAT_HANDOFF.md, PROJECT_MASTER.md, ARCHITECTURE.md, FUNCTION_MAP.md, SPORT_RULES.md, TEST_REPORT.md, VERSION.txt и CHANGELOG.md и исследуй реальные авторитетные файлы. Ничего не пересобирай по памяти. Архитектура обязательна: UI != SPORT RULES != LAPWIZ != STORAGE. Никаких patch/override, одна функция/стиль — один источник. Каждый релиз отдавай двумя архивами: FULL и UPLOAD_TO_GITHUB только с изменёнными файлами. RC32 сохраняет RC30 официальный стартовый порядок/диктора, тонкую нейтральную подсветку выбора и RC31 исправление колонок. RC32 хирургически исправляет административный пропуск/отмену: пустые отменённые заезды не создают фиктивные перезаезды, не создаются события с 0 пилотов, обязательный настоящий перезаезд нельзя циклически пропустить, а «Завершить спортивную часть» всегда выводит соревнование в архивируемое завершённое состояние. Официальные RC29 scoring/run-off criteria, Free Practice core, LapWiz, storage и reporting не изменены. Считай RC32 кандидатом до физического теста iPhone/LapWiz/Android. Не трогай работающие модули без необходимости.
 
 ---
 

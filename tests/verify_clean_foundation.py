@@ -12,11 +12,11 @@ expected={
 'platform/timing.js':'2f906ea408b3dca79a7dc74b19eed99c0a88d2559e24146a52a02b350ea8a9c8',
 'platform/utils.js':'488d5cc91485d8511fa46b7c043cb21d61048ee3d9caf0a3e03724493432fecd',
 'modes/rallycross/rules.js':'d840388a9e0a148909cac826b184fb88d513c0edbb4a354585ee74362cbb6db3',
-'modes/rallycross/qualifying.js':'bebee6a92a488e5bcdf768740bfba6413a92e3a921a346aef4c11388738c63eb',
-'modes/rallycross/finals.js':'7f057ef596b26573be59efb30fc5760b6ca1d36acac6228a8a275305d828b440',
+'modes/rallycross/qualifying.js':'ebc33b9bba66065e839aba0c3d90c57fc02621a418862b987711bf79a3f0f8a4',
+'modes/rallycross/finals.js':'9a57c3267921201c48b73166d07e304068d59238c9d1c3a0ffe2ab882913e8e4',
 'modes/rallycross/index.js':'0b991bd073892fc80a62850c81010fcd1eba3c5fae794a11e6f9b7fda34c8156',
 'modes/rallycross/audio-actions.js':'56bc3301350365b87e78cbdbc76935fe94c3e89172fb424df31759de725cddef',
-'modes/rallycross/runtime.js':'1d4f1500537f4c77c5fd14b0f547cf823f60e288239d71bdf5274f81cc99ebb0',
+'modes/rallycross/runtime.js':'8054c2d6beec9b0d542fa3772ef98af2974f179561ddb646fb49459c53756eb3',
 'modes/rallycross/self-test.js':'3f2be9c50b3a4b158505abd64f95ffd7d10856323a7fd7fb8e31f579cad1113a',
 'modes/free-practice/index.js':'aa43d3a87f0e9286635dbb5bbcfc7647dac310ea30d24af80bb9fe9cdd20845a',
 'modes/rally-sprint/index.js':'1f72a94e0f765212b98bd7af6b24589c1108001bcfaa9fcfc3db7fd97b025a71',
@@ -31,7 +31,7 @@ for rel,want in expected.items():
     p=ROOT/rel
     got=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else 'MISSING'
     if got!=want: changed.append((rel,got,want))
-checks['protected_foundation_hashes_match_rc30']=not changed
+checks['protected_foundation_hashes_match_rc32']=not changed
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])
