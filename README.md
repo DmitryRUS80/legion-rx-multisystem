@@ -1,6 +1,10 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC32 · SKIP FLOW STATE SAFETY
+# LEGION RX 4.2.0 CLEAN FULL APP RC33 · PILOT LAP STATS UI
 
-Direct code base: **RC30 START ORDER + SELECTION OUTLINE**.
+Direct code base: **RC32 SKIP FLOW STATE SAFETY**.
+
+## RC33 current release
+
+RC33 is a UI-only replacement of the pilot lap-statistics window. During active RallyCross and Free Practice, tapping a pilot opens a compact branded overlay constrained to the roster area only; the timer/control pult is never covered. The hero reuses the pilot-card avatar/flag/team language and shows current PLACE / BEST / AVG with normal foreground values. Lap rows are flat cockpit rows: BEST green, the lap closest to AVG yellow, WORST magenta. Free Practice judge lap deletion and correction history are preserved. The old lap-summary cards/table/modal styling is removed from this component rather than overridden. RallyCross scoring/runtime, RC30 start order/announcer, RC31 column repair, RC32 skip safety, LapWiz, audio, storage and reporting are unchanged.
 
 ## RC32 current release
 

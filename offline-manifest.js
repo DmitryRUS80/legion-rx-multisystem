@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc32-skip-flow-state-safety';
-  const displayVersion='4.2.0 CLEAN FULL APP RC32 · SKIP FLOW STATE SAFETY';
-  const cacheName='legion-rx-4-2-0-clean-full-rc32-skip-flow-state-safety';
+  const appVersion='4.2.0-clean-full-rc33-pilot-lap-stats-ui';
+  const displayVersion='4.2.0 CLEAN FULL APP RC33 · PILOT LAP STATS UI';
+  const cacheName='legion-rx-4-2-0-clean-full-rc33-pilot-lap-stats-ui';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

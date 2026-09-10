@@ -299,18 +299,6 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 .dangerZone{border-color:color-mix(in srgb,var(--red) 35%,var(--line))}
 .flowItem.cancelled{opacity:.62;background:var(--panel2);border-style:dashed}
 .flowItem.cancelled .flowDot{background:var(--amber)}
-.lapStatsModal{width:min(720px,100%)}
-.lapSummaryGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
-.lapSummaryGrid>div{padding:12px;border:1px solid var(--line);border-radius:var(--radius-input);background:var(--panel2);display:grid;gap:4px}
-.lapSummaryGrid span{font-size:9px;font-weight:900;letter-spacing:.06em;color:var(--muted)}
-.lapSummaryGrid b{font-size:20px}
-.lapSummaryGrid .best b{color:var(--green)}
-.lapSummaryGrid .average b{color:var(--blue)}
-.lapSummaryGrid .worst b{color:var(--amber)}
-.lapTableWrap{max-height:55vh}
-.lapBest{background:var(--green2)}
-.lapAverage{background:var(--blue2)}
-.lapWorst{background:var(--amber2)}
 .trackReportModal{width:min(900px,100%)}
 .trackReportList{display:grid;gap:7px}
 .trackReportPilot{display:grid;grid-template-columns:42px minmax(180px,1fr) 115px 115px 115px;gap:10px;align-items:center;text-align:left;padding:11px;border:1px solid var(--line);border-radius:var(--radius-input);background:var(--panel);color:var(--text);cursor:pointer}
@@ -323,7 +311,6 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 }
 @media (max-width:720px){
   .disciplineGrid415{grid-template-columns:1fr}
-  .lapSummaryGrid{grid-template-columns:repeat(2,1fr)}
   .trackReportPilot{grid-template-columns:34px minmax(130px,1fr) 90px}
   .trackReportPilot>span:nth-child(4),.trackReportPilot>span:nth-child(5){display:none}
   .manageInline{flex-direction:column}

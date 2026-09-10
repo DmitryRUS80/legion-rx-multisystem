@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC32 · SKIP FLOW STATE SAFETY */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC33 · PILOT LAP STATS UI */
 'use strict';
 importScripts('./offline-manifest.js');
 

@@ -1,9 +1,9 @@
-# LEGION RX — NEXT CHAT HANDOFF · RC32
+# LEGION RX — NEXT CHAT HANDOFF · RC33
 
-**Date:** 2026-09-10  
-**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC32_SKIP_FLOW_STATE_SAFETY_FULL.zip`  
-**Base:** RC30 START ORDER + SELECTION OUTLINE  
-**Status:** RC32 automated regression PASS; **real iPhone + LapWiz + Android acceptance still required**.
+**Date:** 2026-09-11  
+**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC33_PILOT_LAP_STATS_UI_FULL.zip`  
+**Base:** RC32 SKIP FLOW STATE SAFETY  
+**Status:** RC33 automated regression PASS; **real iPhone + LapWiz + Android acceptance still required**.
 
 ---
 
@@ -11,7 +11,7 @@
 
 Do **not** rebuild Legion RX from memory and do not use an older archive as the source.
 
-1. Unpack the latest **RC32 FULL**.
+1. Unpack the latest **RC33 FULL**.
 2. Read, in this order:
    - `NEXT_CHAT_HANDOFF.md` (this file if copied into the project/package)
    - `PROJECT_MASTER.md`
@@ -496,6 +496,21 @@ RC32 fixes the authoritative sources only:
 
 Official scoring / BEST-3 / BEST-2 / genuine RC29 run-off criteria remain unchanged. RC30 start order/announcer and RC31 column-grid repair are preserved.
 
+# 13C. RC33 PILOT LAP STATS UI
+
+RC33 is a focused UI-only replacement of the old pilot lap-statistics window. It does not change lap calculation, RallyCross ranking/scoring, Free Practice rules, LapWiz, audio or storage.
+
+Authoritative behavior:
+- tap a pilot row in active RallyCross / Free Practice -> one stats overlay;
+- overlay bounds are taken from the existing `.rxnRoster` rectangle, so the timer/control pult on the right is never covered;
+- the hero reuses pilot-card avatar / flag / team markup and shows current PLACE / BEST / AVG;
+- race PLACE comes from the same `RallyCrossModeAPI.startPilots() + liveRanking()` path used by the cockpit; Free Practice PLACE comes from `rankTrackPilots()`;
+- lap rows use the cockpit language: BEST green, closest-to-average yellow, WORST magenta;
+- Free Practice judge lap deletion and correction history are preserved;
+- obsolete `lapSummaryGrid`, old `lapStatsModal` styling and old BEST/AVG/WORST table classes were removed instead of overridden.
+
+Protected behavior: RC30 start-order/announcer, RC31 column repair and RC32 skip/cancel safety remain unchanged.
+
 # 14. TEST POLICY
 
 Every build must run the project tests relevant to its scope plus baseline regression.
@@ -518,7 +533,7 @@ Minimum UI regression:
 
 If sport logic changes, additionally run full sport tests and specific scenario tests.
 
-For RC32 currently validated:
+For RC33 currently validated:
 - architecture PASS;
 - clean foundation PASS;
 - iOS START/finish safety PASS;
@@ -529,6 +544,7 @@ For RC32 currently validated:
 - RC30 start-order/selection behavior preserved: **12/12 PASS**;
 - RC31 column-grid contract: PASS; all 64 toggle combinations browser-smoked on desktop/Android-landscape/tablet viewports;
 - RC32 skip/state regression: **11/11 PASS**;
+- RC33 pilot lap-statistics UI regression: **16/16 PASS**;
 - RallyCross self-test: **18/18 PASS**;
 - JavaScript syntax: **40/40 PASS**;
 - offline manifest: no missing local file.
@@ -574,11 +590,27 @@ tests/verify_rc32_skip_flow.js
 
 Release/offline/docs/test metadata changed as required. Protected unchanged runtime areas include RC30 start-order/audio files (`modes/rallycross/index.js`, `audio-actions.js`, `ui/discipline-ui.js`), RC31 cockpit CSS, Free Practice, LapWiz, platform audio/storage and reporting.
 
+# 15C. RC33 FILE SCOPE VS RC32
+
+Authoritative UI runtime changes:
+```text
+ui/shell/views.js
+ui/shell/app.css
+ui/shell/discipline-pults.css
+```
+
+Focused regression:
+```text
+tests/verify_rc33_pilot_stats_ui.py
+```
+
+Release/offline/docs/test metadata changed as required. RallyCross modes, Free Practice mode, `ui/discipline-ui.js`, `ui/pilots/pilot-cards.js/.css`, LapWiz/platform audio/storage and reporting are unchanged from RC32.
+
 # 16. IMMEDIATE NEXT-CHAT CHECKLIST
 
-1. Load **RC32 FULL** and this handoff.
+1. Load **RC33 FULL** and this handoff.
 2. Read the project docs before touching code.
-3. Treat RC32 as **candidate**, not GOLD, until device acceptance.
+3. Treat RC33 as **candidate**, not GOLD, until device acceptance.
 4. First real acceptance test:
    - exact qualification tie -> `ПЕРЕЗАЕЗД` only tied pilots -> zero extra Q points/result;
    - exact Final A tie -> run-off only tied pilots -> no A4/no extra final score -> only disputed positions reorder;
@@ -587,16 +619,17 @@ Release/offline/docs/test metadata changed as required. Protected unchanged runt
 6. RC30 selected tile style remains implemented; do not reintroduce blue fill/glow.
 7. Verify cockpit column toggles in RallyCross and Free Practice: disabled metric disappears, remaining metrics expand, no second-row overlap.
 8. Verify RC32 skip safety on device: skipped qualification/A-runs do not create fake run-offs; no active event may show `PILOTS 0/0`; a genuine run-off refuses skip; explicit sport finish still reaches archiveable completion.
-9. Keep every future build focused and output FULL + delta GitHub ZIP.
+9. Verify RC33 pilot stats on device: tap several pilots during RallyCross and Free Practice; overlay stays entirely inside roster, PLACE matches the row, BEST/AVG values are normal foreground, BEST/AVG/WORST lap rows are green/yellow/magenta, and Free Practice lap delete still recalculates stats.
+10. Keep every future build focused and output FULL + delta GitHub ZIP.
 
 
 ---
 
 # 17. START PROMPT FOR THE NEXT CHAT
 
-Copy/paste this as the first message after attaching RC32 FULL + this handoff:
+Copy/paste this as the first message after attaching RC33 FULL + this handoff:
 
-> Продолжаем LEGION RX. Загруженная RC32 FULL — текущий исходник-кандидат. Сначала прочитай NEXT_CHAT_HANDOFF.md, PROJECT_MASTER.md, ARCHITECTURE.md, FUNCTION_MAP.md, SPORT_RULES.md, TEST_REPORT.md, VERSION.txt и CHANGELOG.md и исследуй реальные авторитетные файлы. Ничего не пересобирай по памяти. Архитектура обязательна: UI != SPORT RULES != LAPWIZ != STORAGE. Никаких patch/override, одна функция/стиль — один источник. Каждый релиз отдавай двумя архивами: FULL и UPLOAD_TO_GITHUB только с изменёнными файлами. RC32 сохраняет RC30 официальный стартовый порядок/диктора, тонкую нейтральную подсветку выбора и RC31 исправление колонок. RC32 хирургически исправляет административный пропуск/отмену: пустые отменённые заезды не создают фиктивные перезаезды, не создаются события с 0 пилотов, обязательный настоящий перезаезд нельзя циклически пропустить, а «Завершить спортивную часть» всегда выводит соревнование в архивируемое завершённое состояние. Официальные RC29 scoring/run-off criteria, Free Practice core, LapWiz, storage и reporting не изменены. Считай RC32 кандидатом до физического теста iPhone/LapWiz/Android. Не трогай работающие модули без необходимости.
+> Продолжаем LEGION RX. Загруженная RC33 FULL — текущий исходник-кандидат. Сначала прочитай NEXT_CHAT_HANDOFF.md, PROJECT_MASTER.md, ARCHITECTURE.md, FUNCTION_MAP.md, SPORT_RULES.md, TEST_REPORT.md, VERSION.txt и CHANGELOG.md и исследуй реальные авторитетные файлы. Ничего не пересобирай по памяти. Архитектура обязательна: UI != SPORT RULES != LAPWIZ != STORAGE. Никаких patch/override, одна функция/стиль — один источник. Каждый релиз отдавай двумя архивами: FULL и UPLOAD_TO_GITHUB только с изменёнными файлами. RC33 сохраняет RC29 scoring/run-off, RC30 стартовый порядок/диктора, RC31 исправление колонок и RC32 skip/state safety. RC33 меняет только UI статистики пилота: окно открывается в границах списка пилотов и не перекрывает правый пульт; сверху аватар/флаг/команда и МЕСТО/BEST/AVG, ниже плоские строки кругов BEST зелёный, средний жёлтый, худший magenta. Удаление ошибочного круга Free Practice сохранено, старый stats UI удалён. Считай RC33 кандидатом до физического теста iPhone/LapWiz/Android. Не трогай работающие модули без необходимости.
 
 ---
 

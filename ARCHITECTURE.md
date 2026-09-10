@@ -122,3 +122,7 @@ RC27 changes only pilot-selection presentation and shell background rendering. F
 - Explicit force-finish does not execute ordinary advancement callbacks: it marks remaining events cancelled and terminates the lifecycle directly, preventing recursive event creation.
 - No patch layer or alternate state machine is introduced.
 
+
+## RC33 pilot lap-statistics UI boundary
+
+Pilot lap statistics remain a presentation concern. `ui/shell/views.js` reads already-computed live/practice state and the authoritative ranking adapters; it does not calculate RallyCross points or alter lap data. `ui/shell/discipline-pults.css` owns the one cockpit-native overlay style. During active cockpit use the overlay is constrained to the rendered roster rectangle, so no alternate cockpit geometry or second pult layer is introduced. Free Practice lap deletion continues to call the existing `removeTrackDayLap()` mode function.

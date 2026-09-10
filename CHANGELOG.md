@@ -1,5 +1,15 @@
 # LEGION RX CHANGELOG
 
+## RC33 · PILOT LAP STATS UI
+
+- Replaced the legacy pilot lap-statistics modal with one cockpit-native presentation source.
+- Active RallyCross / Free Practice statistics are constrained to the pilot-roster area and never cover the timer/control pult.
+- Hero uses shared avatar/flag/team language and shows current PLACE / BEST / AVG with neutral foreground values.
+- Lap rows: BEST green, closest-to-average yellow, WORST magenta.
+- Free Practice judge lap deletion and correction log remain available in the new compact row language.
+- Removed the obsolete lap summary/modal/table styling instead of adding an override layer.
+- RC29 sport rules, RC30 start order/announcer, RC31 column repair and RC32 skip/state safety are unchanged.
+
 ## RC32 · SKIP FLOW STATE SAFETY
 
 - Reproduced the operator skip regression introduced by strict run-off handling: cancelled qualification/final events could manufacture exact ties and create endless mandatory run-offs.

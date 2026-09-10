@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC32 · SKIP FLOW STATE SAFETY**  
-Direct code base: **RC30 START ORDER + SELECTION OUTLINE**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC33 · PILOT LAP STATS UI**  
+Direct code base: **RC32 SKIP FLOW STATE SAFETY**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -21,6 +21,16 @@ Executable rules remain in `modes/rallycross/`. RC20 does **not** change any spo
 ## Current approved visual direction
 
 The current RC19/RC20 RallyCross cockpit is the preserved visual baseline. Further design work should make the race line, pilot presentation, BEST LAP cards, pre-start grid and results look like a compact motorsport TV broadcast while retaining trackside readability and fast operator control.
+
+## RC33 PILOT LAP STATS UI
+
+- `ui/shell/views.js::pilotLapStatsModal()` remains the single data-to-view entry point for pilot lap statistics.
+- In an active RallyCross/Free Practice cockpit it measures `.rxnRoster` and renders only inside those bounds; the right timer/control area remains interactive geometry outside the overlay.
+- PLACE is read from the same current ranking source as the cockpit (`RallyCrossModeAPI.startPilots()` + `liveRanking()` for race, `rankTrackPilots()` for practice).
+- Avatar, flag and team markup are reused from the authoritative pilot-card component; lap visual styling lives only in `ui/shell/discipline-pults.css`.
+- Old `lapSummaryGrid/lapStatsModal/lapBest/lapAverage/lapWorst` UI styles are removed instead of layered over.
+- Free Practice judge lap deletion and audit history remain unchanged behaviorally.
+- No sport rule, BLE, audio, storage or reporting code is changed.
 
 ## RC32 SKIP FLOW STATE SAFETY
 

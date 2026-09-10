@@ -1,12 +1,18 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC32 · SKIP FLOW STATE SAFETY — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC33 · PILOT LAP STATS UI — TEST REPORT
 
 ## Scope
-Focused RallyCross administrative-state repair over RC31. Restore safe `Пропустить заезд` / multi-skip / `Завершить спортивную часть` transitions without changing official RC29 scoring, real run-off criteria, RC30 start order/announcer, RC31 cockpit column behavior, Free Practice, LapWiz or storage.
+Focused UI-only replacement of the pilot lap-statistics window over RC32. Preserve timing data, RallyCross scoring/runtime, Free Practice lap logic and judge deletion, RC30 start order/announcer, RC31 column behavior, RC32 skip/state safety, LapWiz, audio, storage and reporting.
 
-## Root cause reproduced
+## RC32 root-cause regression context (preserved)
 - Skipping all standard qualification heats left every pilot with no qualifying record. The strict RC29 equality detector interpreted equal zero totals as a real sport tie and generated a qualification run-off. Cancelling that run-off generated another one.
 - A cancelled Final A run had `saved=true` and `result=[]`; `buildMainStandingItems()` converted the missing result for every pilot to DNS, score 7. Skipping A1/A2/A3 therefore manufactured an exact tie and a Final A run-off. Cancelling that run-off recreated the same run-off indefinitely.
 - With large fields, cancelling every preliminary LCQ could yield `winners=[]` and create a downstream `LCQ-F` with zero pilots.
+
+## RC33 pilot lap-statistics UI verification
+- `tests/verify_rc33_pilot_stats_ui.py`: **16/16 PASS**.
+- Confirms active race PLACE uses the same `startPilots + liveRanking` source as the cockpit.
+- Confirms Free Practice PLACE uses `rankTrackPilots`.
+- Confirms the overlay bounds come from `.rxnRoster`, old lap-stat UI classes are removed, BEST/AVG/WORST colors map to green/yellow/magenta, and Free Practice lap deletion remains wired.
 
 ## RC32 behavior verification
 - `tests/verify_rc32_skip_flow.js`: **11/11 PASS**.

@@ -20,6 +20,7 @@
 
 - Global Dark/Light tokens -> `ui/themes/theme.css`
 - General application UI -> `ui/shell/app.css`
+- Pilot lap-statistics view / cockpit-contained overlay -> `ui/shell/views.js::pilotLapStatsModal()` + `ui/shell/discipline-pults.css`
 - Pilot database cards / model tiles / expanding pilot editor / race model picker -> `ui/pilots/pilot-cards.js` + `ui/pilots/pilot-cards.css`
 - RallyCross + Free Practice cockpit style -> `ui/shell/discipline-pults.css`
 - General screens -> `ui/shell/views.js`
@@ -110,3 +111,21 @@
 - `modes/rallycross/finals.js::buildMainStandingItems(race)` — cancelled Final A runs have no score; saved real results retain normal FIN/DNF/DNS/DSQ scoring.
 - `modes/rallycross/finals.js::processPreliminaryRound(race, round)` — zero preliminary winners seed no empty LCQ; existing top-four qualified grid proceeds.
 
+
+## RC33 pilot statistics flow
+
+```text
+Tap pilot row
+  -> ui/shell/actions.js [data-pilot-stats]
+  -> ui/shell/views.js::pilotLapStatsModal()
+       -> race PLACE from startPilots + liveRanking
+       -> practice PLACE from rankTrackPilots
+       -> lapSummary() for BEST / AVG / WORST markers
+       -> shared pilot avatar / flag / team markup
+  -> ui/shell/discipline-pults.css
+       -> roster-bounded dim/blur
+       -> flat hero + lap rows
+       -> no overlap of rxnSide timer/control pult
+```
+
+Free Practice delete remains `removeTrackDayLap()`; RC33 adds no duplicate lap calculation or sport rule.

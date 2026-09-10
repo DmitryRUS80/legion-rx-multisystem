@@ -1,6 +1,11 @@
 # Regression helpers
 Run `python3 tests/verify_architecture.py` after every structural/UI change. It enforces the hard architecture boundaries and checks the offline manifest.
 
+## RC33
+
+- `verify_rc33_pilot_stats_ui.py` checks the new roster-bounded pilot lap-statistics UI, authoritative ranking sources, shared pilot-card avatar markup, BEST/AVG/WORST accent mapping, removal of the legacy stats UI, and preservation of Free Practice judge lap deletion.
+- Expected focused result: **16/16 PASS**.
+
 ## RC32
 
 - `verify_rc32_skip_flow.js` reproduces and guards the operator skip regression: empty qualification cancellations, cancelled Final A, large-field preliminary LCQ cancellation, mandatory run-off skip protection, and force-finish recovery.
