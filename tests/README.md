@@ -1,6 +1,10 @@
 # Regression helpers
 Run `python3 tests/verify_architecture.py` after every structural/UI change. It enforces the hard architecture boundaries and checks the offline manifest.
 
+## RC31
+- `verify_rc31_column_grid.py` — verifies that each existing cockpit `rxnHide-*` toggle class maps to `display:none` for the matching metric cell in the authoritative cockpit stylesheet, and that RallyCross / Free Practice still share the same row component.
+- Browser smoke used for RC31 acceptance checks all 64 GAP/✓/BEST/AVG/LAST/LAPS combinations at desktop, Android-landscape and tablet viewports; visible cells remain in one grid row.
+
 
 ## RC28
 - `verify_rc28_manual_storage.py` checks the shared cockpit pilot action tile, removal of initials-based manual cards, quota-safe persistence structure and protected sport/BLE hashes.

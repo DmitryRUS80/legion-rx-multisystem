@@ -96,4 +96,8 @@
 - `RallyCrossModeAPI.startPilots()` — public read adapter used by cockpit/manual UI before `liveRanking()`.
 - `modes/rallycross/runtime.js::liveRanking()` — live timing sort; when live values are equal, preserves the supplied official start order instead of falling back to registration order.
 - `modes/rallycross/audio-actions.js::announceStartCall()` — speaks `getEventStartPilots()` in sequence; no duplicate finals sorting.
+## RC31 cockpit column toggles
+- `ui/discipline-ui.js::rxnColumnClass()` / `rxnMetricCount()` — existing saved operator visibility state and visible metric count.
+- `ui/shell/discipline-pults.css::.rxnCockpit.rxnHide-*` — authoritative visibility mapping for GAP / ✓ / BEST / AVG / LAST / LAPS in both RallyCross and Free Practice rows.
+- No RallyCross rule/order calculation and no Free Practice timing logic lives in the column-toggle layer.
 

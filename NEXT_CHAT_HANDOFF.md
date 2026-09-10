@@ -1,9 +1,9 @@
-# LEGION RX — NEXT CHAT HANDOFF · RC30
+# LEGION RX — NEXT CHAT HANDOFF · RC31
 
 **Date:** 2026-09-10  
-**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC30_START_ORDER_SELECTION_OUTLINE_FULL.zip`  
-**Base:** RC29 RALLYCROSS RUNOFF TIEBREAK  
-**Status:** RC30 automated regression PASS; **real iPhone + LapWiz acceptance still required**.
+**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC31_COLUMN_GRID_REPAIR_FULL.zip`  
+**Base:** RC30 START ORDER + SELECTION OUTLINE  
+**Status:** RC31 automated regression PASS; **real iPhone + LapWiz + Android acceptance still required**.
 
 ---
 
@@ -11,7 +11,7 @@
 
 Do **not** rebuild Legion RX from memory and do not use an older archive as the source.
 
-1. Unpack the latest **RC30 FULL**.
+1. Unpack the latest **RC31 FULL**.
 2. Read, in this order:
    - `NEXT_CHAT_HANDOFF.md` (this file if copied into the project/package)
    - `PROJECT_MASTER.md`
@@ -466,6 +466,22 @@ Pilot DB future migration to IndexedDB / native DB and cloud sync was discussed,
 
 ---
 
+# 13A. RC31 COCKPIT COLUMN GRID REPAIR
+
+RC31 is a UI-only cockpit repair over RC30. It does not change sport ordering or timing.
+
+The existing JS contract was already:
+- `rxnColumnClass()` adds `rxnHide-gap/check/best/avg/last/laps` for disabled metrics;
+- `rxnMetricCount()` reduces `--rxn-metric-count` to the number of enabled metrics.
+
+The authoritative cockpit stylesheet had no matching `rxnHide-*` selectors. Therefore disabled metric DOM cells stayed visible after the explicit grid lost their tracks; CSS Grid auto-placed the overflow cells into an implicit second row, visually moving AVG/LAST/LAPS over POS/ID/PILOT. RC31 adds the missing visibility mapping directly in `ui/shell/discipline-pults.css`.
+
+Protected RC30 behavior:
+- qualification/final official start order + announcer sequence unchanged;
+- pilot/model thin neutral selected outline unchanged;
+- RallyCross rules/run-offs unchanged;
+- Free Practice sport core unchanged.
+
 # 14. TEST POLICY
 
 Every build must run the project tests relevant to its scope plus baseline regression.
@@ -488,7 +504,7 @@ Minimum UI regression:
 
 If sport logic changes, additionally run full sport tests and specific scenario tests.
 
-For RC30 currently validated:
+For RC31 currently validated:
 - architecture PASS;
 - clean foundation PASS;
 - iOS START/finish safety PASS;
@@ -496,7 +512,8 @@ For RC30 currently validated:
 - RC26/27/28 regression PASS;
 - RC29 static sport checks PASS;
 - RC29 run-off behavior remains **28/28 PASS**;
-- RC30 start-order/selection behavior: **12/12 PASS**;
+- RC30 start-order/selection behavior preserved: **12/12 PASS**;
+- RC31 column-grid contract: PASS; all 64 toggle combinations browser-smoked on desktop/Android-landscape/tablet viewports;
 - RallyCross self-test: **18/18 PASS**;
 - JavaScript syntax: **39/39 PASS**;
 - offline manifest: no missing local file.
@@ -505,54 +522,48 @@ Never describe a real iPhone/LapWiz hardware test as PASS unless the user physic
 
 ---
 
-# 15. RC30 FILE SCOPE VS RC29
+# 15. RC31 FILE SCOPE VS RC30
 
-Runtime/code changes:
+Runtime/code change:
 
 ```text
-modes/rallycross/index.js
-modes/rallycross/audio-actions.js
-modes/rallycross/runtime.js
-ui/discipline-ui.js
-ui/shell/views.js
-ui/pilots/pilot-cards.css
+ui/shell/discipline-pults.css
 ```
 
 Focused/new regression work:
 
 ```text
-tests/verify_rc30_start_order_selection.js
-tests/verify_clean_foundation.py
+tests/verify_rc31_column_grid.py
 tests/verify_ios_start_safety.py
-tests/verify_pilot_cards.py
-tests/verify_rc27_ui_safety.py
 tests/README.md
 ```
 
-Release/offline/docs metadata are updated as required. Protected unchanged areas include RallyCross `rules.js` / `qualifying.js` / `finals.js`, Free Practice sport core, LapWiz protocol/platform audio, RC28 storage safety and reporting.
+Release/offline/docs metadata are updated as required. `ui/discipline-ui.js`, all RC30 start-order files, `ui/pilots/pilot-cards.css`, RallyCross rules/scoring, Free Practice core, LapWiz/platform audio, storage and reporting are unchanged.
 
 ---
 
 # 16. IMMEDIATE NEXT-CHAT CHECKLIST
 
-1. Load **RC30 FULL** and this handoff.
+1. Load **RC31 FULL** and this handoff.
 2. Read the project docs before touching code.
-3. Treat RC30 as **candidate**, not GOLD, until device acceptance.
+3. Treat RC31 as **candidate**, not GOLD, until device acceptance.
 4. First real acceptance test:
    - exact qualification tie -> `ПЕРЕЗАЕЗД` only tied pilots -> zero extra Q points/result;
    - exact Final A tie -> run-off only tied pilots -> no A4/no extra final score -> only disputed positions reorder;
    - event points assigned from resolved final order.
 5. Verify start-call order on device: qualification pult order = spoken order; Final A qualification-rating order = spoken order.
-6. RC30 selected tile style is already implemented; do not reintroduce blue fill/glow.
-7. Keep every future build focused and output FULL + delta GitHub ZIP.
+6. RC30 selected tile style remains implemented; do not reintroduce blue fill/glow.
+7. Verify cockpit column toggles in RallyCross and Free Practice: disabled metric disappears, remaining metrics expand, no second-row overlap.
+8. Keep every future build focused and output FULL + delta GitHub ZIP.
+
 
 ---
 
 # 17. START PROMPT FOR THE NEXT CHAT
 
-Copy/paste this as the first message after attaching RC30 FULL + this handoff:
+Copy/paste this as the first message after attaching RC31 FULL + this handoff:
 
-> Продолжаем LEGION RX. Загруженная RC30 FULL — текущий исходник-кандидат. Сначала прочитай NEXT_CHAT_HANDOFF.md, PROJECT_MASTER.md, ARCHITECTURE.md, FUNCTION_MAP.md, SPORT_RULES.md, TEST_REPORT.md, VERSION.txt и CHANGELOG.md и исследуй реальные авторитетные файлы. Ничего не пересобирай по памяти. Архитектура обязательна: UI != SPORT RULES != LAPWIZ != STORAGE. Никаких patch/override, одна функция/стиль — один источник. Каждый релиз отдавай двумя архивами: FULL и UPLOAD_TO_GITHUB только с изменёнными файлами. RC30 сохраняет RC29 перезаезды без дополнительных очков и синхронизирует официальный порядок старта между пультом и диктором; сначала считай её кандидатом до физического теста на iPhone/LapWiz. Не трогай работающие модули без необходимости.
+> Продолжаем LEGION RX. Загруженная RC31 FULL — текущий исходник-кандидат. Сначала прочитай NEXT_CHAT_HANDOFF.md, PROJECT_MASTER.md, ARCHITECTURE.md, FUNCTION_MAP.md, SPORT_RULES.md, TEST_REPORT.md, VERSION.txt и CHANGELOG.md и исследуй реальные авторитетные файлы. Ничего не пересобирай по памяти. Архитектура обязательна: UI != SPORT RULES != LAPWIZ != STORAGE. Никаких patch/override, одна функция/стиль — один источник. Каждый релиз отдавай двумя архивами: FULL и UPLOAD_TO_GITHUB только с изменёнными файлами. RC31 сохраняет RC30 порядок старта/диктора и тонкую подсветку выбора и восстанавливает корректную работу GAP/✓/BEST/AVG/LAST/LAPS через единственный authoritative cockpit CSS. Считай её кандидатом до физического теста iPhone/LapWiz/Android. Не трогай работающие модули без необходимости.
 
 ---
 

@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC30 · START ORDER + SELECTION OUTLINE**  
-Direct code base: **RC29 RALLYCROSS RUNOFF TIEBREAK**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC31 · COLUMN GRID REPAIR**  
+Direct code base: **RC30 START ORDER + SELECTION OUTLINE**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -21,6 +21,13 @@ Executable rules remain in `modes/rallycross/`. RC20 does **not** change any spo
 ## Current approved visual direction
 
 The current RC19/RC20 RallyCross cockpit is the preserved visual baseline. Further design work should make the race line, pilot presentation, BEST LAP cards, pre-start grid and results look like a compact motorsport TV broadcast while retaining trackside readability and fast operator control.
+
+## RC31 COLUMN GRID REPAIR
+
+- The cockpit column toggles remain a UI-only concern. `ui/discipline-ui.js` already owns the saved toggle state / `--rxn-metric-count`; `ui/shell/discipline-pults.css` now completes that existing contract by hiding the matching `rxnGap/rxnCheck/rxnBest/rxnAvg/rxnLast/rxnLaps` cells when the root has `rxnHide-*`.
+- This prevents CSS Grid from auto-placing disabled-but-still-visible metrics into an implicit second row over POS / ID / PILOT.
+- RallyCross and Free Practice intentionally share this one row component, so the correction is made once in the authoritative cockpit stylesheet.
+- RC30 start-order/announcer behavior and pilot/model selected-state visuals are unchanged. Sport/platform/storage/offline behavior is not moved into UI.
 
 ## RC30 START ORDER + SELECTION OUTLINE
 

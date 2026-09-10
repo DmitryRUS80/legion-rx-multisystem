@@ -1,3 +1,42 @@
+# LEGION RX 4.2.0 CLEAN FULL APP RC31 · COLUMN GRID REPAIR — TEST REPORT
+
+## Scope
+Focused UI-only repair over RC30: restore the existing GAP / ✓ / BEST / AVG / LAST / LAPS cockpit toggles for RallyCross and Free Practice without changing sport rules, start-order logic, announcer behavior or picker visuals.
+
+## Root cause verified
+- RC20, RC29 and RC30 `ui/shell/discipline-pults.css` are byte-identical.
+- `rxnColumnClass()` already emitted `rxnHide-*` classes and `rxnMetricCount()` already reduced the explicit grid track count.
+- No CSS selector existed for those `rxnHide-*` classes, so disabled metric elements remained visible and CSS Grid placed overflow cells into an implicit second row.
+- This exactly reproduces AVG/LAST/LAPS appearing over the beginning of the pilot row when metrics are disabled.
+
+## RC31 behavior verification
+- `rxnHide-gap` -> GAP header/data cells hidden: PASS.
+- `rxnHide-check` -> ✓ header/data cells hidden: PASS.
+- `rxnHide-best` -> BEST hidden: PASS.
+- `rxnHide-avg` -> AVG hidden: PASS.
+- `rxnHide-last` -> LAST hidden: PASS.
+- `rxnHide-laps` -> LAPS hidden: PASS.
+- Remaining enabled metric columns keep one grid row and expand into available width: PASS.
+- Same authoritative row/CSS works in RallyCross and Free Practice: PASS.
+- Browser smoke: all 64 metric toggle combinations PASS at 1786×860 desktop, 1316×741 Android/common landscape, 1024×700 landscape and 900×1200 tablet portrait.
+- RC30 start-order/announcer test remains **12/12 PASS**.
+- RC29 RallyCross run-off behavior remains **28/28 PASS**.
+
+## Protected unchanged areas
+- `ui/discipline-ui.js`: unchanged from RC30.
+- `modes/rallycross/index.js`, `runtime.js`, `audio-actions.js`: unchanged from RC30; start order/announcer correction preserved.
+- `ui/pilots/pilot-cards.css`: unchanged from RC30; thin neutral selected-state preserved.
+- RallyCross `rules.js`, `qualifying.js`, `finals.js`, `self-test.js`: unchanged.
+- `modes/free-practice/index.js`: unchanged.
+- LapWiz, platform audio, storage, reporting: unchanged.
+
+## Real-device acceptance still required
+On iPhone/PWA and Android verify RallyCross + Free Practice with several combinations (for example all on; BEST only; GAP+✓+BEST; AVG+LAST off; all metrics off/on again). Disabled columns must disappear, enabled columns must remain on one line and spread across the right side, and no values may appear over POS/ID/PILOT. Also keep the RC30 spoken start-order device check.
+
+---
+
+## Previous report snapshot (RC30)
+
 # LEGION RX 4.2.0 CLEAN FULL APP RC30 · START ORDER + SELECTION OUTLINE — TEST REPORT
 
 ## Scope

@@ -109,4 +109,9 @@ RC27 changes only pilot-selection presentation and shell background rendering. F
 - UI reads this order through `RallyCrossModeAPI.startPilots()` / `startGrid()` and may apply live timing ranking on top. UI does not create a second grid algorithm.
 - `modes/rallycross/audio-actions.js` consumes the same prepared order and therefore has no independent pilot sorting policy.
 - `ui/pilots/pilot-cards.css` remains the only owner of pilot/model picker selected-state visuals. RC30 edits those authoritative selectors directly; no patch/override stylesheet is added.
+## RC31 cockpit column visibility boundary
+
+- `ui/discipline-ui.js` owns only the operator's column visibility state and calculates the visible metric count; it does not own cockpit geometry.
+- `ui/shell/discipline-pults.css` is the single authoritative owner of RallyCross / Free Practice pilot-row grid geometry and the `rxnHide-*` presentation rules.
+- RC31 adds the missing selectors directly to that stylesheet. No patch/override stylesheet, duplicate row renderer or sport/platform change is introduced.
 

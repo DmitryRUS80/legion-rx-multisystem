@@ -1,5 +1,13 @@
 # LEGION RX CHANGELOG
 
+## RC31 · COLUMN GRID REPAIR
+
+- Repaired the existing cockpit column-toggle contract in the authoritative `ui/shell/discipline-pults.css`; no patch/override layer was added.
+- `rxnHide-gap/check/best/avg/last/laps` now actually hide their matching header/data cells, so `--rxn-metric-count` always matches the visible metric cells.
+- Prevents disabled metric cells from wrapping into a second implicit CSS Grid row and appearing over position / ID / pilot name.
+- The same fix applies to RallyCross and Free Practice because both intentionally share the cockpit row component.
+- RC30 start-order/announcer synchronization and neutral pilot/model selection outline are preserved unchanged. RallyCross scoring/run-offs, Free Practice sport core, LapWiz, audio engine, storage and reporting are unchanged.
+
 ## RC30 · START ORDER + SELECTION OUTLINE
 
 - Added one authoritative RallyCross pre-start pilot order shared by cockpit presentation, start-grid view and announcer call sequence.
