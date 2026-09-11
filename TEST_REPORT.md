@@ -1,24 +1,26 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC34 · LIVE PILOT STATS BROADCAST — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC35 · PILOT STATS TYPOGRAPHY DENSITY — TEST REPORT
 
 ## Scope
-Focused UI refinement over RC33. Preserve RC29 scoring/run-offs, RC30 start order/announcer, RC31 column repair, RC32 skip/state safety, RC33 legacy stats removal, Free Practice judge deletion, LapWiz, audio, storage and reporting.
+Focused UI-only refinement over RC34. Preserve RC34 live refresh/data wiring and all RC29-RC32 sport/state fixes. Runtime target: existing `ui/shell/discipline-pults.css` pilot-stat selectors only.
 
-## RC34 live pilot-statistics verification
-- `tests/verify_rc34_live_pilot_stats.py`: **17/17 PASS**.
-- Confirms one live refresh path, refresh calls from both existing cockpit tickers, live POS/BEST/AVG/LAPS/TIME, full pilot name, colored transponder ID, compact landscape geometry, portrait roster-bounded geometry, light blur/dim, no metric guide lines, no average-row highlight, neutral rows, BEST green text, WORST magenta text and preserved Free Practice delete.
-
-## Preserved focused regressions
-- RC33 pilot-stats foundation: **10/10 PASS**.
+## RC35 verification
+- `tests/verify_rc35_pilot_stats_typography.py`: **14/14 PASS**.
+- RC34 live card contract: **17/17 PASS**.
+- RC33 pilot-stat foundation: **10/10 PASS**.
 - RC32 skip/state flow: **11/11 PASS**.
+- RC30 official start-order / announcer: **12/12 PASS**.
 - RC29 run-off behavior: **28/28 PASS**.
-- RC30 official start-order / announcer / selection: **12/12 PASS**.
 - RC31 column-grid contract: PASS.
+- Architecture / clean foundation / iOS START-storage safety / pilot cards / RC26-28 regressions: PASS.
+- JavaScript syntax: **40/40 PASS**.
+- Offline manifest local assets: PASS / 0 missing.
+- iOS START-safety test changed only for the RC35 cache namespace.
 
 ## Protected runtime scope
-Changed runtime files: `ui/shell/views.js`, `ui/discipline-ui.js`, `ui/shell/discipline-pults.css` only. No files under `modes/`, `platform/`, `reporting/`, `ui/pilots/` are changed from RC33. Offline metadata changes only for the RC34 release namespace.
+No `modes/`, `platform/`, `reporting/`, `ui/pilots/`, `ui/shell/views.js` or `ui/discipline-ui.js` behavior changes are intended in RC35. The only application presentation change is in the existing authoritative cockpit stylesheet. Offline metadata changes only for the RC35 release namespace.
 
 ## Real-device acceptance still required
-On landscape desktop/Android/iPhone/tablet: open a pilot while a race/practice session is running and verify the card occupies only the roster, the right pult is untouched, underlying rows remain visible/live, `TIME` continues counting, `POS/AVG/LAPS` update, and a new pass appends a lap without closing the card. In portrait verify the card stays above the lower control area because it remains bounded by the roster.
+Verify landscape and portrait readability on Android/iPhone/tablet: portrait card should be markedly narrower than RC34; POS/BEST/AVG labels and values should read as one compact broadcast block; qualification/LAPS/TIME and lap/BEST/WORST text must be readable without large vertical padding.
 
 ---
 

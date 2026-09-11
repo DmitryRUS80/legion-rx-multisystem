@@ -1,6 +1,6 @@
-# LEGION RX — RALLYCROSS SPORT RULES · RC34 (official scoring unchanged from RC29)
+# LEGION RX — RALLYCROSS SPORT RULES · RC35 (official scoring unchanged from RC29)
 
-RC34 changes pilot lap-statistics presentation/live UI only; RC33 legacy-stats removal is preserved. RC32 administrative cancellation/state handling and the official scoring, BEST-3, LCQ/finals and genuine run-off rules remain unchanged from the RC29 ruleset `RALLYCROSS-2026.09.2`. A cancelled/unrun heat is not itself a sport result and therefore cannot manufacture a mandatory equality/run-off.
+RC35 changes pilot lap-statistics typography/density only; RC34 live presentation/refresh is preserved; RC33 legacy-stats removal is preserved. RC32 administrative cancellation/state handling and the official scoring, BEST-3, LCQ/finals and genuine run-off rules remain unchanged from the RC29 ruleset `RALLYCROSS-2026.09.2`. A cancelled/unrun heat is not itself a sport result and therefore cannot manufacture a mandatory equality/run-off.
 
 ## Qualification
 - Q points: 50,45,42,40,39...28 through 16th; current continuation after 16th preserved pending explicit decision.

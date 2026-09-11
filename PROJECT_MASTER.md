@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC34 · LIVE PILOT STATS BROADCAST**  
-Direct code base: **RC33 PILOT LAP STATS UI**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC35 · PILOT STATS TYPOGRAPHY DENSITY**  
+Direct code base: **RC34 LIVE PILOT STATS BROADCAST**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -21,6 +21,15 @@ Executable rules remain in `modes/rallycross/`. RC20 does **not** change any spo
 ## Current approved visual direction
 
 The current RC19/RC20 RallyCross cockpit is the preserved visual baseline. Further design work should make the race line, pilot presentation, BEST LAP cards, pre-start grid and results look like a compact motorsport TV broadcast while retaining trackside readability and fast operator control.
+
+## RC35 PILOT STATS TYPOGRAPHY DENSITY
+
+- Same RC34 live pilot-stat component and refresh path; only the existing authoritative cockpit CSS is refined.
+- `POS / BEST / AVG` labels are larger and values sit closer to the labels.
+- Qualification/session line, `LAPS / TIME`, lap numbers/times and `BEST / WORST` tags are larger with tighter vertical padding.
+- Portrait card width is reduced to about 58% of the roster instead of nearly full width.
+- BEST remains green; WORST uses the existing red race accent; average receives no highlight.
+- No RallyCross / Free Practice / LapWiz / audio / storage / reporting logic changes.
 
 ## RC34 LIVE PILOT STATS BROADCAST
 

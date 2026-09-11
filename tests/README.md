@@ -1,3 +1,6 @@
+## RC35
+- `verify_rc35_pilot_stats_typography.py` validates the focused live-stat typography/density/portrait-width refinement.
+
 # Regression helpers
 Run `python3 tests/verify_architecture.py` after every structural/UI change. It enforces the hard architecture boundaries and checks the offline manifest.
 

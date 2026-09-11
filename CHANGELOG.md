@@ -1,5 +1,14 @@
 # LEGION RX CHANGELOG
 
+## RC35 · PILOT STATS TYPOGRAPHY DENSITY
+
+- Refined the existing RC34 live pilot-statistics component only; no new overlay/style layer or sport logic changes.
+- Enlarged `POS / BEST / AVG` labels and moved their values closer to the labels to match the broadcast reference more closely.
+- Enlarged qualification/session line, `LAPS / TIME`, lap number/time values and `BEST / WORST` tags while tightening vertical air around the text.
+- Portrait card is narrowed to about 58% of the available roster width instead of occupying nearly the whole roster.
+- Normal lap rows remain neutral/translucent; BEST remains green, WORST now uses the existing red race accent, and average remains unhighlighted.
+- RC34 live refresh, Free Practice lap delete, RallyCross rules/timing, LapWiz, audio, storage and reporting are unchanged.
+
 ## RC34 · LIVE PILOT STATS BROADCAST
 
 - Refined the RC33 pilot lap-statistics window into a compact broadcast-style live card.

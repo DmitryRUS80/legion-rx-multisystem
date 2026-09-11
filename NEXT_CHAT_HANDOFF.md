@@ -1,9 +1,9 @@
-# LEGION RX — NEXT CHAT HANDOFF · RC34
+# LEGION RX — NEXT CHAT HANDOFF · RC35
 
 **Date:** 2026-09-11  
-**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC34_LIVE_PILOT_STATS_BROADCAST_FULL.zip`  
-**Base:** RC33 PILOT LAP STATS UI  
-**Status:** RC34 automated regression PASS; **real iPhone + LapWiz + Android acceptance still required**.
+**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC35_PILOT_STATS_TYPOGRAPHY_DENSITY_FULL.zip`  
+**Base:** RC34 LIVE PILOT STATS BROADCAST  
+**Status:** RC35 automated regression PASS; **real iPhone + LapWiz + Android acceptance still required**.
 
 ---
 
@@ -11,7 +11,7 @@
 
 Do **not** rebuild Legion RX from memory and do not use an older archive as the source.
 
-1. Unpack the latest **RC34 FULL**.
+1. Unpack the latest **RC35 FULL**.
 2. Read, in this order:
    - `NEXT_CHAT_HANDOFF.md` (this file if copied into the project/package)
    - `PROJECT_MASTER.md`
@@ -27,6 +27,11 @@ Do **not** rebuild Legion RX from memory and do not use an older archive as the 
 The FULL/source modular project is the **only development source**. A portable/browser test build is never the source for the next version.
 
 ---
+
+# RC35 CURRENT UI DELTA
+
+RC35 is UI-only. It edits the existing authoritative `ui/shell/discipline-pults.css` pilot-stat rules in place: larger readable typography, tighter vertical density, closer POS/BEST/AVG label-value spacing, visible LAPS/TIME labels on phone, and a narrower portrait card (~58% of roster). No new overlay/container/style layer is introduced. RC34 live refresh logic and all sport/timing/platform behavior are preserved.
+
 
 # 1. PROJECT IDENTITY
 
