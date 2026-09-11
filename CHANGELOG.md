@@ -1,5 +1,12 @@
 # LEGION RX CHANGELOG
 
+## RC36 · BEST LAP STRIP + HERO CLEANUP
+
+- Removed the obsolete phone-portrait full-width leader-photo block from the authoritative cockpit renderer and stylesheet; compressed/portrait layouts no longer append a giant leader avatar below the pilot rows.
+- Simplified the cockpit best-lap strip to `BEST LAP` + the live lap time only. The trophy icon and misleading `ЛИДЕР · ЛУЧШИЙ КРУГ` wording were removed.
+- Renamed the strip's internal UI class/IDs to BEST-LAP semantics instead of leaving a stale leader-strip implementation behind.
+- Existing RallyCross UI tick still refreshes the best-lap time live; sport ranking, timing, announcer/start order, Free Practice, LapWiz, storage and reporting are unchanged.
+
 ## RC35 · PILOT STATS TYPOGRAPHY DENSITY
 
 - Refined the existing RC34 live pilot-statistics component only; no new overlay/style layer or sport logic changes.

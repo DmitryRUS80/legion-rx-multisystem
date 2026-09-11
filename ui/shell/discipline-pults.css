@@ -7,14 +7,14 @@ html[data-theme="dark"]{--rxn-bg:#04111c;--rxn-bg2:#071927;--rxn-panel:#081b2a;-
   --rxn-row-head:rgba(0,0,0,.74);--rxn-row:rgba(255,255,255,.045);--rxn-row-alt:rgba(255,255,255,.03);--rxn-row-leader:rgba(28,199,91,.24);--rxn-row-border:#04111c;
   --rxn-roster-bg:rgba(0,10,16,.18);--rxn-lap-track:#123147;--rxn-flag-empty:#102536;--rxn-flag-empty-line:#1a425c;--rxn-flag-outline:rgba(255,255,255,.22);
   --rxn-timer-bg:rgba(255,255,255,.045);--rxn-timer-border:#23262a;--rxn-ring-track:rgba(255,255,255,.09);--rxn-ring-inner:#071a27;--rxn-timer-label:#9aabb7;
-  --rxn-leader-bg:rgba(8,20,29,.92);--rxn-leader-border:#30343a;--rxn-leader-icon:#d8df00;--rxn-leader-label:#b6ff00;
+  --rxn-bestlap-bg:rgba(8,20,29,.92);--rxn-bestlap-border:#30343a;--rxn-bestlap-label:#b6ff00;
   --rxn-grid-button-bg:rgba(0,0,0,.16);--rxn-grid-button-border:rgba(255,255,255,.72);--rxn-display-border:#3b3d42;
   --rxn-final-head:#02080d;--rxn-final-row:rgba(255,255,255,.05);--rxn-final-row-border:#03101a;--rxn-final-muted:#9eb0bc;--rxn-empty:#8398a7;--rxn-tie-bg:rgba(255,255,255,.04);
   --rxn-id-text:#071018;--rxn-check-text:#fff;--rxn-disabled-accent:#555;--rxn-race-meta:#9bb0be;--rxn-top-text:#fff;
   --rxn-modal-panel:#071722;--rxn-modal-panel2:#081d2c;--rxn-modal-border:#164767;--rxn-modal-text:#eef7fb;--rxn-modal-muted:#8fb1c7;
   --rxn-note-bg:#06131e;--rxn-note-border:#123a55;--rxn-note-text:#9fc7dc;--rxn-note-chip-bg:#081d2d;--rxn-note-chip-text:#d9f2ff;
   --rxn-result-row:#0a2233;--rxn-result-row-alt:#081d2c;--rxn-result-border:#11364f;--rxn-result-muted:#86a7bc;--rxn-result-input-border:#1c5679;--rxn-result-input-bg:#061722;--rxn-result-input-text:#f4fbff;
-  --rxn-grid-row-bg:#092033;--rxn-grid-row-border:#133d58;--rxn-grid-row-strong:#69c9ff;--rxn-grid-row-muted:#83a8bd;--rxn-mobile-nav:#04121d;--rxn-hero-photo-bg:#071722;--rxn-status-fin:#55df81;--rxn-status-dnf:#f4c148;--rxn-status-dns:#7ebde3;--rxn-status-dsq:#ff6475;}
+  --rxn-grid-row-bg:#092033;--rxn-grid-row-border:#133d58;--rxn-grid-row-strong:#69c9ff;--rxn-grid-row-muted:#83a8bd;--rxn-mobile-nav:#04121d;--rxn-status-fin:#55df81;--rxn-status-dnf:#f4c148;--rxn-status-dns:#7ebde3;--rxn-status-dsq:#ff6475;}
 html[data-theme="light"]{--rxn-bg:#f3f4f5;--rxn-bg2:#ffffff;--rxn-panel:#ffffff;--rxn-panel2:#eceff2;--rxn-strip:rgba(0,0,0,.05);
   --rxn-line:#c5cbd1;--rxn-line2:#dde1e5;--rxn-line-strong:#9da3aa;--rxn-scrollbar:#66849a;--rxn-text:#08090a;--rxn-muted:#5f6770;--rxn-blue:#0057ff;--rxn-green:#4f7d00;--rxn-lime:#5f8500;--rxn-yellow:#927000;--rxn-red:#cf2437;
   --rxn-grid:rgba(0,87,255,.035);--rxn-cockpit-grid:rgba(0,87,255,.05);
@@ -22,14 +22,14 @@ html[data-theme="light"]{--rxn-bg:#f3f4f5;--rxn-bg2:#ffffff;--rxn-panel:#ffffff;
   --rxn-row-head:#e4e7ea;--rxn-row:#ffffff;--rxn-row-alt:#f1f3f4;--rxn-row-leader:rgba(95,133,0,.13);--rxn-row-border:#d9dde1;
   --rxn-roster-bg:rgba(0,0,0,.018);--rxn-lap-track:#d3d9df;--rxn-flag-empty:#e1e6ea;--rxn-flag-empty-line:#b6bec6;--rxn-flag-outline:rgba(0,0,0,.18);
   --rxn-timer-bg:#ffffff;--rxn-timer-border:#c5cbd1;--rxn-ring-track:#d8dde2;--rxn-ring-inner:#ffffff;--rxn-timer-label:#5f6770;
-  --rxn-leader-bg:#ffffff;--rxn-leader-border:#9da3aa;--rxn-leader-icon:#8c7200;--rxn-leader-label:#5f8500;
+  --rxn-bestlap-bg:#ffffff;--rxn-bestlap-border:#9da3aa;--rxn-bestlap-label:#5f8500;
   --rxn-grid-button-bg:#ffffff;--rxn-grid-button-border:#111317;--rxn-display-border:#8f959c;
   --rxn-final-head:#e4e7ea;--rxn-final-row:#ffffff;--rxn-final-row-border:#d9dde1;--rxn-final-muted:#68717a;--rxn-empty:#626a72;--rxn-tie-bg:#f5f6f7;
   --rxn-id-text:#071018;--rxn-check-text:#08090a;--rxn-disabled-accent:#9da3aa;--rxn-race-meta:#5f6770;--rxn-top-text:#08090a;
   --rxn-modal-panel:#ffffff;--rxn-modal-panel2:#f1f3f4;--rxn-modal-border:#aeb5bc;--rxn-modal-text:#08090a;--rxn-modal-muted:#5f6770;
   --rxn-note-bg:#f4f5f6;--rxn-note-border:#c5cbd1;--rxn-note-text:#5f6770;--rxn-note-chip-bg:#ffffff;--rxn-note-chip-text:#08090a;
   --rxn-result-row:#ffffff;--rxn-result-row-alt:#f1f3f4;--rxn-result-border:#c5cbd1;--rxn-result-muted:#66707a;--rxn-result-input-border:#aeb5bc;--rxn-result-input-bg:#ffffff;--rxn-result-input-text:#08090a;
-  --rxn-grid-row-bg:#ffffff;--rxn-grid-row-border:#c5cbd1;--rxn-grid-row-strong:#0057ff;--rxn-grid-row-muted:#66707a;--rxn-mobile-nav:#ffffff;--rxn-hero-photo-bg:#eef1f3;--rxn-status-fin:#2d7a3e;--rxn-status-dnf:#8a6500;--rxn-status-dns:#336d94;--rxn-status-dsq:#b82639;}
+  --rxn-grid-row-bg:#ffffff;--rxn-grid-row-border:#c5cbd1;--rxn-grid-row-strong:#0057ff;--rxn-grid-row-muted:#66707a;--rxn-mobile-nav:#ffffff;--rxn-status-fin:#2d7a3e;--rxn-status-dnf:#8a6500;--rxn-status-dns:#336d94;--rxn-status-dsq:#b82639;}
 /* ===== RALLYCROSS / FREE PRACTICE COCKPIT · AUTHORITATIVE UI ===== */
 body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--rxn-bg)!important}
 .cockpitMode .appbar{display:none!important}
@@ -67,11 +67,9 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 .rxnRaceMeta{flex:none;display:flex;align-items:center;gap:14px;font-size:12px;text-transform:uppercase;white-space:nowrap}
 .rxnRaceMeta span{color:var(--rxn-race-meta)}
 .rxnRaceMeta b{color:var(--rxn-green)}
-.rxnLeaderStrip{min-width:0;display:grid;grid-template-columns:26px auto minmax(0,1fr) auto;align-items:center;gap:8px;padding:0 8px;background:var(--rxn-leader-bg);border:1px solid var(--rxn-leader-border);border-radius:3px;color:var(--rxn-text);overflow:hidden;line-height:.9}
-.rxnLeaderStrip>svg{width:22px;height:22px;color:var(--rxn-leader-icon);stroke-width:2.2}
-.rxnLeaderStrip small{font-size:12px;font-weight:800;letter-spacing:.025em;color:var(--rxn-leader-label);white-space:nowrap}
-.rxnLeaderStrip b{min-width:0;font-size:20px;font-weight:700;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rxnLeaderStrip strong{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rxnBestLapStrip{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 10px;background:var(--rxn-bestlap-bg);border:1px solid var(--rxn-bestlap-border);border-radius:3px;color:var(--rxn-text);overflow:hidden;line-height:.9}
+.rxnBestLapStrip small{font-size:12px;font-weight:800;letter-spacing:.045em;color:var(--rxn-bestlap-label);white-space:nowrap}
+.rxnBestLapStrip strong{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
 .rxnMain{min-height:0;overflow:hidden}
 .rxnRoster{min-height:0;overflow:auto;background:var(--rxn-roster-bg);scrollbar-width:thin;scrollbar-color:var(--rxn-scrollbar) transparent}
 .rxnTable{min-width:0;width:100%}
@@ -105,7 +103,6 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 .rxnMillis{display:inline-block;font-size:.72em;vertical-align:.06em;letter-spacing:-.01em}
 .rxnDot{display:inline-block;margin-right:.01em}
 .rxnPhoneMetric{display:none}
-.rxnLeaderHero{display:none}
 @keyframes rxnPassFlash{
   0%{background:color-mix(in srgb,var(--rxn-green) 36%,var(--rxn-row))}
   100%{background:var(--rxn-row)}
@@ -163,11 +160,9 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
   .rxnTopActions .rxnTopButton svg,.rxnTopActions .rxnTopButton.iconOnly svg{width:24px;height:24px}
   .rxnRaceBannerLine{font-size:30px;gap:10px}
   .rxnGridButton{height:30px;font-size:12px}
-  .rxnLeaderStrip{grid-template-columns:26px auto minmax(0,1fr) auto;gap:8px;padding:0 8px}
-  .rxnLeaderStrip>svg{width:22px;height:22px}
-  .rxnLeaderStrip small{font-size:12px}
-  .rxnLeaderStrip b{font-size:20px}
-  .rxnLeaderStrip strong{font-size:22px}
+  .rxnBestLapStrip{gap:10px;padding:0 10px}
+  .rxnBestLapStrip small{font-size:12px}
+  .rxnBestLapStrip strong{font-size:22px}
   .rxnSide{grid-template-rows:minmax(210px,32%) minmax(0,1fr)}
   .rxnTimerPanel{padding:12px 14px}
   .rxnControlPanel{grid-template-rows:minmax(0,1fr) 52px}
@@ -202,11 +197,9 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
   .rxnTopActions .rxnTopButton svg{width:20px;height:20px}
   .rxnRaceBannerLine{font-size:23px;gap:8px}
   .rxnGridButton{height:28px;font-size:11px}
-  .rxnLeaderStrip{grid-template-columns:23px auto minmax(0,1fr) auto;gap:6px;padding:0 7px}
-  .rxnLeaderStrip>svg{width:20px;height:20px}
-  .rxnLeaderStrip small{font-size:11px}
-  .rxnLeaderStrip b{font-size:18px}
-  .rxnLeaderStrip strong{font-size:20px}
+  .rxnBestLapStrip{gap:8px;padding:0 8px}
+  .rxnBestLapStrip small{font-size:11px}
+  .rxnBestLapStrip strong{font-size:20px}
   .rxnPilotRow{grid-template-columns:clamp(30px,3.2vw,40px) clamp(46px,4.6vw,58px) clamp(180px,23%,235px) clamp(30px,3.2vw,36px) repeat(var(--rxn-metric-count),minmax(0,1fr));width:100%;padding:0 3px}
   .rxnPilotData{height:clamp(52px,7.6vh,64px);font-size:clamp(18px,1.85vw,23px)}
   .rxnPilotHead{height:28px;font-size:10px}
@@ -231,11 +224,9 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
   .rxnRaceBannerLine{font-size:17px;gap:6px}
   .rxnBannerDiscipline,.rxnBannerDisciplineSep{display:none}
   .rxnGridButton{height:26px;padding:0 6px;font-size:9px}
-  .rxnLeaderStrip{grid-template-columns:19px auto minmax(0,1fr) auto;gap:5px;padding:0 5px}
-  .rxnLeaderStrip>svg{width:17px;height:17px}
-  .rxnLeaderStrip small{font-size:9px}
-  .rxnLeaderStrip b{font-size:14px}
-  .rxnLeaderStrip strong{font-size:16px}
+  .rxnBestLapStrip{gap:6px;padding:0 6px}
+  .rxnBestLapStrip small{font-size:9px}
+  .rxnBestLapStrip strong{font-size:16px}
   .rxnPilotRow{grid-template-columns:22px 36px clamp(120px,24%,170px) 27px repeat(var(--rxn-metric-count),minmax(0,1fr));padding:0 2px}
   .rxnPilotHead{height:20px;font-size:8px}
   .rxnPilotData{height:34px;font-size:15px}
@@ -271,7 +262,7 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
   .rxnTopActions .rxnTopButton svg{width:18px;height:18px}
   .rxnRaceTitle{display:flex;height:42px;padding:0;border:0}
   .rxnRaceTitleLeft{display:flex;flex:1;padding:0 6px}
-  .rxnLeaderStrip{display:none}
+  .rxnBestLapStrip{display:none}
   .rxnRaceBannerLine{font-size:30px;gap:7px}
   .rxnBannerDiscipline,.rxnBannerDisciplineSep{display:none}
   .rxnGridButton{height:30px;padding:0 8px;font-size:10px}
@@ -305,7 +296,7 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
   .rxnTopActions .rxnTopButton:after{width:4px;height:4px;top:3px;right:3px}
   .rxnRaceTitle{display:flex;height:40px;padding:0;border:0}
   .rxnRaceTitleLeft{display:flex;flex:1;padding:0 4px}
-  .rxnLeaderStrip{display:none}
+  .rxnBestLapStrip{display:none}
   .rxnRaceBannerLine{font-size:24px;gap:5px}
   .rxnBannerDiscipline,.rxnBannerDisciplineSep{display:none}
   .rxnBannerPilots{font-size:inherit}
@@ -339,11 +330,6 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
   .rxnPhoneMetric b{font-weight:600}
   .rxnPhoneMetric small{font-size:10px;color:var(--rxn-green)}
   .rxnLapTrack{margin-bottom:2px}
-  .rxnLeaderHero{display:block;position:relative;height:110px;overflow:hidden;background:var(--rxn-hero-photo-bg)}
-  .rxnLeaderHero img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
-  .rxnLeaderHero span{position:absolute;left:8px;bottom:7px;display:flex;flex-direction:column;text-shadow:0 2px 5px #000}
-  .rxnLeaderHero small{font-size:7px;color:var(--rxn-green)}
-  .rxnLeaderHero b{font-size:17px}
 }
 .rxnTrackCockpit .rxnRaceTitle h1{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rxnTrackCockpit .rxnCheck{font-size:.72em}

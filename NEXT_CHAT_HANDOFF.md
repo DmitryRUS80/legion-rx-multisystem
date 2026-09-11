@@ -1,9 +1,9 @@
-# LEGION RX — NEXT CHAT HANDOFF · RC35
+# LEGION RX — NEXT CHAT HANDOFF · RC36
 
 **Date:** 2026-09-11  
-**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC35_PILOT_STATS_TYPOGRAPHY_DENSITY_FULL.zip`  
+**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC36_BEST_LAP_STRIP_HERO_CLEANUP_FULL.zip`  
 **Base:** RC34 LIVE PILOT STATS BROADCAST  
-**Status:** RC35 automated regression PASS; **real iPhone + LapWiz + Android acceptance still required**.
+**Status:** RC36 automated regression PASS; **real iPhone + LapWiz + Android acceptance still required**.
 
 ---
 
@@ -11,7 +11,7 @@
 
 Do **not** rebuild Legion RX from memory and do not use an older archive as the source.
 
-1. Unpack the latest **RC35 FULL**.
+1. Unpack the latest **RC36 FULL**.
 2. Read, in this order:
    - `NEXT_CHAT_HANDOFF.md` (this file if copied into the project/package)
    - `PROJECT_MASTER.md`
@@ -28,9 +28,9 @@ The FULL/source modular project is the **only development source**. A portable/b
 
 ---
 
-# RC35 CURRENT UI DELTA
+# RC36 CURRENT UI DELTA
 
-RC35 is UI-only. It edits the existing authoritative `ui/shell/discipline-pults.css` pilot-stat rules in place: larger readable typography, tighter vertical density, closer POS/BEST/AVG label-value spacing, visible LAPS/TIME labels on phone, and a narrower portrait card (~58% of roster). No new overlay/container/style layer is introduced. RC34 live refresh logic and all sport/timing/platform behavior are preserved.
+RC36 is UI-only. It removes the obsolete portrait-only full-width `rxnLeaderHero` block from the real RallyCross roster renderer and removes its styles instead of hiding it with another override. The header strip above the right pult is renamed/reworked as one authoritative `rxnBestLapStrip`: `BEST LAP` + live best-lap time only, no trophy and no `ЛИДЕР · ЛУЧШИЙ КРУГ`. Existing RallyCross tick updates that time; sport/timing/platform behavior is unchanged.
 
 
 # 1. PROJECT IDENTITY
@@ -646,9 +646,9 @@ Release/offline/docs/test metadata changed as required. All `modes/`, `platform/
 
 # 16. IMMEDIATE NEXT-CHAT CHECKLIST
 
-1. Load **RC34 FULL** and this handoff.
+1. Load **RC36 FULL** and this handoff.
 2. Read the project docs before touching code.
-3. Treat RC34 as **candidate**, not GOLD, until device acceptance.
+3. Treat RC36 as **candidate**, not GOLD, until device acceptance.
 4. First real acceptance test:
    - exact qualification tie -> `ПЕРЕЗАЕЗД` only tied pilots -> zero extra Q points/result;
    - exact Final A tie -> run-off only tied pilots -> no A4/no extra final score -> only disputed positions reorder;
@@ -657,17 +657,18 @@ Release/offline/docs/test metadata changed as required. All `modes/`, `platform/
 6. RC30 selected tile style remains implemented; do not reintroduce blue fill/glow.
 7. Verify cockpit column toggles in RallyCross and Free Practice: disabled metric disappears, remaining metrics expand, no second-row overlap.
 8. Verify RC32 skip safety on device: skipped qualification/A-runs do not create fake run-offs; no active event may show `PILOTS 0/0`; a genuine run-off refuses skip; explicit sport finish still reaches archiveable completion.
-9. Verify RC34 live pilot stats on device: on landscape the card is roughly half the roster width and never covers the right pult; on portrait it stays inside the roster above controls; full name and colored ID are visible; POS/BEST/AVG/LAPS/TIME refresh while open; new laps append live; rows remain neutral, BEST text green, WORST text magenta; Free Practice lap delete still recalculates stats.
-10. Keep every future build focused and output FULL + delta GitHub ZIP.
+9. Verify RC34/35 live pilot stats on device: landscape card stays compact and outside the right pult; portrait stays inside the roster above controls; full name and colored ID are visible; POS/BEST/AVG/LAPS/TIME refresh while open; new laps append live; rows remain neutral, BEST text green, WORST text red; Free Practice lap delete still recalculates stats.
+10. Verify RC36 cockpit cleanup: no full-width leader photo appears below roster rows at any portrait/compressed size; desktop/landscape header strip reads only `BEST LAP` + live lap time with no trophy/leader wording.
+11. Keep every future build focused and output FULL + delta GitHub ZIP.
 
 
 ---
 
 # 17. START PROMPT FOR THE NEXT CHAT
 
-Copy/paste this as the first message after attaching RC34 FULL + this handoff:
+Copy/paste this as the first message after attaching RC36 FULL + this handoff:
 
-> Продолжаем LEGION RX. Загруженная RC34 FULL — текущий исходник-кандидат. Сначала прочитай NEXT_CHAT_HANDOFF.md, PROJECT_MASTER.md, ARCHITECTURE.md, FUNCTION_MAP.md, SPORT_RULES.md, TEST_REPORT.md, VERSION.txt и CHANGELOG.md и исследуй реальные авторитетные файлы. Ничего не пересобирай по памяти. Архитектура обязательна: UI != SPORT RULES != LAPWIZ != STORAGE. Никаких patch/override, одна функция/стиль — один источник. Каждый релиз отдавай двумя архивами: FULL и UPLOAD_TO_GITHUB только с изменёнными файлами. RC34 сохраняет RC29 scoring/run-off, RC30 стартовый порядок/диктора, RC31 исправление колонок, RC32 skip/state safety и RC33 удаление старого stats UI. RC34 меняет только live UI статистики пилота: landscape-карточка около половины roster, portrait в доступной ширине roster, правый пульт/нижние кнопки не перекрываются; avatar/flag/team + цветной ID + полное имя + POS/BEST/AVG + live LAPS/TIME. Окно обновляется существующими cockpit tickers, фон roster лишь слегка размыт/приглушён, обычные круги белые, BEST зелёный, WORST magenta, AVG-строка не подсвечивается. Free Practice delete сохранён. Считай RC34 кандидатом до физического теста iPhone/LapWiz/Android. Не трогай работающие модули без необходимости.
+> Продолжаем LEGION RX. Загруженная RC36 FULL — текущий исходник-кандидат. Сначала прочитай NEXT_CHAT_HANDOFF.md, PROJECT_MASTER.md, ARCHITECTURE.md, FUNCTION_MAP.md, SPORT_RULES.md, TEST_REPORT.md, VERSION.txt и CHANGELOG.md и исследуй реальные авторитетные файлы. Ничего не пересобирай по памяти. Архитектура обязательна: UI != SPORT RULES != LAPWIZ != STORAGE. Никаких patch/override, одна функция/стиль — один источник. Каждый релиз отдавай двумя архивами: FULL и UPLOAD_TO_GITHUB только с изменёнными файлами. RC36 сохраняет RC29 scoring/run-off, RC30 официальный стартовый порядок/диктора, RC31 исправление колонок, RC32 skip/state safety, RC33 удаление старого UI статистики, RC34 live broadcast-карточку и RC35 typography/density. RC36 меняет только cockpit UI: удалён portrait/full-width лидерский фото-блок, строка над пультом теперь BEST LAP + живое время без кубка и без текста ЛИДЕР. Спортивную логику, Free Practice core, LapWiz, audio, storage и reporting не трогать без отдельной задачи. Считай RC36 кандидатом до физической проверки на устройствах.
 
 ---
 

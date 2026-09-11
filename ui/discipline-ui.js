@@ -111,9 +111,7 @@ function rxnPilotTable(pilots,s){
       <div class="rxnPhoneMetric">${rxnPhoneMetric(pilots,s,p,i,l,st)}</div>
     </div>`;
   }).join('');
-  const leader=pilots[0],profile=leader?profileForPilot(leader):null,photo=profile?.photo||leader?.photo||'';
-  const hero=leader&&photo&&((s?.live?.[leader.id]?.laps||0)>0)?`<div class="rxnLeaderHero"><img src="${photo}" alt="${esc(rxnPilotDisplayName(leader))}"><span><small>ЛИДЕР</small><b>${esc(rxnPilotDisplayName(leader))}</b></span></div>`:'';
-  return rxnPilotHeader()+rows+hero;
+  return rxnPilotHeader()+rows;
 }
 function rxnFinalProtocolTable(race){
   if(!race.finalProtocol?.length)return'<div class="rxnEmpty">Финальный протокол ещё не сформирован.</div>';
@@ -155,9 +153,9 @@ function rxnBestLapLeader(pilots,s){
   }
   return{pilot,bestLapMs:Number.isFinite(bestLapMs)?bestLapMs:null};
 }
-function rxnLeaderStrip(pilots,s){
-  const best=rxnBestLapLeader(pilots,s),name=best.pilot?rxnPilotDisplayName(best.pilot):'—',time=Number.isFinite(best.bestLapMs)?fmtMs(best.bestLapMs):'—';
-  return `<div class="rxnLeaderStrip">${raceSvg('trophy')}<small>ЛИДЕР · ЛУЧШИЙ КРУГ</small><b id="rxnLeaderName">${esc(name)}</b><strong id="rxnLeaderBest">${time}</strong></div>`;
+function rxnBestLapStrip(pilots,s){
+  const best=rxnBestLapLeader(pilots,s),time=Number.isFinite(best.bestLapMs)?fmtMs(best.bestLapMs):'—';
+  return `<div class="rxnBestLapStrip"><small>BEST LAP</small><strong id="rxnBestLapTime">${time}</strong></div>`;
 }
 function rxnRaceBannerData(race,ev,pilots=[]){
   const count=Math.max(0,pilots?.length||0),capacity=Math.max(0,ev?.pilots?.length||count);
@@ -179,7 +177,7 @@ function rxnRaceBannerData(race,ev,pilots=[]){
 function rxnRaceTitle(race,ev,s,pilots=[]){
   const info=rxnRaceBannerData(race,ev,pilots);
   const grid=ev?.phase==='finals'?`<button class="rxnGridButton" type="button" data-rxn-grid-open="${esc(ev.key)}">СЕТКА</button>`:'';
-  return `<section class="rxnRaceTitle"><div class="rxnRaceTitleLeft rxnRaceBanner"><div class="rxnRaceBannerLine"><strong>${esc(info.stage)}</strong><i>·</i><span class="rxnBannerHeat">${esc(info.heat)}</span><i class="rxnBannerDisciplineSep">·</i><span class="rxnBannerDiscipline">${esc(info.discipline)}</span><i>·</i><span class="rxnBannerPilots">${esc(info.pilots)}</span></div>${grid}</div>${rxnLeaderStrip(pilots,s)}</section>`;
+  return `<section class="rxnRaceTitle"><div class="rxnRaceTitleLeft rxnRaceBanner"><div class="rxnRaceBannerLine"><strong>${esc(info.stage)}</strong><i>·</i><span class="rxnBannerHeat">${esc(info.heat)}</span><i class="rxnBannerDisciplineSep">·</i><span class="rxnBannerDiscipline">${esc(info.discipline)}</span><i>·</i><span class="rxnBannerPilots">${esc(info.pilots)}</span></div>${grid}</div>${rxnBestLapStrip(pilots,s)}</section>`;
 }
 function rxnTimerPanel(race,ev,pilots,s,done){
   const ring=rxnRingData(race,ev,pilots,s),progress=timerProgress(s,ev),classLabel=String(race?.className||'Rally-10').toUpperCase();
@@ -236,7 +234,7 @@ function updateDynamicCockpitUI(){
   const bestLap=rxnBestLapLeader(ranked,s);
   if(ring)ring.style.setProperty('--ring-progress',`${timerProgress(s,ev)*3.6}deg`);
   const rd=rxnRingData(race,ev,ranked,s),set=(q,v)=>{const e=document.querySelector(q);if(e)e.textContent=v;};
-  set('#rxnRingMain',rd.main);set('#rxnRingSub',rd.sub);set('#timerSubline',timerSubline(s,ev));set('#rxnLeaderName',bestLap.pilot?rxnPilotDisplayName(bestLap.pilot):'—');set('#rxnLeaderBest',Number.isFinite(bestLap.bestLapMs)?fmtMs(bestLap.bestLapMs):'—');
+  set('#rxnRingMain',rd.main);set('#rxnRingSub',rd.sub);set('#timerSubline',timerSubline(s,ev));set('#rxnBestLapTime',Number.isFinite(bestLap.bestLapMs)?fmtMs(bestLap.bestLapMs):'—');
   const board=document.querySelector('.rxnTable');
   if(board&&s.phase!=='finished'){
     const warmSig=Object.keys(s.warmupDetected||{}).sort().join(','),sig=ranked.map(p=>{const l=s.live[p.id]||blankLive();return`${p.id}:${l.laps}:${l.startSeen}:${Math.round(l.lastLapMs||0)}:${Math.round(rxnLapAvg(l)||0)}:${l.finished}`;}).join('|')+`|W:${warmSig}`;

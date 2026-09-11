@@ -145,3 +145,8 @@ Existing UI ticker
 ```
 
 No new sport/timing loop is created. Free Practice delete remains `removeTrackDayLap()`.
+## RC36 best-lap strip / leader-photo cleanup
+- `ui/discipline-ui.js::rxnBestLapStrip()` — renders only `BEST LAP` + current best-lap time from the existing `rxnBestLapLeader()` result.
+- `ui/discipline-ui.js::rxnPilotTable()` — roster rows only; the obsolete portrait-only full-width leader photo is no longer appended.
+- `ui/shell/discipline-pults.css::.rxnBestLapStrip` — single authoritative best-lap strip style; no trophy/icon column and no leader-photo responsive block.
+

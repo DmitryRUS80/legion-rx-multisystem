@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC35 · PILOT STATS TYPOGRAPHY DENSITY**  
-Direct code base: **RC34 LIVE PILOT STATS BROADCAST**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC36 · BEST LAP STRIP + HERO CLEANUP**  
+Direct code base: **RC35 PILOT STATS TYPOGRAPHY DENSITY**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -21,6 +21,14 @@ Executable rules remain in `modes/rallycross/`. RC20 does **not** change any spo
 ## Current approved visual direction
 
 The current RC19/RC20 RallyCross cockpit is the preserved visual baseline. Further design work should make the race line, pilot presentation, BEST LAP cards, pre-start grid and results look like a compact motorsport TV broadcast while retaining trackside readability and fast operator control.
+
+## RC36 BEST LAP STRIP + HERO CLEANUP
+
+- UI-only cleanup in `ui/discipline-ui.js` + `ui/shell/discipline-pults.css`.
+- Removed the old portrait-only full-width leader photo block that could appear as a large artifact under the roster on narrow/compressed layouts.
+- The header strip now means exactly what it displays: `BEST LAP` + live best-lap time. No trophy and no race-leader wording.
+- Existing best-lap calculation and normal RallyCross UI refresh path are reused; no second timer/ranking path is introduced.
+- No RallyCross / Free Practice / LapWiz / audio / storage / reporting logic changes.
 
 ## RC35 PILOT STATS TYPOGRAPHY DENSITY
 

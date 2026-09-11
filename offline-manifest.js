@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc35-pilot-stats-typography-density';
-  const displayVersion='4.2.0 CLEAN FULL APP RC35 · PILOT STATS TYPOGRAPHY DENSITY';
-  const cacheName='legion-rx-4-2-0-clean-full-rc35-pilot-stats-typography-density';
+  const appVersion='4.2.0-clean-full-rc36-best-lap-strip-hero-cleanup';
+  const displayVersion='4.2.0 CLEAN FULL APP RC36 · BEST LAP STRIP + HERO CLEANUP';
+  const cacheName='legion-rx-4-2-0-clean-full-rc36-best-lap-strip-hero-cleanup';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

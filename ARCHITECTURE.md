@@ -130,3 +130,7 @@ Pilot lap statistics remain a presentation concern. `ui/shell/views.js` reads al
 ## RC34 live pilot-statistics presentation boundary
 
 RC34 remains UI-only. `ui/shell/views.js` owns the open-card markup/data projection and one live refresh function. `ui/discipline-ui.js` merely invokes that refresh from the already-existing RallyCross and Free Practice UI tickers; no new timing loop, sport rule or persistence path is created. `ui/shell/discipline-pults.css` remains the single owner of the card geometry and visuals. The overlay is always bounded by `.rxnRoster`, so control-panel geometry is never covered.
+## RC36 best-lap / leader-photo presentation boundary
+
+RC36 is UI-only. `ui/discipline-ui.js` continues to read the existing live RallyCross state; it no longer appends a separate leader-photo block to the roster. `ui/shell/discipline-pults.css` remains the sole cockpit style source. The best-lap header is a presentation of the already-computed best lap and is refreshed through the existing cockpit ticker; no sport ranking, timing loop, BLE/storage path or duplicate responsive layer is introduced.
+

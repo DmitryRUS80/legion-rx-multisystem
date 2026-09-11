@@ -1,10 +1,10 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC35 · PILOT STATS TYPOGRAPHY DENSITY
+# LEGION RX 4.2.0 CLEAN FULL APP RC36 · BEST LAP STRIP + HERO CLEANUP
 
 Direct code base: **RC34 LIVE PILOT STATS BROADCAST**.
 
-## RC35 current release
+## RC36 current release
 
-RC35 is a focused UI-only typography/density refinement of the RC34 live pilot statistics card. It keeps the same component, same live refresh path and same roster-bounded geometry. POS/BEST/AVG labels are enlarged and moved closer to their values; the qualification/session line, LAPS/TIME, lap numbers/times and BEST/WORST tags are enlarged without adding generous row padding. Portrait width is reduced to roughly 58% of the roster. Normal lap rows remain neutral/translucent, BEST is green, WORST uses the existing red race accent, and average is not highlighted. No `modes/`, platform timing/LapWiz/audio/storage or reporting behavior changes.
+RC36 is a focused cockpit UI cleanup over RC35. The portrait-only full-width leader photo that could appear below the roster on narrow/compressed layouts is removed from the authoritative renderer/style source. The header strip above the right pult is simplified to `BEST LAP` + live best-lap time only; the trophy and misleading race-leader wording are gone. Existing sport timing/ranking, RC30 announcer/start order, RC31 columns, RC32 state safety, RC34 live pilot stats and RC35 typography are preserved. No `modes/`, platform timing/LapWiz/audio/storage or reporting behavior changes.
 
 ## RC34 previous release
 

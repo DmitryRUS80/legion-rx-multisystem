@@ -1,3 +1,6 @@
+## RC36
+- `verify_rc36_best_lap_strip.py` checks removal of the full-width leader photo implementation, the new BEST LAP + live-time strip, removal of trophy/leader wording and preservation of the existing dynamic refresh path.
+
 ## RC35
 - `verify_rc35_pilot_stats_typography.py` validates the focused live-stat typography/density/portrait-width refinement.
 
