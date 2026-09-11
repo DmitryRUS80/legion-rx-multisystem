@@ -196,7 +196,7 @@ function pilotCanvasBlob(canvas,type,quality){
 }
 
 async function pilotEncodeAvatar(img,crop,outputSize=480){
-  const targetBytes=95*1024,qualities=[.84,.80,.76,.72,.68,.64];
+  const targetBytes=72*1024,qualities=[.82,.78,.74,.70,.66,.62];
   const render=size=>{const canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;const ctx=canvas.getContext('2d',{alpha:false});ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.fillStyle='#111';ctx.fillRect(0,0,size,size);ctx.drawImage(img,crop.sx,crop.sy,crop.side,crop.side,0,0,size,size);return canvas;};
   for(const size of [outputSize,420]){
     const canvas=render(size);
@@ -257,7 +257,7 @@ function pilotModal(existing=null,addToRace=false,originRect=null){
   </section></div>`;
   pilotRenderModelEditors(initialModels,existing?String(id):'');
   $('#closeModal').onclick=closeModal;
-  $('#pilotAvatarFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const cropped=await pilotResizeAvatar(file);if(!cropped)return;pendingPhoto=cropped;$('#pilotEditorAvatarPreview').innerHTML=pilotEditorAvatarMarkup({name:$('#mName').value||existing?.name||'RX',photo:pendingPhoto,country:$('#mCountry')?.value||existing?.country||''});toast('Аватар загружен');}catch(err){toast(err.message);}finally{e.target.value='';}};
+  $('#pilotAvatarFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const cropped=await pilotResizeAvatar(file);if(!cropped)return;const preview=$('#pilotEditorAvatarPreview');if(!preview)throw new Error('Редактор пилота закрыт');pendingPhoto=cropped;preview.innerHTML=pilotEditorAvatarMarkup({name:$('#mName').value||existing?.name||'RX',photo:pendingPhoto,country:$('#mCountry')?.value||existing?.country||''});toast('Аватар готов');}catch(err){toast(err.message);}finally{e.target.value='';}};
   $('#uploadPilotVoice').onclick=()=>{if(!$('#mName').value.trim())return toast('Сначала введите имя пилота');$('#pilotVoiceFile').click();};
   $('#pilotVoiceFile').onchange=async e=>{const file=e.target.files?.[0],name=$('#mName').value.trim(),status=$('#pilotVoiceState');if(!file)return;if(file.size>5*1024*1024)return toast('Файл больше 5 МБ');if(!file.type.startsWith('audio/')&&!/\.(mp3|wav|ogg)$/i.test(file.name))return toast('Выберите MP3, WAV или OGG');status.className='pilotVoiceState';status.textContent='СОХРАНЕНИЕ…';try{await pilotVoices.put(id,name,file,file.name);pendingVoice={source:'local-file',fileName:file.name,text:name,status:'ready',updatedAt:new Date().toISOString()};const idx=state.pilotDb.findIndex(p=>p.id===id);if(idx>=0){state.pilotDb[idx].voice=pendingVoice;save(KEYS.pilots,state.pilotDb);}if(existing)existing.voice=pendingVoice;status.className='pilotVoiceState ready';status.textContent='ГОТОВО ОФЛАЙН';$('#playPilotVoice').disabled=false;$('#deletePilotVoice').disabled=false;$('#uploadPilotVoice').textContent='Заменить файл';toast('Запись имени сохранена');}catch(err){status.className='pilotVoiceState stale';status.textContent='ОШИБКА';toast(err.message);}finally{e.target.value='';}};
   $('#playPilotVoice').onclick=async()=>{try{const ok=await pilotVoices.play(id);if(!ok)toast('Запись имени не найдена на этом устройстве');}catch(e){toast(`Не удалось воспроизвести: ${e.message}`);}};

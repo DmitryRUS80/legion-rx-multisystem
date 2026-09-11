@@ -195,3 +195,11 @@
 - Official event points are assigned only after run-off-resolved final positions are known.
 - Added dedicated static and behavioral regression tests for qualification/final run-offs; focused suite now covers 28 scenarios, including middle-table and three-way ties.
 - Free Practice, LapWiz, audio, storage/reporting and RC28 iPhone archive safety are unchanged.
+
+
+## RC38 · AVATAR CROP LAYER FIX
+- Fixed the RC37 crop dialog stacking bug: the avatar cropper now opens above the pilot editor instead of underneath it.
+- Mobile crop UI is centered in the viewport instead of opening as a bottom sheet.
+- After `ГОТОВО`, the cropped image is applied immediately to the still-open pilot editor preview.
+- Avatar target remains 480×480 with WebP/JPEG fallback; the compact target is tightened from ~95 KB to ~72 KB to reduce localStorage pressure.
+- Pilot database/storage contract, RallyCross, Free Practice, LapWiz, audio, reporting and timing are unchanged.

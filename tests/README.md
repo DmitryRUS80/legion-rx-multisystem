@@ -36,3 +36,5 @@ Run `python3 tests/verify_architecture.py` after every structural/UI change. It 
 ## RC30
 - `verify_rc30_start_order_selection.js` behavior-tests qualification heat order preservation, qualification-rated final order, stable zero-lap cockpit ordering, live reordering after timing changes, shared announcer order, and neutral thin pilot/model selected-state styling.
 
+
+- `verify_rc38_avatar_crop_layer.py` — RC38 crop z-order, mobile centering, immediate preview and compact avatar target.

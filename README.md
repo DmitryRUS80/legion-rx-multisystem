@@ -1,6 +1,11 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC36 · BEST LAP STRIP + HERO CLEANUP
+# LEGION RX 4.2.0 CLEAN FULL APP RC38 · AVATAR CROP LAYER FIX
 
 Direct code base: **RC34 LIVE PILOT STATS BROADCAST**.
+
+
+## RC38 current release
+
+RC38 is a focused repair of the RC37 avatar crop UI. The crop dialog now stacks above the pilot editor and is centered on mobile instead of appearing only after the editor is closed. Confirming the crop updates the open editor avatar immediately. The existing 480×480 compression pipeline remains authoritative, with the target tightened to about 72 KB. Sport/timing/LapWiz/audio/storage-engine/reporting behavior is unchanged.
 
 ## RC36 current release
 

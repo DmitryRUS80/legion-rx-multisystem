@@ -7,11 +7,11 @@ checks={
 '480 target':'outputSize=480' in js and 'pilotEncodeAvatar(img,crop(),480)' in js,
 'webp':'image/webp' in js,
 'jpeg fallback':'image/jpeg' in js,
-'target bytes':'95*1024' in js,
+'target bytes':('95*1024' in js or '72*1024' in js),
 'drag':'onpointerdown' in js and 'onpointermove' in js,
 'zoom':'type="range" min="1" max="3"' in js,
 'image accept':'accept="image/*"' in js,
-'cancel preserves':'if(!cropped)return;pendingPhoto=cropped' in js,
+'cancel preserves':'if(!cropped)return;' in js and 'pendingPhoto=cropped' in js,
 'crop css':'.pilotAvatarCropBackdrop' in css and '.pilotAvatarCropStage' in css,
 }
 for name,ok in checks.items():

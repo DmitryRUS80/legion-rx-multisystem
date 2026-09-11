@@ -1,9 +1,9 @@
-# LEGION RX — NEXT CHAT HANDOFF · RC37
+# LEGION RX — NEXT CHAT HANDOFF · RC38
 
 **Date:** 2026-09-11  
-**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC36_BEST_LAP_STRIP_HERO_CLEANUP_FULL.zip`  
-**Base:** RC34 LIVE PILOT STATS BROADCAST  
-**Status:** RC36 automated regression PASS; **real iPhone + LapWiz + Android acceptance still required**.
+**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC38_AVATAR_CROP_LAYER_FIX_FULL.zip`  
+**Base:** RC37 AVATAR CROP + COMPRESSION  
+**Status:** RC38 automated regression PASS; **real iPhone/Android camera acceptance still required**.
 
 ---
 
@@ -11,7 +11,7 @@
 
 Do **not** rebuild Legion RX from memory and do not use an older archive as the source.
 
-1. Unpack the latest **RC36 FULL**.
+1. Unpack the latest **RC38 FULL**.
 2. Read, in this order:
    - `NEXT_CHAT_HANDOFF.md` (this file if copied into the project/package)
    - `PROJECT_MASTER.md`
@@ -28,9 +28,9 @@ The FULL/source modular project is the **only development source**. A portable/b
 
 ---
 
-# RC36 CURRENT UI DELTA
+# RC38 CURRENT UI DELTA
 
-RC36 is UI-only. It removes the obsolete portrait-only full-width `rxnLeaderHero` block from the real RallyCross roster renderer and removes its styles instead of hiding it with another override. The header strip above the right pult is renamed/reworked as one authoritative `rxnBestLapStrip`: `BEST LAP` + live best-lap time only, no trophy and no `ЛИДЕР · ЛУЧШИЙ КРУГ`. Existing RallyCross tick updates that time; sport/timing/platform behavior is unchanged.
+RC38 is pilot-UI only. It fixes the RC37 avatar crop stacking/centering bug in the authoritative `ui/pilots/` component. The cropper opens above the pilot editor, is centered on mobile, and applies the processed image immediately to the open editor preview. Compression remains 480×480 WebP/JPEG with a tighter ~72 KB target. Sport, timing, LapWiz, audio, storage engine and reporting are unchanged.
 
 
 # 1. PROJECT IDENTITY
