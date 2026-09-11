@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc36-best-lap-strip-hero-cleanup';
-  const displayVersion='4.2.0 CLEAN FULL APP RC36 · BEST LAP STRIP + HERO CLEANUP';
-  const cacheName='legion-rx-4-2-0-clean-full-rc36-best-lap-strip-hero-cleanup';
+  const appVersion='4.2.0-clean-full-rc37-avatar-crop-compression';
+  const displayVersion='4.2.0 CLEAN FULL APP RC37 · AVATAR CROP + COMPRESSION';
+  const cacheName='legion-rx-4-2-0-clean-full-rc37-avatar-crop-compression';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

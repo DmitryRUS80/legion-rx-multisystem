@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC36 · BEST LAP STRIP + HERO CLEANUP */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC37 · AVATAR CROP + COMPRESSION */
 'use strict';
 importScripts('./offline-manifest.js');
 

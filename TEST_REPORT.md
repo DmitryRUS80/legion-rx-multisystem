@@ -1,19 +1,18 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC36 · BEST LAP STRIP + HERO CLEANUP — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC37 · AVATAR CROP + COMPRESSION — TEST REPORT
 
 ## Scope
 
-UI-only cleanup over RC35. Runtime changes are limited to `ui/discipline-ui.js` and `ui/shell/discipline-pults.css`, plus release metadata. RallyCross / Free Practice sport logic, LapWiz, platform audio/storage and reporting are not modified.
+Pilot UI image pipeline only. Runtime changes are limited to `ui/pilots/pilot-cards.js` and `ui/pilots/pilot-cards.css`, plus release metadata. Sport/timing, LapWiz, audio, storage engine and reporting are not modified.
 
-## RC36 verification
+## RC37 verification
 
-- Obsolete `rxnLeaderHero` renderer and portrait CSS removed instead of hidden by an override.
-- No giant leader-photo block can be appended below RallyCross roster rows on phone/portrait/compressed layouts.
-- Header strip is one authoritative `rxnBestLapStrip`.
-- Trophy SVG and `ЛИДЕР · ЛУЧШИЙ КРУГ` wording removed.
-- Strip content is `BEST LAP` + live `rxnBestLapTime`.
-- Existing RallyCross dynamic UI tick refreshes that time from the same `rxnBestLapLeader()` data.
-- Portrait/tablet still hide the right-column strip according to the existing cockpit layout contract.
+- Avatar picker accepts `image/*` so mobile browsers can offer camera or gallery.
+- Selected images open one authoritative crop UI with square preview, drag and zoom.
+- Output uses a 480×480 target and adaptive WebP/JPEG compression; the original file is not stored.
+- Encoder targets ~95 KB binary image size and may fall back to 420×420 only for unusually complex images that remain too large.
+- Cancel leaves the previous avatar unchanged.
+- Pilot profile continues to store the processed image in the existing `photo` field, preserving all current consumers.
 
 ## Regression
 
-Run all existing architecture, iOS safety, pilot UI, RC29 run-off, RC30 start-order/announcer, RC31 columns, RC32 skip flow, RC33/34/35 pilot-stat checks, JS syntax and offline-manifest checks. Physical iPhone / Android / LapWiz acceptance remains user-side.
+Run architecture, clean-foundation, iOS start/storage, pilot-card, RC29 run-off, RC30 start-order/announcer, RC31 columns, RC32 skip flow, RC33–36 UI tests, JavaScript syntax and offline-manifest checks. Physical camera/crop acceptance remains user-side on iPhone/Android.

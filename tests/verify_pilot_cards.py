@@ -27,7 +27,7 @@ checks['picker_no_full_rerender_on_toggle']='persistRace();if(refresh)pilotSyncP
 checks['picker_no_transform_selection']='pilotPickerModelChip.selected' in css and 'transform:' not in re.search(r'\.pilotPickerModelChip\{.*?\.pilotPickerModelChip\.selected\{.*?\}',css,re.S).group(0)
 checks['race_setup_compact_tiles']='pilotRaceSetupTileMarkup' in pilot and 'pilotRaceSetupGrid' in views
 
-checks['avatar_true_square_crop']=all(x in pilot for x in ['side=Math.min(srcW,srcH)','(srcW-side)/2','(srcH-side)/2','canvas.width=out;canvas.height=out'])
+checks['avatar_true_square_crop']=all(x in pilot for x in ['function pilotOpenAvatarCrop(file)','const srcW=Math.max(1,img.naturalWidth)','baseSide=Math.min(srcW,srcH)','ctx.drawImage(img,crop.sx,crop.sy,crop.side,crop.side,0,0,size,size)'])
 checks['team_label_lower_left']='pilotTeamBadge(profile)' in pilot and '.pilotTileTeam{position:absolute;left:0;bottom:0' in css
 checks['club_input_has_no_brand_hint']='placeholder="LEGION RX"' not in pilot
 checks['picker_class_under_id']='pilotPickerModelClass' in pilot and '.pilotPickerModelClass{' in css

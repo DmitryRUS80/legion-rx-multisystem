@@ -114,3 +114,7 @@ Sport/platform/offline/audio/reporting logic is unchanged.
 - Only an exact remaining equality creates a Final A run-off. The run-off does not become A4 and has no bonus points; it only fixes the order inside the disputed final positions.
 - Normal event/championship points are assigned after that final order is known.
 - Free Practice, LapWiz protocol, audio, storage, reporting and RC28 iPhone quota safety are unchanged.
+
+
+## RC37 avatar pipeline
+Pilot avatar upload now uses manual square crop + automatic compact 480×480 WebP/JPEG encoding before local save. The original camera/gallery file is not stored.

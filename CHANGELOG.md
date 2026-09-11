@@ -1,5 +1,13 @@
 # LEGION RX CHANGELOG
 
+## RC37 · AVATAR CROP + COMPRESSION
+
+- Replaced the old fixed center-crop avatar upload with an interactive square cropper: drag the photo and zoom before accepting it.
+- Pilot avatars are encoded to a compact local 480×480 target (420 fallback only when necessary), preferring WebP with JPEG fallback and adaptive quality targeting about 95 KB binary size.
+- Gallery selection and mobile camera images pass through the same crop/compression path; the original multi-megabyte photo is never written to the pilot database.
+- Existing pilot DB/storage contract is preserved: only the processed avatar data URL is stored. RallyCross, Free Practice, LapWiz, audio, reporting and race timing are unchanged.
+
+
 ## RC36 · BEST LAP STRIP + HERO CLEANUP
 
 - Removed the obsolete phone-portrait full-width leader-photo block from the authoritative cockpit renderer and stylesheet; compressed/portrait layouts no longer append a giant leader avatar below the pilot rows.

@@ -187,23 +187,58 @@ function pilotRenderModelEditors(models,profileId=''){
   $('#pilotAddModel').onclick=()=>{const current=pilotCollectEditorModels();current.push({id:uid('model'),name:`МОДЕЛЬ ${current.length+1}`,className:'',number:'',transponder:'',uiColor:pilotStableColor(Date.now()+current.length)});pilotRenderModelEditors(current,profileId);};
 }
 
-function pilotResizeAvatar(file){
+function pilotBlobToDataUrl(blob){
+  return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=()=>reject(new Error('Не удалось подготовить аватар'));reader.onload=()=>resolve(String(reader.result||''));reader.readAsDataURL(blob);});
+}
+
+function pilotCanvasBlob(canvas,type,quality){
+  return new Promise(resolve=>{try{canvas.toBlob(blob=>resolve(blob||null),type,quality);}catch{resolve(null);}});
+}
+
+async function pilotEncodeAvatar(img,crop,outputSize=480){
+  const targetBytes=95*1024,qualities=[.84,.80,.76,.72,.68,.64];
+  const render=size=>{const canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;const ctx=canvas.getContext('2d',{alpha:false});ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.fillStyle='#111';ctx.fillRect(0,0,size,size);ctx.drawImage(img,crop.sx,crop.sy,crop.side,crop.side,0,0,size,size);return canvas;};
+  for(const size of [outputSize,420]){
+    const canvas=render(size);
+    for(const q of qualities){
+      let blob=await pilotCanvasBlob(canvas,'image/webp',q);
+      if(!blob||blob.type!=='image/webp')blob=await pilotCanvasBlob(canvas,'image/jpeg',q);
+      if(blob&&blob.size<=targetBytes)return pilotBlobToDataUrl(blob);
+    }
+    let blob=await pilotCanvasBlob(canvas,'image/webp',.62);if(!blob||blob.type!=='image/webp')blob=await pilotCanvasBlob(canvas,'image/jpeg',.62);
+    if(blob&&size===420)return pilotBlobToDataUrl(blob);
+  }
+  throw new Error('Не удалось сжать фотографию');
+}
+
+function pilotOpenAvatarCrop(file){
   return new Promise((resolve,reject)=>{
     if(!file)return resolve('');
-    if(file.size>8*1024*1024)return reject(new Error('Изображение больше 8 МБ'));
-    const reader=new FileReader();reader.onerror=()=>reject(new Error('Не удалось прочитать изображение'));
-    reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error('Не удалось открыть изображение'));img.onload=()=>{
-      // Save the avatar itself as a centered square. The short side fills the square;
-      // only the long side is cropped, equally from both ends.
-      const srcW=Math.max(1,img.naturalWidth),srcH=Math.max(1,img.naturalHeight),side=Math.min(srcW,srcH);
-      const sx=Math.max(0,(srcW-side)/2),sy=Math.max(0,(srcH-side)/2),out=Math.max(1,Math.min(720,side));
-      const canvas=document.createElement('canvas');canvas.width=out;canvas.height=out;const ctx=canvas.getContext('2d');ctx.clearRect(0,0,out,out);ctx.drawImage(img,sx,sy,side,side,0,0,out,out);
-      let data=canvas.toDataURL('image/webp',.86);if(!data||data==='data:,')data=String(reader.result||'');
-      if(data.length>1_600_000)return reject(new Error('Аватар слишком большой после обработки'));
-      resolve(data);
-    };img.src=String(reader.result||'');};reader.readAsDataURL(file);
+    if(file.size>20*1024*1024)return reject(new Error('Фотография больше 20 МБ'));
+    const url=URL.createObjectURL(file),img=new Image();
+    img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('Не удалось открыть фотографию'));};
+    img.onload=()=>{
+      const srcW=Math.max(1,img.naturalWidth),srcH=Math.max(1,img.naturalHeight),baseSide=Math.min(srcW,srcH);
+      let zoom=1,cx=srcW/2,cy=srcH/2,drag=null,closed=false;
+      const wrap=document.createElement('div');wrap.className='pilotAvatarCropBackdrop';wrap.innerHTML=`<section class="pilotAvatarCropPanel" role="dialog" aria-modal="true" aria-label="Кадрирование аватара"><header><div><div class="sectionLabel">АВАТАР</div><h3>КАДРИРОВАНИЕ</h3></div><button type="button" class="pilotEditorClose" data-crop-cancel aria-label="Отмена">${pilotCardIcon('close')}</button></header><div class="pilotAvatarCropStage"><canvas width="480" height="480"></canvas></div><div class="pilotAvatarCropZoom"><span>−</span><input type="range" min="1" max="3" step="0.01" value="1" aria-label="Масштаб фотографии"><span>＋</span></div><footer><button type="button" class="btn secondary" data-crop-cancel>ОТМЕНА</button><button type="button" class="btn primary" data-crop-save>ГОТОВО</button></footer></section>`;
+      document.body.appendChild(wrap);
+      const canvas=wrap.querySelector('canvas'),ctx=canvas.getContext('2d'),slider=wrap.querySelector('input[type="range"]');
+      const crop=()=>{const side=baseSide/zoom,maxX=srcW-side/2,minX=side/2,maxY=srcH-side/2,minY=side/2;cx=Math.min(maxX,Math.max(minX,cx));cy=Math.min(maxY,Math.max(minY,cy));return{sx:cx-side/2,sy:cy-side/2,side};};
+      const draw=()=>{const c=crop();ctx.clearRect(0,0,480,480);ctx.drawImage(img,c.sx,c.sy,c.side,c.side,0,0,480,480);};
+      const finish=value=>{if(closed)return;closed=true;wrap.remove();URL.revokeObjectURL(url);resolve(value);};
+      slider.oninput=()=>{const oldSide=baseSide/zoom;zoom=Number(slider.value)||1;const newSide=baseSide/zoom;if(oldSide!==newSide){cx=Math.min(srcW-newSide/2,Math.max(newSide/2,cx));cy=Math.min(srcH-newSide/2,Math.max(newSide/2,cy));}draw();};
+      canvas.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY,cx,cy,side:crop().side};canvas.setPointerCapture?.(e.pointerId);};
+      canvas.onpointermove=e=>{if(!drag)return;const rect=canvas.getBoundingClientRect(),scale=drag.side/Math.max(1,rect.width);cx=drag.cx-(e.clientX-drag.x)*scale;cy=drag.cy-(e.clientY-drag.y)*scale;draw();};
+      const stop=()=>{drag=null;};canvas.onpointerup=stop;canvas.onpointercancel=stop;
+      wrap.querySelectorAll('[data-crop-cancel]').forEach(b=>b.onclick=()=>finish(null));
+      wrap.querySelector('[data-crop-save]').onclick=async()=>{const btn=wrap.querySelector('[data-crop-save]');btn.disabled=true;btn.textContent='СЖАТИЕ…';try{finish(await pilotEncodeAvatar(img,crop(),480));}catch(err){btn.disabled=false;btn.textContent='ГОТОВО';toast(err.message||'Не удалось обработать фотографию');}};
+      draw();
+    };
+    img.src=url;
   });
 }
+
+function pilotResizeAvatar(file){return pilotOpenAvatarCrop(file);}
 
 function pilotModal(existing=null,addToRace=false,originRect=null){
   const id=existing?.id||uid('profile'),voice=existing?.voice||null,voiceReady=voice?.status==='ready',voiceStale=voiceReady&&voice.text!==existing?.name;let pendingVoice=voice,pendingPhoto=existing?.photo||'';
@@ -212,7 +247,7 @@ function pilotModal(existing=null,addToRace=false,originRect=null){
     <header class="pilotEditorHead"><div><div class="sectionLabel">ПИЛОТ</div><h2>${existing?'ПРОФИЛЬ ПИЛОТА':'НОВЫЙ ПИЛОТ'}</h2></div><button class="pilotEditorClose" id="closeModal" type="button" aria-label="Закрыть">${pilotCardIcon('close')}</button></header>
     <div class="pilotEditorHero">
       <label class="pilotEditorAvatarButton" id="pilotAvatarButton" for="pilotAvatarFile" aria-label="Загрузить аватар"><span id="pilotEditorAvatarPreview">${pilotEditorAvatarMarkup({...existing,photo:pendingPhoto,name:existing?.name||'RX'})}</span><i>${pilotCardIcon('camera')}</i></label>
-      <input id="pilotAvatarFile" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+      <input id="pilotAvatarFile" type="file" accept="image/*" hidden>
       <div class="pilotEditorIdentity"><label><span>ФАМИЛИЯ ИМЯ</span><input id="mName" value="${esc(existing?.name||'')}" placeholder="ДМИТРИЙ КОЧЕТКОВ"></label><div class="pilotEditorIdentityGrid"><label><span>СТРАНА</span><select id="mCountry">${countryOptions(existing?.country||'')}</select></label><label><span>КЛУБ</span><input id="mClub" value="${esc(existing?.club||'')}"></label><label><span>ГОРОД</span><input id="mCity" value="${esc(existing?.city||'')}" placeholder="Пенза"></label></div></div>
     </div>
     <div class="pilotEditorSectionHead"><div><div class="sectionLabel">ГАРАЖ</div><h3>МОДЕЛИ ПИЛОТА</h3></div><small>В соревнование модель выбирается одним нажатием по её плитке.</small></div>
@@ -222,7 +257,7 @@ function pilotModal(existing=null,addToRace=false,originRect=null){
   </section></div>`;
   pilotRenderModelEditors(initialModels,existing?String(id):'');
   $('#closeModal').onclick=closeModal;
-  $('#pilotAvatarFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{pendingPhoto=await pilotResizeAvatar(file);$('#pilotEditorAvatarPreview').innerHTML=pilotEditorAvatarMarkup({name:$('#mName').value||existing?.name||'RX',photo:pendingPhoto,country:$('#mCountry')?.value||existing?.country||''});toast('Аватар загружен');}catch(err){toast(err.message);}finally{e.target.value='';}};
+  $('#pilotAvatarFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const cropped=await pilotResizeAvatar(file);if(!cropped)return;pendingPhoto=cropped;$('#pilotEditorAvatarPreview').innerHTML=pilotEditorAvatarMarkup({name:$('#mName').value||existing?.name||'RX',photo:pendingPhoto,country:$('#mCountry')?.value||existing?.country||''});toast('Аватар загружен');}catch(err){toast(err.message);}finally{e.target.value='';}};
   $('#uploadPilotVoice').onclick=()=>{if(!$('#mName').value.trim())return toast('Сначала введите имя пилота');$('#pilotVoiceFile').click();};
   $('#pilotVoiceFile').onchange=async e=>{const file=e.target.files?.[0],name=$('#mName').value.trim(),status=$('#pilotVoiceState');if(!file)return;if(file.size>5*1024*1024)return toast('Файл больше 5 МБ');if(!file.type.startsWith('audio/')&&!/\.(mp3|wav|ogg)$/i.test(file.name))return toast('Выберите MP3, WAV или OGG');status.className='pilotVoiceState';status.textContent='СОХРАНЕНИЕ…';try{await pilotVoices.put(id,name,file,file.name);pendingVoice={source:'local-file',fileName:file.name,text:name,status:'ready',updatedAt:new Date().toISOString()};const idx=state.pilotDb.findIndex(p=>p.id===id);if(idx>=0){state.pilotDb[idx].voice=pendingVoice;save(KEYS.pilots,state.pilotDb);}if(existing)existing.voice=pendingVoice;status.className='pilotVoiceState ready';status.textContent='ГОТОВО ОФЛАЙН';$('#playPilotVoice').disabled=false;$('#deletePilotVoice').disabled=false;$('#uploadPilotVoice').textContent='Заменить файл';toast('Запись имени сохранена');}catch(err){status.className='pilotVoiceState stale';status.textContent='ОШИБКА';toast(err.message);}finally{e.target.value='';}};
   $('#playPilotVoice').onclick=async()=>{try{const ok=await pilotVoices.play(id);if(!ok)toast('Запись имени не найдена на этом устройстве');}catch(e){toast(`Не удалось воспроизвести: ${e.message}`);}};

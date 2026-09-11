@@ -1,4 +1,4 @@
-# LEGION RX — NEXT CHAT HANDOFF · RC36
+# LEGION RX — NEXT CHAT HANDOFF · RC37
 
 **Date:** 2026-09-11  
 **Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC36_BEST_LAP_STRIP_HERO_CLEANUP_FULL.zip`  
@@ -682,3 +682,8 @@ Copy/paste this as the first message after attaching RC36 FULL + this handoff:
 НЕ СМЕШИВАТЬ UI / SPORT / BLE / STORAGE.
 ПОСЛЕ КАЖДОЙ СБОРКИ — FULL + МИНИМАЛЬНЫЙ GITHUB DELTA.
 ```
+
+## RC37 avatar storage safety
+- Pilot avatar input now opens manual square crop with drag/zoom.
+- Save pipeline writes only a compressed ~480×480 WebP/JPEG data URL; original camera/gallery file is never stored.
+- Runtime change scope: `ui/pilots/pilot-cards.js` + `ui/pilots/pilot-cards.css`; sport/platform logic untouched.
