@@ -573,3 +573,70 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
   .pageHeader h1{font-size:30px}
   .modal{width:calc(100% - 12px);max-height:calc(100dvh - 12px);margin:6px}
 }
+
+/* ===== SETTINGS REWORK RC39 ===== */
+.settingsPage .pageHeader p{max-width:860px}
+.settingsShell{display:grid;grid-template-columns:280px minmax(0,1fr);gap:16px;align-items:start}
+.settingsSidebar,.settingsContent,.settingsSectionBody,.settingsFooterBar{background:rgba(5,12,20,.52);border:1px solid rgba(58,116,204,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.settingsSidebar{border-radius:14px;padding:10px;display:grid;gap:6px;position:sticky;top:calc(var(--appbarh,72px) + 12px)}
+.settingsNavBtn{appearance:none;border:1px solid transparent;background:transparent;color:var(--v4-text);display:grid;grid-template-columns:22px minmax(0,1fr) 12px;gap:12px;align-items:center;padding:12px 14px;border-radius:12px;text-align:left;cursor:pointer;transition:.18s}
+.settingsNavBtn b{display:block;font-size:21px;line-height:1.02;font-weight:900;text-transform:uppercase}
+.settingsNavBtn small{display:block;margin-top:3px;font-size:12px;line-height:1.12;color:var(--v4-muted)}
+.settingsNavBtn:hover{border-color:rgba(58,116,204,.35);background:rgba(7,15,26,.58)}
+.settingsNavBtn.active{background:linear-gradient(180deg,rgba(13,27,46,.84),rgba(6,12,21,.92));border-color:rgba(58,116,204,.55);box-shadow:inset 4px 0 0 var(--blue2)}
+.settingsNavIcon,.settingsNavArrow,.settingsSectionChevron{width:18px;height:18px}
+.settingsNavArrow{opacity:.75}
+.settingsContent{border-radius:18px;padding:10px;display:grid;gap:10px}
+.settingsSection{display:none}
+.settingsSection.active{display:block}
+.settingsSectionHead{display:none}
+.settingsSectionBody{border-radius:14px;padding:16px 18px}
+.settingsSectionIntro{margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.settingsSectionIntro h2{margin:2px 0 4px;font-size:34px;line-height:1;text-transform:uppercase}
+.settingsSectionIntro p{margin:0;font-size:14px;line-height:1.25;color:var(--v4-muted)}
+.settingsBlock+.settingsBlock{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)}
+.settingsBlockHead h3{margin:0 0 4px;font-size:24px;line-height:1.02;text-transform:uppercase}
+.settingsBlockHead p{margin:0 0 12px;font-size:14px;line-height:1.22;color:var(--v4-muted)}
+.settingsShell .field label{font-size:12px;line-height:1.05;font-weight:900;letter-spacing:.03em;color:#9eb6d3;margin-bottom:6px}
+.settingsShell .field input,.settingsShell .field select{min-height:48px;padding:10px 12px;font-size:22px;font-weight:800;border-radius:10px}
+.settingsRow{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:22px;line-height:1.04;font-weight:900;text-transform:uppercase}
+.settingsRow:last-child{border-bottom:0}
+.settingsSplit{display:grid;grid-template-columns:minmax(190px,260px) minmax(0,1fr);gap:12px;align-items:end}
+.settingsUploadBlock{padding:12px 14px;border-radius:12px;background:rgba(7,15,26,.45);border:1px solid rgba(58,116,204,.22)}
+.settingsMiniLabel{font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:#9eb6d3;margin-bottom:10px}
+.settingsHint{margin-top:10px;font-size:13px;line-height:1.22;color:var(--v4-muted)}
+.settingsInfoList .listRow{padding:12px 0}
+.settingsFooterBar{border-radius:14px;padding:12px 14px;display:flex;justify-content:flex-end}
+.settingsFooterBar .btn{min-width:240px}
+.settingsShell .ruleBox{background:rgba(7,15,26,.45);border:1px solid rgba(58,116,204,.22);border-radius:12px;padding:12px}
+.settingsShell .ruleBoxHead{margin-bottom:10px}
+.settingsShell .ruleBoxHead b{font-size:20px;line-height:1;text-transform:uppercase}
+.settingsShell .btnRow{flex-wrap:wrap}
+.settingsShell .btn{min-height:48px;font-size:17px}
+.settingsShell .toggle{width:54px;height:30px}
+.settingsShell .toggle:after{width:22px;height:22px;left:4px;top:4px}
+.settingsShell .toggle:checked:after{left:28px}
+.settingsShell .backgroundSettingGrid{margin-top:8px}
+.settingsShell .offlineReadyBox,.settingsShell .updateStateBox{margin-top:12px}
+@media (max-width:980px){
+  .settingsShell{grid-template-columns:1fr}
+  .settingsSidebar{position:static}
+}
+@media (max-width:760px){
+  .settingsShell{grid-template-columns:1fr;gap:10px}
+  .settingsSidebar{display:none}
+  .settingsContent{padding:0;border:0;background:transparent;box-shadow:none}
+  .settingsSection{display:block}
+  .settingsSectionBody{display:none;padding:14px 14px 16px}
+  .settingsSection.open .settingsSectionBody{display:block}
+  .settingsSectionHead{appearance:none;display:grid;grid-template-columns:minmax(0,1fr) 18px;gap:10px;align-items:center;width:100%;padding:14px 14px;border-radius:14px;background:rgba(5,12,20,.52);border:1px solid rgba(58,116,204,.22);color:var(--v4-text);text-align:left}
+  .settingsSectionHead b{display:block;font-size:22px;line-height:1.02;font-weight:900;text-transform:uppercase}
+  .settingsSectionHead small{display:block;margin-top:3px;font-size:12px;line-height:1.15;color:var(--v4-muted)}
+  .settingsSectionChevron{transition:transform .18s ease}
+  .settingsSection.open .settingsSectionChevron{transform:rotate(180deg)}
+  .settingsSectionIntro h2{font-size:27px}
+  .settingsRow{font-size:18px}
+  .settingsSplit,.settingsShell .formGrid{grid-template-columns:1fr}
+  .settingsFooterBar{padding:12px;position:sticky;bottom:64px;z-index:20}
+  .settingsFooterBar .btn{width:100%}
+}

@@ -1,3 +1,10 @@
+# RC39 ADDENDUM · SETTINGS UI REWORK TEST
+
+- Base release for this handoff: RC39 settings-shell test build.
+- Changed files only: `ui/shell/views.js`, `ui/shell/actions.js`, `ui/shell/app.css`, `CHANGELOG.md`, `TEST_REPORT.md`, `README.md`.
+- Main user request implemented: Settings visually rebuilt into left-side section navigation on desktop and expanding vertical sections on phone. Update moved into its own section.
+- This is intentionally a UI-shell test pass, not a final clean-shell convergence pass. Wider shell unification (main menu / championships / results / archive) remains future work after visual review.
+
 # LEGION RX — NEXT CHAT HANDOFF · RC38
 
 **Date:** 2026-09-11  

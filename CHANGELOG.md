@@ -1,5 +1,14 @@
 # LEGION RX CHANGELOG
 
+## RC39 · SETTINGS UI REWORK TEST
+
+- Rebuilt the main Settings screen into a cleaner two-pane system: desktop/tablet now uses a left navigation rail and a right content area instead of a dense card grid.
+- Added mobile-first accordion behavior for Settings: on narrow screens sections expand downward as separate blocks instead of staying in a two-column layout.
+- Split Settings into explicit sections: General, Screen, Sound, Pilots, Storage, Language, Update, and About. The Update / Offline block is now its own separate section as requested.
+- Increased settings typography density/legibility inside the new shell: larger headings, larger row text, less microtype, tighter vertical rhythm, fewer decorative frames.
+- Preserved the existing settings contract and actions: save-settings, theme/language persistence, LapWiz connect/disconnect, bleep test, announcer toggles, Design Lab, offline-check, update-check and update-install remain functional through the new layout.
+- Runtime scope is limited to UI shell settings rendering/styling/binding only (`ui/shell/views.js`, `ui/shell/actions.js`, `ui/shell/app.css`). Sport rules, LapWiz protocol/timing, archive logic, pilot DB and reporting are unchanged.
+
 ## RC37 · AVATAR CROP + COMPRESSION
 
 - Replaced the old fixed center-crop avatar upload with an interactive square cropper: drag the photo and zoom before accepting it.

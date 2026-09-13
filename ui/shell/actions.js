@@ -16,7 +16,12 @@ function bindView(){
  $$('[data-stage-results]').forEach(b=>b.addEventListener('click',()=>showRaceResultsById(b.dataset.stageResults)));
  $$('[data-restore-archive]').forEach(b=>b.addEventListener('click',()=>restoreRaceFromArchive(b.dataset.restoreArchive)));
  $$('[data-delete-archive]').forEach(b=>b.addEventListener('click',()=>deleteArchivedRace(b.dataset.deleteArchive)));
- const qSel=$('#qLimitType'),fSel=$('#finalLimitType');if(qSel)qSel.addEventListener('change',syncRaceRuleFields);if(fSel)fSel.addEventListener('change',syncRaceRuleFields);syncRaceRuleFields();
+ $$('[data-settings-nav]').forEach(b=>b.addEventListener('click',()=>{state.settingsUiSection=b.dataset.settingsNav;state.settingsUiOpen={[b.dataset.settingsNav]:true};render();}));
+ $$('[data-settings-mobile-toggle]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.settingsMobileToggle;const open=Boolean(state.settingsUiOpen?.[id]);state.settingsUiSection=id;state.settingsUiOpen=open?{}:{[id]:true};render();}));
+ const qSel=$('#qLimitType'),fSel=$('#finalLimitType'),settingsQSel=$('#settingsQLimit'),settingsFSel=$('#settingsFLimit');
+ if(qSel)qSel.addEventListener('change',syncRaceRuleFields);if(fSel)fSel.addEventListener('change',syncRaceRuleFields);
+ if(settingsQSel)settingsQSel.addEventListener('change',syncRaceRuleFields);if(settingsFSel)settingsFSel.addEventListener('change',syncRaceRuleFields);
+ syncRaceRuleFields();
  const darkToggle=$('#darkToggle');if(darkToggle)darkToggle.addEventListener('change',()=>{state.settings.theme=darkToggle.checked?'dark':'light';save(KEYS.settings,state.settings);applySettings();const c=$('#appBgColor');if(c&&!state.settings.backgroundColor)c.value=appBackgroundFallbackColor();});
  const bgColor=$('#appBgColor');if(bgColor)bgColor.addEventListener('input',()=>{state.settings.backgroundColor=bgColor.value;try{save(KEYS.settings,state.settings);}catch(e){toast('Не удалось сохранить цвет фона');return;}applyAppBackground();});
  const bgFile=$('#appBgFile'),bgUpload=$('#appBgUpload'),bgClear=$('#appBgClear'),bgState=$('#appBgState');if(bgUpload&&bgFile)bgUpload.addEventListener('click',()=>bgFile.click());

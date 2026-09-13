@@ -123,3 +123,10 @@ Sport/platform/offline/audio/reporting logic is unchanged.
 
 ## RC37 avatar pipeline
 Pilot avatar upload now uses manual square crop + automatic compact 480×480 WebP/JPEG encoding before local save. The original camera/gallery file is not stored.
+
+
+## RC39 current focus
+
+- Settings UI test rebuild: left menu on desktop, accordion sections on mobile.
+- Update / Offline moved into a dedicated settings section.
+- Visual goal: less container noise, larger text, cleaner rhythm before wider shell restyling.

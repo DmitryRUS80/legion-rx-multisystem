@@ -1,3 +1,25 @@
+# LEGION RX 4.2.0 CLEAN FULL APP RC39 · SETTINGS UI REWORK TEST — TEST REPORT
+
+## Scope
+
+UI shell settings screen only. Runtime changes are limited to `ui/shell/views.js`, `ui/shell/actions.js` and `ui/shell/app.css`, plus release metadata/tests. Sport/timing, LapWiz parsing, audio engine internals, storage engine, avatar pipeline and reporting are not modified.
+
+## RC39 verification
+
+- Desktop/tablet Settings now render as a left menu + right content workspace instead of the old dense two-column card grid.
+- Mobile Settings no longer use the desktop split: sections stack vertically and open downward as accordion blocks.
+- `Обновление` is separated into its own explicit settings section.
+- Existing action hooks remain reachable from the new layout: `save-settings`, `lap-connect`, `lap-disconnect`, `test-bleep`, `audio-enable`, `test-good-race`, `test-start-horn`, `offline-check`, `update-check`, `update-install`, and `open-design-lab`.
+- Existing setting IDs used by persistence were preserved (`darkToggle`, `langSelect`, `soundToggle`, `settingsMinLap`, `settingsQLimit`, `settingsQMin`, `settingsQLaps`, `settingsFLimit`, `settingsFLaps`, `settingsFMin`, `settingsCountdown`, `settingsWarmupMinutes`, `announcerToggle`, `pilotVoiceToggle`, `voiceStartCallToggle`, `voiceBestLapToggle`, `voiceFinishToggle`, `voiceResultsToggle`, `voiceServiceToggle`).
+- Added dedicated desktop section switching (`data-settings-nav`) and mobile accordion toggles (`data-settings-mobile-toggle`).
+- JavaScript syntax check passed for the modified shell files.
+
+## Regression
+
+Run JavaScript syntax checks for modified files and reviewed settings action wiring against the existing save/update/offline/audio hooks. Physical device smoke test for the new Settings shell remains user-side on PWA/GitHub, especially for desktop ↔ mobile presentation and visual density evaluation.
+
+---
+
 # LEGION RX 4.2.0 CLEAN FULL APP RC38 · AVATAR CROP LAYER FIX — TEST REPORT
 
 ## Scope
