@@ -1,3 +1,7 @@
+# RC42 CURRENT UI TEST
+
+RC42 adds **APEX ORANGE** as a true alternate renderer, not a recolor of Classic. Switch it in Settings → Screen. Classic remains available and unchanged as the safe fallback. APEX owns its own main-page DOM/CSS while sharing the existing state/actions and preserving the protected race-status/pilot board on the cockpit.
+
 # LEGION RX 4.2.0 CLEAN FULL APP RC38 · AVATAR CROP LAYER FIX
 
 Direct code base: **RC34 LIVE PILOT STATS BROADCAST**.
@@ -130,6 +134,10 @@ Pilot avatar upload now uses manual square crop + automatic compact 480×480 Web
 Settings is rebuilt from RC38: desktop uses left navigation and one right surface; phone portrait uses a true collapsible accordion. Update is a separate section. Background noise is reduced with a denser glass surface and blur.
 
 
-## RC41 · Apex Orange Skin
+## RC42 APEX alternate renderer
 
-Classic remains the default UI. Settings → Screen can enable the isolated Apex Orange skin. The skin is implemented in `ui/skins/apex-orange.css`; sport/platform logic is unchanged.
+- RC42 starts from RC40; rejected RC41 theme override is not used.
+- APEX ORANGE is a separate UI renderer with its own DOM/CSS for Home, RallyCross Setup, Free Practice Setup, Pilots, Championships, Archive, Settings and cockpit shells.
+- Classic remains the default/fallback and its authoritative CSS is unchanged.
+- Settings → Screen switches CLASSIC / APEX ORANGE; choice persists locally.
+- RallyCross cockpit keeps the protected red race-status strip and pilot board/table; only the surrounding APEX shell/control area is replaced.

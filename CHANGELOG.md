@@ -1,14 +1,15 @@
 # LEGION RX CHANGELOG
 
-## RC41 · APEX ORANGE SKIN
+## RC42 · APEX ALTERNATE RENDERER TEST
 
-- Added a completely opt-in visual skin `Apex Orange` while preserving `Classic` as the default interface.
-- Classic authoritative visual files are unchanged: `ui/themes/theme.css`, `ui/shell/app.css`, `ui/pilots/pilot-cards.css`, and `ui/shell/discipline-pults.css`.
-- The new skin lives in one isolated file: `ui/skins/apex-orange.css`. Every runtime selector is scoped to `html[data-skin="apex-orange"]`.
-- Added Settings → Screen → Interface Skin selector. Switching skins saves immediately and does not rerender the Settings DOM, so unsaved form values are not lost.
-- Apex Orange defines its own typography stack, graphite/carbon background, orange accent system, buttons, cards, forms, settings, championships, archive, pilot cards, modals and cockpit shell controls.
-- RallyCross red race banner and the established pilot roster/rows are intentionally not targeted by the skin and remain visually/structurally unchanged.
-- RallyCross/Free Practice sport logic, LapWiz, audio, storage and reporting are unchanged.
+- RC41 theme-override approach is rejected and not used as a base. RC42 starts from the safe RC40 FULL.
+- Added APEX ORANGE as a physically separate alternate renderer: its own DOM for Home, RallyCross Setup, Free Practice Setup, Pilots, Championships, Championship Detail, Archive, Settings and both cockpit shells.
+- Classic remains the fallback/default renderer. Existing Classic visual styles (`app.css`, `theme.css`, `discipline-pults.css`, pilot-card CSS/JS) and sport/platform core are byte-identical to RC40.
+- Added a skin selector in Classic Settings → Screen and inside APEX Settings. Selection persists in the existing settings object.
+- RallyCross cockpit intentionally preserves the protected red race-status strip and authoritative pilot board/table; APEX replaces the surrounding shell/right control area.
+- APEX has its own navigation, icons, form/card/table layout, settings layout, responsive rules and tie-break screen. It does not call Classic page renderers.
+- Fixed the first portrait responsive pass before release: the APEX hero/status blocks now stack correctly on phone width instead of overlapping.
+- Release trio is synchronized to RC42 and the two APEX assets are included in the offline package.
 
 ## RC40 · CLEAN SETTINGS UI
 

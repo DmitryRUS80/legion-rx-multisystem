@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC41 · APEX ORANGE SKIN */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC42 · APEX ALTERNATE RENDERER TEST */
 'use strict';
 importScripts('./offline-manifest.js');
 

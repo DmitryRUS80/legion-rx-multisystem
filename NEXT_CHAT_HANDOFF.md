@@ -1,11 +1,13 @@
-# RC41 ADDENDUM · APEX ORANGE SKIN
+# RC42 ADDENDUM · APEX ALTERNATE RENDERER TEST
 
-- Current candidate: RC41 Apex Orange Skin, based on RC40.
-- Classic remains default and its four authoritative visual CSS files were not modified.
-- New opt-in skin file: `ui/skins/apex-orange.css`.
-- Skin selector: Settings → Screen → Classic / Apex Orange. Switch saves immediately without Settings rerender.
-- Do not merge Apex Orange rules back into Classic CSS. Future skins must be isolated the same way.
-- Protected RallyCross area: red race banner + roster/pilot rows. Apex skin may restyle cockpit header, best-lap strip, timer/right controls, but must not target the protected roster/banner selectors.
+- Current source candidate: RC42 APEX ALTERNATE RENDERER TEST. Base is RC40 FULL; RC41 is rejected and must not be used as source.
+- Classic is preserved as fallback/default. Do not move APEX styles into Classic CSS and do not convert APEX back into a theme override.
+- APEX source lives only in `ui/skins/apex/apex-renderer.js` + `ui/skins/apex/apex.css`; router chooses renderer from `state.settings.uiSkin`.
+- Classic Settings → Screen exposes CLASSIC / APEX ORANGE. The chosen value is stored inside the existing settings object; no platform/state schema change is required.
+- Protected cockpit contract remains: red race-status strip and pilot board/table are authoritative shared race UI; APEX may replace the surrounding shell/control surface only.
+- Runtime changes from RC40: `ui/shell/router.js`, `ui/shell/actions.js`, `ui/shell/views.js`, `index.html`, plus the two new APEX files. Release trio/docs/tests are synchronized separately.
+- Sport rules, LapWiz, audio, storage, reporting, pilot pipeline and Classic authoritative CSS remain unchanged.
+- Final RC42 regression: ALL automated tests PASS; offline manifest has 81 local references / 0 missing. Physical device/PWA/LapWiz acceptance remains required.
 
 # RC40 ADDENDUM · CLEAN SETTINGS UI
 

@@ -35,13 +35,10 @@ checks['protected_foundation_hashes_match_rc32']=not changed
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])
-checks['style_layers_exact']=all(x in index for x in ['ui/themes/theme.css','ui/shell/app.css','ui/pilots/pilot-cards.css','ui/shell/discipline-pults.css','ui/skins/apex-orange.css']) and index.count('rel="stylesheet"')==6 # + Oswald; Apex Orange is a separate opt-in skin layer
+checks['style_layers_exact']=all(x in index for x in ['ui/themes/theme.css','ui/shell/app.css','ui/pilots/pilot-cards.css','ui/shell/discipline-pults.css','ui/skins/apex/apex.css']) and index.count('rel="stylesheet"')==6 # Classic keeps its five authoritative layers (+ Oswald); APEX is one isolated alternate-renderer stylesheet.
 
 theme=(ROOT/'ui/themes/theme.css').read_text(encoding='utf-8')
 checks['theme_is_tokens_only']=not re.search(r'\.[A-Za-z_][\w-]*\s*[,{]',theme)
-skin=(ROOT/'ui/skins/apex-orange.css').read_text(encoding='utf-8')
-checks['apex_skin_opt_in_scoped']='html[data-skin=\"apex-orange\"]' in skin and 'html[data-skin=\"classic\"]' not in skin
-checks['apex_skin_preserves_race_roster']=all(x not in skin for x in ['html[data-skin=\"apex-orange\"] .rxnRoster','html[data-skin=\"apex-orange\"] .rxnPilotRow','html[data-skin=\"apex-orange\"] .rxnPilotData','html[data-skin=\"apex-orange\"] .rxnRaceTitleLeft{'])
 
 badfiles=[str(p.relative_to(ROOT)) for p in ROOT.rglob('*') if p.is_file() and re.search(r'(patch|hotfix|override|fix\.css|fix\.js)',p.name,re.I)]
 checks['no_patch_override_files']=not badfiles

@@ -1,0 +1,144 @@
+/* APEX ORANGE — physically separate UI skin/renderer. Classic CSS is not edited. */
+body.apexRenderer{--apx-bg:#090b0c;--apx-bg2:#101315;--apx-panel:rgba(18,21,22,.92);--apx-panel2:rgba(25,28,29,.96);--apx-line:#303537;--apx-line2:#42494c;--apx-text:#f4f3ef;--apx-muted:#9d9c96;--apx-orange:#ff8c16;--apx-orange2:#ffb347;--apx-danger:#e34848;background:#070809;color:var(--apx-text)}
+body.apexRenderer:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background:radial-gradient(circle at 10% 15%,rgba(255,140,22,.09),transparent 26%),linear-gradient(120deg,rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(30deg,rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(#080a0b,#0c0f10);background-size:auto,26px 26px,34px 34px,auto}
+body.apexRenderer .appbar{display:none!important}
+body.apexRenderer:not(.cockpitMode){padding-bottom:0!important}
+body.apexRenderer #viewHost{top:0!important;bottom:0!important;background:transparent!important;overflow:auto}
+body.apexRenderer .mainNav{display:none!important}
+body.apexRenderer .page{all:unset}
+body.apexRenderer button,body.apexRenderer input,body.apexRenderer select{font-family:"Segoe UI",Arial,sans-serif}
+body.apexRenderer .apxApp{min-height:100dvh;color:var(--apx-text);font-family:var(--rxn-font),"Arial Narrow",sans-serif}
+body.apexRenderer .apxContent{width:min(1440px,calc(100% - 28px));margin:0 auto;padding:22px 0 34px}
+body.apexRenderer .apxWide .apxContent{width:min(1680px,calc(100% - 22px))}
+body.apexRenderer .apxTopbar{height:58px;position:sticky;top:0;z-index:90;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;padding:0 18px;background:rgba(8,10,11,.94);border-bottom:1px solid #282d2f;backdrop-filter:blur(16px)}
+body.apexRenderer .apxBrand{border:0;background:none;color:#fff;padding:0;display:flex;align-items:baseline;gap:5px;font-size:22px;cursor:pointer;letter-spacing:.02em}
+body.apexRenderer .apxBrand b{font-weight:800}.apxBrand i{font-style:normal;color:var(--apx-orange);font-weight:900}
+body.apexRenderer .apxTopNav{display:flex;align-items:center;justify-content:center;gap:4px;min-width:0;overflow:auto;scrollbar-width:none}
+body.apexRenderer .apxTopNav button{border:0;border-bottom:2px solid transparent;background:transparent;color:#969a9c;min-height:58px;padding:0 11px;display:flex;align-items:center;gap:7px;font-size:14px;font-weight:800;white-space:nowrap;cursor:pointer}
+body.apexRenderer .apxTopNav button.active,body.apexRenderer .apxTopNav button:hover{color:#fff;border-bottom-color:var(--apx-orange)}
+body.apexRenderer .apxTopNav .apxIcon{width:15px;height:15px}
+body.apexRenderer .apxTopState{display:flex;gap:7px;align-items:center}.apxTopState>span{font-size:11px;font-weight:900;color:#777}.apxTopState>span.ok{color:#7fc953}.apxTopState button{width:36px;height:36px;border:1px solid #303537;background:#111416;color:#ddd;display:grid;place-items:center;border-radius:5px}.apxTopState .apxIcon{width:17px;height:17px}
+body.apexRenderer .apxPageTitle{width:min(1680px,calc(100% - 22px));margin:20px auto 0}.apxPageTitle small,.apxTitleRow small,.apxWorkHead small{font-size:12px;letter-spacing:.13em;color:var(--apx-orange);font-weight:900}.apxPageTitle h1,.apxTitleRow h1{font-size:38px;line-height:1;margin:4px 0 0;text-transform:uppercase}
+body.apexRenderer .apxTitleRow{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #313638}
+body.apexRenderer .apxBtn{min-height:42px;padding:0 16px;border-radius:4px;border:1px solid #4a4f51;background:#16191a;color:#eee;font-weight:900;text-transform:uppercase;letter-spacing:.02em;cursor:pointer;box-shadow:none}
+body.apexRenderer .apxBtn:hover{border-color:#747b7e;background:#1b1f20}.apxBtn.accent{background:linear-gradient(180deg,#ff981e,#e87900);border-color:#ffac48;color:#17100a}.apxBtn.danger{border-color:#743335;color:#ff8080;background:#1c1112}.apxBtn:disabled{opacity:.35;cursor:not-allowed}
+body.apexRenderer .apxIcon{width:20px;height:20px}
+
+/* HOME */
+body.apexRenderer .apxHomeHero{min-height:270px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.6fr);gap:20px;align-items:stretch;border-top:2px solid var(--apx-orange);border-bottom:1px solid #353a3c;background:linear-gradient(90deg,rgba(12,14,15,.97),rgba(12,14,15,.74)),radial-gradient(circle at 74% 45%,rgba(255,140,22,.16),transparent 35%);padding:34px 38px}
+.apxHeroCopy{align-self:center}.apxHeroCopy>small{color:var(--apx-orange);font-size:12px;font-weight:900;letter-spacing:.14em}.apxHeroCopy h1{font-size:62px;line-height:.95;margin:8px 0 12px;letter-spacing:.01em}.apxHeroCopy h1 i{font-style:normal;color:var(--apx-orange)}.apxHeroCopy p{max-width:640px;margin:0;color:#aaa;font:600 17px/1.35 Arial,sans-serif}.apxHeroActions{margin-top:22px}.apxHeroStatus{align-self:stretch;display:flex;flex-direction:column;justify-content:center;padding:24px;border-left:1px solid #3a3f41;background:rgba(255,255,255,.018)}.apxHeroStatus small{font-size:11px;color:var(--apx-orange);letter-spacing:.12em}.apxHeroStatus b{font-size:28px;margin:6px 0}.apxHeroStatus span{font-size:13px;color:#8f9496}
+.apxLaunchGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.apxLaunchGrid>button{min-height:150px;text-align:left;padding:18px;border:1px solid #343a3c;border-radius:5px;background:linear-gradient(160deg,#151819,#0f1112);color:#f3f3f0;display:flex;flex-direction:column;gap:10px;cursor:pointer}.apxLaunchGrid>button:hover{border-color:#8a551e;box-shadow:inset 0 -3px var(--apx-orange)}.apxLaunchGrid>button:disabled{opacity:.48}.apxLaunchIcon{width:42px;height:42px;display:grid;place-items:center;background:#222627;color:var(--apx-orange);border:1px solid #44494a;border-radius:4px}.apxLaunchGrid b{font-size:22px}.apxLaunchGrid small{font-size:13px;color:#8c9294}.apxQuickRow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}.apxQuickRow button{min-height:74px;border:1px solid #323738;background:#0e1112;color:#ddd;border-radius:4px;display:flex;align-items:center;gap:12px;padding:12px 14px;text-align:left;cursor:pointer}.apxQuickRow button:hover{background:#16191a;border-color:#5a6062}.apxQuickRow .apxIcon{color:var(--apx-orange)}.apxQuickRow b{display:block;font-size:18px}.apxQuickRow small{display:block;color:#82888a;font-size:12px;margin-top:2px}
+
+/* FORMS / SETUP */
+.apxSetup{display:grid;grid-template-columns:230px minmax(0,1fr);gap:14px}.apxSteps{background:#0d0f10;border:1px solid #303536;align-self:start}.apxSteps button{width:100%;min-height:56px;border:0;border-left:3px solid transparent;border-bottom:1px solid #242829;background:transparent;color:#7f8587;text-align:left;display:flex;align-items:center;gap:12px;padding:0 13px}.apxSteps button.active{color:#fff;border-left-color:var(--apx-orange);background:#171a1b}.apxSteps b{width:24px;height:24px;border:1px solid #4a5052;display:grid;place-items:center;border-radius:3px;color:var(--apx-orange)}.apxWork{min-width:0}.apxWorkHead,.apxRuleHead{display:flex;align-items:center;justify-content:space-between;gap:14px}.apxWorkHead{padding-bottom:13px;border-bottom:1px solid #34393a}.apxWorkHead h2,.apxRule h3,.apxPracticeForm h2,.apxPracticePilots h2,.apxSheet h2,.apxStages h2,.apxSettingsBlock h2{margin:0;font-size:24px;text-transform:uppercase}.apxFormGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px;margin-top:14px}.apxField{display:flex;flex-direction:column;gap:5px}.apxField>span{color:#a9adae;font-size:12px;font-weight:900;text-transform:uppercase}.apxField input,.apxField select{min-height:42px;width:100%;box-sizing:border-box;border:1px solid #3a3f41;background:#0d1011;color:#eee;border-radius:3px;padding:8px 10px;font-size:16px;outline:none}.apxField input:focus,.apxField select:focus{border-color:var(--apx-orange)}.apxActionLine{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;flex-wrap:wrap}.apxRule{margin-top:14px;padding-top:14px;border-top:1px solid #323637}.apxPilotStrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:10px}.apxPilotMini{position:relative;min-height:130px;border:1px solid #34393a;background:#121516;padding:8px;display:grid;grid-template-columns:40px 1fr;align-items:end;gap:8px}.apxPilotAvatar{grid-column:1/-1;height:72px;overflow:hidden;background:#191d1e}.apxPilotAvatar img,.apxPilotAvatarImg{width:100%;height:100%;object-fit:cover}.apxPilotMini .rxnFlag{position:absolute;right:8px;top:8px}.apxPilotNo{width:38px;height:30px;background:var(--apx-id);color:#111;display:grid;place-items:center;font-size:17px;font-weight:900}.apxPilotMini>b{font-size:15px;align-self:center}.apxFormatGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}.apxFormatGrid>div{padding:12px;border-left:2px solid #3e4345;background:#101314}.apxFormatGrid>div>b{font-size:15px;color:var(--apx-orange)}.apxFormatGrid .apxField{margin-top:9px}
+
+/* PRACTICE SETUP */
+.apxPracticeSetup{display:grid;grid-template-columns:minmax(300px,.72fr) minmax(0,1.28fr);gap:14px}.apxPracticeForm,.apxPracticePilots{padding:16px;background:rgba(13,16,17,.92);border:1px solid #303536}.apxPracticeForm .apxField{margin-top:10px}.apxPracticeForm p{font:13px/1.4 Arial,sans-serif;color:#83898b;margin:16px 0 0}.apxSelectGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.apxSelectPilot{border:1px solid #33383a;background:#111415;padding:9px;min-width:0}.apxSelectPilot.selected,.apxSelectPilot.hasSelection{border-color:#85501a;box-shadow:inset 0 -2px var(--apx-orange)}.apxSelectTop{display:grid;grid-template-columns:42px 1fr 25px;gap:7px;align-items:center}.apxSelectTop>div:first-child{height:42px;background:#1b1f20;overflow:hidden}.apxSelectAvatar{width:100%;height:100%;object-fit:cover}.apxSelectTop>b{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.apxModelChoices{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}.apxModelChoices button{border:1px solid #363b3d;background:#0c0f10;color:#ddd;padding:5px 7px;min-width:58px;border-radius:2px;cursor:pointer}.apxModelChoices button.selected{border-color:var(--apx-id);box-shadow:inset 3px 0 var(--apx-id)}.apxModelChoices strong{display:block}.apxModelChoices small{display:block;font-size:9px;color:#858b8d}.trackPilotSelectedCount{color:var(--apx-orange);font-weight:900}
+
+/* PILOTS */
+.apxPilotsGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.apxPilotCard{position:relative;border:1px solid #34393b;background:#101314;min-height:225px;padding:10px;display:grid;grid-template-rows:110px auto auto}.apxPilotEdit{position:absolute;right:8px;top:8px;width:32px;height:32px;border:1px solid #42484a;background:#141718;color:#ddd;z-index:2}.apxPilotPortrait{height:110px;overflow:hidden;background:#1b1e1f}.apxPilotCardAvatar{width:100%;height:100%;object-fit:cover}.apxPilotIdentity{display:grid;grid-template-columns:46px 1fr;gap:9px;align-items:center;margin-top:8px}.apxNumber{height:40px;background:var(--apx-id);display:grid;place-items:center;color:#101010;font-size:18px;font-weight:900}.apxPilotIdentity h3{font-size:18px;margin:0}.apxPilotIdentity>div>span{display:flex;align-items:center;gap:5px;color:#92989a;font-size:11px;margin-top:3px}.apxPilotStats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #303536;margin-top:9px;padding-top:8px}.apxPilotStats span{text-align:center;border-right:1px solid #2a2f30}.apxPilotStats span:last-child{border-right:0}.apxPilotStats b{display:block;font-size:18px}.apxPilotStats small{font-size:9px;color:#818789}
+
+/* CHAMPIONSHIPS */
+.apxChampGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.apxChampCard,.apxArchiveGrid article,.apxSheet,.apxStages{border:1px solid #34393a;background:#101314;padding:16px}.apxChampTop{display:flex;align-items:center;justify-content:space-between;gap:14px}.apxChampTop small{color:var(--apx-orange);font-weight:900}.apxChampTop h2{font-size:26px;margin:3px 0}.apxTable,.apxList{margin-top:13px;border-top:1px solid #3a3f40}.apxTable>div,.apxList>div{display:grid;grid-template-columns:44px minmax(0,1fr) 100px;gap:8px;align-items:center;min-height:42px;border-bottom:1px solid #272c2d;padding:0 7px}.apxTable strong{color:var(--apx-orange);text-align:right}.apxTabs{display:flex;gap:2px;border-bottom:1px solid #34393a;margin:-4px 0 14px}.apxTabs button{border:0;border-bottom:2px solid transparent;background:transparent;color:#929799;min-height:42px;padding:0 15px;font-weight:900;cursor:pointer}.apxTabs button.active{color:#fff;border-bottom-color:var(--apx-orange)}.apxList>div{grid-template-columns:42px minmax(0,1fr) minmax(100px,.5fr) auto}.apxList em{font-style:normal;color:#8b9193}.apxList button{border:1px solid #474d4f;background:#121516;color:#ddd;padding:6px 9px}.apxStageGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}.apxStageGrid article{border:1px solid #353a3b;background:#121516;padding:13px}.apxStageGrid article>small{color:var(--apx-orange);font-weight:900}.apxStageGrid h3{font-size:21px;margin:5px 0}.apxStageGrid p{color:#8d9395;margin:0 0 9px}.apxStageGrid article>span{font-size:10px;font-weight:900;color:#a3a8aa}.apxStageGrid article>span.completed{color:#62c764}.apxStageGrid article>div{display:flex;gap:6px;margin-top:11px}.apxArchiveGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.apxArchiveGrid article{min-height:150px}.apxArchiveGrid article>small{color:var(--apx-orange);font-weight:900}.apxArchiveGrid h2{font-size:22px;margin:6px 0}.apxArchiveGrid p{color:#888e90}.apxArchiveGrid article>div{display:flex;gap:6px;margin-top:16px}
+
+/* SETTINGS */
+.apxToggle{appearance:none;width:50px;height:26px;border:1px solid #555b5d;border-radius:2px;background:#262a2b;position:relative;cursor:pointer}.apxToggle:after{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#8e9496;transition:.15s}.apxToggle:checked{background:#8a4d0c;border-color:#d87913}.apxToggle:checked:after{left:27px;background:#ff9b25}
+
+.apxSettingsLayout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:12px}.apxSettingsNav{border:1px solid #303536;background:#0d0f10;padding:6px;align-self:start}.apxSettingsNav button{display:block;width:100%;min-height:44px;text-align:left;border:0;border-left:3px solid transparent;background:transparent;color:#909698;padding:0 12px;font-weight:900;text-transform:uppercase;cursor:pointer}.apxSettingsNav button.active{background:#191c1d;color:#fff;border-left-color:var(--apx-orange)}.apxSettingsPane{min-height:420px;border:1px solid #34393a;background:#101314;padding:18px}.apxSettingsPanel{display:none}.apxSettingsPanel.active{display:block}.apxSettingsBlock>h2{margin-bottom:14px}.apxSettingsBlock>h2:not(:first-child){margin-top:25px;padding-top:15px;border-top:1px solid #303536}.apxSettingRow{display:flex;align-items:center;justify-content:space-between;min-height:48px;border-bottom:1px solid #292e2f;font-size:16px;font-weight:800}.apxSkinChooser{display:grid;grid-template-columns:repeat(2,minmax(0,260px));gap:8px;margin-bottom:20px}.apxSkinChooser button{min-height:74px;border:1px solid #444a4c;background:#121516;color:#d5d5d2;text-align:left;padding:12px}.apxSkinChooser button.active{border-color:#c76f11;box-shadow:inset 4px 0 var(--apx-orange)}.apxSkinChooser b,.apxSkinChooser small{display:block}.apxSkinChooser b{font-size:18px}.apxSkinChooser small{font-size:11px;color:#858b8d;margin-top:4px}.apxInfoRows{border-top:1px solid #333839}.apxInfoRows>div{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;min-height:46px;border-bottom:1px solid #292d2e}.apxInfoRows span{color:#9ca1a3}.apxInfoRows b{color:#f1f1ed}.apxSettingsBlock p{font:14px/1.45 Arial,sans-serif;color:#92989a}
+
+/* APEX COCKPIT: preserve red banner + pilot board, replace shell and right controls */
+body.apexRenderer.cockpitMode #viewHost{overflow:hidden!important}.apxCockpit{height:100dvh;background:#071017}.apxCockpit .rxnTop{background:#0a0c0d;border-bottom-color:#2d3133}.apxCockpit .rxnTopButton,.apxCockpit .rxnPrimaryNav button{border-color:#34393b;background:#101314}.apxCockpit .rxnTopButton:hover,.apxCockpit .rxnPrimaryNav button:hover{border-color:#8b551d}.apxCockpit .rxnHomeBrand i{color:var(--apx-orange)}.apxRaceMain{display:grid;grid-template-columns:minmax(0,1fr) minmax(310px,31vw);min-height:0;height:calc(100dvh - var(--rxn-top-h) - var(--rxn-title-h));overflow:hidden}.apxRaceMain .rxnRoster{min-width:0}.apxRaceSide{background:linear-gradient(180deg,#0d1113,#090b0c);border-left:1px solid #353a3b;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:0;overflow:auto}.apxTimer{position:relative;min-height:180px;border-bottom:1px solid #34393a;padding:10px 118px 14px 4px}.apxTimer>small{color:var(--apx-orange);font-size:14px;font-weight:900}.apxTimer>strong{font-size:74px;line-height:.95;display:block;margin:8px 0 2px}.apxTimer>span{color:#8b9193;font-size:12px;font-weight:900}.apxRing{position:absolute;right:8px;top:20px;width:104px;height:104px;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle,#0d1113 58%,transparent 60%),conic-gradient(var(--apx-orange) var(--ring-progress),#303536 0)}.apxRing b{display:block;font-size:29px}.apxRing small{font-size:9px;color:#9da2a3}.apxRaceControls .rxnControls{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.apxRaceControls .rxnControl{min-height:66px;border-radius:3px;border:1px solid #34393a;background:#111415}.apxRaceControls .rxnControl{gap:8px;padding:6px 9px}.apxRaceControls .rxnControl svg{width:28px;height:28px}.apxRaceControls .rxnControl b{font-size:16px;letter-spacing:.02em}.apxRaceControls .rxnControl:after{width:7px}.apxRaceControls .rxnControl.primary{background:linear-gradient(#ff981e,#e47a05);border-color:#ffae50;color:#18100a}.apxRaceControls .rxnControl.blue{background:#151819;border-color:#555c5f}.apxRaceControls .rxnControl.danger{background:#1b1112;border-color:#703438;color:#ff7474}.apxRaceSide .rxnDisplayTools{margin-top:auto}.apxRaceSide .rxnColumnToggles button.active,.apxRaceSide .rxnPrecisionToggles button.active{border-color:var(--apx-orange)!important;color:var(--apx-orange)!important}
+
+.apxEmpty{min-height:120px;display:grid;place-items:center;color:#777d7f;border:1px dashed #34393b}.apxApp .rxnFlag{width:24px;height:15px;display:inline-block;background-image:url('../../../flags/flags-atlas-rc4.png');background-size:1600% 1600%;background-position:var(--country-flag-position)}
+
+@media(max-width:980px){
+ body.apexRenderer .apxTopbar{grid-template-columns:auto 1fr}
+ body.apexRenderer .apxTopState{display:none}
+ body.apexRenderer .apxTopNav{justify-content:flex-end}
+ body.apexRenderer .apxTopNav button span{display:none}
+ body.apexRenderer .apxTopNav button{padding:0 9px}
+ body.apexRenderer .apxLaunchGrid,body.apexRenderer .apxQuickRow{grid-template-columns:repeat(2,1fr)}
+ body.apexRenderer .apxSetup{grid-template-columns:1fr}
+ body.apexRenderer .apxSteps{display:grid;grid-template-columns:repeat(4,1fr)}
+ body.apexRenderer .apxSteps button{border-left:0;border-bottom:2px solid transparent;justify-content:center;padding:8px}
+ body.apexRenderer .apxSteps button.active{border-bottom-color:var(--apx-orange)}
+ body.apexRenderer .apxFormatGrid{grid-template-columns:1fr}
+ body.apexRenderer .apxPracticeSetup{grid-template-columns:1fr}
+ body.apexRenderer .apxPilotsGrid{grid-template-columns:repeat(3,1fr)}
+ body.apexRenderer .apxChampGrid{grid-template-columns:1fr}
+ body.apexRenderer .apxStageGrid,body.apexRenderer .apxArchiveGrid{grid-template-columns:repeat(2,1fr)}
+ body.apexRenderer .apxSettingsLayout{grid-template-columns:180px 1fr}
+ body.apexRenderer .apxRaceMain{grid-template-columns:minmax(0,1fr) minmax(280px,35vw)}
+ body.apexRenderer .apxTimer>strong{font-size:58px}
+}
+@media(max-width:760px){
+ body.apexRenderer #viewHost{overflow:auto!important}
+ body.apexRenderer .apxApp .apxContent,body.apexRenderer .apxWide .apxContent{width:calc(100% - 14px);padding:10px 0 18px}
+ body.apexRenderer .apxTopbar{height:52px!important;padding:0 8px!important;gap:8px!important;grid-template-columns:auto minmax(0,1fr)}
+ body.apexRenderer .apxBrand{font-size:18px!important}
+ body.apexRenderer .apxTopNav{gap:0!important;justify-content:flex-end}
+ body.apexRenderer .apxTopNav button{min-height:52px!important;padding:0 7px!important}
+ body.apexRenderer .apxTopNav button span{display:none}
+ body.apexRenderer .apxHeroCopy h1{font-size:42px}
+ body.apexRenderer .apxHomeHero{grid-template-columns:minmax(0,1fr);min-height:0;padding:20px 16px;gap:18px}
+ body.apexRenderer .apxHeroStatus{border-left:0;border-top:1px solid #3a3f41;padding:14px 0 0;min-width:0}
+ body.apexRenderer .apxHeroStatus b{font-size:22px;overflow-wrap:anywhere}
+ body.apexRenderer .apxLaunchGrid,body.apexRenderer .apxQuickRow{grid-template-columns:1fr 1fr}
+ body.apexRenderer .apxLaunchGrid>button{min-height:120px;padding:13px}
+ body.apexRenderer .apxLaunchGrid b{font-size:17px}
+ body.apexRenderer .apxQuickRow button{min-height:62px}
+ body.apexRenderer .apxPageTitle{width:calc(100% - 14px);margin-top:12px}
+ body.apexRenderer .apxPageTitle h1,body.apexRenderer .apxTitleRow h1{font-size:27px}
+ body.apexRenderer .apxTitleRow{align-items:flex-start;flex-direction:column}
+ body.apexRenderer .apxSteps{grid-template-columns:1fr 1fr}
+ body.apexRenderer .apxSteps button{justify-content:flex-start}
+ body.apexRenderer .apxFormGrid{grid-template-columns:1fr}
+ body.apexRenderer .apxPilotStrip{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.apexRenderer .apxPracticeSetup{gap:8px}
+ body.apexRenderer .apxPracticeForm,body.apexRenderer .apxPracticePilots{padding:11px}
+ body.apexRenderer .apxSelectGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.apexRenderer .apxPilotsGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.apexRenderer .apxPilotCard{min-height:190px}
+ body.apexRenderer .apxChampGrid,body.apexRenderer .apxArchiveGrid,body.apexRenderer .apxStageGrid{grid-template-columns:1fr}
+ body.apexRenderer .apxTabs{overflow:auto;scrollbar-width:none}
+ body.apexRenderer .apxList>div{grid-template-columns:32px minmax(0,1fr) auto}
+ body.apexRenderer .apxList em{display:none}
+ body.apexRenderer .apxSettingsLayout{grid-template-columns:1fr}
+ body.apexRenderer .apxSettingsNav{display:flex;overflow:auto;padding:4px}
+ body.apexRenderer .apxSettingsNav button{width:auto;min-width:max-content;border-left:0;border-bottom:2px solid transparent;padding:0 10px}
+ body.apexRenderer .apxSettingsNav button.active{border-bottom-color:var(--apx-orange);border-left:0}
+ body.apexRenderer .apxSettingsPane{padding:12px;min-height:0}
+ body.apexRenderer .apxSkinChooser{grid-template-columns:1fr 1fr}
+ body.apexRenderer .apxCockpit{height:auto;min-height:100dvh}
+ body.apexRenderer .apxCockpit .rxnTop{position:relative}
+ body.apexRenderer .apxRaceMain{display:block;height:auto;overflow:visible}
+ body.apexRenderer .apxRaceSide{border-left:0;border-top:1px solid #353a3b;overflow:visible}
+ body.apexRenderer .apxTimer{min-height:145px}
+ body.apexRenderer .apxTimer>strong{font-size:54px}
+ body.apexRenderer .apxRaceControls .rxnControls{grid-template-columns:repeat(2,1fr)}
+}
+
+body.apexRenderer .modalBackdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(9px)}body.apexRenderer .modal{background:#101314;border:1px solid #444a4c;border-radius:5px;color:#eee;box-shadow:0 26px 80px rgba(0,0,0,.55)}body.apexRenderer .modalHead{border-bottom:1px solid #33383a;padding-bottom:10px}body.apexRenderer .modalHead h2{color:#fff}body.apexRenderer .modal .btn.primary{background:#ff8c16;color:#17100a;border-color:#ffb04e}body.apexRenderer .modal .btn.secondary{background:#171a1b;border-color:#444a4c;color:#eee}body.apexRenderer .modal .field input,body.apexRenderer .modal .field select{background:#0b0e0f;border-color:#3e4446;color:#fff}
+
+/* APEX tie-break renderer — never falls back to Classic DOM. */
+body.apexRenderer .apxTieLayout{height:calc(100dvh - var(--rxn-top-h) - var(--rxn-title-h));display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,28vw);background:#080a0b}
+body.apexRenderer .apxTieStage{padding:34px;overflow:auto}
+body.apexRenderer .apxTieStage>small{color:var(--apx-orange);font-weight:900;letter-spacing:.12em}
+body.apexRenderer .apxTieStage h1{font-size:42px;line-height:1;margin:7px 0 10px}
+body.apexRenderer .apxTieStage>p{max-width:760px;color:#989d9f;font:15px/1.45 Arial,sans-serif}
+body.apexRenderer .apxTieRows{margin:24px 0;display:grid;gap:7px}
+body.apexRenderer .apxTieRow{min-height:62px;display:grid;grid-template-columns:38px minmax(0,1fr) auto;align-items:center;gap:12px;border-top:1px solid #353a3b;border-bottom:1px solid #222627;background:#101314;padding:0 14px}
+body.apexRenderer .apxTieRow>span{color:var(--apx-orange);font-size:24px;font-weight:900}
+body.apexRenderer .apxTieRow>b{font-size:20px}
+body.apexRenderer .apxTieRow>small{color:#7e8587;font-size:10px;font-weight:900}
+body.apexRenderer .apxTieSide{border-left:1px solid #353a3b;background:#0d1113;padding:28px 20px;display:flex;flex-direction:column;gap:10px}
+body.apexRenderer .apxTieSide>b{font-size:34px;color:var(--apx-orange)}
+body.apexRenderer .apxTieSide>span{color:#8d9395;font:13px/1.35 Arial,sans-serif;margin-bottom:16px}
+@media(max-width:760px){
+ body.apexRenderer .apxTieLayout{height:auto;min-height:calc(100dvh - var(--rxn-top-h) - var(--rxn-title-h));grid-template-columns:1fr}
+ body.apexRenderer .apxTieStage{padding:18px 12px}
+ body.apexRenderer .apxTieStage h1{font-size:30px}
+ body.apexRenderer .apxTieRow{grid-template-columns:32px 1fr}
+ body.apexRenderer .apxTieRow>small{grid-column:2}
+ body.apexRenderer .apxTieSide{border-left:0;border-top:1px solid #353a3b;padding:16px 12px}
+}

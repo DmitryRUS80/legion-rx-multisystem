@@ -11,8 +11,10 @@ function clearIntervalsIfNotCockpit(){
 
 function uiRender(){
   clearIntervalsIfNotCockpit();
-  const host=$('#viewHost');
-  if(state.view==='home')host.innerHTML=homeView();
+  const host=$('#viewHost'),apex=String(state.settings.uiSkin||'classic')==='apex-orange'&&typeof apexRenderView==='function';
+  document.body.classList.toggle('apexRenderer',apex);
+  if(apex)host.innerHTML=apexRenderView(state.view);
+  else if(state.view==='home')host.innerHTML=homeView();
   else if(state.view==='rallySetup')host.innerHTML=rallySetupView();
   else if(state.view==='cockpit')host.innerHTML=cockpitView();
   else if(state.view==='trackDaySetup')host.innerHTML=trackDaySetupView();
