@@ -1,11 +1,11 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC38 · AVATAR CROP LAYER FIX
+# LEGION RX 4.2.0 CLEAN FULL APP RC39 · SETTINGS UI REWORK TEST
 
 Direct code base: **RC34 LIVE PILOT STATS BROADCAST**.
 
 
-## RC38 current release
+## RC39 current release
 
-RC38 is a focused repair of the RC37 avatar crop UI. The crop dialog now stacks above the pilot editor and is centered on mobile instead of appearing only after the editor is closed. Confirming the crop updates the open editor avatar immediately. The existing 480×480 compression pipeline remains authoritative, with the target tightened to about 72 KB. Sport/timing/LapWiz/audio/storage-engine/reporting behavior is unchanged.
+RC39 is a focused Settings UI test rebuild on top of RC38. Desktop/tablet Settings use a left section rail with content on the right; narrow mobile layouts use downward-opening accordion sections. Update / Offline is now a dedicated section. Existing settings actions and storage contracts are preserved. Sport/timing/LapWiz/audio-engine/storage-engine/reporting behavior is unchanged.
 
 ## RC36 current release
 

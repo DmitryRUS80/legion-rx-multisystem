@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC38 · AVATAR CROP LAYER FIX */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC39 · SETTINGS UI REWORK TEST */
 'use strict';
 importScripts('./offline-manifest.js');
 

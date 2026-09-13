@@ -12,11 +12,13 @@ UI shell settings screen only. Runtime changes are limited to `ui/shell/views.js
 - Existing action hooks remain reachable from the new layout: `save-settings`, `lap-connect`, `lap-disconnect`, `test-bleep`, `audio-enable`, `test-good-race`, `test-start-horn`, `offline-check`, `update-check`, `update-install`, and `open-design-lab`.
 - Existing setting IDs used by persistence were preserved (`darkToggle`, `langSelect`, `soundToggle`, `settingsMinLap`, `settingsQLimit`, `settingsQMin`, `settingsQLaps`, `settingsFLimit`, `settingsFLaps`, `settingsFMin`, `settingsCountdown`, `settingsWarmupMinutes`, `announcerToggle`, `pilotVoiceToggle`, `voiceStartCallToggle`, `voiceBestLapToggle`, `voiceFinishToggle`, `voiceResultsToggle`, `voiceServiceToggle`).
 - Added dedicated desktop section switching (`data-settings-nav`) and mobile accordion toggles (`data-settings-mobile-toggle`).
-- JavaScript syntax check passed for the modified shell files.
+- JavaScript syntax check passed for the modified shell files and release metadata scripts (`offline-manifest.js`, `sw.js`).
+- RC39 release metadata is synchronized: `VERSION.txt`, `offline-manifest.js` display/app version, unique RC39 cache namespace, and `sw.js` release marker. This is required so an RC38 PWA actually discovers RC39 as a new service worker candidate.
+- Offline manifest local asset audit passed: every local path listed in the RC39 package exists in FULL.
 
 ## Regression
 
-Run JavaScript syntax checks for modified files and reviewed settings action wiring against the existing save/update/offline/audio hooks. Physical device smoke test for the new Settings shell remains user-side on PWA/GitHub, especially for desktop ↔ mobile presentation and visual density evaluation.
+Run JavaScript syntax checks for modified files and reviewed settings action wiring against the existing save/update/offline/audio hooks. Physical device smoke test for the new Settings shell remains user-side on PWA/GitHub, especially for RC38 → RC39 updater discovery/activation and desktop ↔ mobile presentation. Container Chromium could not be used for the PWA smoke because the environment blocks localhost navigation; no physical-device PASS is claimed.
 
 ---
 

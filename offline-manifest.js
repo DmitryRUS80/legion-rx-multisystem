@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc37-avatar-crop-compression';
-  const displayVersion='4.2.0 CLEAN FULL APP RC38 · AVATAR CROP LAYER FIX';
-  const cacheName='legion-rx-4-2-0-clean-full-rc38-avatar-crop-layer-fix';
+  const appVersion='4.2.0-clean-full-rc39-settings-ui-rework-test';
+  const displayVersion='4.2.0 CLEAN FULL APP RC39 · SETTINGS UI REWORK TEST';
+  const cacheName='legion-rx-4-2-0-clean-full-rc39-settings-ui-rework-test';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

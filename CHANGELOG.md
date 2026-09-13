@@ -8,6 +8,7 @@
 - Increased settings typography density/legibility inside the new shell: larger headings, larger row text, less microtype, tighter vertical rhythm, fewer decorative frames.
 - Preserved the existing settings contract and actions: save-settings, theme/language persistence, LapWiz connect/disconnect, bleep test, announcer toggles, Design Lab, offline-check, update-check and update-install remain functional through the new layout.
 - Runtime scope is limited to UI shell settings rendering/styling/binding only (`ui/shell/views.js`, `ui/shell/actions.js`, `ui/shell/app.css`). Sport rules, LapWiz protocol/timing, archive logic, pilot DB and reporting are unchanged.
+- Release packaging corrected before reissue: RC39 now updates `VERSION.txt`, `offline-manifest.js` and `sw.js` together, including a unique RC39 cache namespace. Without the service-worker change an installed RC38 PWA cannot discover the UI-only upload as a new application version.
 
 ## RC37 · AVATAR CROP + COMPRESSION
 
