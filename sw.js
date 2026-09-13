@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC39 · SETTINGS UI REWORK TEST */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC40 · CLEAN SETTINGS UI */
 'use strict';
 importScripts('./offline-manifest.js');
 

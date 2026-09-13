@@ -38,7 +38,7 @@ svg{display:block}
 .moduleCard em{font-size:12px;color:var(--muted);font-style:normal}
 /* General cards/forms */
 .grid{display:grid;gap:16px}
-.grid2,.settingsGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-card);box-shadow:var(--shadow);padding:var(--card-padding)}
 .card h2,.card h3{margin:0 0 8px}
 .card p{color:var(--muted);line-height:1.5}
@@ -107,7 +107,7 @@ svg{display:block}
 .designQuickBtn svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .designQuickBtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 /* keep the approved compact industrial geometry throughout the application */
-.btn,.moduleCard,.disciplineTile,.card,.field input,.field select,.toggleRow,.modal,.iconBtn{transition:border-color .16s ease,background .16s ease,color .16s ease,transform .16s ease}
+.btn,.moduleCard,.disciplineTile,.card,.field input,.field select,.modal,.iconBtn{transition:border-color .16s ease,background .16s ease,color .16s ease,transform .16s ease}
 .card h2,.card h3,.pageHeader h1,.disciplineTile h3,.moduleCard b{font-family:var(--race-font);font-stretch:condensed}
 body.cockpitMode{background:var(--race-bg)}
 /* top race status bar */
@@ -279,7 +279,6 @@ body,.btn,.field input,.field select,.mainNav button{font-family:var(--rx-ui-fon
 .updateStateBox.error>i{background:var(--v4-magenta)}
 .updateWarning{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;margin:10px 0 12px;padding:10px 12px;border:1px solid var(--v4-line);border-radius:4px;background:var(--v4-surface2);color:var(--v4-muted);font-size:11px;line-height:1.4}
 .updateWarning b{color:var(--v4-amber);font:700 11px/1.2 var(--v4-font);letter-spacing:.06em}
-.updateSettingsCard [hidden]{display:none!important}
 @keyframes offlinePulse{
   0%,100%{opacity:.45;transform:scale(.82)}
   50%{opacity:1;transform:scale(1.08)}
@@ -392,14 +391,14 @@ body button,body input,body select,body textarea{font-family:inherit}
 .pageHeader h2{font-family:var(--rxn-font)}
 .pageHeader p{margin:7px 0 0;line-height:1.55;color:var(--rxn-muted);}
 /* Generic surfaces */
-.card,.disciplineTile,.moduleCard,.settingGroup,.ruleBox,.listRow,.champStageCard,.archiveCard,.formatRuleGrid{background:rgba(7,25,39,.84);border:1px solid var(--rxn-line);border-radius:5px;box-shadow:none;color:var(--rxn-text)}
+.card,.disciplineTile,.moduleCard,.ruleBox,.listRow,.champStageCard,.archiveCard,.formatRuleGrid{background:rgba(7,25,39,.84);border:1px solid var(--rxn-line);border-radius:5px;box-shadow:none;color:var(--rxn-text)}
 .card:hover,.moduleCard:hover,.disciplineTile:hover:hover{border-color:#1b638f}
 .homeSectionHead{display:flex;align-items:end;justify-content:space-between;margin:18px 2px 8px;}
 .homeSectionHead h2{font-size:25px;margin:5px 0 0;font:700 23px/1 var(--rxn-font);text-transform:uppercase;}
 .disciplineGrid,.moduleGrid,.grid{gap:8px}
 .disciplineTile{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-tile);display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow);position:relative;overflow:hidden;text-align:left;min-height:220px;padding:14px;}
 .disciplineTile h3{font-size:26px;letter-spacing:-.025em;font:700 25px/1 var(--rxn-font);margin:18px 0 7px;text-transform:uppercase;}
-.disciplineTile p,.moduleCard em,.sub,.muted,.settingGroup p{color:var(--rxn-muted)}
+.disciplineTile p,.moduleCard em,.sub,.muted{color:var(--rxn-muted)}
 .moduleCard{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius-card);text-align:left;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;color:var(--text);cursor:pointer;box-shadow:0 8px 25px rgba(40,70,110,.05);padding:12px;}
 .moduleCard b{font-size:18px;text-transform:uppercase;}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;font-size:10px;font-weight:900;letter-spacing:.04em;border-radius:3px;background:#09283e;color:var(--rxn-blue);}
@@ -409,14 +408,6 @@ body button,body input,body select,body textarea{font-family:inherit}
 .listRow{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--panel2);padding:9px 10px;}
 .name{font-family:var(--rxn-font);font-weight:700}
 .legionClubMark i{font-style:italic;color:var(--rxn-blue);}
-.settingsGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.settingGroup h3{margin:0 0 12px;display:flex;align-items:center;font:700 19px/1 var(--rxn-font);text-transform:uppercase;}
-.backgroundSettingGrid{display:grid;grid-template-columns:minmax(120px,.55fr) minmax(0,1.45fr);gap:10px;margin-top:12px;align-items:end}
-.backgroundColorField{display:grid;gap:5px}.backgroundColorField>span,.backgroundImageField>span{font:800 10px/1 var(--v4-font);letter-spacing:.08em;color:var(--v4-muted)}
-.backgroundColorField input[type=color]{width:100%;height:42px;padding:0;border:0;border-radius:0;background:transparent;cursor:pointer}
-.backgroundImageField{display:grid;gap:5px}.backgroundImageActions{display:flex;gap:7px;flex-wrap:wrap}.backgroundImageActions .btn{min-height:42px}
-.backgroundImageState{font:700 9px/1.2 var(--v4-font);color:var(--v4-muted);min-height:12px}
-@media(max-width:620px){.backgroundSettingGrid{grid-template-columns:1fr}.backgroundImageActions .btn{flex:1}}
 
 /* Modal / drawers */
 .manualPilotBtn,.resultEditRow,.resultPreview,.trackReportPilot{background:#081b2a;border:1px solid var(--rxn-line);border-radius:4px;color:var(--rxn-text)}
@@ -453,7 +444,7 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
 .pageHeader h1,.homeSectionHead h2{font-weight:900;text-transform:uppercase;letter-spacing:.005em}
 .sectionLabel{font-size:11px;text-transform:uppercase;font:700 9px/1 var(--rxn-font);color:var(--v4-text);font-family:var(--v4-font);font-weight:900;letter-spacing:.18em;}
 .sectionLabel:after{content:"";display:inline-block;width:24px;height:3px;background:var(--v4-cobalt);margin-left:10px;vertical-align:2px}
-.pageHeader p,.settingGroup p,.muted,.sub{color:var(--v4-muted)}
+.pageHeader p,.muted,.sub{color:var(--v4-muted)}
 /* ===== HERO / CARDS ===== */
 .heroPanel{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);gap:26px;align-items:center;position:relative;overflow:hidden;min-height:178px;border-radius:5px;padding:24px 28px;background:var(--v4-surface);color:var(--v4-text);border:1px solid var(--v4-line-strong);box-shadow:none;}
 .heroPanel:after{content:"";position:absolute;width:440px;height:440px;border:1px solid rgba(255,255,255,.13);border-radius:50%;right:-150px;top:-230px;box-shadow:0 0 0 70px rgba(255,255,255,.035),0 0 0 140px rgba(255,255,255,.025);display:none;}
@@ -466,7 +457,7 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
 .liveCard small{font-size:10px;letter-spacing:.13em;color:var(--v4-control-text);}
 .liveCard .liveDot{margin-top:8px;background:var(--v4-green);box-shadow:none;}
 .liveCard .btn{grid-column:1/-1;margin-top:8px;background:var(--v4-control);color:var(--v4-control-text);border-color:var(--v4-line-strong);box-shadow:inset -6px 0 var(--v4-green);}
-.disciplineTile,.moduleCard,.card,.settingGroup,.ruleBox,.listRow,.champStageCard,.archiveCard,.formatRuleGrid{background:var(--v4-surface);border:1px solid var(--v4-line);border-radius:5px;box-shadow:none;color:var(--v4-text)}
+.disciplineTile,.moduleCard,.card,.ruleBox,.listRow,.champStageCard,.archiveCard,.formatRuleGrid{background:var(--v4-surface);border:1px solid var(--v4-line);border-radius:5px;box-shadow:none;color:var(--v4-text)}
 .disciplineTile:hover,.moduleCard:hover,.card:hover:hover{border-color:var(--v4-line-strong)}
 .disciplineTile.activeDiscipline{border-color:var(--v4-line-strong);box-shadow:none;}
 .disciplineTile.activeDiscipline:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--v4-cobalt);}
@@ -498,7 +489,89 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
 .field input,.field select,.field textarea,input,select,textarea{background:var(--v4-input);color:var(--v4-text);border:1px solid var(--v4-line);border-radius:4px;box-shadow:none;}
 .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--v4-cobalt);outline-offset:1px}
 .toggle{appearance:none;width:44px;height:24px;border-radius:999px;background:#b7c1cf;position:relative;cursor:pointer;accent-color:var(--v4-cobalt);}
-.toggleRow{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);border-color:var(--v4-line);}
+/* ===== SETTINGS / AUTHORITATIVE RC40 ===== */
+.settingsPage{padding-top:12px}
+.settingsPageHead{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:12px}
+.settingsPageHead h1{margin:0;font:700 clamp(30px,4vw,44px)/1 var(--rxn-font);text-transform:uppercase;letter-spacing:-.02em}
+.settingsPage .sectionLabel{font-size:13px;letter-spacing:.08em}
+.settingsPage .btn.primary{background:rgba(8,45,72,.96);border-color:#176fa9;box-shadow:none}
+.settingsLayout{display:grid;grid-template-columns:235px minmax(0,1fr);gap:10px;min-height:520px}
+.settingsNav{display:flex;flex-direction:column;gap:4px;padding:4px 0}
+.settingsNavItem{appearance:none;border:0;background:rgba(5,12,19,.74);color:var(--v4-text);display:grid;grid-template-columns:24px 1fr;gap:11px;align-items:center;min-height:52px;padding:0 14px;text-align:left;cursor:pointer;border-left:3px solid transparent;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.settingsNavItem:hover{background:rgba(8,20,31,.88)}
+.settingsNavItem.active{background:rgba(8,29,47,.94);border-left-color:var(--v4-cobalt)}
+.settingsNavItem span{font:700 20px/1 var(--rxn-font);text-transform:uppercase;letter-spacing:.01em}
+.settingsNavIcon{width:21px;height:21px;color:#d9e7f5}
+.settingsPane{min-width:0;background:rgba(4,10,16,.86);backdrop-filter:blur(14px) saturate(.82);-webkit-backdrop-filter:blur(14px) saturate(.82);padding:18px 22px}
+.settingsSection{display:none}
+.settingsSection.active{display:block}
+.settingsSectionBody>h2{margin:0 0 16px;font:700 31px/1 var(--rxn-font);text-transform:uppercase}
+.settingsAccordionHead{display:none}
+.settingsGroup{padding:0 0 16px}
+.settingsGroup+.settingsGroup{padding-top:15px;border-top:1px solid rgba(183,211,236,.16)}
+.settingsGroup h3{margin:0 0 12px;font:700 21px/1 var(--rxn-font);text-transform:uppercase}
+.settingsRow,.settingsInfoRow{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:54px;padding:9px 0;border-bottom:1px solid rgba(183,211,236,.14)}
+.settingsRow>span,.settingsInfoRow>b{font-size:18px;line-height:1.1;font-weight:850}
+.settingsInfoRow>span{font-size:16px;line-height:1.15;color:#a9bdd0;text-align:right}
+.settingsGridFields{display:grid;grid-template-columns:minmax(180px,1.35fr) minmax(120px,.7fr) minmax(120px,.7fr);gap:10px;margin-bottom:10px}
+.settingsGridFields.two{grid-template-columns:repeat(2,minmax(0,1fr));max-width:720px}
+.settingsGridFieldsFinal{padding-top:10px;border-top:1px solid rgba(183,211,236,.12)}
+.settingsPage .field label,.settingsUpload>label{display:block;margin-bottom:6px;font-size:14px;line-height:1.05;font-weight:850;text-transform:uppercase;color:#a9bdd0}
+.settingsPage .field input,.settingsPage .field select{width:100%;min-height:46px;padding:8px 11px;font-size:18px;font-weight:800;border-radius:3px}
+.settingsPage input[type=color]{height:46px;padding:0;border:1px solid var(--v4-line);background:transparent;cursor:pointer}
+.settingsUpload{min-width:0}
+.settingsText{margin-top:8px;font-size:16px;line-height:1.25;color:#a9bdd0}
+.settingsActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.settingsActions .btn{min-height:45px;font-size:15px}
+.settingsSoundState{display:flex;align-items:center;gap:9px;margin-top:14px;font-size:16px;font-weight:850;text-transform:uppercase;color:#e5a82f}
+.settingsSoundState i{width:9px;height:9px;border-radius:50%;background:#e5a82f}
+.settingsSoundState.ready{color:var(--green)}
+.settingsSoundState.ready i{background:var(--green)}
+.settingsStatusList{border-top:1px solid rgba(183,211,236,.14)}
+.settingsPane .updateStateBox,.settingsPane .offlineReadyBox{margin:0;padding:13px 0;border:0;border-bottom:1px solid rgba(183,211,236,.14);border-radius:0;background:transparent;box-shadow:none;min-height:62px}
+.settingsPane .updateStateBox.ready,.settingsPane .updateStateBox.error{box-shadow:none}
+.settingsPane .updateStateBox b,.settingsPane .offlineReadyBox b{font-size:18px;line-height:1.05}
+.settingsPane .updateStateBox small,.settingsPane .offlineMeta{font-size:15px;line-height:1.25;color:#a9bdd0;margin-top:4px}
+.settingsNote{display:flex;gap:12px;align-items:flex-start;margin-top:14px;padding:12px 0;border-bottom:1px solid rgba(183,211,236,.14);font-size:16px;line-height:1.3;color:#a9bdd0}
+.settingsNote b{color:var(--v4-amber);font-size:16px;text-transform:uppercase}
+.settingsSaveBottom{display:none}
+.settingsPage .toggle{width:50px;height:28px;flex:0 0 50px}
+.settingsPage .toggle:after{width:20px;height:20px;top:4px;left:4px}
+.settingsPage .toggle:checked:after{left:26px}
+@media(max-width:720px){
+  .settingsPage{width:calc(100% - 10px);padding-top:8px;padding-bottom:24px}
+  .settingsPageHead{margin:0 8px 10px;align-items:center}
+  .settingsPageHead h1{font-size:34px}
+  .settingsSaveTop{display:none}
+  .settingsLayout{display:block;min-height:0}
+  .settingsNav{display:none}
+  .settingsPane{padding:0;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .settingsSection{display:block;margin-bottom:7px;background:rgba(4,10,16,.88);backdrop-filter:blur(14px) saturate(.78);-webkit-backdrop-filter:blur(14px) saturate(.78)}
+  .settingsAccordionHead{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:58px;padding:10px 14px;border:0;border-left:3px solid transparent;background:transparent;color:var(--v4-text);text-align:left;cursor:pointer}
+  .settingsAccordionHead span{font:700 24px/1 var(--rxn-font);text-transform:uppercase}
+  .settingsAccordionChevron{width:20px;height:20px;transition:transform .16s ease}
+  .settingsSection.open .settingsAccordionHead{border-left-color:var(--v4-cobalt);background:rgba(8,29,47,.72)}
+  .settingsSection.open .settingsAccordionChevron{transform:rotate(180deg)}
+  .settingsSectionBody{display:none;padding:12px 14px 16px;border-top:1px solid rgba(183,211,236,.14)}
+  .settingsSection.open .settingsSectionBody{display:block}
+  .settingsSectionBody>h2{display:none}
+  .settingsGroup{padding-bottom:13px}
+  .settingsGroup+.settingsGroup{padding-top:13px}
+  .settingsGroup h3{font-size:20px;margin-bottom:9px}
+  .settingsRow,.settingsInfoRow{min-height:50px;padding:8px 0}
+  .settingsRow>span,.settingsInfoRow>b{font-size:17px}
+  .settingsInfoRow>span{font-size:16px}
+  .settingsGridFields,.settingsGridFields.two{grid-template-columns:1fr;max-width:none;gap:9px}
+  .settingsGridFieldsFinal{padding-top:9px}
+  .settingsPage .field label,.settingsUpload>label{font-size:14px}
+  .settingsPage .field input,.settingsPage .field select{font-size:18px;min-height:45px}
+  .settingsActions .btn{flex:1 1 160px}
+  .settingsText{font-size:16px}
+  .settingsPane .updateStateBox b,.settingsPane .offlineReadyBox b{font-size:17px}
+  .settingsPane .updateStateBox small,.settingsPane .offlineMeta{font-size:15px}
+  .settingsNote{font-size:15px}
+  .settingsSaveBottom{display:block;width:100%;min-height:52px;margin-top:10px;font-size:18px}
+}
 .sectionTabs{display:flex;gap:7px;margin-bottom:16px;padding:6px;overflow:auto;background:var(--v4-surface);border:1px solid var(--v4-line);border-radius:5px;}
 .sectionTabs button{border:1px solid transparent;background:transparent;padding:10px 15px;font-weight:800;cursor:pointer;white-space:nowrap;color:var(--v4-muted);border-radius:3px;}
 .sectionTabs button.active{background:var(--v4-control);color:var(--v4-control-text);border-color:var(--v4-line-strong);box-shadow:inset 0 -3px var(--v4-cobalt);}
@@ -532,7 +605,7 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
   .headerSettings{display:grid}
   .mainNav button.active{background:linear-gradient(180deg,transparent,var(--blue2))}
   .heroCopy p{font-size:14px}
-  .disciplineGrid,.moduleGrid,.grid2,.settingsGrid{grid-template-columns:1fr}
+  .disciplineGrid,.moduleGrid,.grid2{grid-template-columns:1fr}
   .disciplineTile{min-height:220px}
   .setupShell{grid-template-columns:1fr}
   .setupSide{display:flex;overflow:auto}
@@ -564,7 +637,7 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
   #viewHost{top:54px;bottom:54px;}
   .cockpitMode #viewHost{top:0;bottom:0;}
   .page{width:calc(100% - 12px);padding:10px 0 28px;}
-  .disciplineGrid,.moduleGrid,.settingsGrid,.grid2{grid-template-columns:1fr}
+  .disciplineGrid,.moduleGrid,.grid2{grid-template-columns:1fr}
   .heroPanel{min-height:0;border-radius:22px;grid-template-columns:1fr;padding:16px;}
   .heroCopy h1{font-size:45px;}
   .heroStatus{justify-content:stretch;}
@@ -572,71 +645,4 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
   .pageHeader{align-items:flex-start;flex-direction:column}
   .pageHeader h1{font-size:30px}
   .modal{width:calc(100% - 12px);max-height:calc(100dvh - 12px);margin:6px}
-}
-
-/* ===== SETTINGS REWORK RC39 ===== */
-.settingsPage .pageHeader p{max-width:860px}
-.settingsShell{display:grid;grid-template-columns:280px minmax(0,1fr);gap:16px;align-items:start}
-.settingsSidebar,.settingsContent,.settingsSectionBody,.settingsFooterBar{background:rgba(5,12,20,.52);border:1px solid rgba(58,116,204,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
-.settingsSidebar{border-radius:14px;padding:10px;display:grid;gap:6px;position:sticky;top:calc(var(--appbarh,72px) + 12px)}
-.settingsNavBtn{appearance:none;border:1px solid transparent;background:transparent;color:var(--v4-text);display:grid;grid-template-columns:22px minmax(0,1fr) 12px;gap:12px;align-items:center;padding:12px 14px;border-radius:12px;text-align:left;cursor:pointer;transition:.18s}
-.settingsNavBtn b{display:block;font-size:21px;line-height:1.02;font-weight:900;text-transform:uppercase}
-.settingsNavBtn small{display:block;margin-top:3px;font-size:12px;line-height:1.12;color:var(--v4-muted)}
-.settingsNavBtn:hover{border-color:rgba(58,116,204,.35);background:rgba(7,15,26,.58)}
-.settingsNavBtn.active{background:linear-gradient(180deg,rgba(13,27,46,.84),rgba(6,12,21,.92));border-color:rgba(58,116,204,.55);box-shadow:inset 4px 0 0 var(--blue2)}
-.settingsNavIcon,.settingsNavArrow,.settingsSectionChevron{width:18px;height:18px}
-.settingsNavArrow{opacity:.75}
-.settingsContent{border-radius:18px;padding:10px;display:grid;gap:10px}
-.settingsSection{display:none}
-.settingsSection.active{display:block}
-.settingsSectionHead{display:none}
-.settingsSectionBody{border-radius:14px;padding:16px 18px}
-.settingsSectionIntro{margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08)}
-.settingsSectionIntro h2{margin:2px 0 4px;font-size:34px;line-height:1;text-transform:uppercase}
-.settingsSectionIntro p{margin:0;font-size:14px;line-height:1.25;color:var(--v4-muted)}
-.settingsBlock+.settingsBlock{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)}
-.settingsBlockHead h3{margin:0 0 4px;font-size:24px;line-height:1.02;text-transform:uppercase}
-.settingsBlockHead p{margin:0 0 12px;font-size:14px;line-height:1.22;color:var(--v4-muted)}
-.settingsShell .field label{font-size:12px;line-height:1.05;font-weight:900;letter-spacing:.03em;color:#9eb6d3;margin-bottom:6px}
-.settingsShell .field input,.settingsShell .field select{min-height:48px;padding:10px 12px;font-size:22px;font-weight:800;border-radius:10px}
-.settingsRow{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:22px;line-height:1.04;font-weight:900;text-transform:uppercase}
-.settingsRow:last-child{border-bottom:0}
-.settingsSplit{display:grid;grid-template-columns:minmax(190px,260px) minmax(0,1fr);gap:12px;align-items:end}
-.settingsUploadBlock{padding:12px 14px;border-radius:12px;background:rgba(7,15,26,.45);border:1px solid rgba(58,116,204,.22)}
-.settingsMiniLabel{font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:#9eb6d3;margin-bottom:10px}
-.settingsHint{margin-top:10px;font-size:13px;line-height:1.22;color:var(--v4-muted)}
-.settingsInfoList .listRow{padding:12px 0}
-.settingsFooterBar{border-radius:14px;padding:12px 14px;display:flex;justify-content:flex-end}
-.settingsFooterBar .btn{min-width:240px}
-.settingsShell .ruleBox{background:rgba(7,15,26,.45);border:1px solid rgba(58,116,204,.22);border-radius:12px;padding:12px}
-.settingsShell .ruleBoxHead{margin-bottom:10px}
-.settingsShell .ruleBoxHead b{font-size:20px;line-height:1;text-transform:uppercase}
-.settingsShell .btnRow{flex-wrap:wrap}
-.settingsShell .btn{min-height:48px;font-size:17px}
-.settingsShell .toggle{width:54px;height:30px}
-.settingsShell .toggle:after{width:22px;height:22px;left:4px;top:4px}
-.settingsShell .toggle:checked:after{left:28px}
-.settingsShell .backgroundSettingGrid{margin-top:8px}
-.settingsShell .offlineReadyBox,.settingsShell .updateStateBox{margin-top:12px}
-@media (max-width:980px){
-  .settingsShell{grid-template-columns:1fr}
-  .settingsSidebar{position:static}
-}
-@media (max-width:760px){
-  .settingsShell{grid-template-columns:1fr;gap:10px}
-  .settingsSidebar{display:none}
-  .settingsContent{padding:0;border:0;background:transparent;box-shadow:none}
-  .settingsSection{display:block}
-  .settingsSectionBody{display:none;padding:14px 14px 16px}
-  .settingsSection.open .settingsSectionBody{display:block}
-  .settingsSectionHead{appearance:none;display:grid;grid-template-columns:minmax(0,1fr) 18px;gap:10px;align-items:center;width:100%;padding:14px 14px;border-radius:14px;background:rgba(5,12,20,.52);border:1px solid rgba(58,116,204,.22);color:var(--v4-text);text-align:left}
-  .settingsSectionHead b{display:block;font-size:22px;line-height:1.02;font-weight:900;text-transform:uppercase}
-  .settingsSectionHead small{display:block;margin-top:3px;font-size:12px;line-height:1.15;color:var(--v4-muted)}
-  .settingsSectionChevron{transition:transform .18s ease}
-  .settingsSection.open .settingsSectionChevron{transform:rotate(180deg)}
-  .settingsSectionIntro h2{font-size:27px}
-  .settingsRow{font-size:18px}
-  .settingsSplit,.settingsShell .formGrid{grid-template-columns:1fr}
-  .settingsFooterBar{padding:12px;position:sticky;bottom:64px;z-index:20}
-  .settingsFooterBar .btn{width:100%}
 }

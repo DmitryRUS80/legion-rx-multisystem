@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc39-settings-ui-rework-test';
-  const displayVersion='4.2.0 CLEAN FULL APP RC39 · SETTINGS UI REWORK TEST';
-  const cacheName='legion-rx-4-2-0-clean-full-rc39-settings-ui-rework-test';
+  const appVersion='4.2.0-clean-full-rc40-clean-settings-ui';
+  const displayVersion='4.2.0 CLEAN FULL APP RC40 · CLEAN SETTINGS UI';
+  const cacheName='legion-rx-4-2-0-clean-full-rc40-clean-settings-ui';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

@@ -1,14 +1,16 @@
 # LEGION RX CHANGELOG
 
-## RC39 · SETTINGS UI REWORK TEST
+## RC40 · CLEAN SETTINGS UI
 
-- Rebuilt the main Settings screen into a cleaner two-pane system: desktop/tablet now uses a left navigation rail and a right content area instead of a dense card grid.
-- Added mobile-first accordion behavior for Settings: on narrow screens sections expand downward as separate blocks instead of staying in a two-column layout.
-- Split Settings into explicit sections: General, Screen, Sound, Pilots, Storage, Language, Update, and About. The Update / Offline block is now its own separate section as requested.
-- Increased settings typography density/legibility inside the new shell: larger headings, larger row text, less microtype, tighter vertical rhythm, fewer decorative frames.
-- Preserved the existing settings contract and actions: save-settings, theme/language persistence, LapWiz connect/disconnect, bleep test, announcer toggles, Design Lab, offline-check, update-check and update-install remain functional through the new layout.
-- Runtime scope is limited to UI shell settings rendering/styling/binding only (`ui/shell/views.js`, `ui/shell/actions.js`, `ui/shell/app.css`). Sport rules, LapWiz protocol/timing, archive logic, pilot DB and reporting are unchanged.
-- Release packaging corrected before reissue: RC39 now updates `VERSION.txt`, `offline-manifest.js` and `sw.js` together, including a unique RC39 cache namespace. Without the service-worker change an installed RC38 PWA cannot discover the UI-only upload as a new application version.
+- Rebuilt Settings from the RC38 FULL baseline; RC39 settings implementation is not used as the base.
+- Desktop/tablet horizontal: left section navigation + one right settings surface. No nested settings cards.
+- Phone portrait: vertical accordion. The active section can be collapsed normally, and only one section is open at a time.
+- Section switching is DOM-only and does not rerender the settings screen, so unsaved field values are preserved while moving between sections.
+- Update / Offline is a dedicated section using the same row-based visual language instead of an old card inside a new container.
+- Save button is top-right on desktop and placed after all accordion sections on mobile; it is not injected into the middle of an open section.
+- Increased surface opacity and added backdrop blur to suppress noisy background patterns. Primary settings text/controls are larger and no longer use microtype as the main UI language.
+- Removed obsolete RC38 settings-grid/setting-group/background-setting CSS from the authoritative stylesheet rather than adding an override patch at the end.
+- Runtime changes remain UI-shell only: `ui/shell/views.js`, `ui/shell/actions.js`, `ui/shell/app.css`, `ui/shell/discipline-shared.js`. Sport logic, LapWiz protocol/timing, audio engine, storage engine, reporting, pilot DB and cockpit UI are unchanged.
 
 ## RC37 · AVATAR CROP + COMPRESSION
 

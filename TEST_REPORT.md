@@ -1,24 +1,27 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC39 · SETTINGS UI REWORK TEST — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC40 · CLEAN SETTINGS UI — TEST REPORT
 
 ## Scope
 
-UI shell settings screen only. Runtime changes are limited to `ui/shell/views.js`, `ui/shell/actions.js` and `ui/shell/app.css`, plus release metadata/tests. Sport/timing, LapWiz parsing, audio engine internals, storage engine, avatar pipeline and reporting are not modified.
+Settings UI shell rebuild from the RC38 FULL baseline. Runtime changes: `ui/shell/views.js`, `ui/shell/actions.js`, `ui/shell/app.css`, `ui/shell/discipline-shared.js`. Release files synchronized: `VERSION.txt`, `offline-manifest.js`, `sw.js`. Sport rules, LapWiz parser/timing, audio engine internals, storage engine, pilot database, reporting and cockpit UI are unchanged.
 
-## RC39 verification
+## RC40 verification
 
-- Desktop/tablet Settings now render as a left menu + right content workspace instead of the old dense two-column card grid.
-- Mobile Settings no longer use the desktop split: sections stack vertically and open downward as accordion blocks.
-- `Обновление` is separated into its own explicit settings section.
-- Existing action hooks remain reachable from the new layout: `save-settings`, `lap-connect`, `lap-disconnect`, `test-bleep`, `audio-enable`, `test-good-race`, `test-start-horn`, `offline-check`, `update-check`, `update-install`, and `open-design-lab`.
-- Existing setting IDs used by persistence were preserved (`darkToggle`, `langSelect`, `soundToggle`, `settingsMinLap`, `settingsQLimit`, `settingsQMin`, `settingsQLaps`, `settingsFLimit`, `settingsFLaps`, `settingsFMin`, `settingsCountdown`, `settingsWarmupMinutes`, `announcerToggle`, `pilotVoiceToggle`, `voiceStartCallToggle`, `voiceBestLapToggle`, `voiceFinishToggle`, `voiceResultsToggle`, `voiceServiceToggle`).
-- Added dedicated desktop section switching (`data-settings-nav`) and mobile accordion toggles (`data-settings-mobile-toggle`).
-- JavaScript syntax check passed for the modified shell files and release metadata scripts (`offline-manifest.js`, `sw.js`).
-- RC39 release metadata is synchronized: `VERSION.txt`, `offline-manifest.js` display/app version, unique RC39 cache namespace, and `sw.js` release marker. This is required so an RC38 PWA actually discovers RC39 as a new service worker candidate.
-- Offline manifest local asset audit passed: every local path listed in the RC39 package exists in FULL.
+- JavaScript syntax check passes for every `.js` file in the package.
+- Settings section navigation does not call `render()`: unsaved values remain in the DOM while switching desktop sections.
+- Mobile accordion logic removes/open classes directly and allows the currently open section to close.
+- Old settings classes (`settingsGrid`, `settingGroup`, `toggleRow`, `backgroundSettingGrid`, old background-setting helpers) are no longer used by Settings and their dedicated CSS rules were removed.
+- Update UI remains wired to the existing `data-update-state`, `data-offline-ready`, `update-check`, `update-install`, and `offline-check` contracts.
+- Existing save IDs are preserved for `save-settings`.
+- `VERSION.txt`, `offline-manifest.js` display/app/cache version and service-worker release namespace are synchronized to RC40.
+- Every local path listed in the offline manifest exists in the FULL package.
+- Hash comparison against RC38 confirms no changes under `platform/`, `modes/`, `reporting/`, `ui/pilots/`, `ui/discipline-ui.js`, or `ui/shell/discipline-pults.css`.
 
-## Regression
+## Physical acceptance still required
 
-Run JavaScript syntax checks for modified files and reviewed settings action wiring against the existing save/update/offline/audio hooks. Physical device smoke test for the new Settings shell remains user-side on PWA/GitHub, especially for RC38 → RC39 updater discovery/activation and desktop ↔ mobile presentation. Container Chromium could not be used for the PWA smoke because the environment blocks localhost navigation; no physical-device PASS is claimed.
+- PWA update RC38 -> RC40 on the real hosted GitHub build.
+- Phone portrait visual check with the user background pattern.
+- Desktop/tablet horizontal visual check.
+- Real-device interaction check for save/theme/background upload and Update/Offline buttons.
 
 ---
 

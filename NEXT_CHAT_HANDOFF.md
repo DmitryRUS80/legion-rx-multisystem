@@ -1,17 +1,18 @@
-# RC39 ADDENDUM · SETTINGS UI REWORK TEST
+# RC40 ADDENDUM · CLEAN SETTINGS UI
 
-- Base release for this handoff: RC39 settings-shell test build.
-- Changed files relative to RC38: `ui/shell/views.js`, `ui/shell/actions.js`, `ui/shell/app.css`, `VERSION.txt`, `offline-manifest.js`, `sw.js`, `CHANGELOG.md`, `TEST_REPORT.md`, `README.md`, `NEXT_CHAT_HANDOFF.md`.
-- Main user request implemented: Settings visually rebuilt into left-side section navigation on desktop and expanding vertical sections on phone. Update moved into its own section.
-- Release invariant: every PWA release must change/synchronize `VERSION.txt`, `offline-manifest.js` app/display version + cache namespace, and `sw.js`, otherwise the updater can remain on the previous installed version even when UI files were uploaded.
-- This is intentionally a UI-shell test pass, not a final clean-shell convergence pass. Wider shell unification (main menu / championships / results / archive) remains future work after visual review.
+- Current source candidate: RC40 CLEAN SETTINGS UI, rebuilt from RC38 FULL; do not continue from RC39.
+- User rejected RC39 because portrait accordion looked poor, background pattern bled through, Save appeared in the wrong visual location, sections did not collapse properly, and desktop had nested containers.
+- RC40 addresses those issues structurally, not with an appended patch layer.
+- Runtime changed files: `ui/shell/views.js`, `ui/shell/actions.js`, `ui/shell/app.css`, `ui/shell/discipline-shared.js`.
+- Release synchronized files: `VERSION.txt`, `offline-manifest.js`, `sw.js`; docs updated.
+- Do not touch RallyCross/Free Practice/LapWiz/audio/storage/reporting for Settings visual work.
 
-# LEGION RX — NEXT CHAT HANDOFF · RC39
+# LEGION RX — NEXT CHAT HANDOFF · RC38
 
 **Date:** 2026-09-11  
-**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC39_SETTINGS_UI_REWORK_TEST_FULL.zip`  
+**Current code candidate:** `Legion_RX_4.2.0_CLEAN_FULL_APP_RC38_AVATAR_CROP_LAYER_FIX_FULL.zip`  
 **Base:** RC37 AVATAR CROP + COMPRESSION  
-**Status:** RC39 settings-shell static verification PASS; **real PWA/GitHub updater + responsive visual acceptance still required**.
+**Status:** RC38 automated regression PASS; **real iPhone/Android camera acceptance still required**.
 
 ---
 
@@ -19,7 +20,7 @@
 
 Do **not** rebuild Legion RX from memory and do not use an older archive as the source.
 
-1. Unpack the latest **RC39 FULL**.
+1. Unpack the latest **RC38 FULL**.
 2. Read, in this order:
    - `NEXT_CHAT_HANDOFF.md` (this file if copied into the project/package)
    - `PROJECT_MASTER.md`
@@ -36,9 +37,9 @@ The FULL/source modular project is the **only development source**. A portable/b
 
 ---
 
-# RC39 CURRENT UI DELTA
+# RC38 CURRENT UI DELTA
 
-RC39 is shell-UI only. It rebuilds the authoritative Settings screen into a left-navigation/right-content layout on desktop/tablet and an accordion layout on narrow mobile screens. `Обновление` is a separate section. RC38 avatar crop behavior is preserved. Sport, timing, LapWiz protocol, audio engine, storage engine and reporting are unchanged.
+RC38 is pilot-UI only. It fixes the RC37 avatar crop stacking/centering bug in the authoritative `ui/pilots/` component. The cropper opens above the pilot editor, is centered on mobile, and applies the processed image immediately to the open editor preview. Compression remains 480×480 WebP/JPEG with a tighter ~72 KB target. Sport, timing, LapWiz, audio, storage engine and reporting are unchanged.
 
 
 # 1. PROJECT IDENTITY
