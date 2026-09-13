@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC40 · CLEAN SETTINGS UI */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC41 · APEX ORANGE SKIN */
 'use strict';
 importScripts('./offline-manifest.js');
 

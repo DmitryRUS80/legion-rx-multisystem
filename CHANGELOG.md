@@ -1,5 +1,15 @@
 # LEGION RX CHANGELOG
 
+## RC41 · APEX ORANGE SKIN
+
+- Added a completely opt-in visual skin `Apex Orange` while preserving `Classic` as the default interface.
+- Classic authoritative visual files are unchanged: `ui/themes/theme.css`, `ui/shell/app.css`, `ui/pilots/pilot-cards.css`, and `ui/shell/discipline-pults.css`.
+- The new skin lives in one isolated file: `ui/skins/apex-orange.css`. Every runtime selector is scoped to `html[data-skin="apex-orange"]`.
+- Added Settings → Screen → Interface Skin selector. Switching skins saves immediately and does not rerender the Settings DOM, so unsaved form values are not lost.
+- Apex Orange defines its own typography stack, graphite/carbon background, orange accent system, buttons, cards, forms, settings, championships, archive, pilot cards, modals and cockpit shell controls.
+- RallyCross red race banner and the established pilot roster/rows are intentionally not targeted by the skin and remain visually/structurally unchanged.
+- RallyCross/Free Practice sport logic, LapWiz, audio, storage and reporting are unchanged.
+
 ## RC40 · CLEAN SETTINGS UI
 
 - Rebuilt Settings from the RC38 FULL baseline; RC39 settings implementation is not used as the base.

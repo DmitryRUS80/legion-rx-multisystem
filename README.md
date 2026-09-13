@@ -128,3 +128,8 @@ Pilot avatar upload now uses manual square crop + automatic compact 480×480 Web
 ## RC40 current UI test
 
 Settings is rebuilt from RC38: desktop uses left navigation and one right surface; phone portrait uses a true collapsible accordion. Update is a separate section. Background noise is reduced with a denser glass surface and blur.
+
+
+## RC41 · Apex Orange Skin
+
+Classic remains the default UI. Settings → Screen can enable the isolated Apex Orange skin. The skin is implemented in `ui/skins/apex-orange.css`; sport/platform logic is unchanged.

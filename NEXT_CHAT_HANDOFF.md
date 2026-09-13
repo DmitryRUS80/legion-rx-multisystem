@@ -1,3 +1,12 @@
+# RC41 ADDENDUM · APEX ORANGE SKIN
+
+- Current candidate: RC41 Apex Orange Skin, based on RC40.
+- Classic remains default and its four authoritative visual CSS files were not modified.
+- New opt-in skin file: `ui/skins/apex-orange.css`.
+- Skin selector: Settings → Screen → Classic / Apex Orange. Switch saves immediately without Settings rerender.
+- Do not merge Apex Orange rules back into Classic CSS. Future skins must be isolated the same way.
+- Protected RallyCross area: red race banner + roster/pilot rows. Apex skin may restyle cockpit header, best-lap strip, timer/right controls, but must not target the protected roster/banner selectors.
+
 # RC40 ADDENDUM · CLEAN SETTINGS UI
 
 - Current source candidate: RC40 CLEAN SETTINGS UI, rebuilt from RC38 FULL; do not continue from RC39.

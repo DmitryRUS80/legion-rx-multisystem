@@ -88,7 +88,7 @@ function resizeAppBackground(file){
   };img.src=String(reader.result||'');};reader.readAsDataURL(file);
  });
 }
-function applySettings(){document.documentElement.dataset.theme=state.settings.theme;document.documentElement.lang=state.settings.lang;const themeMeta=document.querySelector('meta[name="theme-color"]');if(themeMeta)themeMeta.content=state.settings.theme==='light'?'#f3f4f5':'#050608';lapwiz.sound=state.settings.lapSound;applyUiTokens();applyAppBackground();translateStatic();announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;}
+function applySettings(){document.documentElement.dataset.theme=state.settings.theme;document.documentElement.dataset.skin=state.settings.skin||'classic';document.documentElement.lang=state.settings.lang;const themeMeta=document.querySelector('meta[name="theme-color"]');if(themeMeta)themeMeta.content=(state.settings.skin==='apex-orange')?'#090b0c':state.settings.theme==='light'?'#f3f4f5':'#050608';lapwiz.sound=state.settings.lapSound;applyUiTokens();applyAppBackground();translateStatic();announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;}
 
 function stageLabel(stage){return({setup:'Настройка',qualifying:'Квалификация',tie:'Перезаезд',finals:'Финалы',finished:'Завершено'})[stage]||stage;}
 
