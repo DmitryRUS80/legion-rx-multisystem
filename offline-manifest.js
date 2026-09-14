@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc44-rxui-removable-skins';
-  const displayVersion='4.2.0 CLEAN FULL APP RC44 · RXUI REMOVABLE SKINS';
-  const cacheName='legion-rx-4-2-0-clean-full-rc44-rxui-removable-skins';
+  const appVersion='4.2.0-clean-full-rc45-cockpit-steel-light-polish';
+  const displayVersion='4.2.0 CLEAN FULL APP RC45 · COCKPIT STEEL LIGHT POLISH';
+  const cacheName='legion-rx-4-2-0-clean-full-rc45-cockpit-steel-light-polish';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

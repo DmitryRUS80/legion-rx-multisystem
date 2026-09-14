@@ -65,3 +65,16 @@ Run architecture, clean-foundation, iOS start/storage, pilot-card, RC29 run-off,
 - Skip / state safety: 11/11 PASS.
 - Offline manifest: 85 local assets, 0 missing.
 - Headless browser rendering was attempted with system Chromium but local HTTP navigation is blocked by the execution environment administrator; physical/browser visual acceptance remains user-side.
+
+## RC45 · COCKPIT STEEL / LIGHT POLISH
+Focused acceptance target: cockpit appearance only. Classic geometry and sport/platform layers are protected.
+
+Automated checks include:
+- RC45 cockpit skin scope + no pilot-row geometry ownership.
+- Classic cockpit CSS / `ui/discipline-ui.js` baseline hashes unchanged from RC44.
+- No STEEL/LIGHT legacy side/bottom activation strips or top status dots.
+- Full-surface enabled/on/disabled tokens present in both STEEL and LIGHT.
+- Required cockpit/navigation icons present in the unified non-Classic SVG vocabulary.
+- Existing RC44 skin isolation, architecture, CLEAN foundation, iOS START, RallyCross run-off, start-order/announcer and skip/state suites.
+
+A self-contained visual harness was also rendered at 1510×812 and 430×900 for STEEL and LIGHT to inspect proportional behavior without changing app geometry. Final installed-PWA visual acceptance remains device-side.

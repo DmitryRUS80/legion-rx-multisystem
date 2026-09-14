@@ -705,3 +705,13 @@ Copy/paste this as the first message after attaching RC36 FULL + this handoff:
 - Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
 - RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
 - Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.
+
+## RC45 · COCKPIT STEEL / LIGHT POLISH
+- Base: RC44 RXUI removable skins.
+- Scope is intentionally narrow: RallyCross / Free Practice cockpit appearance for STEEL and LIGHT only.
+- Classic remains the rollback truth and its authoritative `ui/shell/discipline-pults.css` plus `ui/discipline-ui.js` are byte-unchanged from RC44.
+- Runtime skin changes are limited to `ui/skins/rxui/base.css`, `steel.css`, `light.css`, `icons.js`.
+- Active/connected actions use full-surface state; legacy side/bottom strips and top status dots are suppressed inside STEEL/LIGHT cockpit.
+- Pilot-row geometry is protected. Do not change `.rxnPilotRow` grid/height/order while evaluating RC45 visuals.
+- MODERN/HERITAGE are not part of RC45 visual acceptance.
+- Required physical acceptance: compare STEEL and LIGHT on desktop + phone, especially toolbar icon optical size, START/disabled controls, timer/ring, and bottom display toggles.

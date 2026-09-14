@@ -3,9 +3,25 @@ html[data-skin="steel"]{
  --rxui-text:#f2f6fa;--rxui-muted:#9cadbb;--rxui-line:#40505e;--rxui-line-soft:#2a3945;--rxui-line-strong:#667786;
  --rxui-accent:#69aef4;--rxui-active:#e8edf1;--rxui-active-text:#10202d;--rxui-active-border:#ffffff;
  --rxui-success:#48c57a;--rxui-success-bg:#163326;--rxui-success-text:#dff9e8;--rxui-warning:#e6b555;--rxui-warning-bg:#352b18;--rxui-warning-text:#fff1cc;--rxui-danger:#e0535e;--rxui-danger-bg:#3a1c21;--rxui-danger-text:#ffe9eb;
+
+ --rxui-brand-accent:#78b9f7;--rxui-best-label:#b8ff4d;--rxui-ring-active:#3c9cff;
+ --rxui-cockpit-brand:linear-gradient(180deg,#202d38 0%,#17222c 100%);
+ --rxui-cockpit-surface:linear-gradient(145deg,#22303b 0%,#18232d 44%,#151f28 100%);
+ --rxui-cockpit-control:linear-gradient(180deg,#25333e 0%,#18232c 100%);
+ --rxui-cockpit-control-hover:linear-gradient(180deg,#30414e 0%,#21303b 100%);
+ --rxui-cockpit-border:#4b5d6c;--rxui-cockpit-border-strong:#8193a2;--rxui-cockpit-icon:#eef4f8;
+ --rxui-cockpit-inset:inset 0 1px 0 rgba(255,255,255,.09);
+ --rxui-cockpit-on:linear-gradient(180deg,#2e8cf2 0%,#1467c8 100%);--rxui-cockpit-on-text:#ffffff;--rxui-cockpit-on-border:#69b2ff;--rxui-cockpit-on-inset:inset 0 1px 0 rgba(255,255,255,.25);
+ --rxui-primary-control:linear-gradient(180deg,#f4f7f9 0%,#bac5ce 100%);--rxui-primary-control-text:#11202d;--rxui-primary-control-border:#ffffff;--rxui-primary-control-inset:inset 0 1px 0 #fff;
+ --rxui-danger-control:linear-gradient(180deg,#b73542 0%,#7e202b 100%);--rxui-danger-control-text:#fff;--rxui-danger-inset:inset 0 1px 0 rgba(255,255,255,.18);--rxui-cockpit-danger-soft:#2d1b21;
+ --rxui-cockpit-disabled:#151d24;--rxui-cockpit-disabled-text:#586572;--rxui-cockpit-disabled-icon:#53616c;--rxui-cockpit-disabled-border:#25313b;
+ --rxui-cockpit-chip:#17222b;--rxui-cockpit-chip-text:#c6d0d8;--rxui-cockpit-chip-border:#435361;--rxui-cockpit-chip-on:#e6edf2;--rxui-cockpit-chip-on-text:#122130;--rxui-cockpit-chip-on-border:#ffffff;
  --rxui-toggle-off:#53616d;--rxui-ring-track:#3a4855;--rxui-row-head:#0f171f;--rxui-row-head-text:#dbe4eb;--rxui-row:#1a242e;--rxui-row-alt:#18222b;--rxui-row-border:#0e151c;--rxui-row-leader:#223b34;--rxui-row-line:#3b4a56;
  --rxui-page-texture:linear-gradient(125deg,rgba(255,255,255,.025),transparent 38%),linear-gradient(180deg,#111820,#0c1218);
- --rxui-cockpit-texture:linear-gradient(135deg,rgba(255,255,255,.028),transparent 32%),linear-gradient(180deg,#111820,#0d141b);
+ --rxui-cockpit-texture:
+   linear-gradient(115deg,rgba(255,255,255,.045) 0%,transparent 18%,transparent 78%,rgba(255,255,255,.02) 100%),
+   repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,rgba(0,0,0,.012) 1px 3px),
+   linear-gradient(180deg,#18232d 0%,#0f171e 48%,#0c1218 100%);
  --v4-bg:var(--rxui-page);--v4-surface:var(--rxui-surface);--v4-surface2:var(--rxui-surface2);--v4-surface3:#283642;--v4-text:var(--rxui-text);--v4-muted:var(--rxui-muted);--v4-line:var(--rxui-line);--v4-line-strong:var(--rxui-line-strong);--v4-control:var(--rxui-control);--v4-control-hover:var(--rxui-control-hover);--v4-control-text:var(--rxui-text);--v4-input:var(--rxui-input);--v4-cobalt:var(--rxui-accent);--v4-green:#69aef4;
  color-scheme:dark;
 }

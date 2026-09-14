@@ -38,3 +38,6 @@ Run `python3 tests/verify_architecture.py` after every structural/UI change. It 
 
 
 - `verify_rc38_avatar_crop_layer.py` — RC38 crop z-order, mobile centering, immediate preview and compact avatar target.
+
+### RC45 cockpit skin polish
+`python tests/verify_rc45_cockpit_skin_polish.py` verifies Steel/Light cockpit-only scope, frozen Classic cockpit geometry hashes, removal of legacy side/bottom state strips, full-surface button-state tokens, and required RXUI SVG icon coverage.

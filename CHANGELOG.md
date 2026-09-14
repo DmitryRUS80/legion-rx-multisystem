@@ -224,3 +224,12 @@
 - Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
 - RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
 - Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.
+
+## RC45 · COCKPIT STEEL / LIGHT POLISH
+- Focused cockpit-only visual refinement over RC44 removable skins; Classic source markup and Classic cockpit CSS are unchanged.
+- Rebuilt STEEL and LIGHT cockpit surfaces as instrument-style materials rather than flat recolors: coherent header/nav/toolbar/timer/control surfaces with restrained full-surface states.
+- Replaced the RXUI SVG vocabulary with one consistent monoline family for cockpit navigation, toolbar actions and race controls. Classic never consumes this icon map.
+- Removed legacy side/bottom activation-strip behavior from STEEL/LIGHT cockpit skin; active/on states are represented by the complete button surface.
+- Disabled controls now have explicit theme states instead of generic opacity, so available vs unavailable actions remain readable on desktop and portrait layouts.
+- Pilot rows keep the exact RC44/Classic grid, height, order and interaction geometry; skin layer changes paint only.
+- MODERN and HERITAGE skin token files are unchanged. RallyCross/Free Practice sport logic, LapWiz, audio, storage and reporting are unchanged.

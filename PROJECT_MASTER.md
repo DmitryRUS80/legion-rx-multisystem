@@ -191,3 +191,8 @@ UI-only refinement on the RC26 foundation: Free Practice selection visibility, t
 - Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
 - RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
 - Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.
+
+## RC45 COCKPIT STEEL / LIGHT POLISH
+- RC45 does not introduce a new renderer. It keeps the RC44 removable-skin architecture and the established Classic cockpit markup/actions.
+- STEEL/LIGHT cockpit styling is now an explicit instrument-surface treatment with full-surface states and one SVG icon family.
+- Classic cockpit CSS and pilot-row geometry are frozen for this task; no sport/platform modules are touched.

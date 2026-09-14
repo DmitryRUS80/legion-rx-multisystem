@@ -159,3 +159,10 @@ No new sport/timing loop is created. Free Practice delete remains `removeTrackDa
 - Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
 - RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
 - Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.
+
+## RC45 · cockpit visual skin ownership
+- `ui/skins/rxui/base.css`: authoritative shared STEEL/LIGHT cockpit skin treatment; never owns pilot-row geometry.
+- `ui/skins/rxui/steel.css`: STEEL material/state tokens.
+- `ui/skins/rxui/light.css`: LIGHT material/state tokens.
+- `ui/skins/rxui/icons.js`: non-Classic RXUI SVG icon vocabulary.
+- `ui/shell/discipline-pults.css`: unchanged Classic cockpit geometry/source of layout truth.

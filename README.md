@@ -137,3 +137,6 @@ Settings is rebuilt from RC38: desktop uses left navigation and one right surfac
 - Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
 - RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
 - Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.
+
+## RC45 · COCKPIT STEEL / LIGHT POLISH
+RC45 is a focused visual pass over RC44 removable skins. It refines only RallyCross / Free Practice cockpit appearance for STEEL and LIGHT while preserving Classic markup, Classic cockpit geometry and all sport/platform behavior. The skin layer uses one SVG icon family and full-surface control states; no legacy side/bottom state strips are used in STEEL/LIGHT cockpit.
