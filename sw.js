@@ -1,8 +1,8 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC49 · RECOVERY UPDATE PIPELINE */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC50 · PHONE LANDSCAPE GEOMETRY */
 'use strict';
-const LEGION_SW_BUILD='rc49-recovery-update-pipeline';
+const LEGION_SW_BUILD='rc50-phone-landscape-geometry';
 /* Unique import URL prevents an older HTTP-cached release manifest being reused during SW update. */
-importScripts('./offline-manifest.js?build=rc49-recovery-update-pipeline');
+importScripts('./offline-manifest.js?build=rc50-phone-landscape-geometry');
 
 const CFG=self.LEGION_OFFLINE_CONFIG;
 const CACHE=CFG.cacheName;
@@ -10,7 +10,7 @@ const LOCAL=[...CFG.assets];
 const EXTERNAL=[...(CFG.externalAssets||[])];
 const PACKAGE=[...LOCAL,...EXTERNAL];
 /* These files define this release and are never allowed to fall back to older cached bytes. */
-const FRESH_REQUIRED=new Set(['./','./index.html','./VERSION.txt','./offline-manifest.js','./ui/shell/views.js','./ui/skins/rxui/base.css','./ui/skins/rxui/cobalt.css','./ui/classic-polish/classic-controls.css','./ui/classic-polish/classic-icons.js']);
+const FRESH_REQUIRED=new Set(['./','./index.html','./VERSION.txt','./offline-manifest.js','./ui/shell/views.js','./ui/shell/discipline-pults.css','./ui/skins/rxui/base.css','./ui/skins/rxui/cobalt.css','./ui/classic-polish/classic-controls.css','./ui/classic-polish/classic-icons.js']);
 
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 function mimeFor(path){
@@ -30,13 +30,14 @@ async function validate(url,response){
   if(!response||!response.ok)throw new Error(`${url}: HTTP ${response?.status||0}`);
   const type=(response.headers.get('content-type')||'').toLowerCase();
   if(/\.(wav|mp3|png|svg|js|css|woff2)$/i.test(url)&&type.includes('text/html'))throw new Error(`${url}: HTML instead of asset`);
-  if(url==='./'||url==='./index.html'){const s=await textOf(response);if(!s.includes('ui/skins/rxui/cobalt.css')||!s.includes('ui/classic-polish/classic-controls.css'))throw new Error(`${url}: stale index without RC49 UI files`);}
+  if(url==='./'||url==='./index.html'){const s=await textOf(response);if(!s.includes('ui/skins/rxui/cobalt.css')||!s.includes('ui/classic-polish/classic-controls.css'))throw new Error(`${url}: stale index without RC50 UI files`);}
   if(url==='./ui/shell/views.js'){const s=await textOf(response);if(!s.includes('COBALT · BLUE CONTROL'))throw new Error(`${url}: stale views without COBALT`);}
   if(url==='./ui/skins/rxui/cobalt.css'){const s=await textOf(response);if(!s.includes('data-skin="cobalt"'))throw new Error(`${url}: invalid COBALT skin`);}
+  if(url==='./ui/shell/discipline-pults.css'){const s=await textOf(response);if(!s.includes('Landscape phone / narrow browser viewport')||!s.includes('font-size:.75em'))throw new Error(`${url}: stale cockpit geometry CSS`);}
   if(url==='./ui/classic-polish/classic-controls.css'){const s=await textOf(response);if(!s.includes('data-skin="classic"'))throw new Error(`${url}: invalid Classic polish CSS`);}
   if(url==='./ui/classic-polish/classic-icons.js'){const s=await textOf(response);if(!s.includes('ClassicControlPolish'))throw new Error(`${url}: invalid Classic polish icons`);}
-  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc49-recovery-update-pipeline'))throw new Error(`${url}: stale release manifest`);}
-  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC49'))throw new Error(`${url}: stale VERSION`);}
+  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc50-phone-landscape-geometry'))throw new Error(`${url}: stale release manifest`);}
+  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC50'))throw new Error(`${url}: stale VERSION`);}
   return response;
 }
 function freshRequestUrl(url){const u=new URL(url,self.registration.scope);u.searchParams.set('__legion_build',LEGION_SW_BUILD);return u.href;}

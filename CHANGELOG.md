@@ -1,5 +1,16 @@
 # LEGION RX CHANGELOG
 
+## RC50 · PHONE LANDSCAPE GEOMETRY
+
+- Added one shared landscape-phone breakpoint (`<=1100 × 600 CSS px`) so modern phones around 522 px viewport height no longer fall into the larger tablet cockpit geometry.
+- Reduced the horizontal-phone top toolbar/button height by about 25% in every visual theme.
+- Fixed the control panel allocation so GAP/BEST/AVG/LAST/LAPS and precision buttons have their own row and cannot cover the six main race-control buttons.
+- Reduced the Rally class label and lap-ring text by about 25% on horizontal phones; added clear vertical separation between the main timer digits and its lower caption.
+- Pilot-row numeric cells now use the same base font size and vertical centering as the pilot name on horizontal phones. One/two decimal places remain full size; the three-digit fractional part is exactly 75% of the main number.
+- Control SVG icons now inherit the button text color, fixing low-contrast white icons on light/white control surfaces.
+- Cobalt no longer owns cockpit geometry; it is visual paint only, so Classic / Cobalt / Steel / Light / Modern / Heritage share the same responsive dimensions.
+- Sport rules, timing, LapWiz, audio, storage and reporting are unchanged.
+
 ## RC49 · RECOVERY UPDATE PIPELINE
 
 - Fixed the actual RC48 update failure visible on the deployed app: the device was still running RC45, but the previous GitHub package was incremental from RC46/RC48 and omitted the RC46 `ui/classic-polish/` runtime files required by the new offline manifest. The RC49 GitHub package is cumulative from RC45.

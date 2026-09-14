@@ -50,7 +50,7 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 .rxnTopActions .rxnTopButton{position:relative;width:100%;min-width:0;height:46px;padding:0;border:1px solid var(--rxn-control-border);border-radius:3px;background:var(--rxn-control-bg);color:var(--rxn-control-text);box-shadow:none;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .rxnTopActions .rxnTopButton:hover:not(:disabled){background:var(--rxn-control-hover);border-color:var(--rxn-control-border-hover)}
 .rxnTopActions .rxnTopButton span{display:none}
-.rxnTopActions .rxnTopButton svg,.rxnTopActions .rxnTopButton.iconOnly svg{width:22px;height:22px;flex:none;color:var(--rxn-control-text);stroke-width:2.15}
+.rxnTopActions .rxnTopButton svg,.rxnTopActions .rxnTopButton.iconOnly svg{width:22px;height:22px;flex:none;color:currentColor;stroke-width:2.15}
 .rxnTopActions .rxnTopButton:after{content:"";position:absolute;top:4px;right:4px;width:6px;height:6px;background:var(--rxn-cobalt)}
 .rxnTopActions .rxnTopButton.ok:after{background:var(--rxn-lime)}
 .rxnTopActions .rxnTopButton.danger:after{background:var(--rxn-magenta)}
@@ -90,7 +90,7 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 .rxnFlagCell{display:flex;align-items:center;justify-content:center}
 .rxnFlag{display:block;width:28px;height:17px;background-image:url("../../flags/flags-atlas-rc4.png");background-size:1600% 1600%;background-position:var(--country-flag-position);background-repeat:no-repeat;box-shadow:0 0 0 1px var(--rxn-flag-outline)}
 .rxnFlagEmpty{background:var(--rxn-flag-empty);box-shadow:inset 0 0 0 1px var(--rxn-flag-empty-line)}
-.rxnGap,.rxnCheck,.rxnBest,.rxnAvg,.rxnLast,.rxnLaps{min-width:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip;font-variant-numeric:tabular-nums;padding:0 2px}
+.rxnGap,.rxnCheck,.rxnBest,.rxnAvg,.rxnLast,.rxnLaps{min-width:0;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip;font-variant-numeric:tabular-nums;padding:0 2px;line-height:1}
 .rxnCockpit.rxnHide-gap .rxnGap{display:none}
 .rxnCockpit.rxnHide-check .rxnCheck{display:none}
 .rxnCockpit.rxnHide-best .rxnBest{display:none}
@@ -100,7 +100,7 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 .rxnCheck{font-family:"Segoe UI Symbol",Arial,sans-serif;font-weight:700}
 .rxnCheck.ok{color:var(--rxn-check-text)}
 .rxnBest,.rxnAvg,.rxnLast,.rxnLaps,.rxnGap{letter-spacing:-.02em}
-.rxnMillis{display:inline-block;font-size:.72em;vertical-align:.06em;letter-spacing:-.01em}
+.rxnMillis{display:inline-block;font-size:.75em;vertical-align:.04em;letter-spacing:-.01em}
 .rxnDot{display:inline-block;margin-right:.01em}
 .rxnPhoneMetric{display:none}
 @keyframes rxnPassFlash{
@@ -123,7 +123,7 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 .rxnControls{min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,minmax(0,1fr));gap:5px}
 .rxnControl{position:relative;min-width:0;min-height:42px;border:1px solid var(--rxn-control-border);border-radius:4px;background:var(--rxn-control-bg);color:var(--rxn-control-text);display:flex;flex-direction:row;align-items:center;justify-content:center;gap:11px;padding:6px 12px;overflow:hidden;box-shadow:none;transition:background .15s ease,border-color .15s ease}
 .rxnControl:hover:not(:disabled){background:var(--rxn-control-hover);border-color:var(--rxn-control-border-hover)}
-.rxnControl svg{width:28px;height:28px;color:var(--rxn-control-text);stroke-width:2.3;flex:none}
+.rxnControl svg{width:28px;height:28px;color:currentColor;stroke-width:2.3;flex:none}
 .rxnControl span{min-width:0;display:flex;flex-direction:row;align-items:center;justify-content:center;line-height:1}
 .rxnControl b{font-size:16px;font-weight:900;letter-spacing:.055em;white-space:nowrap;text-transform:uppercase}
 .rxnControl small{display:none}
@@ -183,7 +183,6 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
   .rxnLapTrack{height:3px;margin-bottom:6px}
   .rxnFlag{width:33px;height:20px}
   .rxnGap,.rxnCheck,.rxnBest,.rxnAvg,.rxnLast,.rxnLaps{font-size:.88em}
-  .rxnMillis{font-size:.7em}
   .rxnRing{width:min(100%,154px)}
 }
 /* Landscape tablet / common Android */
@@ -247,6 +246,34 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
   .rxnControl b{font-size:11px}
   .rxnControl:after{width:6px}
   .rxnDisplayTools{grid-template-rows:20px 17px;gap:3px}
+  .rxnColumnToggles,.rxnPrecisionToggles{gap:3px}
+  .rxnColumnToggles button,.rxnPrecisionToggles button{font-size:8px}
+}
+/* Landscape phone / narrow browser viewport.
+   Covers modern phones whose CSS viewport can be slightly above 500px high.
+   Geometry only: shared by every visual skin. */
+@media (orientation:landscape) and (max-width:1100px) and (max-height:600px){
+  .rxnCockpit{--rxn-top-h:37px;--rxn-title-h:36px;padding:3px;gap:3px}
+  .rxnHomeBrand{height:34px;padding:0 6px}
+  .rxnHomeBrand span{font-size:15px}
+  .rxnPrimaryNav{display:none}
+  .rxnTopActions{height:34px;gap:2px}
+  .rxnTopActions .rxnTopButton{height:34px}
+  .rxnTopActions .rxnTopButton svg,.rxnTopActions .rxnTopButton.iconOnly svg{width:16px;height:16px}
+
+  .rxnPilotData{font-size:20px}
+  .rxnPos{font-size:20px}
+  .rxnId{font-size:20px}
+  .rxnGap,.rxnCheck,.rxnBest,.rxnAvg,.rxnLast,.rxnLaps{font-size:20px;padding:0 1px}
+
+  .rxnTimerCopy>span.rxnTimerClass{font-size:15px}
+  .rxnTimerCopy small{margin-top:8px}
+  .rxnRing b{font-size:17px}
+  .rxnRing small{font-size:9px;margin-top:5px}
+
+  .rxnControlPanel{grid-template-rows:minmax(0,1fr) 44px;gap:6px}
+  .rxnControls{gap:4px}
+  .rxnDisplayTools{grid-template-rows:22px 18px;gap:4px;overflow:hidden}
   .rxnColumnToggles,.rxnPrecisionToggles{gap:3px}
   .rxnColumnToggles button,.rxnPrecisionToggles button{font-size:8px}
 }

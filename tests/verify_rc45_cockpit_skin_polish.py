@@ -6,11 +6,13 @@ steel=(R/'ui/skins/rxui/steel.css').read_text(encoding='utf-8')
 light=(R/'ui/skins/rxui/light.css').read_text(encoding='utf-8')
 icons=(R/'ui/skins/rxui/icons.js').read_text(encoding='utf-8')
 
-# RC45 is deliberately cockpit-only for Steel/Light. Classic geometry/markup stays authoritative.
+# RC45 skin paint remains isolated. RC50 intentionally updates shared cockpit geometry in discipline-pults.css for every skin.
 assert 'Cockpit skin · RC45 authoritative Steel/Light treatment' in base
 assert ':is(html[data-skin="steel"],html[data-skin="light"]) .rxnCockpit' in base
 assert '.rxnPilotRow{' not in base
-assert hashlib.sha256((R/'ui/shell/discipline-pults.css').read_bytes()).hexdigest()=='5dd02f18d959daa2da7275a965f7cfc1b13c0a718ff050324f872256ee81ee9a'
+shared=(R/'ui/shell/discipline-pults.css').read_text(encoding='utf-8')
+assert 'Landscape phone / narrow browser viewport' in shared
+assert 'max-width:1100px' in shared and 'max-height:600px' in shared
 assert hashlib.sha256((R/'ui/discipline-ui.js').read_bytes()).hexdigest()=='052ce3f901327b7ce6fa9365b1f091612577431092a9470b41fc854c9f5a00e1'
 
 # No legacy side/bottom activation strips in Steel/Light cockpit layer.

@@ -97,8 +97,6 @@ html[data-skin="cobalt"] .rxnRing:before{
   box-shadow:inset 0 0 0 1px var(--rxui-cockpit-border)!important;
 }
 
-html[data-skin="cobalt"] .rxnControlPanel{gap:7px!important}
-html[data-skin="cobalt"] .rxnControls{gap:7px!important}
 html[data-skin="cobalt"] .rxnControl{
   background:var(--rxui-cockpit-control)!important;
   color:var(--rxui-text)!important;
@@ -142,7 +140,6 @@ html[data-skin="cobalt"] .rxnControl:disabled{
 }
 html[data-skin="cobalt"] .rxnControl:disabled svg{color:var(--rxui-cockpit-disabled-icon)!important}
 
-html[data-skin="cobalt"] .rxnDisplayTools{grid-template-rows:32px 24px;gap:5px!important}
 html[data-skin="cobalt"] .rxnColumnToggles button,
 html[data-skin="cobalt"] .rxnPrecisionToggles button{
   background:var(--rxui-cockpit-chip)!important;
@@ -161,21 +158,3 @@ html[data-skin="cobalt"] .rxnPrecisionToggles button.active{
 }
 html[data-skin="cobalt"] .rxnColumnToggles button:hover,
 html[data-skin="cobalt"] .rxnPrecisionToggles button:hover{border-color:var(--rxui-cockpit-border-strong)!important}
-
-@media (min-width:1400px) and (min-height:650px){
-  html[data-skin="cobalt"] .rxnControlPanel{grid-template-rows:minmax(0,1fr) 58px!important}
-  html[data-skin="cobalt"] .rxnDisplayTools{grid-template-rows:31px 22px!important}
-}
-@media (orientation:landscape) and (min-height:501px) and (max-width:1399px){
-  html[data-skin="cobalt"] .rxnControlPanel{grid-template-rows:minmax(0,1fr) 54px!important}
-  html[data-skin="cobalt"] .rxnDisplayTools{grid-template-rows:28px 21px!important}
-}
-@media (orientation:portrait) and (min-width:600px){
-  html[data-skin="cobalt"] .rxnControlPanel{grid-template-rows:minmax(0,1fr) 62px!important}
-  html[data-skin="cobalt"] .rxnDisplayTools{grid-template-rows:30px 27px!important}
-}
-@media (orientation:portrait) and (max-width:599px){
-  html[data-skin="cobalt"] .rxnControlPanel{gap:4px!important}
-  html[data-skin="cobalt"] .rxnControls{gap:4px!important}
-  html[data-skin="cobalt"] .rxnControl{border-radius:4px!important}
-}
