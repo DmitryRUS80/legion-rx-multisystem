@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC43 · STEEL + LIGHT SKINS**  
-Direct code base: **RC40 CLEAN SETTINGS UI**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC36 · BEST LAP STRIP + HERO CLEANUP**  
+Direct code base: **RC35 PILOT STATS TYPOGRAPHY DENSITY**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -182,3 +182,12 @@ UI-only refinement on the RC26 foundation: Free Practice selection visibility, t
 - Final run-off result is not appended to `pilot.finalResults` and has no event points of its own. It only resolves the disputed final positions; normal event points are assigned afterward from the official final protocol.
 - Run-off events use the normal RallyCross runtime/LapWiz path and current final race limit settings. No parallel scoring engine is added.
 - Free Practice, LapWiz protocol, audio, storage/reporting contracts and RC28 iOS storage safety are unchanged.
+
+
+## RC44 · RXUI removable skins
+- Base: RC40 CLEAN SETTINGS UI.
+- Classic visual source files remain authoritative and were not edited for the skin look.
+- Added removable `ui/skins/rxui/` layer with STEEL, LIGHT, MODERN and HERITAGE.
+- Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
+- RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
+- Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.

@@ -1,0 +1,13 @@
+html[data-skin="light"]{
+ --rxui-page:#f6f9fc;--rxui-page2:#ffffff;--rxui-bar:#f8fbfe;--rxui-surface:#ffffff;--rxui-surface2:#eef3f7;--rxui-control:#f7fafc;--rxui-control-hover:#e9f0f6;--rxui-input:#ffffff;
+ --rxui-text:#10243a;--rxui-muted:#687c90;--rxui-line:#ccd8e3;--rxui-line-soft:#e2e9ef;--rxui-line-strong:#a9bac9;
+ --rxui-accent:#2f80ed;--rxui-active:#2f80ed;--rxui-active-text:#ffffff;--rxui-active-border:#1b69d1;
+ --rxui-success:#25a45b;--rxui-success-bg:#e7f7ee;--rxui-success-text:#116334;--rxui-warning:#e49a18;--rxui-warning-bg:#fff5df;--rxui-warning-text:#805310;--rxui-danger:#dc3848;--rxui-danger-bg:#ffedf0;--rxui-danger-text:#9f1f2d;
+ --rxui-toggle-off:#b7c5d1;--rxui-ring-track:#d5e0e8;--rxui-row-head:#edf3f7;--rxui-row-head-text:#1d344b;--rxui-row:#ffffff;--rxui-row-alt:#f7f9fb;--rxui-row-border:#d9e2ea;--rxui-row-leader:#edf8f2;--rxui-row-line:#c7d4df;
+ --rxui-page-texture:linear-gradient(135deg,rgba(59,115,165,.035),transparent 36%),linear-gradient(180deg,#ffffff,#eef4f8);
+ --rxui-cockpit-texture:linear-gradient(135deg,rgba(74,130,181,.03),transparent 38%),linear-gradient(180deg,#fdfefe,#eef4f8);
+ --v4-bg:var(--rxui-page);--v4-surface:var(--rxui-surface);--v4-surface2:var(--rxui-surface2);--v4-surface3:#e6edf3;--v4-text:var(--rxui-text);--v4-muted:var(--rxui-muted);--v4-line:var(--rxui-line);--v4-line-strong:var(--rxui-line-strong);--v4-control:var(--rxui-control);--v4-control-hover:var(--rxui-control-hover);--v4-control-text:var(--rxui-text);--v4-input:var(--rxui-input);--v4-cobalt:var(--rxui-accent);--v4-green:var(--rxui-accent);
+ color-scheme:light;
+}
+html[data-skin="light"] .rxnRaceBanner{color:#fff!important}
+html[data-skin="light"] .rxnId{color:#071018!important}

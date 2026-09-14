@@ -1,0 +1,159 @@
+/* LEGION RX · RXUI removable skin layer · RC44
+   Classic is untouched. This file is inert when data-skin="classic". */
+html:not([data-skin="classic"]){
+  --rxui-radius:5px;
+  --rxui-radius-sm:3px;
+  --rxui-control-h:42px;
+  --rxui-focus:2px solid var(--rxui-accent);
+}
+html:not([data-skin="classic"]) body:not(.cockpitMode){
+  background-color:var(--rxui-page)!important;
+  background-image:var(--rxui-page-texture)!important;
+  color:var(--rxui-text)!important;
+}
+html:not([data-skin="classic"]) .appbar{
+  background:var(--rxui-bar)!important;border-color:var(--rxui-line-strong)!important;box-shadow:none!important;
+}
+html:not([data-skin="classic"]) .brandMark,
+html:not([data-skin="classic"]) .designQuickBtn,
+html:not([data-skin="classic"]) .iconBtn,
+html:not([data-skin="classic"]) .mainNav button,
+html:not([data-skin="classic"]) .settingsNavItem,
+html:not([data-skin="classic"]) .settingsAccordionHead{
+  border-radius:var(--rxui-radius-sm)!important;box-shadow:none!important;
+}
+html:not([data-skin="classic"]) .brandMark{background:transparent!important;border-color:transparent!important;color:var(--rxui-accent)!important}
+html:not([data-skin="classic"]) .brandText i{color:var(--rxui-accent)!important}
+html:not([data-skin="classic"]) .mainNav button{background:transparent!important;color:var(--rxui-muted)!important;border-color:transparent!important}
+html:not([data-skin="classic"]) .mainNav button:hover{background:var(--rxui-control-hover)!important;color:var(--rxui-text)!important;border-color:var(--rxui-line)!important}
+html:not([data-skin="classic"]) .mainNav button.active{background:var(--rxui-active)!important;color:var(--rxui-active-text)!important;border-color:var(--rxui-active-border)!important;box-shadow:none!important}
+html:not([data-skin="classic"]) .mainNav button.active svg{color:currentColor!important}
+html:not([data-skin="classic"]) .designQuickBtn,
+html:not([data-skin="classic"]) .iconBtn{background:var(--rxui-control)!important;color:var(--rxui-text)!important;border-color:var(--rxui-line)!important}
+html:not([data-skin="classic"]) .designQuickBtn:hover,
+html:not([data-skin="classic"]) .iconBtn:hover{background:var(--rxui-control-hover)!important;border-color:var(--rxui-line-strong)!important}
+
+/* Common surfaces: paint only, geometry comes from Classic. */
+html:not([data-skin="classic"]) .heroPanel,
+html:not([data-skin="classic"]) .disciplineTile,
+html:not([data-skin="classic"]) .moduleCard,
+html:not([data-skin="classic"]) .card,
+html:not([data-skin="classic"]) .ruleBox,
+html:not([data-skin="classic"]) .listRow,
+html:not([data-skin="classic"]) .champStageCard,
+html:not([data-skin="classic"]) .archiveCard,
+html:not([data-skin="classic"]) .formatRuleGrid,
+html:not([data-skin="classic"]) .settingsSectionBody,
+html:not([data-skin="classic"]) .modal{
+  background:var(--rxui-surface)!important;color:var(--rxui-text)!important;border-color:var(--rxui-line)!important;box-shadow:none!important;
+}
+html:not([data-skin="classic"]) .disciplineTile.activeDiscipline:before,
+html:not([data-skin="classic"]) .tileIcon:after,
+html:not([data-skin="classic"]) .moduleIcon:after{display:none!important}
+html:not([data-skin="classic"]) .sectionLabel:after{background:var(--rxui-accent)!important}
+html:not([data-skin="classic"]) .pageHeader p,
+html:not([data-skin="classic"]) .muted,
+html:not([data-skin="classic"]) .sub,
+html:not([data-skin="classic"]) .settingsText{color:var(--rxui-muted)!important}
+
+/* Buttons: no side/bottom stripe. State is a full-surface change. */
+html:not([data-skin="classic"]) .btn,
+html:not([data-skin="classic"]) .miniAction,
+html:not([data-skin="classic"]) .widgetAction,
+html:not([data-skin="classic"]) .tileAction{
+  box-shadow:none!important;border-radius:var(--rxui-radius-sm)!important;transform:none!important;
+}
+html:not([data-skin="classic"]) .btn:not(.primary):not(.danger):not(.good):not(.warn),
+html:not([data-skin="classic"]) .btn.secondary,
+html:not([data-skin="classic"]) .miniAction,
+html:not([data-skin="classic"]) .widgetAction{
+  background:var(--rxui-control)!important;color:var(--rxui-text)!important;border-color:var(--rxui-line)!important;
+}
+html:not([data-skin="classic"]) .btn.primary,
+html:not([data-skin="classic"]) .miniAction.primary,
+html:not([data-skin="classic"]) .widgetAction.primaryAction{
+  background:var(--rxui-active)!important;color:var(--rxui-active-text)!important;border-color:var(--rxui-active-border)!important;box-shadow:none!important;
+}
+html:not([data-skin="classic"]) .btn.good{background:var(--rxui-success-bg)!important;color:var(--rxui-success-text)!important;border-color:var(--rxui-success)!important;box-shadow:none!important}
+html:not([data-skin="classic"]) .btn.warn{background:var(--rxui-warning-bg)!important;color:var(--rxui-warning-text)!important;border-color:var(--rxui-warning)!important;box-shadow:none!important}
+html:not([data-skin="classic"]) .btn.danger{background:var(--rxui-danger-bg)!important;color:var(--rxui-danger-text)!important;border-color:var(--rxui-danger)!important;box-shadow:none!important}
+html:not([data-skin="classic"]) .btn:hover:not(:disabled),
+html:not([data-skin="classic"]) .miniAction:hover:not(:disabled),
+html:not([data-skin="classic"]) .widgetAction:hover:not(:disabled){filter:brightness(1.08);transform:none!important}
+html:not([data-skin="classic"]) .btn:active:not(:disabled),
+html:not([data-skin="classic"]) .miniAction:active:not(:disabled),
+html:not([data-skin="classic"]) .widgetAction:active:not(:disabled){filter:brightness(.9)}
+html:not([data-skin="classic"]) button:disabled{opacity:.34!important;filter:saturate(.3)!important}
+
+/* Forms */
+html:not([data-skin="classic"]) input,
+html:not([data-skin="classic"]) select,
+html:not([data-skin="classic"]) textarea{background:var(--rxui-input)!important;color:var(--rxui-text)!important;border-color:var(--rxui-line)!important;box-shadow:none!important}
+html:not([data-skin="classic"]) input:focus,
+html:not([data-skin="classic"]) select:focus,
+html:not([data-skin="classic"]) textarea:focus{outline:var(--rxui-focus)!important;outline-offset:1px}
+html:not([data-skin="classic"]) .toggle{background:var(--rxui-toggle-off)!important;box-shadow:none!important}
+html:not([data-skin="classic"]) .toggle:checked{background:var(--rxui-active)!important}
+
+/* Settings selector */
+.rxSkinGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-top:8px}
+.rxSkinOption{min-height:64px;padding:10px 12px;text-align:left;border:1px solid var(--v4-line);border-radius:4px;background:var(--v4-control);color:var(--v4-control-text);cursor:pointer;box-shadow:none}
+.rxSkinOption b{display:block;font:800 16px/1 var(--rxn-font);letter-spacing:.05em}
+.rxSkinOption span{display:block;margin-top:7px;font-size:12px;color:var(--v4-muted)}
+.rxSkinOption.active{outline:2px solid var(--rxui-accent,var(--v4-cobalt));outline-offset:1px;background:var(--rxui-active,var(--v4-control));color:var(--rxui-active-text,var(--v4-control-text))}
+html:not([data-skin="classic"]) .rxSkinOption{background:var(--rxui-control)!important;color:var(--rxui-text)!important;border-color:var(--rxui-line)!important}
+html:not([data-skin="classic"]) .rxSkinOption span{color:var(--rxui-muted)!important}
+html:not([data-skin="classic"]) .rxSkinOption.active{background:var(--rxui-active)!important;color:var(--rxui-active-text)!important;border-color:var(--rxui-active-border)!important;outline:none!important}
+@media(max-width:900px){.rxSkinGrid{grid-template-columns:1fr 1fr}.rxSkinOption:first-child{grid-column:1/-1}}
+
+/* Cockpit shell. Pilot row grid/height/order are intentionally not touched. */
+html:not([data-skin="classic"]) .rxnCockpit{
+  --rxn-bg:var(--rxui-page);--rxn-bg2:var(--rxui-page2);--rxn-panel:var(--rxui-surface);--rxn-panel2:var(--rxui-surface2);
+  --rxn-line:var(--rxui-line);--rxn-line2:var(--rxui-line-soft);--rxn-line-strong:var(--rxui-line-strong);
+  --rxn-text:var(--rxui-text);--rxn-muted:var(--rxui-muted);--rxn-blue:var(--rxui-accent);--rxn-cobalt:var(--rxui-accent);
+  --rxn-control-bg:var(--rxui-control);--rxn-control-hover:var(--rxui-control-hover);--rxn-control-border:var(--rxui-line);--rxn-control-border-hover:var(--rxui-line-strong);--rxn-control-text:var(--rxui-text);
+  --rxn-timer-bg:var(--rxui-surface);--rxn-timer-border:var(--rxui-line);--rxn-ring-track:var(--rxui-ring-track);--rxn-ring-inner:var(--rxui-surface);
+  --rxn-bestlap-bg:var(--rxui-surface);--rxn-bestlap-border:var(--rxui-line);--rxn-bestlap-label:var(--rxui-accent);
+  --rxn-display-border:var(--rxui-line);--rxn-grid-button-bg:var(--rxui-control);--rxn-grid-button-border:var(--rxui-line);
+  background-color:var(--rxui-page)!important;background-image:var(--rxui-cockpit-texture)!important;
+}
+html:not([data-skin="classic"]) .rxnHomeBrand,
+html:not([data-skin="classic"]) .rxnPrimaryNav button,
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton,
+html:not([data-skin="classic"]) .rxnControl,
+html:not([data-skin="classic"]) .rxnColumnToggles button,
+html:not([data-skin="classic"]) .rxnPrecisionToggles button{
+  background:var(--rxui-control)!important;color:var(--rxui-text)!important;border-color:var(--rxui-line)!important;box-shadow:none!important;
+}
+html:not([data-skin="classic"]) .rxnHomeBrand:hover,
+html:not([data-skin="classic"]) .rxnPrimaryNav button:hover,
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton:hover:not(:disabled),
+html:not([data-skin="classic"]) .rxnControl:hover:not(:disabled){background:var(--rxui-control-hover)!important;border-color:var(--rxui-line-strong)!important}
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton:after,
+html:not([data-skin="classic"]) .rxnControl:after{display:none!important}
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton.ok,
+html:not([data-skin="classic"]) .rxnControl.primary:not(:disabled),
+html:not([data-skin="classic"]) .rxnControl.blue:not(:disabled),
+html:not([data-skin="classic"]) .rxnColumnToggles button.active,
+html:not([data-skin="classic"]) .rxnPrecisionToggles button.active{
+  background:var(--rxui-active)!important;color:var(--rxui-active-text)!important;border-color:var(--rxui-active-border)!important;box-shadow:none!important;
+}
+html:not([data-skin="classic"]) .rxnControl.danger:not(:disabled){background:var(--rxui-danger-bg)!important;color:var(--rxui-danger-text)!important;border-color:var(--rxui-danger)!important}
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton.danger:not(:disabled){border-color:var(--rxui-danger)!important;color:var(--rxui-danger)!important}
+html:not([data-skin="classic"]) .rxnControl:disabled,
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton:disabled{opacity:.3!important;filter:saturate(.25)!important}
+html:not([data-skin="classic"]) .rxnTimerPanel{background:var(--rxui-surface)!important;border-color:var(--rxui-line)!important}
+html:not([data-skin="classic"]) .rxnRing{background:conic-gradient(var(--rxui-accent) var(--ring-progress),var(--rxui-ring-track) 0)!important}
+html:not([data-skin="classic"]) .rxnRing:before{background:var(--rxui-surface)!important}
+html:not([data-skin="classic"]) .rxnBestLapStrip{background:var(--rxui-surface)!important;border-color:var(--rxui-line)!important}
+html:not([data-skin="classic"]) .rxnBestLapStrip small{color:var(--rxui-accent)!important}
+html:not([data-skin="classic"]) .rxnPilotHead{background:var(--rxui-row-head)!important;color:var(--rxui-row-head-text)!important}
+html:not([data-skin="classic"]) .rxnPilotData{background:var(--rxui-row)!important;border-bottom-color:var(--rxui-row-border)!important}
+html:not([data-skin="classic"]) .rxnPilotData:nth-child(odd){background:var(--rxui-row-alt)!important}
+html:not([data-skin="classic"]) .rxnPilotData.leader{background:var(--rxui-row-leader)!important}
+html:not([data-skin="classic"]) .rxnLapTrack{background:var(--rxui-row-line)!important}
+
+/* New icon vocabulary: consistent optical weight, no glow dots. */
+html:not([data-skin="classic"]) svg[data-rx-icon]{stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+html:not([data-skin="classic"]) .rxnTopActions svg[data-rx-icon]{width:22px;height:22px}
+html:not([data-skin="classic"]) .rxnControl svg[data-rx-icon]{width:28px;height:28px}

@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC43 · STEEL + LIGHT SKINS */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC44 · RXUI REMOVABLE SKINS */
 'use strict';
 importScripts('./offline-manifest.js');
 

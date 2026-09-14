@@ -1,13 +1,3 @@
-## RC43 · STEEL + LIGHT SKINS
-- RC43 returns to the RC40 Classic renderer/layout baseline; the abandoned APEX alternate-renderer branch is not included.
-- Added `STEEL` and `LIGHT` as isolated visual skins over the same Classic DOM/actions. No alternate screen renderer is used.
-- `STEEL`: cold graphite/steel palette, neutral metallic controls, no blue cockpit grid.
-- `LIGHT`: white/light-gray daylight palette with restrained orange primary accent.
-- Added one new technical SVG glyph family for STEEL/LIGHT across shell/cockpit and pilot controls while Classic continues to render the existing icon paths.
-- Skin choice lives in Settings → Screen and applies immediately: `CLASSIC / STEEL / LIGHT`.
-- RallyCross pilot-row geometry and red race-state banner remain authoritative; skin CSS only repaints them.
-- `platform/`, `modes/`, `reporting/`, `ui/discipline-ui.js`, Classic `app.css`, pilot-card CSS and cockpit layout CSS are unchanged from RC40.
-
 # LEGION RX CHANGELOG
 
 ## RC40 · CLEAN SETTINGS UI
@@ -225,3 +215,12 @@
 - After `ГОТОВО`, the cropped image is applied immediately to the still-open pilot editor preview.
 - Avatar target remains 480×480 with WebP/JPEG fallback; the compact target is tightened from ~95 KB to ~72 KB to reduce localStorage pressure.
 - Pilot database/storage contract, RallyCross, Free Practice, LapWiz, audio, reporting and timing are unchanged.
+
+
+## RC44 · RXUI removable skins
+- Base: RC40 CLEAN SETTINGS UI.
+- Classic visual source files remain authoritative and were not edited for the skin look.
+- Added removable `ui/skins/rxui/` layer with STEEL, LIGHT, MODERN and HERITAGE.
+- Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
+- RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
+- Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.

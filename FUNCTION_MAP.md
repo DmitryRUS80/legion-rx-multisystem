@@ -1,11 +1,3 @@
-# RC43 UI skin map
-- `ui/shell/discipline-shared.js::interfaceSkin()` — normalizes `classic / steel / light`.
-- `ui/shell/discipline-shared.js::applySettings()` — applies `data-skin` and compatible dark/light color-scheme token.
-- `ui/themes/skins.css` — visual paint for STEEL/LIGHT only; no alternate renderer or cockpit geometry.
-- `ui/shell/views.js::settingsSkinChoice()` — Settings → Screen selector.
-- `ui/shell/actions.js::bindView()` — immediate skin persistence/application without screen re-render.
-- `ui/pilots/pilot-cards.js::pilotCardIcon()` — keeps Classic pilot icons and supplies the same STEEL/LIGHT technical glyph family to pilot controls.
-
 # LEGION RX — FUNCTION MAP
 
 - LapWiz BLE/connect/start/stop/pass parsing -> `platform/lapwiz.js`
@@ -158,3 +150,12 @@ No new sport/timing loop is created. Free Practice delete remains `removeTrackDa
 - `ui/discipline-ui.js::rxnPilotTable()` — roster rows only; the obsolete portrait-only full-width leader photo is no longer appended.
 - `ui/shell/discipline-pults.css::.rxnBestLapStrip` — single authoritative best-lap strip style; no trophy/icon column and no leader-photo responsive block.
 
+
+
+## RC44 · RXUI removable skins
+- Base: RC40 CLEAN SETTINGS UI.
+- Classic visual source files remain authoritative and were not edited for the skin look.
+- Added removable `ui/skins/rxui/` layer with STEEL, LIGHT, MODERN and HERITAGE.
+- Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
+- RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
+- Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.

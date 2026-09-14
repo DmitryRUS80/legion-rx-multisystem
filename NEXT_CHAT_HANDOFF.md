@@ -1,14 +1,3 @@
-# RC43 ADDENDUM · STEEL + LIGHT VISUAL SKINS
-
-- Current source candidate: **RC43 STEEL + LIGHT SKINS**, built from RC40 CLEAN SETTINGS UI.
-- APEX ORANGE / alternate renderer is deliberately absent. Do not restore it.
-- The accepted model is Winamp-style skinning over the existing Classic layout: same DOM/actions/geometry, separate visual skin tokens and icon glyphs.
-- Available skins: `classic`, `steel`, `light`.
-- Skin stylesheet: `ui/themes/skins.css`. It may change paint only; do not add cockpit layout/grid geometry there.
-- Classic authoritative geometry remains in `ui/shell/app.css`, `ui/shell/discipline-pults.css`, and `ui/pilots/pilot-cards.css`.
-- New icon glyphs are embedded as the hidden/visible `skinGlyph` group beside preserved `classicGlyph` paths in `index.html`, `ui/shell/discipline-shared.js`, and the pilot icon helper in `ui/pilots/pilot-cards.js`.
-- RallyCross pilot rows under the red race strip must not be structurally redesigned during skin work.
-
 # RC40 ADDENDUM · CLEAN SETTINGS UI
 
 - Current source candidate: RC40 CLEAN SETTINGS UI, rebuilt from RC38 FULL; do not continue from RC39.
@@ -707,3 +696,12 @@ Copy/paste this as the first message after attaching RC36 FULL + this handoff:
 - Pilot avatar input now opens manual square crop with drag/zoom.
 - Save pipeline writes only a compressed ~480×480 WebP/JPEG data URL; original camera/gallery file is never stored.
 - Runtime change scope: `ui/pilots/pilot-cards.js` + `ui/pilots/pilot-cards.css`; sport/platform logic untouched.
+
+
+## RC44 · RXUI removable skins
+- Base: RC40 CLEAN SETTINGS UI.
+- Classic visual source files remain authoritative and were not edited for the skin look.
+- Added removable `ui/skins/rxui/` layer with STEEL, LIGHT, MODERN and HERITAGE.
+- Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
+- RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
+- Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.

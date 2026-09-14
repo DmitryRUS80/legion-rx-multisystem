@@ -1,21 +1,3 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC43 · STEEL + LIGHT SKINS — TEST REPORT
-
-## Scope
-Visual skin task only. RC43 starts from the RC40 Classic layout and adds two selectable visual skins without an alternate renderer. Runtime changes are limited to `index.html`, `ui/themes/skins.css`, `ui/shell/discipline-shared.js`, `ui/shell/views.js`, `ui/shell/actions.js`, and the icon markup helper in `ui/pilots/pilot-cards.js`. Release metadata/tests/docs are synchronized.
-
-## Verification
-- APEX files/references are absent from the RC43 UI tree and runtime.
-- `CLASSIC / STEEL / LIGHT` are the only skin choices.
-- Skin switching applies without replacing the screen renderer.
-- Classic and new glyph sets coexist in the same SVG markup; CSS switches glyph groups by `data-skin`, so changing skin does not require a page re-render.
-- `ui/shell/app.css`, `ui/shell/discipline-pults.css`, `ui/pilots/pilot-cards.css`, and `ui/discipline-ui.js` are byte-identical to RC40. `ui/pilots/pilot-cards.js` changes only its SVG icon helper / voice-play icon so STEEL/LIGHT use the same glyph family while Classic keeps the original glyph paths.
-- All files under `platform/`, `modes/`, and `reporting/` are byte-identical to RC40.
-- STEEL/LIGHT skin CSS does not declare `.rxnPilotRow` or cockpit `grid-template-columns`; locked pilot-row geometry is not redefined.
-- Offline manifest includes `ui/themes/skins.css` and uses a new RC43 cache namespace.
-- Full automated regression suite passes, including RallyCross run-offs 28/28, official start-order/announcer 12/12, skip/state safety 11/11, storage behavior, pilot UI, avatar crop, architecture/offline checks and RC43 skin isolation.
-- JavaScript syntax check passes for all project `.js` files; CSS parser reports zero stylesheet parse errors.
-- Headless browser rendering is blocked by the execution environment, so no simulated visual/browser PASS is claimed for RC43. Physical PWA visual acceptance on the user's phone/tablet remains required.
-
 # LEGION RX 4.2.0 CLEAN FULL APP RC40 · CLEAN SETTINGS UI — TEST REPORT
 
 ## Scope
@@ -62,3 +44,24 @@ Pilot UI image pipeline only. Runtime changes are limited to `ui/pilots/pilot-ca
 ## Regression
 
 Run architecture, clean-foundation, iOS start/storage, pilot-card, RC29 run-off, RC30 start-order/announcer, RC31 columns, RC32 skip flow, RC33–36 UI tests, RC37 avatar pipeline, RC38 crop-layer test, JavaScript syntax and offline-manifest checks. Physical camera launch/permission remains user-side on iPhone/Android.
+
+
+## RC44 · RXUI removable skins
+- Base: RC40 CLEAN SETTINGS UI.
+- Classic visual source files remain authoritative and were not edited for the skin look.
+- Added removable `ui/skins/rxui/` layer with STEEL, LIGHT, MODERN and HERITAGE.
+- Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
+- RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
+- Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.
+
+### RC44 verification result
+- JS syntax (views/actions/discipline-shared/icons): PASS.
+- RC44 skin isolation test: PASS.
+- Architecture test: PASS.
+- CLEAN foundation test (updated for isolated RXUI style layer): PASS.
+- iOS start safety: PASS.
+- RallyCross run-off: 28/28 PASS.
+- Start order / announcer: 12/12 PASS.
+- Skip / state safety: 11/11 PASS.
+- Offline manifest: 85 local assets, 0 missing.
+- Headless browser rendering was attempted with system Chromium but local HTTP navigation is blocked by the execution environment administrator; physical/browser visual acceptance remains user-side.
