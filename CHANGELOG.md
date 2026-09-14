@@ -1,5 +1,13 @@
 # LEGION RX CHANGELOG
 
+## RC51 · PHONE TABLE TYPOGRAPHY
+
+- Kept the RC50 shared phone-landscape geometry and corrected only typography/contrast details.
+- Thousandths remain 75% size, but are now top-aligned with the main digit group instead of sitting lower in the flex cell. One- and two-decimal values remain full size.
+- On landscape phones, `GAP / BEST / AVG / LAST / LAPS` table-header labels now inherit the same header font size as `ПИЛОТ`; only pilot data cells receive the larger numeric font.
+- In COBALT, the top STOP square icon on its light button now uses a dark outline instead of red for proper contrast.
+- No sport rules, race state, LapWiz, audio, storage, reporting, pilot-row geometry or button layout logic changed.
+
 ## RC50 · PHONE LANDSCAPE GEOMETRY
 
 - Added one shared landscape-phone breakpoint (`<=1100 × 600 CSS px`) so modern phones around 522 px viewport height no longer fall into the larger tablet cockpit geometry.

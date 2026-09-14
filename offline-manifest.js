@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc50-phone-landscape-geometry';
-  const displayVersion='4.2.0 CLEAN FULL APP RC50 · PHONE LANDSCAPE GEOMETRY';
-  const cacheName='legion-rx-4-2-0-clean-full-rc50-phone-landscape-geometry';
+  const appVersion='4.2.0-clean-full-rc51-phone-table-typography';
+  const displayVersion='4.2.0 CLEAN FULL APP RC51 · PHONE TABLE TYPOGRAPHY';
+  const cacheName='legion-rx-4-2-0-clean-full-rc51-phone-table-typography';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

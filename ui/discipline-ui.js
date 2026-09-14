@@ -49,7 +49,7 @@ function rxnSplitMillisText(value,digits=rxnLoadPrecision()){
   const s=String(value??'—');
   if(!s.includes('.')||digits!==3)return esc(s);
   const i=s.lastIndexOf('.');
-  return `${esc(s.slice(0,i))}<span class="rxnDot">.</span><span class="rxnMillis">${esc(s.slice(i+1))}</span>`;
+  return `<span class="rxnTimeValue">${esc(s.slice(0,i))}<span class="rxnDot">.</span><span class="rxnMillis">${esc(s.slice(i+1))}</span></span>`;
 }
 function rxnTimeHtml(ms){return rxnFormatTimeHtml(ms);}
 function rxnPaceHtml(l){return `${l?.laps||0}/${rxnFormatTimeHtml(Number(l?.elapsedMs||0))}`;}

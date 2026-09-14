@@ -72,8 +72,8 @@ html[data-skin="cobalt"] .rxnTopActions .rxnTopButton.blue{
 }
 html[data-skin="cobalt"] .rxnTopActions .rxnTopButton.danger:not(:disabled){
   background:var(--rxui-cockpit-danger-soft)!important;
-  color:var(--rxui-danger)!important;
-  border-color:color-mix(in srgb,var(--rxui-danger) 60%,var(--rxui-cockpit-border))!important;
+  color:#101820!important;
+  border-color:var(--rxui-cockpit-border-strong)!important;
 }
 html[data-skin="cobalt"] .rxnTopActions .rxnTopButton:disabled{opacity:.34!important;filter:saturate(.15)!important}
 
