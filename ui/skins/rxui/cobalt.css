@@ -1,0 +1,181 @@
+html[data-skin="cobalt"]{
+ --rxui-page:#08111a;--rxui-page2:#0c1721;--rxui-bar:#0e1822;--rxui-surface:#0f1b25;--rxui-surface2:#13212d;--rxui-control:#0d1821;--rxui-control-hover:#162635;--rxui-input:#091118;
+ --rxui-text:#eef3f8;--rxui-muted:#93a4b5;--rxui-line:#344b5d;--rxui-line-soft:#1d2f3b;--rxui-line-strong:#5f788b;
+ --rxui-accent:#3d9cff;--rxui-active:#2e8cf2;--rxui-active-text:#ffffff;--rxui-active-border:#71b9ff;
+ --rxui-success:#54d083;--rxui-success-bg:#153224;--rxui-success-text:#dcf8e7;--rxui-warning:#e5b95d;--rxui-warning-bg:#382c18;--rxui-warning-text:#fff2d0;--rxui-danger:#cc6170;--rxui-danger-bg:#312028;--rxui-danger-text:#ffe9ed;
+
+ --rxui-brand-accent:#78c0ff;--rxui-best-label:#b8ff47;--rxui-ring-active:#3f9fff;
+ --rxui-cockpit-brand:linear-gradient(180deg,#182733 0%,#101c26 100%);
+ --rxui-cockpit-surface:linear-gradient(145deg,#172835 0%,#11202c 48%,#0c1821 100%);
+ --rxui-cockpit-control:linear-gradient(180deg,#263947 0%,#172632 100%);
+ --rxui-cockpit-control-hover:linear-gradient(180deg,#314858 0%,#203342 100%);
+ --rxui-cockpit-border:#4b6375;--rxui-cockpit-border-strong:#819aab;--rxui-cockpit-icon:#eef4f8;
+ --rxui-cockpit-inset:inset 0 1px 0 rgba(255,255,255,.08);
+ --rxui-cockpit-on:linear-gradient(180deg,#3fa5ff 0%,#1369d3 100%);--rxui-cockpit-on-text:#ffffff;--rxui-cockpit-on-border:#73bcff;--rxui-cockpit-on-inset:inset 0 1px 0 rgba(255,255,255,.24);
+ --rxui-primary-control:linear-gradient(180deg,#3a9fff 0%,#1b75dd 100%);--rxui-primary-control-text:#ffffff;--rxui-primary-control-border:#76beff;--rxui-primary-control-inset:inset 0 1px 0 rgba(255,255,255,.24);
+ --rxui-danger-control:linear-gradient(180deg,#f3f7fa 0%,#c9d4de 100%);--rxui-danger-control-text:#132433;--rxui-danger-inset:inset 0 1px 0 #ffffff;--rxui-cockpit-danger-soft:#e8eff5;
+ --rxui-cockpit-disabled:#0d161d;--rxui-cockpit-disabled-text:#5c6b78;--rxui-cockpit-disabled-icon:#566570;--rxui-cockpit-disabled-border:#23313c;
+ --rxui-cockpit-chip:#13212b;--rxui-cockpit-chip-text:#d5dee6;--rxui-cockpit-chip-border:#415563;--rxui-cockpit-chip-on:linear-gradient(180deg,#3b9fff 0%,#1768cf 100%);--rxui-cockpit-chip-on-text:#ffffff;--rxui-cockpit-chip-on-border:#70b8ff;
+ --rxui-toggle-off:#506372;--rxui-ring-track:#32424f;
+ --rxui-page-texture:linear-gradient(125deg,rgba(61,156,255,.05),transparent 36%),linear-gradient(180deg,#0a131a,#060b10);
+ --rxui-cockpit-texture:
+   linear-gradient(115deg,rgba(120,192,255,.05) 0%,transparent 18%,transparent 80%,rgba(120,192,255,.025) 100%),
+   repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,rgba(0,0,0,.012) 1px 3px),
+   linear-gradient(180deg,#12202c 0%,#0d151d 52%,#080d12 100%);
+ --v4-bg:var(--rxui-page);--v4-surface:var(--rxui-surface);--v4-surface2:var(--rxui-surface2);--v4-surface3:#1b2d3a;--v4-text:var(--rxui-text);--v4-muted:var(--rxui-muted);--v4-line:var(--rxui-line);--v4-line-strong:var(--rxui-line-strong);--v4-control:var(--rxui-control);--v4-control-hover:var(--rxui-control-hover);--v4-control-text:var(--rxui-text);--v4-input:var(--rxui-input);--v4-cobalt:var(--rxui-accent);--v4-green:#79c1ff;
+ color-scheme:dark;
+}
+
+html[data-skin="cobalt"] .rxnCockpit{
+  --rxn-bg:var(--rxui-page);--rxn-bg2:var(--rxui-page2);--rxn-panel:var(--rxui-surface);--rxn-panel2:var(--rxui-surface2);
+  --rxn-line:var(--rxui-line);--rxn-line2:var(--rxui-line-soft);--rxn-line-strong:var(--rxui-line-strong);
+  --rxn-text:var(--rxui-text);--rxn-muted:var(--rxui-muted);--rxn-blue:var(--rxui-accent);--rxn-cobalt:var(--rxui-accent);
+  --rxn-control-bg:var(--rxui-cockpit-control);--rxn-control-hover:var(--rxui-cockpit-control-hover);--rxn-control-border:var(--rxui-cockpit-border);--rxn-control-border-hover:var(--rxui-cockpit-border-strong);--rxn-control-text:var(--rxui-text);
+  --rxn-timer-bg:var(--rxui-cockpit-surface);--rxn-timer-border:var(--rxui-cockpit-border);--rxn-ring-track:var(--rxui-ring-track);--rxn-ring-inner:var(--rxui-cockpit-surface);
+  --rxn-bestlap-bg:var(--rxui-cockpit-surface);--rxn-bestlap-border:var(--rxui-cockpit-border);--rxn-bestlap-label:var(--rxui-best-label);
+  --rxn-display-border:var(--rxui-cockpit-chip-border);--rxn-grid-button-bg:var(--rxui-cockpit-control);--rxn-grid-button-border:var(--rxui-cockpit-border);
+  background-color:var(--rxui-page)!important;
+  background-image:var(--rxui-cockpit-texture)!important;
+  background-size:auto!important;
+}
+
+html[data-skin="cobalt"] .rxnHomeBrand{
+  background:var(--rxui-cockpit-brand)!important;
+  border:1px solid var(--rxui-cockpit-border)!important;
+  border-radius:4px!important;
+  color:var(--rxui-text)!important;
+  box-shadow:var(--rxui-cockpit-inset)!important;
+}
+html[data-skin="cobalt"] .rxnHomeBrand i{color:var(--rxui-brand-accent)!important}
+html[data-skin="cobalt"] .rxnPrimaryNav button,
+html[data-skin="cobalt"] .rxnTopActions .rxnTopButton{
+  background:var(--rxui-cockpit-control)!important;
+  color:var(--rxui-cockpit-icon)!important;
+  border:1px solid var(--rxui-cockpit-border)!important;
+  border-radius:4px!important;
+  box-shadow:var(--rxui-cockpit-inset)!important;
+  transition:background .12s ease,border-color .12s ease,color .12s ease,filter .12s ease!important;
+}
+html[data-skin="cobalt"] .rxnPrimaryNav button:hover,
+html[data-skin="cobalt"] .rxnTopActions .rxnTopButton:hover:not(:disabled){
+  background:var(--rxui-cockpit-control-hover)!important;
+  border-color:var(--rxui-cockpit-border-strong)!important;
+  color:var(--rxui-text)!important;
+}
+html[data-skin="cobalt"] .rxnTopActions .rxnTopButton:after{display:none!important;content:none!important}
+html[data-skin="cobalt"] .rxnTopActions .rxnTopButton.ok,
+html[data-skin="cobalt"] .rxnTopActions .rxnTopButton.blue{
+  background:var(--rxui-cockpit-on)!important;
+  color:var(--rxui-cockpit-on-text)!important;
+  border-color:var(--rxui-cockpit-on-border)!important;
+  box-shadow:var(--rxui-cockpit-on-inset)!important;
+}
+html[data-skin="cobalt"] .rxnTopActions .rxnTopButton.danger:not(:disabled){
+  background:var(--rxui-cockpit-danger-soft)!important;
+  color:var(--rxui-danger)!important;
+  border-color:color-mix(in srgb,var(--rxui-danger) 60%,var(--rxui-cockpit-border))!important;
+}
+html[data-skin="cobalt"] .rxnTopActions .rxnTopButton:disabled{opacity:.34!important;filter:saturate(.15)!important}
+
+html[data-skin="cobalt"] .rxnBestLapStrip,
+html[data-skin="cobalt"] .rxnTimerPanel{
+  background:var(--rxui-cockpit-surface)!important;
+  border-color:var(--rxui-cockpit-border)!important;
+  border-radius:4px!important;
+  box-shadow:var(--rxui-cockpit-inset)!important;
+}
+html[data-skin="cobalt"] .rxnBestLapStrip small{color:var(--rxui-best-label)!important}
+html[data-skin="cobalt"] .rxnTimerCopy span,
+html[data-skin="cobalt"] .rxnTimerCopy small{color:var(--rxui-muted)!important}
+html[data-skin="cobalt"] .rxnRing{
+  background:conic-gradient(var(--rxui-ring-active) var(--ring-progress),var(--rxui-ring-track) 0)!important;
+  filter:none!important;
+  box-shadow:none!important;
+}
+html[data-skin="cobalt"] .rxnRing:before{
+  background:var(--rxui-cockpit-surface)!important;
+  box-shadow:inset 0 0 0 1px var(--rxui-cockpit-border)!important;
+}
+
+html[data-skin="cobalt"] .rxnControlPanel{gap:7px!important}
+html[data-skin="cobalt"] .rxnControls{gap:7px!important}
+html[data-skin="cobalt"] .rxnControl{
+  background:var(--rxui-cockpit-control)!important;
+  color:var(--rxui-text)!important;
+  border:1px solid var(--rxui-cockpit-border)!important;
+  border-radius:5px!important;
+  box-shadow:var(--rxui-cockpit-inset)!important;
+  transform:none!important;
+  transition:background .12s ease,border-color .12s ease,color .12s ease,filter .08s ease!important;
+}
+html[data-skin="cobalt"] .rxnControl:after{display:none!important;content:none!important}
+html[data-skin="cobalt"] .rxnControl:hover:not(:disabled){
+  background:var(--rxui-cockpit-control-hover)!important;
+  border-color:var(--rxui-cockpit-border-strong)!important;
+}
+html[data-skin="cobalt"] .rxnControl.primary:not(:disabled){
+  background:var(--rxui-primary-control)!important;
+  color:var(--rxui-primary-control-text)!important;
+  border-color:var(--rxui-primary-control-border)!important;
+  box-shadow:var(--rxui-primary-control-inset)!important;
+}
+html[data-skin="cobalt"] .rxnControl.blue:not(:disabled){
+  background:var(--rxui-cockpit-on)!important;
+  color:var(--rxui-cockpit-on-text)!important;
+  border-color:var(--rxui-cockpit-on-border)!important;
+  box-shadow:var(--rxui-cockpit-on-inset)!important;
+}
+html[data-skin="cobalt"] .rxnControl.danger:not(:disabled){
+  background:var(--rxui-danger-control)!important;
+  color:var(--rxui-danger-control-text)!important;
+  border-color:color-mix(in srgb,var(--rxui-danger) 52%,var(--rxui-primary-control-border))!important;
+  box-shadow:var(--rxui-danger-inset)!important;
+}
+html[data-skin="cobalt"] .rxnControl:active:not(:disabled){filter:brightness(.92)!important;transform:translateY(1px)!important}
+html[data-skin="cobalt"] .rxnControl:disabled{
+  opacity:1!important;
+  background:var(--rxui-cockpit-disabled)!important;
+  color:var(--rxui-cockpit-disabled-text)!important;
+  border-color:var(--rxui-cockpit-disabled-border)!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+html[data-skin="cobalt"] .rxnControl:disabled svg{color:var(--rxui-cockpit-disabled-icon)!important}
+
+html[data-skin="cobalt"] .rxnDisplayTools{grid-template-rows:32px 24px;gap:5px!important}
+html[data-skin="cobalt"] .rxnColumnToggles button,
+html[data-skin="cobalt"] .rxnPrecisionToggles button{
+  background:var(--rxui-cockpit-chip)!important;
+  color:var(--rxui-cockpit-chip-text)!important;
+  border:1px solid var(--rxui-cockpit-chip-border)!important;
+  border-radius:3px!important;
+  box-shadow:none!important;
+  min-height:100%;
+}
+html[data-skin="cobalt"] .rxnColumnToggles button.active,
+html[data-skin="cobalt"] .rxnPrecisionToggles button.active{
+  background:var(--rxui-cockpit-chip-on)!important;
+  color:var(--rxui-cockpit-chip-on-text)!important;
+  border-color:var(--rxui-cockpit-chip-on-border)!important;
+  box-shadow:none!important;
+}
+html[data-skin="cobalt"] .rxnColumnToggles button:hover,
+html[data-skin="cobalt"] .rxnPrecisionToggles button:hover{border-color:var(--rxui-cockpit-border-strong)!important}
+
+@media (min-width:1400px) and (min-height:650px){
+  html[data-skin="cobalt"] .rxnControlPanel{grid-template-rows:minmax(0,1fr) 58px!important}
+  html[data-skin="cobalt"] .rxnDisplayTools{grid-template-rows:31px 22px!important}
+}
+@media (orientation:landscape) and (min-height:501px) and (max-width:1399px){
+  html[data-skin="cobalt"] .rxnControlPanel{grid-template-rows:minmax(0,1fr) 54px!important}
+  html[data-skin="cobalt"] .rxnDisplayTools{grid-template-rows:28px 21px!important}
+}
+@media (orientation:portrait) and (min-width:600px){
+  html[data-skin="cobalt"] .rxnControlPanel{grid-template-rows:minmax(0,1fr) 62px!important}
+  html[data-skin="cobalt"] .rxnDisplayTools{grid-template-rows:30px 27px!important}
+}
+@media (orientation:portrait) and (max-width:599px){
+  html[data-skin="cobalt"] .rxnControlPanel{gap:4px!important}
+  html[data-skin="cobalt"] .rxnControls{gap:4px!important}
+  html[data-skin="cobalt"] .rxnControl{border-radius:4px!important}
+}

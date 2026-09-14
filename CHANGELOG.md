@@ -1,5 +1,13 @@
 # LEGION RX CHANGELOG
 
+## RC47 · COBALT COCKPIT SKIN
+
+- Added a new separate `COBALT` interface skin; `CLASSIC` remains preserved as the authoritative untouched baseline.
+- The new skin changes cockpit chrome only: top icon buttons, main race-control buttons, and display-toggle buttons. No new panels, widgets or layout blocks were introduced.
+- Pilot rows are intentionally left on the Classic rendering/styling path; their geometry and data layout are unchanged.
+- The Cobalt cockpit uses the RXUI icon family, removes legacy status dots/side strips, keeps full-surface button states, and gives the lower display-tool buttons slightly more height.
+- Portrait/landscape structure remains the existing Classic adaptation. RallyCross logic, Free Practice logic, LapWiz, audio, storage and reporting are unchanged.
+
 ## RC40 · CLEAN SETTINGS UI
 
 - Rebuilt Settings from the RC38 FULL baseline; RC39 settings implementation is not used as the base.
@@ -233,3 +241,12 @@
 - Disabled controls now have explicit theme states instead of generic opacity, so available vs unavailable actions remain readable on desktop and portrait layouts.
 - Pilot rows keep the exact RC44/Classic grid, height, order and interaction geometry; skin layer changes paint only.
 - MODERN and HERITAGE skin token files are unchanged. RallyCross/Free Practice sport logic, LapWiz, audio, storage and reporting are unchanged.
+
+
+## RC46 · CLASSIC CONTROL POLISH
+- Added isolated Classic-only cockpit polish layer: `ui/classic-polish/classic-controls.css` + `classic-icons.js`.
+- Classic cockpit geometry, pilot rows, timer layout and sport behavior are unchanged.
+- Replaced cockpit toolbar/race-control SVG paths with one coherent icon family.
+- Removed visual status dots, side activation stripes and bottom inset selection bars from Classic cockpit controls.
+- Active/connected, primary, danger and disabled states now use full control surfaces.
+- Bottom GAP/BEST/AVG/LAST/LAPS and precision toggles use full-surface selection.
