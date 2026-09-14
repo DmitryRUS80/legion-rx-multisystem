@@ -1,5 +1,14 @@
 # LEGION RX CHANGELOG
 
+## RC49 · RECOVERY UPDATE PIPELINE
+
+- Fixed the actual RC48 update failure visible on the deployed app: the device was still running RC45, but the previous GitHub package was incremental from RC46/RC48 and omitted the RC46 `ui/classic-polish/` runtime files required by the new offline manifest. The RC49 GitHub package is cumulative from RC45.
+- Rebuilt the PWA update path so an installed RC45/RC46 build cannot accidentally reuse an older HTTP-cached `offline-manifest.js` while checking a newer service worker.
+- The service worker imports the RC49 manifest through a release-unique URL and downloads critical release files with cache-busting plus retry.
+- Added release sentinels: RC49 refuses to activate unless the downloaded index references both COBALT and Classic-polish files, Settings contains `COBALT · BLUE CONTROL`, Cobalt CSS is valid, and `VERSION.txt`/offline manifest identify RC49.
+- Unchanged local assets may fall back to the previous verified cache on a transient network failure; critical changed/new files never fall back to stale content.
+- `VERSION.txt` is now part of the verified offline package. Classic cockpit, pilot rows, sport rules, LapWiz, audio, storage and reporting are unchanged.
+
 ## RC48 · COBALT UPDATE VISIBILITY
 
 - Fixed the deployment/update path after RC47 could remain visually stuck on the old five-skin Settings screen.

@@ -1,11 +1,11 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc48-cobalt-update-visibility';
-  const displayVersion='4.2.0 CLEAN FULL APP RC48 · COBALT UPDATE VISIBILITY';
-  const cacheName='legion-rx-4-2-0-clean-full-rc48-cobalt-update-visibility';
+  const appVersion='4.2.0-clean-full-rc49-recovery-update-pipeline';
+  const displayVersion='4.2.0 CLEAN FULL APP RC49 · RECOVERY UPDATE PIPELINE';
+  const cacheName='legion-rx-4-2-0-clean-full-rc49-recovery-update-pipeline';
   const assets=[
     './',
-    './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',
+    './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',
     './icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png',
     './flags/flags-atlas-rc4.png',
     './audio/system/bleep.mp3','./audio/system/silence.wav','./audio/system/start_race.mp3',
