@@ -1,4 +1,4 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC42 · APEX ALTERNATE RENDERER TEST */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC43 · STEEL + LIGHT SKINS */
 'use strict';
 importScripts('./offline-manifest.js');
 

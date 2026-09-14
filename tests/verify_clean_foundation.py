@@ -35,7 +35,7 @@ checks['protected_foundation_hashes_match_rc32']=not changed
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])
-checks['style_layers_exact']=all(x in index for x in ['ui/themes/theme.css','ui/shell/app.css','ui/pilots/pilot-cards.css','ui/shell/discipline-pults.css','ui/skins/apex/apex.css']) and index.count('rel="stylesheet"')==6 # Classic keeps its five authoritative layers (+ Oswald); APEX is one isolated alternate-renderer stylesheet.
+checks['style_layers_exact']=all(x in index for x in ['ui/themes/theme.css','ui/themes/skins.css','ui/shell/app.css','ui/pilots/pilot-cards.css','ui/shell/discipline-pults.css']) and index.count('rel="stylesheet"')==6 # + Oswald; skins.css is the intentional visual-skin layer, not a patch stylesheet
 
 theme=(ROOT/'ui/themes/theme.css').read_text(encoding='utf-8')
 checks['theme_is_tokens_only']=not re.search(r'\.[A-Za-z_][\w-]*\s*[,{]',theme)

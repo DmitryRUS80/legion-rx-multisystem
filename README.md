@@ -1,10 +1,11 @@
-# RC42 CURRENT UI TEST
+# LEGION RX 4.2.0 CLEAN FULL APP RC43 · STEEL + LIGHT SKINS
 
-RC42 adds **APEX ORANGE** as a true alternate renderer, not a recolor of Classic. Switch it in Settings → Screen. Classic remains available and unchanged as the safe fallback. APEX owns its own main-page DOM/CSS while sharing the existing state/actions and preserving the protected race-status/pilot board on the cockpit.
+Direct code base: **RC40 CLEAN SETTINGS UI**.
 
-# LEGION RX 4.2.0 CLEAN FULL APP RC38 · AVATAR CROP LAYER FIX
 
-Direct code base: **RC34 LIVE PILOT STATS BROADCAST**.
+## RC43 current release
+
+RC43 uses the proven RC40 Classic layout as the only renderer. The experimental APEX alternate renderer is removed from the line. Two visual-only skins are added: STEEL and LIGHT. Both keep the same screen geometry, buttons/actions and cockpit pilot-row layout, but repaint the application through isolated skin tokens and a separate modern icon glyph family. Classic remains available and visually preserves its existing icon set. Sport logic, LapWiz, audio, storage and reporting are unchanged.
 
 
 ## RC38 current release
@@ -132,12 +133,3 @@ Pilot avatar upload now uses manual square crop + automatic compact 480×480 Web
 ## RC40 current UI test
 
 Settings is rebuilt from RC38: desktop uses left navigation and one right surface; phone portrait uses a true collapsible accordion. Update is a separate section. Background noise is reduced with a denser glass surface and blur.
-
-
-## RC42 APEX alternate renderer
-
-- RC42 starts from RC40; rejected RC41 theme override is not used.
-- APEX ORANGE is a separate UI renderer with its own DOM/CSS for Home, RallyCross Setup, Free Practice Setup, Pilots, Championships, Archive, Settings and cockpit shells.
-- Classic remains the default/fallback and its authoritative CSS is unchanged.
-- Settings → Screen switches CLASSIC / APEX ORANGE; choice persists locally.
-- RallyCross cockpit keeps the protected red race-status strip and pilot board/table; only the surrounding APEX shell/control area is replaced.

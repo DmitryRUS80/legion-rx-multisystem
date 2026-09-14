@@ -4,15 +4,25 @@
    race pilot/model picker. Sport rules, BLE and storage engines are not used here. */
 
 function pilotCardIcon(name,cls='pilotCardIcon'){
-  const paths={
+  const classic={
     edit:'<path d="M4 20h4l11-11-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/>',
     plus:'<path d="M12 5v14M5 12h14"/>',
     trash:'<path d="M4 7h16M9 7V4h6v3m-8 0 1 13h8l1-13M10 11v5m4-5v5"/>',
     camera:'<path d="M4 8h4l1.5-2h5L16 8h4v11H4Z"/><circle cx="12" cy="13" r="3.2"/>',
     car:'<path d="M4 14.5 5.8 9h12.4l1.8 5.5v4H18m-12 0H4v-4h16v4h-2M7 18.5h10"/><circle cx="7" cy="16" r="1.4"/><circle cx="17" cy="16" r="1.4"/>',
-    close:'<path d="M6 6l12 12M18 6 6 18"/>'
+    close:'<path d="M6 6l12 12M18 6 6 18"/>',
+    play:'<path d="M8 5v14l11-7Z"/>'
   };
-  return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.edit}</svg>`;
+  const skin={
+    edit:'<path d="M5 19.5 6.1 15 16.7 4.4l3 3L9.1 18 5 19.5Z"/><path class="skinGlyphAccent" d="m14.8 6.3 3 3"/>',
+    plus:'<path d="M12 5v14M5 12h14"/><path class="skinGlyphAccent" d="M12 5v4"/>',
+    trash:'<path d="M5 7h14M9 7V4.5h6V7m-8.2 0 .8 12h8.8l.8-12M10 11v4.5m4-4.5v4.5"/><path class="skinGlyphAccent" d="M9 4.5h6"/>',
+    camera:'<path d="M4 8.5h4l1.4-2h5.2l1.4 2h4v10H4Z"/><circle cx="12" cy="13.5" r="3"/><path class="skinGlyphAccent" d="M6 8.5h3"/>',
+    car:'<path d="M4 14.5 6.2 9h11.6l2.2 5.5v3.5H4z"/><path d="M7 18v1.5M17 18v1.5M7.2 14h9.6"/><circle cx="7" cy="16.2" r="1.3"/><circle cx="17" cy="16.2" r="1.3"/><path class="skinGlyphAccent" d="M8.5 9 10 6h4l1.5 3"/>',
+    close:'<path d="M6 6l12 12M18 6 6 18"/><path class="skinGlyphAccent" d="M6 6l4 4"/>',
+    play:'<path d="M8 5.5 18.5 12 8 18.5z"/><path class="skinGlyphAccent" d="M8 5.5v13"/>'
+  };
+  return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="classicGlyph">${classic[name]||classic.edit}</g><g class="skinGlyph">${skin[name]||skin.edit}</g></svg>`;
 }
 
 function pilotStableColor(seed='RX'){
@@ -252,7 +262,7 @@ function pilotModal(existing=null,addToRace=false,originRect=null){
     </div>
     <div class="pilotEditorSectionHead"><div><div class="sectionLabel">ГАРАЖ</div><h3>МОДЕЛИ ПИЛОТА</h3></div><small>В соревнование модель выбирается одним нажатием по её плитке.</small></div>
     <div class="pilotModelEditorGrid" id="pilotModelEditors"></div>
-    <details class="pilotEditorVoice"><summary><span>ИМЯ ДЛЯ ДИКТОРА</span><em id="pilotVoiceState" class="pilotVoiceState ${voiceStale?'stale':voiceReady?'ready':''}">${voiceStale?'ИМЯ ИЗМЕНЕНО':voiceReady?'ГОТОВО ОФЛАЙН':'НЕ ЗАГРУЖЕНО'}</em></summary><div class="pilotVoiceBody"><input id="pilotVoiceFile" type="file" accept="audio/mpeg,audio/mp3,audio/wav,audio/x-wav,audio/ogg,.mp3,.wav,.ogg" hidden><div class="pilotVoiceActions"><button class="btn primary" id="uploadPilotVoice" type="button">${voiceReady?'Заменить файл':'Загрузить имя'}</button><button class="btn secondary" id="playPilotVoice" type="button" ${voiceReady?'':'disabled'}>▶ Прослушать</button><button class="btn danger" id="deletePilotVoice" type="button" ${voiceReady?'':'disabled'}>Удалить запись</button></div><div class="pilotVoiceHint">MP3, WAV или OGG до 5 МБ. Файл хранится локально и работает офлайн.</div></div></details>
+    <details class="pilotEditorVoice"><summary><span>ИМЯ ДЛЯ ДИКТОРА</span><em id="pilotVoiceState" class="pilotVoiceState ${voiceStale?'stale':voiceReady?'ready':''}">${voiceStale?'ИМЯ ИЗМЕНЕНО':voiceReady?'ГОТОВО ОФЛАЙН':'НЕ ЗАГРУЖЕНО'}</em></summary><div class="pilotVoiceBody"><input id="pilotVoiceFile" type="file" accept="audio/mpeg,audio/mp3,audio/wav,audio/x-wav,audio/ogg,.mp3,.wav,.ogg" hidden><div class="pilotVoiceActions"><button class="btn primary" id="uploadPilotVoice" type="button">${voiceReady?'Заменить файл':'Загрузить имя'}</button><button class="btn secondary" id="playPilotVoice" type="button" ${voiceReady?'':'disabled'}>${pilotCardIcon('play')} Прослушать</button><button class="btn danger" id="deletePilotVoice" type="button" ${voiceReady?'':'disabled'}>Удалить запись</button></div><div class="pilotVoiceHint">MP3, WAV или OGG до 5 МБ. Файл хранится локально и работает офлайн.</div></div></details>
     <footer class="pilotEditorFoot">${existing?`<button class="pilotEditorDelete" id="deletePilotProfile" type="button">${pilotCardIcon('trash')} УДАЛИТЬ ПРОФИЛЬ</button>`:'<span></span>'}<button class="btn primary pilotEditorSave" id="savePilotModal" type="button">СОХРАНИТЬ</button></footer>
   </section></div>`;
   pilotRenderModelEditors(initialModels,existing?String(id):'');

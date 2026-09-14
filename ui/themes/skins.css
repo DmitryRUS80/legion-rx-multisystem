@@ -1,0 +1,266 @@
+/* LEGION RX · STEEL + LIGHT VISUAL SKINS · RC43
+   Visual layer only: Classic layout/geometry/actions stay authoritative. */
+
+/* Dual-glyph icons: Classic stays byte-for-byte visual, STEEL/LIGHT show the new technical glyph set. */
+.skinGlyph{display:none}
+html[data-skin="steel"] .classicGlyph,html[data-skin="light"] .classicGlyph{display:none}
+html[data-skin="steel"] .skinGlyph,html[data-skin="light"] .skinGlyph{display:inline}
+html[data-skin="steel"] .skinGlyph,html[data-skin="light"] .skinGlyph{stroke-width:1.72}
+html[data-skin="steel"]{--skin-icon-accent:#9fb6c7}
+html[data-skin="light"]{--skin-icon-accent:#ff6a00}
+html[data-skin="steel"] .skinGlyphAccent,html[data-skin="light"] .skinGlyphAccent{stroke:var(--skin-icon-accent)}
+
+/* Settings skin selector. It does not change page geometry. */
+.skinChoiceGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.skinChoice{min-width:0;min-height:82px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px;border:1px solid var(--v4-line);background:var(--v4-control);color:var(--v4-text);cursor:pointer;position:relative}
+.skinChoice:hover{border-color:var(--v4-line-strong);background:var(--v4-control-hover)}
+.skinChoice.active{border-color:var(--v4-cobalt);box-shadow:inset 0 -3px var(--v4-cobalt)}
+.skinChoice input{position:absolute;opacity:0;pointer-events:none}
+.skinSwatches{display:grid;grid-template-columns:repeat(3,12px);height:40px;align-content:center;gap:3px}
+.skinSwatches i{display:block;width:12px;height:30px;background:var(--swatch);border:1px solid color-mix(in srgb,var(--v4-text) 14%,transparent)}
+.skinChoiceCopy{min-width:0;display:grid;gap:5px}
+.skinChoiceCopy b{font:800 19px/1 var(--v4-font);letter-spacing:.05em}
+.skinChoiceCopy small{font:600 14px/1.15 var(--v4-font);color:var(--v4-muted)}
+.skinChoiceCheck{width:26px;height:26px;display:grid;place-items:center;border:1px solid var(--v4-line-strong);color:transparent;font:900 15px/1 var(--v4-font)}
+.skinChoice.active .skinChoiceCheck{background:var(--v4-cobalt);border-color:var(--v4-cobalt);color:var(--v4-bg)}
+html:not([data-skin="classic"]) .classicThemeRow{opacity:.38;pointer-events:none}
+@media(max-width:720px){.skinChoiceGrid{grid-template-columns:1fr}.skinChoice{min-height:70px}.skinSwatches{grid-template-columns:repeat(3,14px)}.skinSwatches i{width:14px;height:26px}}
+
+/* =========================================================
+   STEEL — cold graphite / brushed-metal character
+   ========================================================= */
+html[data-skin="steel"]{
+  color-scheme:dark;
+  --v4-cobalt:#a9bfd0;
+  --v4-bg:#11171d;
+  --v4-surface:#151c23;
+  --v4-surface2:#1a232c;
+  --v4-surface3:#222d37;
+  --v4-text:#f2f5f7;
+  --v4-muted:#93a1ad;
+  --v4-line:#2b3945;
+  --v4-line-strong:#465967;
+  --v4-control:#111820;
+  --v4-control-hover:#1c2731;
+  --v4-control-text:#f4f7f9;
+  --v4-input:#10171e;
+  --v4-table-alt:#171f27;
+  --v4-table-hover:#202d38;
+  --v4-green:#dce7ee;
+  --v4-green-soft:#22303a;
+  --v4-blue-soft:#202d38;
+  --v4-amber:#c8a86e;
+  --v4-amber-soft:#332d22;
+  --v4-magenta:#e84369;
+  --v4-magenta-soft:#33202a;
+  --v4-grid:transparent;
+  --v4-overlay:rgba(4,8,12,.78);
+  --v4-shadow:rgba(0,0,0,.55);
+
+  --rxn-bg:#11171d;
+  --rxn-bg2:#161e26;
+  --rxn-panel:#18212a;
+  --rxn-panel2:#202a34;
+  --rxn-strip:rgba(255,255,255,.045);
+  --rxn-line:#2d3b47;
+  --rxn-line2:#202c36;
+  --rxn-line-strong:#526472;
+  --rxn-scrollbar:#4a5f70;
+  --rxn-text:#f4f7f9;
+  --rxn-muted:#93a2ae;
+  --rxn-blue:#b4c7d5;
+  --rxn-green:#6ed08c;
+  --rxn-lime:#dfe8ee;
+  --rxn-yellow:#d6b36e;
+  --rxn-red:#f04b61;
+  --rxn-grid:transparent;
+  --rxn-cockpit-grid:transparent;
+  --rxn-control-bg:#10161c;
+  --rxn-control-hover:#1c2630;
+  --rxn-control-border:#344653;
+  --rxn-control-border-hover:#8294a3;
+  --rxn-control-text:#f5f7f9;
+  --rxn-row-head:#0d1217;
+  --rxn-row:#1a222a;
+  --rxn-row-alt:#151d24;
+  --rxn-row-leader:#233a33;
+  --rxn-row-border:#0f151a;
+  --rxn-roster-bg:rgba(9,13,17,.34);
+  --rxn-lap-track:#364652;
+  --rxn-flag-empty:#202b34;
+  --rxn-flag-empty-line:#3b4c59;
+  --rxn-flag-outline:rgba(255,255,255,.22);
+  --rxn-timer-bg:#18212a;
+  --rxn-timer-border:#344551;
+  --rxn-ring-track:#2c3944;
+  --rxn-ring-inner:#151d24;
+  --rxn-timer-label:#a9b5be;
+  --rxn-bestlap-bg:#141b22;
+  --rxn-bestlap-border:#3b4a55;
+  --rxn-bestlap-label:#dce6ed;
+  --rxn-grid-button-bg:#10161c;
+  --rxn-grid-button-border:#596b79;
+  --rxn-display-border:#465967;
+  --rxn-final-head:#0d1217;
+  --rxn-final-row:#19222a;
+  --rxn-final-row-border:#10161c;
+  --rxn-final-muted:#9cabb6;
+  --rxn-empty:#82919c;
+  --rxn-tie-bg:#18212a;
+  --rxn-mobile-nav:#111820;
+}
+
+html[data-skin="steel"] body:not(.cockpitMode){
+  background-color:#11171d;
+  background-image:var(--app-page-bg-image,none),linear-gradient(135deg,rgba(255,255,255,.025) 0 1px,transparent 1px 72px),linear-gradient(145deg,#11171d 0%,#18212a 56%,#10161c 100%);
+  background-size:cover,72px 72px,cover;
+}
+html[data-skin="steel"] .rxnCockpit{
+  background-color:#11171d;
+  background-image:radial-gradient(circle at 78% 16%,rgba(170,194,211,.08),transparent 34%),linear-gradient(135deg,rgba(255,255,255,.018) 0 1px,transparent 1px 80px),linear-gradient(145deg,#10161c 0%,#18212a 56%,#0f151a 100%);
+  background-size:auto,80px 80px,auto;
+}
+html[data-skin="steel"] .brandText i,html[data-skin="steel"] .rxnHomeBrand i,html[data-skin="steel"] .legionClubMark i{color:#b7c9d6}
+html[data-skin="steel"] .appbar{background:#111820;border-bottom-color:#3a4a56}
+html[data-skin="steel"] .brandMark,html[data-skin="steel"] .mainNav button.active,html[data-skin="steel"] .designQuickBtn,html[data-skin="steel"] .iconBtn{background:#151d24;border-color:#40515e}
+html[data-skin="steel"] .mainNav button.active{box-shadow:inset 0 -3px #a9bfd0}
+html[data-skin="steel"] .btn.primary,html[data-skin="steel"] .miniAction.primary,html[data-skin="steel"] .widgetAction.primaryAction{background:#e8edf1;color:#111820;border-color:#edf2f5;box-shadow:inset -7px 0 #9eb5c5}
+html[data-skin="steel"] .btn.primary svg,html[data-skin="steel"] .miniAction.primary svg,html[data-skin="steel"] .widgetAction.primaryAction svg{color:#111820}
+html[data-skin="steel"] .settingsPage .btn.primary{background:#e8edf1;color:#111820;border-color:#edf2f5;box-shadow:inset -7px 0 #9eb5c5}
+html[data-skin="steel"] .settingsNavItem{background:rgba(16,23,30,.9);color:#edf3f6}
+html[data-skin="steel"] .settingsNavItem:hover{background:#1c2730}
+html[data-skin="steel"] .settingsNavItem.active{background:#202c36;border-left-color:#a9bfd0}
+html[data-skin="steel"] .settingsNavIcon{color:#cad7df}
+html[data-skin="steel"] .settingsPane,html[data-skin="steel"] .settingsSection{background:rgba(16,23,29,.94)}
+html[data-skin="steel"] .settingsInfoRow>span,html[data-skin="steel"] .settingsPage .field label,html[data-skin="steel"] .settingsUpload>label,html[data-skin="steel"] .settingsText,html[data-skin="steel"] .settingsPane .updateStateBox small,html[data-skin="steel"] .settingsPane .offlineMeta,html[data-skin="steel"] .settingsNote{color:#a5b2bc}
+html[data-skin="steel"] .settingsGroup+.settingsGroup,html[data-skin="steel"] .settingsRow,html[data-skin="steel"] .settingsInfoRow,html[data-skin="steel"] .settingsStatusList,html[data-skin="steel"] .settingsPane .updateStateBox,html[data-skin="steel"] .settingsPane .offlineReadyBox,html[data-skin="steel"] .settingsNote{border-color:rgba(173,195,210,.16)}
+html[data-skin="steel"] .pilotTileTeam.legion i{color:#b7c9d6}
+
+html[data-skin="steel"] .rxnTopActions .rxnTopButton,html[data-skin="steel"] .rxnPrimaryNav button{background:#111820;border-color:#40515e}
+html[data-skin="steel"] .rxnTopActions .rxnTopButton:hover:not(:disabled),html[data-skin="steel"] .rxnPrimaryNav button:hover{background:#1c2730;border-color:#718594}
+html[data-skin="steel"] .rxnControl.primary:not(:disabled){background:#e8edf1;color:#101820;border-color:#eef3f6}
+html[data-skin="steel"] .rxnControl.primary:not(:disabled) svg{color:#101820}
+html[data-skin="steel"] .rxnControl.primary:after{background:#9eb5c5}
+html[data-skin="steel"] .rxnColumnToggles button.active,html[data-skin="steel"] .rxnPrecisionToggles button.active{border-color:#a9bfd0;box-shadow:inset 0 -3px #a9bfd0}
+
+/* =========================================================
+   LIGHT — high-clarity daylight skin with warm orange accent
+   ========================================================= */
+html[data-skin="light"]{
+  color-scheme:light;
+  --v4-cobalt:#ff6a00;
+  --v4-bg:#f3f5f7;
+  --v4-surface:#ffffff;
+  --v4-surface2:#eef1f4;
+  --v4-surface3:#e5e9ed;
+  --v4-text:#17232d;
+  --v4-muted:#697681;
+  --v4-line:#d5dce2;
+  --v4-line-strong:#b9c3cb;
+  --v4-control:#f9fafb;
+  --v4-control-hover:#e9edf1;
+  --v4-control-text:#17232d;
+  --v4-input:#ffffff;
+  --v4-table-alt:#f2f4f6;
+  --v4-table-hover:#e8edf1;
+  --v4-green:#2b8b4b;
+  --v4-green-soft:#e7f4eb;
+  --v4-blue-soft:#fff0e5;
+  --v4-amber:#d88200;
+  --v4-amber-soft:#fff1d9;
+  --v4-magenta:#e22c63;
+  --v4-magenta-soft:#ffe8ef;
+  --v4-grid:transparent;
+  --v4-overlay:rgba(19,31,41,.4);
+  --v4-shadow:rgba(27,39,49,.12);
+
+  --rxn-bg:#f3f5f7;
+  --rxn-bg2:#ffffff;
+  --rxn-panel:#ffffff;
+  --rxn-panel2:#eef1f4;
+  --rxn-strip:rgba(23,35,45,.04);
+  --rxn-line:#d4dbe1;
+  --rxn-line2:#e4e8ec;
+  --rxn-line-strong:#aebac3;
+  --rxn-scrollbar:#98a6b1;
+  --rxn-text:#17232d;
+  --rxn-muted:#6c7883;
+  --rxn-blue:#ff6a00;
+  --rxn-green:#2e8a4c;
+  --rxn-lime:#ff6a00;
+  --rxn-yellow:#b67600;
+  --rxn-red:#cf263b;
+  --rxn-grid:transparent;
+  --rxn-cockpit-grid:transparent;
+  --rxn-control-bg:#f7f9fa;
+  --rxn-control-hover:#e9edf1;
+  --rxn-control-border:#cad2d9;
+  --rxn-control-border-hover:#7f8c96;
+  --rxn-control-text:#17232d;
+  --rxn-row-head:#e6eaee;
+  --rxn-row:#ffffff;
+  --rxn-row-alt:#f2f4f6;
+  --rxn-row-leader:#e7f4eb;
+  --rxn-row-border:#d9dfe4;
+  --rxn-roster-bg:rgba(255,255,255,.42);
+  --rxn-lap-track:#d1d8de;
+  --rxn-flag-empty:#e6eaee;
+  --rxn-flag-empty-line:#bbc6ce;
+  --rxn-flag-outline:rgba(23,35,45,.2);
+  --rxn-timer-bg:#ffffff;
+  --rxn-timer-border:#d0d7dd;
+  --rxn-ring-track:#dce2e7;
+  --rxn-ring-inner:#ffffff;
+  --rxn-timer-label:#65727d;
+  --rxn-bestlap-bg:#ffffff;
+  --rxn-bestlap-border:#c6d0d8;
+  --rxn-bestlap-label:#283844;
+  --rxn-grid-button-bg:#ffffff;
+  --rxn-grid-button-border:#9aa7b0;
+  --rxn-display-border:#b8c2ca;
+  --rxn-final-head:#e6eaee;
+  --rxn-final-row:#ffffff;
+  --rxn-final-row-border:#d9dfe4;
+  --rxn-final-muted:#687681;
+  --rxn-empty:#6c7883;
+  --rxn-tie-bg:#f2f4f6;
+  --rxn-mobile-nav:#ffffff;
+}
+
+html[data-skin="light"] body:not(.cockpitMode){
+  background-color:#f3f5f7;
+  background-image:var(--app-page-bg-image,none),linear-gradient(135deg,rgba(26,42,54,.025) 0 1px,transparent 1px 84px),linear-gradient(150deg,#fbfcfd 0%,#f1f4f6 58%,#e9edf0 100%);
+  background-size:cover,84px 84px,cover;
+}
+html[data-skin="light"] .rxnCockpit{
+  background-color:#f3f5f7;
+  background-image:radial-gradient(circle at 78% 18%,rgba(255,106,0,.055),transparent 30%),linear-gradient(145deg,#fbfcfd 0%,#f1f4f6 58%,#e8edf1 100%);
+  background-size:auto,auto;
+}
+html[data-skin="light"] .brandText i,html[data-skin="light"] .rxnHomeBrand i,html[data-skin="light"] .legionClubMark i{color:#ff6a00}
+html[data-skin="light"] .appbar{background:rgba(250,251,252,.98);border-bottom-color:#c9d1d8}
+html[data-skin="light"] .brandMark,html[data-skin="light"] .mainNav button.active,html[data-skin="light"] .designQuickBtn,html[data-skin="light"] .iconBtn{background:#f7f9fa;border-color:#c5cfd6}
+html[data-skin="light"] .mainNav button.active{box-shadow:inset 0 -3px #ff6a00}
+html[data-skin="light"] .btn.primary,html[data-skin="light"] .miniAction.primary,html[data-skin="light"] .widgetAction.primaryAction{background:#ff6a00;color:#fff;border-color:#ff6a00;box-shadow:none}
+html[data-skin="light"] .btn.primary svg,html[data-skin="light"] .miniAction.primary svg,html[data-skin="light"] .widgetAction.primaryAction svg{color:#fff}
+html[data-skin="light"] .settingsPage .btn.primary{background:#ff6a00;color:#fff;border-color:#ff6a00;box-shadow:none}
+html[data-skin="light"] .settingsNavItem{background:rgba(255,255,255,.82);color:#273642;border-bottom:1px solid #e0e5e9}
+html[data-skin="light"] .settingsNavItem:hover{background:#eef2f5}
+html[data-skin="light"] .settingsNavItem.active{background:#ffffff;border-left-color:#ff6a00}
+html[data-skin="light"] .settingsNavIcon{color:#30414d}
+html[data-skin="light"] .settingsPane,html[data-skin="light"] .settingsSection{background:rgba(255,255,255,.9);color:#17232d}
+html[data-skin="light"] .settingsInfoRow>span,html[data-skin="light"] .settingsPage .field label,html[data-skin="light"] .settingsUpload>label,html[data-skin="light"] .settingsText,html[data-skin="light"] .settingsPane .updateStateBox small,html[data-skin="light"] .settingsPane .offlineMeta,html[data-skin="light"] .settingsNote{color:#66747f}
+html[data-skin="light"] .settingsGroup+.settingsGroup,html[data-skin="light"] .settingsRow,html[data-skin="light"] .settingsInfoRow,html[data-skin="light"] .settingsStatusList,html[data-skin="light"] .settingsPane .updateStateBox,html[data-skin="light"] .settingsPane .offlineReadyBox,html[data-skin="light"] .settingsNote{border-color:#e0e5e9}
+html[data-skin="light"] .settingsSection.open .settingsAccordionHead{background:#f4f6f8;border-left-color:#ff6a00}
+html[data-skin="light"] .settingsSectionBody{border-top-color:#e0e5e9}
+html[data-skin="light"] .pilotTileTeam.legion i{color:#ff6a00}
+
+html[data-skin="light"] .rxnTopActions .rxnTopButton,html[data-skin="light"] .rxnPrimaryNav button{background:#f7f9fa;border-color:#c6d0d8;color:#17232d}
+html[data-skin="light"] .rxnTopActions .rxnTopButton:hover:not(:disabled),html[data-skin="light"] .rxnPrimaryNav button:hover{background:#e9edf1;border-color:#9ba8b2}
+html[data-skin="light"] .rxnTopActions .rxnTopButton svg,html[data-skin="light"] .rxnPrimaryNav button svg{color:#17232d}
+html[data-skin="light"] .rxnControl.primary:not(:disabled){background:#ff6a00;color:#fff;border-color:#ff6a00}
+html[data-skin="light"] .rxnControl.primary:not(:disabled) svg{color:#fff}
+html[data-skin="light"] .rxnControl.primary:after{background:#c94d00}
+html[data-skin="light"] .rxnColumnToggles button.active,html[data-skin="light"] .rxnPrecisionToggles button.active{border-color:#ff6a00;box-shadow:inset 0 -3px #ff6a00}
+
+/* Keep the locked pilot-row geometry untouched: only paint changes above. */

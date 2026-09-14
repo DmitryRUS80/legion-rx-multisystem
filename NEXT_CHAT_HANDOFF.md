@@ -1,13 +1,13 @@
-# RC42 ADDENDUM · APEX ALTERNATE RENDERER TEST
+# RC43 ADDENDUM · STEEL + LIGHT VISUAL SKINS
 
-- Current source candidate: RC42 APEX ALTERNATE RENDERER TEST. Base is RC40 FULL; RC41 is rejected and must not be used as source.
-- Classic is preserved as fallback/default. Do not move APEX styles into Classic CSS and do not convert APEX back into a theme override.
-- APEX source lives only in `ui/skins/apex/apex-renderer.js` + `ui/skins/apex/apex.css`; router chooses renderer from `state.settings.uiSkin`.
-- Classic Settings → Screen exposes CLASSIC / APEX ORANGE. The chosen value is stored inside the existing settings object; no platform/state schema change is required.
-- Protected cockpit contract remains: red race-status strip and pilot board/table are authoritative shared race UI; APEX may replace the surrounding shell/control surface only.
-- Runtime changes from RC40: `ui/shell/router.js`, `ui/shell/actions.js`, `ui/shell/views.js`, `index.html`, plus the two new APEX files. Release trio/docs/tests are synchronized separately.
-- Sport rules, LapWiz, audio, storage, reporting, pilot pipeline and Classic authoritative CSS remain unchanged.
-- Final RC42 regression: ALL automated tests PASS; offline manifest has 81 local references / 0 missing. Physical device/PWA/LapWiz acceptance remains required.
+- Current source candidate: **RC43 STEEL + LIGHT SKINS**, built from RC40 CLEAN SETTINGS UI.
+- APEX ORANGE / alternate renderer is deliberately absent. Do not restore it.
+- The accepted model is Winamp-style skinning over the existing Classic layout: same DOM/actions/geometry, separate visual skin tokens and icon glyphs.
+- Available skins: `classic`, `steel`, `light`.
+- Skin stylesheet: `ui/themes/skins.css`. It may change paint only; do not add cockpit layout/grid geometry there.
+- Classic authoritative geometry remains in `ui/shell/app.css`, `ui/shell/discipline-pults.css`, and `ui/pilots/pilot-cards.css`.
+- New icon glyphs are embedded as the hidden/visible `skinGlyph` group beside preserved `classicGlyph` paths in `index.html`, `ui/shell/discipline-shared.js`, and the pilot icon helper in `ui/pilots/pilot-cards.js`.
+- RallyCross pilot rows under the red race strip must not be structurally redesigned during skin work.
 
 # RC40 ADDENDUM · CLEAN SETTINGS UI
 

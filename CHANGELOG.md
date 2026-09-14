@@ -1,15 +1,14 @@
+## RC43 · STEEL + LIGHT SKINS
+- RC43 returns to the RC40 Classic renderer/layout baseline; the abandoned APEX alternate-renderer branch is not included.
+- Added `STEEL` and `LIGHT` as isolated visual skins over the same Classic DOM/actions. No alternate screen renderer is used.
+- `STEEL`: cold graphite/steel palette, neutral metallic controls, no blue cockpit grid.
+- `LIGHT`: white/light-gray daylight palette with restrained orange primary accent.
+- Added one new technical SVG glyph family for STEEL/LIGHT across shell/cockpit and pilot controls while Classic continues to render the existing icon paths.
+- Skin choice lives in Settings → Screen and applies immediately: `CLASSIC / STEEL / LIGHT`.
+- RallyCross pilot-row geometry and red race-state banner remain authoritative; skin CSS only repaints them.
+- `platform/`, `modes/`, `reporting/`, `ui/discipline-ui.js`, Classic `app.css`, pilot-card CSS and cockpit layout CSS are unchanged from RC40.
+
 # LEGION RX CHANGELOG
-
-## RC42 · APEX ALTERNATE RENDERER TEST
-
-- RC41 theme-override approach is rejected and not used as a base. RC42 starts from the safe RC40 FULL.
-- Added APEX ORANGE as a physically separate alternate renderer: its own DOM for Home, RallyCross Setup, Free Practice Setup, Pilots, Championships, Championship Detail, Archive, Settings and both cockpit shells.
-- Classic remains the fallback/default renderer. Existing Classic visual styles (`app.css`, `theme.css`, `discipline-pults.css`, pilot-card CSS/JS) and sport/platform core are byte-identical to RC40.
-- Added a skin selector in Classic Settings → Screen and inside APEX Settings. Selection persists in the existing settings object.
-- RallyCross cockpit intentionally preserves the protected red race-status strip and authoritative pilot board/table; APEX replaces the surrounding shell/right control area.
-- APEX has its own navigation, icons, form/card/table layout, settings layout, responsive rules and tie-break screen. It does not call Classic page renderers.
-- Fixed the first portrait responsive pass before release: the APEX hero/status blocks now stack correctly on phone width instead of overlapping.
-- Release trio is synchronized to RC42 and the two APEX assets are included in the offline package.
 
 ## RC40 · CLEAN SETTINGS UI
 

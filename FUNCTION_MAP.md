@@ -1,3 +1,11 @@
+# RC43 UI skin map
+- `ui/shell/discipline-shared.js::interfaceSkin()` — normalizes `classic / steel / light`.
+- `ui/shell/discipline-shared.js::applySettings()` — applies `data-skin` and compatible dark/light color-scheme token.
+- `ui/themes/skins.css` — visual paint for STEEL/LIGHT only; no alternate renderer or cockpit geometry.
+- `ui/shell/views.js::settingsSkinChoice()` — Settings → Screen selector.
+- `ui/shell/actions.js::bindView()` — immediate skin persistence/application without screen re-render.
+- `ui/pilots/pilot-cards.js::pilotCardIcon()` — keeps Classic pilot icons and supplies the same STEEL/LIGHT technical glyph family to pilot controls.
+
 # LEGION RX — FUNCTION MAP
 
 - LapWiz BLE/connect/start/stop/pass parsing -> `platform/lapwiz.js`

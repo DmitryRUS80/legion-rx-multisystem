@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC36 · BEST LAP STRIP + HERO CLEANUP**  
-Direct code base: **RC35 PILOT STATS TYPOGRAPHY DENSITY**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC43 · STEEL + LIGHT SKINS**  
+Direct code base: **RC40 CLEAN SETTINGS UI**.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture

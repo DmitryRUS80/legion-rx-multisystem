@@ -19,6 +19,39 @@ function clubMarkup(club='',fallback='Без клуба'){return isLegionRXClub(
 function pilotNameMarkup(p){const code=pilotCountryCode(p),flag=countryFlag(code),name=String(p?.name||'—').toUpperCase();return `<span class="pilotNameLine">${flag?`<span class="countryFlag" style="--country-flag-position:${flag}" title="${esc(countryName(code))}" role="img" aria-label="${esc(countryName(code))}">${esc(code)}</span>`:''}<span>${esc(name)}</span></span>`;}
 
 
+const MODERN_GLYPH_PATHS={
+ flag:'<path d="M5 21V4"/><path d="M6 5h12l-2.4 3.7L18 12H6"/><path class="skinGlyphAccent" d="M5 4h3"/>',
+ timer:'<circle cx="12" cy="13" r="7.5"/><path d="M9 3h6M12 5.5v2M12 13l3.7-2.8"/><path class="skinGlyphAccent" d="M18.2 7.2 20 5.4"/>',
+ car:'<path d="M4 14.5 6.2 9h11.6l2.2 5.5v3.5H4z"/><path d="M7 18v1.5M17 18v1.5M7.2 14h9.6"/><circle cx="7" cy="16.2" r="1.3"/><circle cx="17" cy="16.2" r="1.3"/><path class="skinGlyphAccent" d="M8.5 9 10 6h4l1.5 3"/>',
+ trophy:'<path d="M8 4h8v4.2a4 4 0 0 1-8 0z"/><path d="M8 6H4.5v1.4A3.6 3.6 0 0 0 8 11m8-5h3.5v1.4A3.6 3.6 0 0 1 16 11M12 12.2V18M8.5 20h7"/><path class="skinGlyphAccent" d="M9.5 4h5"/>',
+ users:'<circle cx="9" cy="8" r="2.6"/><circle cx="17" cy="9" r="2.1"/><path d="M3.5 20c.3-3.7 2.5-6 5.5-6s5.2 2.3 5.5 6M15 15c3 0 5 1.8 5.5 5"/><path class="skinGlyphAccent" d="M5 13.2h2.5"/>',
+ settings:'<circle cx="12" cy="12" r="3.2"/><path d="M12 3.5v2.1M12 18.4v2.1M3.5 12h2.1M18.4 12h2.1M6 6l1.5 1.5M16.5 16.5 18 18M18 6l-1.5 1.5M7.5 16.5 6 18"/><path class="skinGlyphAccent" d="M10.8 2.8h2.4"/>',
+ bluetooth:'<path d="M8 7l8 10-4 3V4l4 3-8 10"/><path class="skinGlyphAccent" d="M5 12h3"/>',
+ wave:'<path d="M2 12h3l1.6-4.8L9 17l2.3-13 2.8 16 2.2-9 1.4 4H22"/><path class="skinGlyphAccent" d="M2 12h3"/>',
+ chart:'<path d="M4 20V11M9 20V7M14 20V4M19 20V9M2 20h20"/><path class="skinGlyphAccent" d="M14 4v4"/>',
+ calendar:'<rect x="3.5" y="5.5" width="17" height="15" rx="1.5"/><path d="M7.5 3.5v4M16.5 3.5v4M3.5 10h17"/><path class="skinGlyphAccent" d="M7 14h3"/>',
+ mic:'<rect x="9" y="3" width="6" height="11.5" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M8.5 21h7"/><path class="skinGlyphAccent" d="M9.5 7h5"/>',
+ monitor:'<rect x="3.5" y="4.5" width="17" height="12.5" rx="1.5"/><path d="M8.5 20.5h7M12 17v3.5"/><path class="skinGlyphAccent" d="M6 7h4"/>',
+ home:'<path d="M3.5 10.8 12 4l8.5 6.8V20h-5.4v-5.2H8.9V20H3.5z"/><path class="skinGlyphAccent" d="M5.5 11 12 5.8"/>',
+ play:'<path d="M8 5.5 18.5 12 8 18.5z"/><path class="skinGlyphAccent" d="M8 5.5v13"/>',
+ pause:'<path d="M8 5v14M16 5v14"/><path class="skinGlyphAccent" d="M8 5h2"/>',
+ stop:'<rect x="6.5" y="6.5" width="11" height="11" rx=".8"/><path class="skinGlyphAccent" d="M7 7h4"/>',
+ plusTime:'<circle cx="10.5" cy="12" r="6.8"/><path d="M10.5 8.2V12l2.9 1.8M18 6v5M15.5 8.5h5"/><path class="skinGlyphAccent" d="M18 6v5"/>',
+ plusClock:'<circle cx="10.5" cy="12" r="6.8"/><path d="M10.5 8.2V12l2.9 1.8M18 16.5v5M15.5 19h5"/><path class="skinGlyphAccent" d="M18 16.5v5"/>',
+ next:'<path d="m4.5 5 7 7-7 7M12 5l7 7-7 7"/><path class="skinGlyphAccent" d="M12 5l7 7"/>',
+ refresh:'<path d="M19.5 7.5V4.8h-2.7M4.5 16.5v2.7h2.7"/><path d="M18.5 9A7 7 0 0 0 6.2 6.7L4.5 9M5.5 15A7 7 0 0 0 17.8 17.3l1.7-2.3"/><path class="skinGlyphAccent" d="M16.8 4.8h2.7v2.7"/>',
+ speaker:'<path d="M4 10h4l5-4v12l-5-4H4zM16 9.2a4.2 4.2 0 0 1 0 5.6M18.5 6.5a8 8 0 0 1 0 11"/><path class="skinGlyphAccent" d="M4 10v4"/>',
+ signal:'<path d="M5 19v-3M9.5 19v-7M14 19V8M18.5 19V4"/><path class="skinGlyphAccent" d="M18.5 4v4"/>',
+ clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.5 2"/><path class="skinGlyphAccent" d="M12 3.5v2"/>',
+ list:'<path d="M8 6h12M8 12h12M8 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01"/><path class="skinGlyphAccent" d="M8 6h4"/>',
+ chevron:'<path d="m9 18 6-6-6-6"/><path class="skinGlyphAccent" d="m12 9 3 3"/>',
+ chevronDown:'<path d="m6 9 6 6 6-6"/><path class="skinGlyphAccent" d="m9 12 3 3"/>',
+ radio:'<circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.5 5.5a9 9 0 0 0 0 13M18.5 5.5a9 9 0 0 1 0 13"/><path class="skinGlyphAccent" d="M12 10v4"/>'
+};
+function modernGlyph(name){return MODERN_GLYPH_PATHS[name]||MODERN_GLYPH_PATHS.flag;}
+function interfaceSkin(){const s=String(state.settings.skin||'classic').toLowerCase();return ['classic','steel','light'].includes(s)?s:'classic';}
+function interfaceTheme(){const skin=interfaceSkin();if(skin==='steel')return'dark';if(skin==='light')return'light';return state.settings.theme==='light'?'light':'dark';}
+
 function uiIcon(name,cls='uiIcon'){
  const paths={
   flag:'<path d="M5 21V4m0 1c4-2.4 7.2 2.2 13 0v8.4c-5.8 2.5-9-2.1-13 .1"/>',
@@ -47,7 +80,7 @@ function uiIcon(name,cls='uiIcon'){
   chevron:'<path d="M9 18l6-6-6-6"/>',
   chevronDown:'<path d="m6 9 6 6 6-6"/>'
  };
- return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.flag}</svg>`;
+ return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="classicGlyph">${paths[name]||paths.flag}</g><g class="skinGlyph">${modernGlyph(name)}</g></svg>`;
 }
 
 function translateStatic(){
@@ -61,8 +94,8 @@ function translateStatic(){
 
 function applyUiTokens(ui=state.settings.ui){const r=document.documentElement.style;r.setProperty('--radius-card',`${ui.cardRadius}px`);r.setProperty('--radius-tile',`${ui.tileRadius}px`);r.setProperty('--radius-button',`${ui.buttonRadius}px`);r.setProperty('--radius-input',`${ui.inputRadius}px`);r.setProperty('--radius-icon',`${ui.iconRadius}px`);r.setProperty('--radius-hero',`${ui.heroRadius}px`);r.setProperty('--radius-widget',`${ui.widgetRadius}px`);r.setProperty('--radius-modal',`${ui.modalRadius}px`);r.setProperty('--card-padding',`${ui.cardPadding}px`);r.setProperty('--section-gap',`${ui.sectionGap}px`);r.setProperty('--control-height',`${ui.buttonHeight}px`);r.setProperty('--content-width',`${ui.contentWidth}px`);r.setProperty('--discipline-cols',String(ui.disciplineCols));}
 
-function appBackgroundFallbackColor(){return state.settings.theme==='light'?'#f3f4f5':'#050608';}
-function appBackgroundThemeColor(base,theme=state.settings.theme){
+function appBackgroundFallbackColor(){const skin=interfaceSkin();if(skin==='steel')return'#141a20';if(skin==='light')return'#f4f6f8';return interfaceTheme()==='light'?'#f3f4f5':'#050608';}
+function appBackgroundThemeColor(base,theme=interfaceTheme()){
  const m=/^#([0-9a-f]{6})$/i.exec(String(base||'').trim());if(!m)return appBackgroundFallbackColor();
  const n=parseInt(m[1],16),rgb=[(n>>16)&255,(n>>8)&255,n&255],target=theme==='light'?[255,255,255]:[0,0,0],keep=theme==='light'?.22:.34;
  const out=rgb.map((v,i)=>Math.round(v*keep+target[i]*(1-keep)));
@@ -88,7 +121,7 @@ function resizeAppBackground(file){
   };img.src=String(reader.result||'');};reader.readAsDataURL(file);
  });
 }
-function applySettings(){document.documentElement.dataset.theme=state.settings.theme;document.documentElement.dataset.skin=state.settings.skin||'classic';document.documentElement.lang=state.settings.lang;const themeMeta=document.querySelector('meta[name="theme-color"]');if(themeMeta)themeMeta.content=(state.settings.skin==='apex-orange')?'#090b0c':state.settings.theme==='light'?'#f3f4f5':'#050608';lapwiz.sound=state.settings.lapSound;applyUiTokens();applyAppBackground();translateStatic();announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;}
+function applySettings(){const skin=interfaceSkin(),theme=interfaceTheme();document.documentElement.dataset.skin=skin;document.documentElement.dataset.theme=theme;document.documentElement.lang=state.settings.lang;const themeMeta=document.querySelector('meta[name="theme-color"]');if(themeMeta)themeMeta.content=skin==='steel'?'#141a20':skin==='light'?'#f4f6f8':theme==='light'?'#f3f4f5':'#050608';lapwiz.sound=state.settings.lapSound;applyUiTokens();applyAppBackground();translateStatic();announcer.enabled=state.settings.announcerEnabled;announcer.startMode=state.settings.startVoiceMode;}
 
 function stageLabel(stage){return({setup:'Настройка',qualifying:'Квалификация',tie:'Перезаезд',finals:'Финалы',finished:'Завершено'})[stage]||stage;}
 
@@ -135,7 +168,7 @@ function raceSvg(name,cls='raceSvg'){
   radio:'<circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.5 5.5a9 9 0 0 0 0 13M18.5 5.5a9 9 0 0 1 0 13"/>',
   car:'<path d="M3 15l2-6h14l2 6v4h-2m-14 0H3v-4h18v4h-2M7 19h10"/><circle cx="7" cy="16" r="1.5"/><circle cx="17" cy="16" r="1.5"/>'
  };
- return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.flag}</svg>`;
+ return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="classicGlyph">${paths[name]||paths.flag}</g><g class="skinGlyph">${modernGlyph(name)}</g></svg>`;
 }
 
 function eventShortLabel(ev){if(!ev)return'—';return ev.label||'Заезд';}

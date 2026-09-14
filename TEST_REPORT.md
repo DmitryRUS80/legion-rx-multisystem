@@ -1,29 +1,20 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC42 · APEX ALTERNATE RENDERER TEST — TEST REPORT
+# LEGION RX 4.2.0 CLEAN FULL APP RC43 · STEEL + LIGHT SKINS — TEST REPORT
 
 ## Scope
+Visual skin task only. RC43 starts from the RC40 Classic layout and adds two selectable visual skins without an alternate renderer. Runtime changes are limited to `index.html`, `ui/themes/skins.css`, `ui/shell/discipline-shared.js`, `ui/shell/views.js`, `ui/shell/actions.js`, and the icon markup helper in `ui/pilots/pilot-cards.js`. Release metadata/tests/docs are synchronized.
 
-Alternate UI renderer only, based on RC40 FULL. Classic remains intact. APEX is implemented in separate renderer/CSS files and consumes the same state/actions. RallyCross/Free Practice sport core, LapWiz, audio, storage, reporting and pilot pipeline are unchanged.
-
-## RC42 verification
-
-- All JavaScript files pass `node --check`.
-- Full automated regression suite PASS after updating two stale test assertions to understand the intentional sixth stylesheet (isolated APEX CSS) and the current RC42 cache namespace.
-- `verify_architecture.py`: all checks PASS, including no BLE protocol or sport constants in UI.
-- `verify_clean_foundation.py`: all checks PASS; Classic authoritative styles remain unchanged and APEX is treated as one isolated alternate-renderer stylesheet.
-- `verify_ios_start_safety.py`: all checks PASS with RC42 cache namespace.
-- `verify_rc42_apex_renderer.py`: all checks PASS, including Classic/core hash identity to RC40, separate APEX assets, alternate-router selection, own page renderers/icons/CSS namespace, no calls to Classic page renderers, protected cockpit board reuse and offline-manifest inclusion.
-- RC29 RallyCross run-off: 28/28 PASS. RC30 start-order/announcer: 12/12 PASS. RC32 skip/state: 11/11 PASS. RC33–RC38 UI/avatar regression tests PASS.
-- Offline manifest audit: 81 local asset references, 0 missing.
-- Browser renderer smoke had already been run during RC42 implementation on desktop and 430px phone; the phone hero overlap found in the first pass was fixed before final packaging. The final runtime code has not changed since that smoke; only regression-test assertions/docs were updated afterward.
-- Skin switching Classic ↔ APEX uses existing settings persistence and normal routing. APEX settings section switching is DOM-only and does not destroy unsaved field values.
-- `VERSION.txt`, offline manifest app/display/cache IDs and service-worker release label are synchronized to RC42.
-- Physical PWA/iPhone/Android/LapWiz acceptance remains user-side and is not claimed by automated tests.
-
-## Protected invariants
-
-- `ui/shell/app.css`, `ui/themes/theme.css`, `ui/shell/discipline-pults.css`, `ui/pilots/pilot-cards.css/js` are byte-identical to RC40.
-- `platform/lapwiz.js`, `platform/audio.js`, `platform/storage.js`, RallyCross sport files, Free Practice core and reporting are byte-identical to RC40.
-- Protected RallyCross cockpit contract remains: red race-status strip + authoritative pilot board/table are shared; APEX replaces the surrounding shell/right control surface only.
+## Verification
+- APEX files/references are absent from the RC43 UI tree and runtime.
+- `CLASSIC / STEEL / LIGHT` are the only skin choices.
+- Skin switching applies without replacing the screen renderer.
+- Classic and new glyph sets coexist in the same SVG markup; CSS switches glyph groups by `data-skin`, so changing skin does not require a page re-render.
+- `ui/shell/app.css`, `ui/shell/discipline-pults.css`, `ui/pilots/pilot-cards.css`, and `ui/discipline-ui.js` are byte-identical to RC40. `ui/pilots/pilot-cards.js` changes only its SVG icon helper / voice-play icon so STEEL/LIGHT use the same glyph family while Classic keeps the original glyph paths.
+- All files under `platform/`, `modes/`, and `reporting/` are byte-identical to RC40.
+- STEEL/LIGHT skin CSS does not declare `.rxnPilotRow` or cockpit `grid-template-columns`; locked pilot-row geometry is not redefined.
+- Offline manifest includes `ui/themes/skins.css` and uses a new RC43 cache namespace.
+- Full automated regression suite passes, including RallyCross run-offs 28/28, official start-order/announcer 12/12, skip/state safety 11/11, storage behavior, pilot UI, avatar crop, architecture/offline checks and RC43 skin isolation.
+- JavaScript syntax check passes for all project `.js` files; CSS parser reports zero stylesheet parse errors.
+- Headless browser rendering is blocked by the execution environment, so no simulated visual/browser PASS is claimed for RC43. Physical PWA visual acceptance on the user's phone/tablet remains required.
 
 # LEGION RX 4.2.0 CLEAN FULL APP RC40 · CLEAN SETTINGS UI — TEST REPORT
 
