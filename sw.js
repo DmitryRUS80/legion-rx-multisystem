@@ -1,5 +1,6 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC45 · COCKPIT STEEL LIGHT POLISH */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC48 · COBALT UPDATE VISIBILITY */
 'use strict';
+const LEGION_SW_BUILD='rc48-cobalt-update-visibility';
 importScripts('./offline-manifest.js');
 
 const CFG=self.LEGION_OFFLINE_CONFIG;

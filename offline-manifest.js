@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc47-cobalt-cockpit-skin';
-  const displayVersion='4.2.0 CLEAN FULL APP RC47 · COBALT COCKPIT SKIN';
-  const cacheName='legion-rx-4-2-0-clean-full-rc47-cobalt-cockpit-skin';
+  const appVersion='4.2.0-clean-full-rc48-cobalt-update-visibility';
+  const displayVersion='4.2.0 CLEAN FULL APP RC48 · COBALT UPDATE VISIBILITY';
+  const cacheName='legion-rx-4-2-0-clean-full-rc48-cobalt-update-visibility';
   const assets=[
     './',
     './index.html','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

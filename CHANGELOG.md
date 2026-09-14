@@ -1,5 +1,14 @@
 # LEGION RX CHANGELOG
 
+## RC48 · COBALT UPDATE VISIBILITY
+
+- Fixed the deployment/update path after RC47 could remain visually stuck on the old five-skin Settings screen.
+- The top-level `sw.js` is now physically version-bumped so the PWA browser update check sees an unmistakably new service worker build.
+- COBALT is explicitly labeled in Settings as `COBALT · BLUE CONTROL` with the description `Тёмная тема · голубой пульт`.
+- The skin selector grid now accommodates all six skins on wide screens.
+- Added a release guard test that requires Cobalt to exist in CSS, Settings, index loading, offline package and the service-worker build marker.
+- Classic, cockpit pilot rows, sport logic, LapWiz, audio, storage and reporting are unchanged.
+
 ## RC47 · COBALT COCKPIT SKIN
 
 - Added a new separate `COBALT` interface skin; `CLASSIC` remains preserved as the authoritative untouched baseline.
