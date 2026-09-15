@@ -1,56 +1,13 @@
+# RC53 — UNIFIED SHELL SYSTEM
+
+- Зафиксирована единая кнопочная система для всех новых тем (classic не трогался): одинаковые состояния, размеры, радиусы и логика primary/secondary/icon/tile действий.
+- Главная страница приведена к общему стилю: hero-блок с гоночным фоном, упрощённый текст, единый вид плиток дисциплин и общих разделов.
+- Для shell/UI убраны акцентные полоски как основной способ состояния; активность теперь читается через полную поверхность кнопки.
+- Настройки, навигация, вкладки и карточки приведены к одному визуальному языку без каскада контейнеров внутри контейнеров.
+- Добавлена тема COBALT в список интерфейсных скинов.
+- Включены актуальные правки RC52 по phone landscape geometry / thousandths baseline в общие файлы пульта.
+
 # LEGION RX CHANGELOG
-
-## RC52 · THOUSANDTHS BASELINE FIX
-
-- Fixed shared cockpit time typography in all themes: when precision is `0.001`, the three digits after the dot now stay on the same lower baseline as the main digit; only the size is reduced.
-- Locked mobile cockpit table-header metric labels `GAP / BEST / AVG / LAST / LAPS` to the same size as `ПИЛОТ`, preventing them from appearing larger on phone landscape.
-- Kept the COBALT top stop-window square icon with a dark outline on the light button state for clearer contrast.
-- No sport logic, LapWiz, audio, storage or reporting changes.
-
-## RC51 · PHONE TABLE TYPOGRAPHY
-
-- Kept the RC50 shared phone-landscape geometry and corrected only typography/contrast details.
-- Thousandths remain 75% size, but are now top-aligned with the main digit group instead of sitting lower in the flex cell. One- and two-decimal values remain full size.
-- On landscape phones, `GAP / BEST / AVG / LAST / LAPS` table-header labels now inherit the same header font size as `ПИЛОТ`; only pilot data cells receive the larger numeric font.
-- In COBALT, the top STOP square icon on its light button now uses a dark outline instead of red for proper contrast.
-- No sport rules, race state, LapWiz, audio, storage, reporting, pilot-row geometry or button layout logic changed.
-
-## RC50 · PHONE LANDSCAPE GEOMETRY
-
-- Added one shared landscape-phone breakpoint (`<=1100 × 600 CSS px`) so modern phones around 522 px viewport height no longer fall into the larger tablet cockpit geometry.
-- Reduced the horizontal-phone top toolbar/button height by about 25% in every visual theme.
-- Fixed the control panel allocation so GAP/BEST/AVG/LAST/LAPS and precision buttons have their own row and cannot cover the six main race-control buttons.
-- Reduced the Rally class label and lap-ring text by about 25% on horizontal phones; added clear vertical separation between the main timer digits and its lower caption.
-- Pilot-row numeric cells now use the same base font size and vertical centering as the pilot name on horizontal phones. One/two decimal places remain full size; the three-digit fractional part is exactly 75% of the main number.
-- Control SVG icons now inherit the button text color, fixing low-contrast white icons on light/white control surfaces.
-- Cobalt no longer owns cockpit geometry; it is visual paint only, so Classic / Cobalt / Steel / Light / Modern / Heritage share the same responsive dimensions.
-- Sport rules, timing, LapWiz, audio, storage and reporting are unchanged.
-
-## RC49 · RECOVERY UPDATE PIPELINE
-
-- Fixed the actual RC48 update failure visible on the deployed app: the device was still running RC45, but the previous GitHub package was incremental from RC46/RC48 and omitted the RC46 `ui/classic-polish/` runtime files required by the new offline manifest. The RC49 GitHub package is cumulative from RC45.
-- Rebuilt the PWA update path so an installed RC45/RC46 build cannot accidentally reuse an older HTTP-cached `offline-manifest.js` while checking a newer service worker.
-- The service worker imports the RC49 manifest through a release-unique URL and downloads critical release files with cache-busting plus retry.
-- Added release sentinels: RC49 refuses to activate unless the downloaded index references both COBALT and Classic-polish files, Settings contains `COBALT · BLUE CONTROL`, Cobalt CSS is valid, and `VERSION.txt`/offline manifest identify RC49.
-- Unchanged local assets may fall back to the previous verified cache on a transient network failure; critical changed/new files never fall back to stale content.
-- `VERSION.txt` is now part of the verified offline package. Classic cockpit, pilot rows, sport rules, LapWiz, audio, storage and reporting are unchanged.
-
-## RC48 · COBALT UPDATE VISIBILITY
-
-- Fixed the deployment/update path after RC47 could remain visually stuck on the old five-skin Settings screen.
-- The top-level `sw.js` is now physically version-bumped so the PWA browser update check sees an unmistakably new service worker build.
-- COBALT is explicitly labeled in Settings as `COBALT · BLUE CONTROL` with the description `Тёмная тема · голубой пульт`.
-- The skin selector grid now accommodates all six skins on wide screens.
-- Added a release guard test that requires Cobalt to exist in CSS, Settings, index loading, offline package and the service-worker build marker.
-- Classic, cockpit pilot rows, sport logic, LapWiz, audio, storage and reporting are unchanged.
-
-## RC47 · COBALT COCKPIT SKIN
-
-- Added a new separate `COBALT` interface skin; `CLASSIC` remains preserved as the authoritative untouched baseline.
-- The new skin changes cockpit chrome only: top icon buttons, main race-control buttons, and display-toggle buttons. No new panels, widgets or layout blocks were introduced.
-- Pilot rows are intentionally left on the Classic rendering/styling path; their geometry and data layout are unchanged.
-- The Cobalt cockpit uses the RXUI icon family, removes legacy status dots/side strips, keeps full-surface button states, and gives the lower display-tool buttons slightly more height.
-- Portrait/landscape structure remains the existing Classic adaptation. RallyCross logic, Free Practice logic, LapWiz, audio, storage and reporting are unchanged.
 
 ## RC40 · CLEAN SETTINGS UI
 

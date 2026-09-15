@@ -646,3 +646,168 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
   .pageHeader h1{font-size:30px}
   .modal{width:calc(100% - 12px);max-height:calc(100dvh - 12px);margin:6px}
 }
+
+
+/* ===== RXUI UNIFIED SHELL SYSTEM · RC53 ===== */
+html:not([data-skin="classic"]){
+  --rxui-shell-radius:4px;
+  --rxui-shell-gap:10px;
+  --rxui-shell-btn-h:44px;
+  --rxui-shell-btn-h-sm:40px;
+  --rxui-shell-pad:14px;
+}
+html:not([data-skin="classic"]) .page{gap:12px;}
+html:not([data-skin="classic"]) .grid,
+html:not([data-skin="classic"]) .grid2,
+html:not([data-skin="classic"]) .moduleGrid,
+html:not([data-skin="classic"]) .champStageGrid,
+html:not([data-skin="classic"]) .archiveGrid,
+html:not([data-skin="classic"]) .disciplineGrid415,
+html:not([data-skin="classic"]) .formatRuleGrid,
+html:not([data-skin="classic"]) .settingsGridFields,
+html:not([data-skin="classic"]) .settingsGridFields.two{gap:var(--rxui-shell-gap)!important;}
+html:not([data-skin="classic"]) .card,
+html:not([data-skin="classic"]) .disciplineTile,
+html:not([data-skin="classic"]) .moduleCard,
+html:not([data-skin="classic"]) .ruleBox,
+html:not([data-skin="classic"]) .champStageCard,
+html:not([data-skin="classic"]) .archiveCard,
+html:not([data-skin="classic"]) .settingsPane,
+html:not([data-skin="classic"]) .modal,
+html:not([data-skin="classic"]) .liveCard,
+html:not([data-skin="classic"]) .heroMini{
+  border-radius:var(--rxui-shell-radius)!important;
+  box-shadow:none!important;
+}
+html:not([data-skin="classic"]) .btn,
+html:not([data-skin="classic"]) .tileAction,
+html:not([data-skin="classic"]) .mainNav button,
+html:not([data-skin="classic"]) .sectionTabs button,
+html:not([data-skin="classic"]) .settingsNavItem,
+html:not([data-skin="classic"]) .iconBtn,
+html:not([data-skin="classic"]) .designQuickBtn,
+html:not([data-skin="classic"]) .rxSkinOption{
+  min-height:var(--rxui-shell-btn-h-sm)!important;
+  border-radius:var(--rxui-shell-radius)!important;
+  box-shadow:none!important;
+  transition:background .14s ease,border-color .14s ease,color .14s ease,filter .14s ease!important;
+}
+html:not([data-skin="classic"]) .btn,
+html:not([data-skin="classic"]) .tileAction{
+  min-height:var(--rxui-shell-btn-h)!important;
+  padding:0 var(--rxui-shell-pad)!important;
+  border:1px solid var(--rxui-line)!important;
+  background:var(--rxui-control)!important;
+  color:var(--rxui-text)!important;
+  text-transform:uppercase!important;
+  letter-spacing:.04em!important;
+  font-weight:900!important;
+}
+html:not([data-skin="classic"]) .btn.primary{background:var(--rxui-active)!important;color:var(--rxui-active-text)!important;border-color:var(--rxui-active-border)!important;}
+html:not([data-skin="classic"]) .btn.secondary,
+html:not([data-skin="classic"]) .btn:not(.primary):not(.danger):not(.good):not(.warn){background:var(--rxui-control)!important;color:var(--rxui-text)!important;border-color:var(--rxui-line)!important;}
+html:not([data-skin="classic"]) .btn.danger{background:var(--rxui-danger-bg)!important;color:var(--rxui-danger-text)!important;border-color:var(--rxui-danger)!important;}
+html:not([data-skin="classic"]) .btn.good{background:var(--rxui-success-bg)!important;color:var(--rxui-success-text)!important;border-color:var(--rxui-success)!important;}
+html:not([data-skin="classic"]) .btn.warn{background:var(--rxui-warning-bg)!important;color:var(--rxui-warning-text)!important;border-color:var(--rxui-warning)!important;}
+html:not([data-skin="classic"]) .btn:hover:not(:disabled),
+html:not([data-skin="classic"]) .tileAction:hover:not(:disabled),
+html:not([data-skin="classic"]) .mainNav button:hover:not(:disabled),
+html:not([data-skin="classic"]) .sectionTabs button:hover:not(:disabled),
+html:not([data-skin="classic"]) .settingsNavItem:hover:not(:disabled),
+html:not([data-skin="classic"]) .iconBtn:hover:not(:disabled),
+html:not([data-skin="classic"]) .designQuickBtn:hover:not(:disabled),
+html:not([data-skin="classic"]) .rxSkinOption:hover:not(:disabled){filter:brightness(1.06)!important;}
+html:not([data-skin="classic"]) .btn:active:not(:disabled),
+html:not([data-skin="classic"]) .tileAction:active:not(:disabled),
+html:not([data-skin="classic"]) .mainNav button:active:not(:disabled),
+html:not([data-skin="classic"]) .sectionTabs button:active:not(:disabled),
+html:not([data-skin="classic"]) .settingsNavItem:active:not(:disabled){filter:brightness(.92)!important;transform:none!important;}
+html:not([data-skin="classic"]) .mainNav button,
+html:not([data-skin="classic"]) .sectionTabs button,
+html:not([data-skin="classic"]) .settingsNavItem,
+html:not([data-skin="classic"]) .iconBtn,
+html:not([data-skin="classic"]) .designQuickBtn,
+html:not([data-skin="classic"]) .rxSkinOption{
+  border:1px solid var(--rxui-line)!important;
+  background:var(--rxui-control)!important;
+  color:var(--rxui-text)!important;
+}
+html:not([data-skin="classic"]) .mainNav button.active,
+html:not([data-skin="classic"]) .sectionTabs button.active,
+html:not([data-skin="classic"]) .settingsNavItem.active,
+html:not([data-skin="classic"]) .rxSkinOption.active{
+  background:var(--rxui-active)!important;
+  color:var(--rxui-active-text)!important;
+  border-color:var(--rxui-active-border)!important;
+  box-shadow:none!important;
+}
+html:not([data-skin="classic"]) .settingsNavItem{grid-template-columns:20px 1fr!important;min-height:44px!important;padding:0 12px!important;border-left:1px solid var(--rxui-line)!important;}
+html:not([data-skin="classic"]) .settingsNavItem span{font-size:17px!important;line-height:1!important;}
+html:not([data-skin="classic"]) .heroPanel.homeHeroPanel{
+  position:relative;
+  overflow:hidden;
+  background:var(--rxui-surface)!important;
+  border:1px solid var(--rxui-line-strong)!important;
+  min-height:220px!important;
+}
+html:not([data-skin="classic"]) .heroPanel.homeHeroPanel::before{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--rxui-page) 82%,transparent) 0%,color-mix(in srgb,var(--rxui-page) 38%,transparent) 48%,color-mix(in srgb,var(--rxui-page) 88%,transparent) 100%),url('../skins/rxui/home-wallpaper.png') center/cover no-repeat;
+  opacity:1;
+}
+html:not([data-skin="classic"]) .heroPanel.homeHeroPanel > *{position:relative;z-index:1;}
+html:not([data-skin="classic"]) .heroCopy h1{font-size:clamp(42px,6vw,72px)!important;}
+html:not([data-skin="classic"]) .heroCopy p{max-width:620px!important;color:var(--rxui-text)!important;opacity:.86;}
+html:not([data-skin="classic"]) .heroMini,
+html:not([data-skin="classic"]) .liveCard{width:min(100%,350px)!important;background:color-mix(in srgb,var(--rxui-surface) 82%,transparent)!important;border:1px solid var(--rxui-line-strong)!important;color:var(--rxui-text)!important;backdrop-filter:blur(10px)!important;-webkit-backdrop-filter:blur(10px)!important;}
+html:not([data-skin="classic"]) .liveCard .btn{margin-top:10px!important;width:100%;}
+html:not([data-skin="classic"]) .disciplineTile{min-height:0!important;padding:14px!important;gap:14px!important;}
+html:not([data-skin="classic"]) .disciplineTile.activeDiscipline:before{display:none!important;}
+html:not([data-skin="classic"]) .tileTop{display:flex;align-items:start;justify-content:space-between;gap:10px;}
+html:not([data-skin="classic"]) .tileIcon,
+html:not([data-skin="classic"]) .moduleIcon{width:54px!important;height:54px!important;border:1px solid var(--rxui-line)!important;background:var(--rxui-control)!important;color:var(--rxui-text)!important;border-radius:4px!important;display:grid!important;place-items:center!important;}
+html:not([data-skin="classic"]) .tileIcon:after,
+html:not([data-skin="classic"]) .moduleIcon:after{display:none!important;}
+html:not([data-skin="classic"]) .disciplineTile h3{margin:0 0 6px!important;font-size:clamp(24px,3vw,34px)!important;line-height:.98!important;}
+html:not([data-skin="classic"]) .disciplineTile p{margin:0!important;font-size:14px!important;line-height:1.45!important;color:var(--rxui-muted)!important;}
+html:not([data-skin="classic"]) .tileAction{width:100%!important;justify-content:space-between!important;margin-top:auto!important;padding:0 14px!important;border-top:1px solid var(--rxui-line)!important;}
+html:not([data-skin="classic"]) .tileAction:disabled{opacity:.4!important;border-color:var(--rxui-line)!important;background:var(--rxui-surface2)!important;}
+html:not([data-skin="classic"]) .badge,
+html:not([data-skin="classic"]) .liveBadge,
+html:not([data-skin="classic"]) .badge.soon{border-radius:3px!important;border:1px solid var(--rxui-line)!important;background:var(--rxui-surface2)!important;color:var(--rxui-text)!important;box-shadow:none!important;}
+html:not([data-skin="classic"]) .liveBadge{background:var(--rxui-active)!important;color:var(--rxui-active-text)!important;border-color:var(--rxui-active-border)!important;}
+html:not([data-skin="classic"]) .moduleGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+html:not([data-skin="classic"]) .moduleCard{grid-template-columns:54px minmax(0,1fr) 20px!important;gap:12px!important;padding:14px!important;align-items:center!important;}
+html:not([data-skin="classic"]) .moduleCard .moduleBody,
+html:not([data-skin="classic"]) .moduleCard>span:nth-child(2){display:grid!important;gap:4px!important;min-width:0!important;}
+html:not([data-skin="classic"]) .moduleCard small{font-size:10px!important;line-height:1!important;letter-spacing:.10em!important;color:var(--rxui-muted)!important;}
+html:not([data-skin="classic"]) .moduleCard b{font-size:22px!important;line-height:1!important;text-transform:uppercase!important;}
+html:not([data-skin="classic"]) .moduleCard em{display:none!important;}
+html:not([data-skin="classic"]) .moduleArrow{color:var(--rxui-muted)!important;}
+html:not([data-skin="classic"]) .settingsPane{padding:16px 18px!important;background:var(--rxui-surface)!important;border:1px solid var(--rxui-line)!important;}
+html:not([data-skin="classic"]) .settingsGroup{padding:0 0 14px!important;}
+html:not([data-skin="classic"]) .settingsGroup+.settingsGroup{padding-top:14px!important;border-top:1px solid var(--rxui-line-soft)!important;}
+html:not([data-skin="classic"]) .settingsRow,
+html:not([data-skin="classic"]) .settingsInfoRow{min-height:44px!important;padding:8px 0!important;border-bottom:1px solid var(--rxui-line-soft)!important;}
+html:not([data-skin="classic"]) .field label,
+html:not([data-skin="classic"]) .settingsPage .field label,
+html:not([data-skin="classic"]) .settingsUpload>label{font-size:11px!important;line-height:1.05!important;color:var(--rxui-muted)!important;margin-bottom:6px!important;}
+html:not([data-skin="classic"]) .field input,
+html:not([data-skin="classic"]) .field select,
+html:not([data-skin="classic"]) .settingsPage .field input,
+html:not([data-skin="classic"]) .settingsPage .field select{min-height:44px!important;padding:10px 12px!important;font-size:16px!important;font-weight:800!important;border-radius:4px!important;}
+html:not([data-skin="classic"]) .settingsText,
+html:not([data-skin="classic"]) .trackInfoNote,
+html:not([data-skin="classic"]) .manageCards p{font-size:12px!important;line-height:1.45!important;color:var(--rxui-muted)!important;}
+html:not([data-skin="classic"]) .settingsSaveBottom{margin-top:12px!important;width:100%!important;}
+@media (max-width:1100px){
+  html:not([data-skin="classic"]) .moduleGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+}
+@media (max-width:720px){
+  html:not([data-skin="classic"]) .heroPanel.homeHeroPanel{grid-template-columns:1fr!important;padding:16px!important;min-height:0!important;}
+  html:not([data-skin="classic"]) .heroPanel.homeHeroPanel::before{background:linear-gradient(180deg,color-mix(in srgb,var(--rxui-page) 80%,transparent) 0%,color-mix(in srgb,var(--rxui-page) 88%,transparent) 100%),url('../skins/rxui/home-wallpaper.png') center/cover no-repeat;}
+  html:not([data-skin="classic"]) .moduleGrid,
+  html:not([data-skin="classic"]) .disciplineGrid415{grid-template-columns:1fr!important;}
+  html:not([data-skin="classic"]) .settingsLayout{grid-template-columns:1fr!important;gap:8px!important;}
+}

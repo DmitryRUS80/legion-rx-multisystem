@@ -6,6 +6,41 @@ html:not([data-skin="classic"]){
   --rxui-control-h:42px;
   --rxui-focus:2px solid var(--rxui-accent);
 }
+html:not([data-skin="classic"]){
+  --rxui-brand-accent:var(--rxui-accent);
+  --rxui-best-label:var(--rxui-accent);
+  --rxui-ring-active:var(--rxui-accent);
+  --rxui-cockpit-brand:var(--rxui-surface);
+  --rxui-cockpit-surface:var(--rxui-surface);
+  --rxui-cockpit-control:var(--rxui-control);
+  --rxui-cockpit-control-hover:var(--rxui-control-hover);
+  --rxui-cockpit-border:var(--rxui-line);
+  --rxui-cockpit-border-strong:var(--rxui-line-strong);
+  --rxui-cockpit-icon:var(--rxui-text);
+  --rxui-cockpit-inset:none;
+  --rxui-cockpit-on:var(--rxui-active);
+  --rxui-cockpit-on-text:var(--rxui-active-text);
+  --rxui-cockpit-on-border:var(--rxui-active-border);
+  --rxui-cockpit-on-inset:none;
+  --rxui-primary-control:var(--rxui-active);
+  --rxui-primary-control-text:var(--rxui-active-text);
+  --rxui-primary-control-border:var(--rxui-active-border);
+  --rxui-primary-control-inset:none;
+  --rxui-danger-control:var(--rxui-danger-bg);
+  --rxui-danger-control-text:var(--rxui-danger-text);
+  --rxui-danger-inset:none;
+  --rxui-cockpit-danger-soft:var(--rxui-danger-bg);
+  --rxui-cockpit-disabled:var(--rxui-surface2);
+  --rxui-cockpit-disabled-text:var(--rxui-muted);
+  --rxui-cockpit-disabled-icon:var(--rxui-muted);
+  --rxui-cockpit-disabled-border:var(--rxui-line);
+  --rxui-cockpit-chip:var(--rxui-surface2);
+  --rxui-cockpit-chip-text:var(--rxui-text);
+  --rxui-cockpit-chip-border:var(--rxui-line);
+  --rxui-cockpit-chip-on:var(--rxui-active);
+  --rxui-cockpit-chip-on-text:var(--rxui-active-text);
+  --rxui-cockpit-chip-on-border:var(--rxui-active-border);
+}
 html:not([data-skin="classic"]) body:not(.cockpitMode){
   background-color:var(--rxui-page)!important;
   background-image:var(--rxui-page-texture)!important;
@@ -96,7 +131,7 @@ html:not([data-skin="classic"]) .toggle{background:var(--rxui-toggle-off)!import
 html:not([data-skin="classic"]) .toggle:checked{background:var(--rxui-active)!important}
 
 /* Settings selector */
-.rxSkinGrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;margin-top:8px}
+.rxSkinGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}
 .rxSkinOption{min-height:64px;padding:10px 12px;text-align:left;border:1px solid var(--v4-line);border-radius:4px;background:var(--v4-control);color:var(--v4-control-text);cursor:pointer;box-shadow:none}
 .rxSkinOption b{display:block;font:800 16px/1 var(--rxn-font);letter-spacing:.05em}
 .rxSkinOption span{display:block;margin-top:7px;font-size:12px;color:var(--v4-muted)}
@@ -108,7 +143,7 @@ html:not([data-skin="classic"]) .rxSkinOption.active{background:var(--rxui-activ
 
 /* Cockpit skin · RC45 authoritative Steel/Light treatment.
    Classic geometry remains owned by discipline-pults.css. Pilot row grid/height/order are never changed here. */
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnCockpit{
+html:not([data-skin="classic"]) .rxnCockpit{
   --rxn-bg:var(--rxui-page);--rxn-bg2:var(--rxui-page2);--rxn-panel:var(--rxui-surface);--rxn-panel2:var(--rxui-surface2);
   --rxn-line:var(--rxui-line);--rxn-line2:var(--rxui-line-soft);--rxn-line-strong:var(--rxui-line-strong);
   --rxn-text:var(--rxui-text);--rxn-muted:var(--rxui-muted);--rxn-blue:var(--rxui-accent);--rxn-cobalt:var(--rxui-accent);
@@ -122,16 +157,16 @@ html:not([data-skin="classic"]) .rxSkinOption.active{background:var(--rxui-activ
 }
 
 /* Header / main nav: one restrained family, no status dots, no side/bottom accents. */
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnHomeBrand{
+html:not([data-skin="classic"]) .rxnHomeBrand{
   background:var(--rxui-cockpit-brand)!important;
   border:1px solid var(--rxui-cockpit-border)!important;
   border-radius:4px!important;
   color:var(--rxui-text)!important;
   box-shadow:var(--rxui-cockpit-inset)!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnHomeBrand i{color:var(--rxui-brand-accent)!important}
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnPrimaryNav button,
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnTopActions .rxnTopButton{
+html:not([data-skin="classic"]) .rxnHomeBrand i{color:var(--rxui-brand-accent)!important}
+html:not([data-skin="classic"]) .rxnPrimaryNav button,
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton{
   background:var(--rxui-cockpit-control)!important;
   color:var(--rxui-cockpit-icon)!important;
   border:1px solid var(--rxui-cockpit-border)!important;
@@ -139,50 +174,50 @@ html:not([data-skin="classic"]) .rxSkinOption.active{background:var(--rxui-activ
   box-shadow:var(--rxui-cockpit-inset)!important;
   transition:background .12s ease,border-color .12s ease,color .12s ease,filter .12s ease!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnPrimaryNav button:hover,
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnTopActions .rxnTopButton:hover:not(:disabled){
+html:not([data-skin="classic"]) .rxnPrimaryNav button:hover,
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton:hover:not(:disabled){
   background:var(--rxui-cockpit-control-hover)!important;
   border-color:var(--rxui-cockpit-border-strong)!important;
   color:var(--rxui-text)!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnTopActions .rxnTopButton:after{display:none!important;content:none!important}
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnTopActions .rxnTopButton.ok{
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton:after{display:none!important;content:none!important}
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton.ok{
   background:var(--rxui-cockpit-on)!important;
   color:var(--rxui-cockpit-on-text)!important;
   border-color:var(--rxui-cockpit-on-border)!important;
   box-shadow:var(--rxui-cockpit-on-inset)!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnTopActions .rxnTopButton.danger:not(:disabled){
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton.danger:not(:disabled){
   background:var(--rxui-cockpit-danger-soft)!important;
   color:var(--rxui-danger)!important;
   border-color:color-mix(in srgb,var(--rxui-danger) 62%,var(--rxui-cockpit-border))!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnTopActions .rxnTopButton:disabled{opacity:.34!important;filter:saturate(.15)!important}
+html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton:disabled{opacity:.34!important;filter:saturate(.15)!important}
 
 /* Race strip stays red; BEST LAP and timer get the same instrument surface. */
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnBestLapStrip,
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnTimerPanel{
+html:not([data-skin="classic"]) .rxnBestLapStrip,
+html:not([data-skin="classic"]) .rxnTimerPanel{
   background:var(--rxui-cockpit-surface)!important;
   border-color:var(--rxui-cockpit-border)!important;
   border-radius:4px!important;
   box-shadow:var(--rxui-cockpit-inset)!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnBestLapStrip small{color:var(--rxui-best-label)!important}
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnTimerCopy span,
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnTimerCopy small{color:var(--rxui-muted)!important}
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnRing{
+html:not([data-skin="classic"]) .rxnBestLapStrip small{color:var(--rxui-best-label)!important}
+html:not([data-skin="classic"]) .rxnTimerCopy span,
+html:not([data-skin="classic"]) .rxnTimerCopy small{color:var(--rxui-muted)!important}
+html:not([data-skin="classic"]) .rxnRing{
   background:conic-gradient(var(--rxui-ring-active) var(--ring-progress),var(--rxui-ring-track) 0)!important;
   filter:none!important;
   box-shadow:none!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnRing:before{
+html:not([data-skin="classic"]) .rxnRing:before{
   background:var(--rxui-cockpit-surface)!important;
   box-shadow:inset 0 0 0 1px var(--rxui-cockpit-border)!important;
 }
 
 /* Main race controls: available = crisp instrument surface; ON/action = full-surface state.
    No right strip, no bottom strip, no glow bars. */
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl{
+html:not([data-skin="classic"]) .rxnControl{
   background:var(--rxui-cockpit-control)!important;
   color:var(--rxui-text)!important;
   border:1px solid var(--rxui-cockpit-border)!important;
@@ -191,31 +226,31 @@ html:not([data-skin="classic"]) .rxSkinOption.active{background:var(--rxui-activ
   transform:none!important;
   transition:background .12s ease,border-color .12s ease,color .12s ease,filter .08s ease!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl:after{display:none!important;content:none!important}
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl:hover:not(:disabled){
+html:not([data-skin="classic"]) .rxnControl:after{display:none!important;content:none!important}
+html:not([data-skin="classic"]) .rxnControl:hover:not(:disabled){
   background:var(--rxui-cockpit-control-hover)!important;
   border-color:var(--rxui-cockpit-border-strong)!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl.primary:not(:disabled){
+html:not([data-skin="classic"]) .rxnControl.primary:not(:disabled){
   background:var(--rxui-primary-control)!important;
   color:var(--rxui-primary-control-text)!important;
   border-color:var(--rxui-primary-control-border)!important;
   box-shadow:var(--rxui-primary-control-inset)!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl.blue:not(:disabled){
+html:not([data-skin="classic"]) .rxnControl.blue:not(:disabled){
   background:var(--rxui-cockpit-on)!important;
   color:var(--rxui-cockpit-on-text)!important;
   border-color:var(--rxui-cockpit-on-border)!important;
   box-shadow:var(--rxui-cockpit-on-inset)!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl.danger:not(:disabled){
+html:not([data-skin="classic"]) .rxnControl.danger:not(:disabled){
   background:var(--rxui-danger-control)!important;
   color:var(--rxui-danger-control-text)!important;
   border-color:var(--rxui-danger)!important;
   box-shadow:var(--rxui-danger-inset)!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl:active:not(:disabled){filter:brightness(.9)!important;transform:translateY(1px)!important}
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl:disabled{
+html:not([data-skin="classic"]) .rxnControl:active:not(:disabled){filter:brightness(.9)!important;transform:translateY(1px)!important}
+html:not([data-skin="classic"]) .rxnControl:disabled{
   opacity:1!important;
   background:var(--rxui-cockpit-disabled)!important;
   color:var(--rxui-cockpit-disabled-text)!important;
@@ -223,48 +258,48 @@ html:not([data-skin="classic"]) .rxSkinOption.active{background:var(--rxui-activ
   box-shadow:none!important;
   filter:none!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl:disabled svg{color:var(--rxui-cockpit-disabled-icon)!important}
+html:not([data-skin="classic"]) .rxnControl:disabled svg{color:var(--rxui-cockpit-disabled-icon)!important}
 
 /* Display toggles: full-surface selection only. */
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnColumnToggles button,
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnPrecisionToggles button{
+html:not([data-skin="classic"]) .rxnColumnToggles button,
+html:not([data-skin="classic"]) .rxnPrecisionToggles button{
   background:var(--rxui-cockpit-chip)!important;
   color:var(--rxui-cockpit-chip-text)!important;
   border:1px solid var(--rxui-cockpit-chip-border)!important;
   border-radius:3px!important;
   box-shadow:none!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnColumnToggles button.active,
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnPrecisionToggles button.active{
+html:not([data-skin="classic"]) .rxnColumnToggles button.active,
+html:not([data-skin="classic"]) .rxnPrecisionToggles button.active{
   background:var(--rxui-cockpit-chip-on)!important;
   color:var(--rxui-cockpit-chip-on-text)!important;
   border-color:var(--rxui-cockpit-chip-on-border)!important;
   box-shadow:none!important;
 }
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnColumnToggles button:hover,
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnPrecisionToggles button:hover{border-color:var(--rxui-cockpit-border-strong)!important}
+html:not([data-skin="classic"]) .rxnColumnToggles button:hover,
+html:not([data-skin="classic"]) .rxnPrecisionToggles button:hover{border-color:var(--rxui-cockpit-border-strong)!important}
 
 /* Pilot rows: paint only. Geometry remains in discipline-pults.css. */
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnPilotHead{background:var(--rxui-row-head)!important;color:var(--rxui-row-head-text)!important}
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnPilotData{background:var(--rxui-row)!important;border-bottom-color:var(--rxui-row-border)!important}
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnPilotData:nth-child(odd){background:var(--rxui-row-alt)!important}
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnPilotData.leader{background:var(--rxui-row-leader)!important}
-:is(html[data-skin="steel"],html[data-skin="light"]) .rxnLapTrack{background:var(--rxui-row-line)!important}
+html:not([data-skin="classic"]) .rxnPilotHead{background:var(--rxui-row-head)!important;color:var(--rxui-row-head-text)!important}
+html:not([data-skin="classic"]) .rxnPilotData{background:var(--rxui-row)!important;border-bottom-color:var(--rxui-row-border)!important}
+html:not([data-skin="classic"]) .rxnPilotData:nth-child(odd){background:var(--rxui-row-alt)!important}
+html:not([data-skin="classic"]) .rxnPilotData.leader{background:var(--rxui-row-leader)!important}
+html:not([data-skin="classic"]) .rxnLapTrack{background:var(--rxui-row-line)!important}
 
 /* Proportional optical tuning only; grid positions are unchanged. */
 @media (orientation:landscape) and (min-width:1400px) and (min-height:700px){
-  :is(html[data-skin="steel"],html[data-skin="light"]) .rxnTopActions .rxnTopButton svg[data-rx-icon]{width:25px;height:25px}
-  :is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl svg[data-rx-icon]{width:36px;height:36px}
-  :is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl b{font-size:22px;letter-spacing:.025em}
+  html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton svg[data-rx-icon]{width:25px;height:25px}
+  html:not([data-skin="classic"]) .rxnControl svg[data-rx-icon]{width:36px;height:36px}
+  html:not([data-skin="classic"]) .rxnControl b{font-size:22px;letter-spacing:.025em}
 }
 @media (orientation:landscape) and (max-height:500px){
-  :is(html[data-skin="steel"],html[data-skin="light"]) .rxnTopActions .rxnTopButton svg[data-rx-icon]{width:19px;height:19px}
-  :is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl svg[data-rx-icon]{width:19px;height:19px}
+  html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton svg[data-rx-icon]{width:19px;height:19px}
+  html:not([data-skin="classic"]) .rxnControl svg[data-rx-icon]{width:19px;height:19px}
 }
 @media (orientation:portrait) and (max-width:599px){
-  :is(html[data-skin="steel"],html[data-skin="light"]) .rxnTopActions .rxnTopButton svg[data-rx-icon]{width:17px;height:17px}
-  :is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl{border-radius:4px!important}
-  :is(html[data-skin="steel"],html[data-skin="light"]) .rxnControl svg[data-rx-icon]{width:19px;height:19px}
+  html:not([data-skin="classic"]) .rxnTopActions .rxnTopButton svg[data-rx-icon]{width:17px;height:17px}
+  html:not([data-skin="classic"]) .rxnControl{border-radius:4px!important}
+  html:not([data-skin="classic"]) .rxnControl svg[data-rx-icon]{width:19px;height:19px}
 }
 /* New icon vocabulary: consistent optical weight, no status dots or legacy glow markers. */
 html:not([data-skin="classic"]) svg[data-rx-icon]{stroke-width:1.75!important;stroke-linecap:round!important;stroke-linejoin:round!important}

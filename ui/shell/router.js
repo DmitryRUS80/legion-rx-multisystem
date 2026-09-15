@@ -11,10 +11,8 @@ function clearIntervalsIfNotCockpit(){
 
 function uiRender(){
   clearIntervalsIfNotCockpit();
-  const host=$('#viewHost'),apex=String(state.settings.uiSkin||'classic')==='apex-orange'&&typeof apexRenderView==='function';
-  document.body.classList.toggle('apexRenderer',apex);
-  if(apex)host.innerHTML=apexRenderView(state.view);
-  else if(state.view==='home')host.innerHTML=homeView();
+  const host=$('#viewHost');
+  if(state.view==='home')host.innerHTML=homeView();
   else if(state.view==='rallySetup')host.innerHTML=rallySetupView();
   else if(state.view==='cockpit')host.innerHTML=cockpitView();
   else if(state.view==='trackDaySetup')host.innerHTML=trackDaySetupView();
@@ -41,21 +39,21 @@ function homeView(){
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
-   :`<div class="heroMini"><b>${esc(LEGION_APP_DISPLAY_VERSION)}</b><span>Модульная архитектура · рабочие пульты сохранены</span></div>`;
+   :`<div class="heroMini"><b>${esc(LEGION_APP_DISPLAY_VERSION)}</b><span>Один интерфейс · единый пульт · съёмные темы</span></div>`;
  return `<section class="page homePage">
- <div class="heroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
+ <div class="heroPanel homeHeroPanel"><div class="heroCopy"><div class="sectionLabel">RACE MANAGEMENT SYSTEM</div><h1>LEGION <span>RX</span></h1><p>Единая система проведения RC-соревнований, тренировок и хронометража LapWiz.</p></div><div class="heroStatus">${live}</div></div>
  <div class="homeSectionHead"><div><div class="sectionLabel">ДИСЦИПЛИНЫ</div><h2>Выберите формат</h2></div></div>
  <div class="disciplineGrid disciplineGrid415">
-  <article class="disciplineTile activeDiscipline"><div class="tileTop"><div class="tileIcon">${uiIcon('flag')}</div><span class="badge liveBadge"><span class="liveDot"></span>АКТИВНО</span></div><div><h3>Ралли-кросс</h3><p>Квалификации, очки, LCQ, переходы и финалы.</p></div><button class="tileAction" data-action="open-rx"><span>${race?'Открыть соревнование':'Создать соревнование'}</span>${uiIcon('chevron')}</button></article>
-  <article class="disciplineTile locked"><div class="tileTop"><div class="tileIcon">${uiIcon('timer')}</div><span class="badge soon">СКОРО</span></div><div><h3>Ралли-спринт</h3><p>Одиночные попытки, лучшее время и протокол результатов.</p></div><button class="tileAction" disabled><span>В разработке</span>${uiIcon('chevron')}</button></article>
-  <article class="disciplineTile locked"><div class="tileTop"><div class="tileIcon">${uiIcon('car')}</div><span class="badge soon">СКОРО</span></div><div><h3>Классическая RC-гонка</h3><p>Practice, seeding, qualifying и A/B/C Finals.</p></div><button class="tileAction" disabled><span>В разработке</span>${uiIcon('chevron')}</button></article>
-  <article class="disciplineTile activeDiscipline trackTile"><div class="tileTop"><div class="tileIcon">${uiIcon('timer')}</div><span class="badge liveBadge">${trackActive?'СЕССИЯ ИДЁТ':'PRACTICE'}</span></div><div><h3>Track Day</h3><p>Свободная практика 10–120 минут, PIT/PIT OUT, круги, лучшее и последнее время, подробный отчёт по каждому пилоту.</p></div><button class="tileAction" data-track-action="open"><span>${trackActive?'Вернуться в сессию':'Свободная практика'}</span>${uiIcon('chevron')}</button></article>
+  <article class="disciplineTile activeDiscipline"><div class="tileTop"><div class="tileIcon">${uiIcon('flag')}</div><span class="badge liveBadge"><span class="liveDot"></span>АКТИВНО</span></div><div><h3>Ралли-кросс</h3><p>Квалификации, очки, переходы и финалы.</p></div><button class="tileAction" data-action="open-rx"><span>${race?'Открыть соревнование':'Создать соревнование'}</span>${uiIcon('chevron')}</button></article>
+  <article class="disciplineTile locked"><div class="tileTop"><div class="tileIcon">${uiIcon('timer')}</div><span class="badge soon">СКОРО</span></div><div><h3>Ралли-спринт</h3><p>Одиночные попытки и протокол результатов.</p></div><button class="tileAction" disabled><span>В разработке</span>${uiIcon('chevron')}</button></article>
+  <article class="disciplineTile locked"><div class="tileTop"><div class="tileIcon">${uiIcon('car')}</div><span class="badge soon">ЭТАЛОН</span></div><div><h3>Классическая RC-гонка</h3><p>Донор-логика и эталонное поведение без изменений.</p></div><button class="tileAction" disabled><span>Без изменений</span>${uiIcon('chevron')}</button></article>
+  <article class="disciplineTile activeDiscipline trackTile"><div class="tileTop"><div class="tileIcon">${uiIcon('timer')}</div><span class="badge liveBadge">${trackActive?'СЕССИЯ ИДЁТ':'PRACTICE'}</span></div><div><h3>Track Day</h3><p>Свободная практика, PIT/PIT OUT, круги и отчёт по пилотам.</p></div><button class="tileAction" data-track-action="open"><span>${trackActive?'Вернуться в сессию':'Свободная практика'}</span>${uiIcon('chevron')}</button></article>
  </div>
  <div class="homeSectionHead modulesHead"><div><div class="sectionLabel">СИСТЕМА</div><h2>Общие разделы</h2></div></div>
  <div class="moduleGrid">
-  <button class="moduleCard" data-nav="championships"><span class="moduleIcon">${uiIcon('trophy')}</span><span><small>СЕЗОНЫ И ЭТАПЫ</small><b>Чемпионаты</b><em>Турнирные таблицы и очки этапов</em></span>${uiIcon('chevron','moduleArrow')}</button>
-  <button class="moduleCard" data-nav="pilots"><span class="moduleIcon">${uiIcon('users')}</span><span><small>ОБЩАЯ БАЗА</small><b>Пилоты</b><em>${state.pilotDb.length} профилей · транспондеры</em></span>${uiIcon('chevron','moduleArrow')}</button>
-  <button class="moduleCard" data-nav="settings"><span class="moduleIcon">${uiIcon('settings')}</span><span><small>СИСТЕМА</small><b>Настройки</b><em>Тема, язык, LapWiz, звук</em></span>${uiIcon('chevron','moduleArrow')}</button>
-  <button class="moduleCard" data-nav="archive"><span class="moduleIcon">${uiIcon('list')}</span><span><small>СОХРАНЁННЫЕ ГОНКИ</small><b>Архив</b><em>${state.archive.length} соревнований · восстановление</em></span>${uiIcon('chevron','moduleArrow')}</button>
+  <button class="moduleCard" data-nav="championships"><span class="moduleIcon">${uiIcon('trophy')}</span><span class="moduleBody"><small>СЕЗОНЫ И ЭТАПЫ</small><b>Чемпионаты</b></span>${uiIcon('chevron','moduleArrow')}</button>
+  <button class="moduleCard" data-nav="pilots"><span class="moduleIcon">${uiIcon('users')}</span><span class="moduleBody"><small>ОБЩАЯ БАЗА</small><b>Пилоты · ${state.pilotDb.length}</b></span>${uiIcon('chevron','moduleArrow')}</button>
+  <button class="moduleCard" data-nav="settings"><span class="moduleIcon">${uiIcon('settings')}</span><span class="moduleBody"><small>СИСТЕМА</small><b>Настройки</b></span>${uiIcon('chevron','moduleArrow')}</button>
+  <button class="moduleCard" data-nav="archive"><span class="moduleIcon">${uiIcon('list')}</span><span class="moduleBody"><small>СОХРАНЁННЫЕ ГОНКИ</small><b>Архив · ${state.archive.length}</b></span>${uiIcon('chevron','moduleArrow')}</button>
  </div></section>`;
 }
