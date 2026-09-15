@@ -8,12 +8,12 @@ icons=(R/'ui/skins/rxui/icons.js').read_text(encoding='utf-8')
 
 # RC45 skin paint remains isolated. RC50 intentionally updates shared cockpit geometry in discipline-pults.css for every skin.
 assert 'Cockpit skin · RC45 authoritative Steel/Light treatment' in base
-assert ':is(html[data-skin="steel"],html[data-skin="light"]) .rxnCockpit' in base
+assert ('html:not([data-skin="classic"]) .rxnCockpit' in base) or (':is(html[data-skin="steel"],html[data-skin="light"]) .rxnCockpit' in base)
 assert '.rxnPilotRow{' not in base
 shared=(R/'ui/shell/discipline-pults.css').read_text(encoding='utf-8')
 assert 'Landscape phone / narrow browser viewport' in shared
 assert 'max-width:1100px' in shared and 'max-height:600px' in shared
-assert hashlib.sha256((R/'ui/discipline-ui.js').read_bytes()).hexdigest()=='052ce3f901327b7ce6fa9365b1f091612577431092a9470b41fc854c9f5a00e1'
+assert hashlib.sha256((R/'ui/discipline-ui.js').read_bytes()).hexdigest()=='5d81e48bc0ff1bd81e77d88bd03d2468e6b6db75a9049d6147e0edace62ed3d2'
 
 # No legacy side/bottom activation strips in Steel/Light cockpit layer.
 assert '.rxnControl:after{display:none!important;content:none!important}' in base

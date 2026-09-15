@@ -7,39 +7,15 @@ html:not([data-skin="classic"]){
   --rxui-focus:2px solid var(--rxui-accent);
 }
 html:not([data-skin="classic"]){
-  --rxui-brand-accent:var(--rxui-accent);
-  --rxui-best-label:var(--rxui-accent);
-  --rxui-ring-active:var(--rxui-accent);
-  --rxui-cockpit-brand:var(--rxui-surface);
-  --rxui-cockpit-surface:var(--rxui-surface);
-  --rxui-cockpit-control:var(--rxui-control);
-  --rxui-cockpit-control-hover:var(--rxui-control-hover);
-  --rxui-cockpit-border:var(--rxui-line);
-  --rxui-cockpit-border-strong:var(--rxui-line-strong);
-  --rxui-cockpit-icon:var(--rxui-text);
-  --rxui-cockpit-inset:none;
-  --rxui-cockpit-on:var(--rxui-active);
-  --rxui-cockpit-on-text:var(--rxui-active-text);
-  --rxui-cockpit-on-border:var(--rxui-active-border);
-  --rxui-cockpit-on-inset:none;
-  --rxui-primary-control:var(--rxui-active);
-  --rxui-primary-control-text:var(--rxui-active-text);
-  --rxui-primary-control-border:var(--rxui-active-border);
-  --rxui-primary-control-inset:none;
-  --rxui-danger-control:var(--rxui-danger-bg);
-  --rxui-danger-control-text:var(--rxui-danger-text);
-  --rxui-danger-inset:none;
-  --rxui-cockpit-danger-soft:var(--rxui-danger-bg);
-  --rxui-cockpit-disabled:var(--rxui-surface2);
-  --rxui-cockpit-disabled-text:var(--rxui-muted);
-  --rxui-cockpit-disabled-icon:var(--rxui-muted);
-  --rxui-cockpit-disabled-border:var(--rxui-line);
-  --rxui-cockpit-chip:var(--rxui-surface2);
-  --rxui-cockpit-chip-text:var(--rxui-text);
-  --rxui-cockpit-chip-border:var(--rxui-line);
-  --rxui-cockpit-chip-on:var(--rxui-active);
-  --rxui-cockpit-chip-on-text:var(--rxui-active-text);
-  --rxui-cockpit-chip-on-border:var(--rxui-active-border);
+  --rxui-brand-accent:var(--rxui-accent);--rxui-best-label:var(--rxui-accent);--rxui-ring-active:var(--rxui-accent);
+  --rxui-cockpit-brand:var(--rxui-surface);--rxui-cockpit-surface:var(--rxui-surface);
+  --rxui-cockpit-control:var(--rxui-control);--rxui-cockpit-control-hover:var(--rxui-control-hover);
+  --rxui-cockpit-border:var(--rxui-line);--rxui-cockpit-border-strong:var(--rxui-line-strong);--rxui-cockpit-icon:var(--rxui-text);--rxui-cockpit-inset:none;
+  --rxui-cockpit-on:var(--rxui-active);--rxui-cockpit-on-text:var(--rxui-active-text);--rxui-cockpit-on-border:var(--rxui-active-border);--rxui-cockpit-on-inset:none;
+  --rxui-primary-control:var(--rxui-active);--rxui-primary-control-text:var(--rxui-active-text);--rxui-primary-control-border:var(--rxui-active-border);--rxui-primary-control-inset:none;
+  --rxui-danger-control:var(--rxui-danger-bg);--rxui-danger-control-text:var(--rxui-danger-text);--rxui-danger-inset:none;--rxui-cockpit-danger-soft:var(--rxui-danger-bg);
+  --rxui-cockpit-disabled:var(--rxui-surface2);--rxui-cockpit-disabled-text:var(--rxui-muted);--rxui-cockpit-disabled-icon:var(--rxui-muted);--rxui-cockpit-disabled-border:var(--rxui-line);
+  --rxui-cockpit-chip:var(--rxui-surface2);--rxui-cockpit-chip-text:var(--rxui-text);--rxui-cockpit-chip-border:var(--rxui-line);--rxui-cockpit-chip-on:var(--rxui-active);--rxui-cockpit-chip-on-text:var(--rxui-active-text);--rxui-cockpit-chip-on-border:var(--rxui-active-border);
 }
 html:not([data-skin="classic"]) body:not(.cockpitMode){
   background-color:var(--rxui-page)!important;
@@ -305,3 +281,66 @@ html:not([data-skin="classic"]) .rxnLapTrack{background:var(--rxui-row-line)!imp
 html:not([data-skin="classic"]) svg[data-rx-icon]{stroke-width:1.75!important;stroke-linecap:round!important;stroke-linejoin:round!important}
 html:not([data-skin="classic"]) .rxnTopActions svg[data-rx-icon]{width:22px;height:22px}
 html:not([data-skin="classic"]) .rxnControl svg[data-rx-icon]{width:28px;height:28px}
+
+
+/* RC55 · NON-CLASSIC WORKSPACE WALLPAPER
+   Built-in artwork is a page-level background behind the shell, never a hero/card background.
+   Classic remains fully outside this layer. */
+html:not([data-skin="classic"]){
+  --rxui-workspace-wallpaper:url('./workspace-landscape.webp');
+  --rxui-workspace-overlay:linear-gradient(180deg,rgba(4,10,16,.57),rgba(4,10,16,.72));
+}
+html[data-skin="light"]{
+  --rxui-workspace-overlay:linear-gradient(180deg,rgba(245,249,252,.72),rgba(238,244,249,.82));
+}
+@media (orientation:portrait){
+  html:not([data-skin="classic"]){--rxui-workspace-wallpaper:url('./workspace-portrait.webp');}
+}
+html:not([data-skin="classic"]) body:not(.cockpitMode){
+  background-color:var(--rxui-page)!important;
+  background-image:var(--rxui-workspace-overlay),var(--rxui-workspace-wallpaper)!important;
+  background-size:cover,cover!important;
+  background-position:center center,center center!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-attachment:fixed,fixed!important;
+}
+/* The artwork must not be embedded into the top hero. */
+html:not([data-skin="classic"]) .heroPanel.homeHeroPanel{
+  background:color-mix(in srgb,var(--rxui-surface) 84%,transparent)!important;
+  backdrop-filter:blur(5px)!important;
+  -webkit-backdrop-filter:blur(5px)!important;
+}
+html:not([data-skin="classic"]) .heroPanel.homeHeroPanel::before{display:none!important;content:none!important;background:none!important;}
+/* Let the workspace remain visible through the main surfaces without adding nested frames. */
+html:not([data-skin="classic"]) .disciplineTile,
+html:not([data-skin="classic"]) .moduleCard,
+html:not([data-skin="classic"]) .card,
+html:not([data-skin="classic"]) .ruleBox,
+html:not([data-skin="classic"]) .listRow,
+html:not([data-skin="classic"]) .champStageCard,
+html:not([data-skin="classic"]) .archiveCard,
+html:not([data-skin="classic"]) .formatRuleGrid,
+html:not([data-skin="classic"]) .settingsPane,
+html:not([data-skin="classic"]) .settingsSectionBody,
+html:not([data-skin="classic"]) .modal{
+  background:color-mix(in srgb,var(--rxui-surface) 90%,transparent)!important;
+}
+html[data-skin="light"] .disciplineTile,
+html[data-skin="light"] .moduleCard,
+html[data-skin="light"] .card,
+html[data-skin="light"] .ruleBox,
+html[data-skin="light"] .listRow,
+html[data-skin="light"] .champStageCard,
+html[data-skin="light"] .archiveCard,
+html[data-skin="light"] .formatRuleGrid,
+html[data-skin="light"] .settingsPane,
+html[data-skin="light"] .settingsSectionBody,
+html[data-skin="light"] .modal{
+  background:color-mix(in srgb,var(--rxui-surface) 94%,transparent)!important;
+}
+@media (orientation:portrait) and (max-width:720px){
+  html:not([data-skin="classic"]) body:not(.cockpitMode){
+    background-position:center top,center top!important;
+    background-attachment:scroll,scroll!important;
+  }
+}

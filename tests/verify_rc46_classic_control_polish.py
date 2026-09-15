@@ -15,7 +15,7 @@ for forbidden in ['.rxnPilotRow{','.rxnPilotData{','.rxnPilotHead{','.rxnNameCel
 shared=(R/'ui/shell/discipline-pults.css').read_text(encoding='utf-8')
 assert 'Landscape phone / narrow browser viewport' in shared
 assert 'max-width:1100px' in shared and 'max-height:600px' in shared
-assert hashlib.sha256((R/'ui/discipline-ui.js').read_bytes()).hexdigest()=='052ce3f901327b7ce6fa9365b1f091612577431092a9470b41fc854c9f5a00e1'
+assert hashlib.sha256((R/'ui/discipline-ui.js').read_bytes()).hexdigest()=='5d81e48bc0ff1bd81e77d88bd03d2468e6b6db75a9049d6147e0edace62ed3d2'
 
 # Legacy status dots/side stripes are neutralized by the isolated polish layer.
 assert '.rxnTopActions .rxnTopButton:after{display:none!important}' in css

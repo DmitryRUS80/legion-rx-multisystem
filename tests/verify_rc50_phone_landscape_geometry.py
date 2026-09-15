@@ -11,7 +11,7 @@ assert '.rxnTimerCopy>span.rxnTimerClass{font-size:15px}' in css
 assert '.rxnTimerCopy small{margin-top:8px}' in css
 assert '.rxnRing b{font-size:17px}' in css
 assert '.rxnPilotData{font-size:20px}' in css
-assert '.rxnGap,.rxnCheck,.rxnBest,.rxnAvg,.rxnLast,.rxnLaps{font-size:20px' in css
+assert '.rxnPilotData .rxnGap,.rxnPilotData .rxnCheck,.rxnPilotData .rxnBest,.rxnPilotData .rxnAvg,.rxnPilotData .rxnLast,.rxnPilotData .rxnLaps{font-size:20px' in css
 assert 'font-size:.75em' in css
 ui=(R/'ui/discipline-ui.js').read_text()
 assert "digits!==3" in ui and 'rxnMillis' in ui
@@ -21,6 +21,6 @@ assert 'grid-template-rows:22px 18px' in css
 # Theme CSS must not own responsive cockpit geometry anymore.
 assert '.rxnControlPanel{gap:7px!important}' not in cobalt
 assert '@media (min-width:1400px)' not in cobalt
-assert 'RC50' in ver
-assert 'rc50-phone-landscape-geometry' in sw
+assert 'RC55' in ver
+assert 'rc55-workspace-wallpaper' in sw
 print('RC50 PHONE LANDSCAPE GEOMETRY: PASS')

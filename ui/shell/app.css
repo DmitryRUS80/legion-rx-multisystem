@@ -648,7 +648,7 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
 }
 
 
-/* ===== RXUI UNIFIED SHELL SYSTEM · RC53 ===== */
+/* ===== RXUI UNIFIED SHELL SYSTEM · RC55 · NON-CLASSIC ONLY ===== */
 html:not([data-skin="classic"]){
   --rxui-shell-radius:4px;
   --rxui-shell-gap:10px;
@@ -750,12 +750,6 @@ html:not([data-skin="classic"]) .heroPanel.homeHeroPanel{
   border:1px solid var(--rxui-line-strong)!important;
   min-height:220px!important;
 }
-html:not([data-skin="classic"]) .heroPanel.homeHeroPanel::before{
-  content:"";
-  position:absolute;inset:0;
-  background:linear-gradient(90deg,color-mix(in srgb,var(--rxui-page) 82%,transparent) 0%,color-mix(in srgb,var(--rxui-page) 38%,transparent) 48%,color-mix(in srgb,var(--rxui-page) 88%,transparent) 100%),url('../skins/rxui/home-wallpaper.png') center/cover no-repeat;
-  opacity:1;
-}
 html:not([data-skin="classic"]) .heroPanel.homeHeroPanel > *{position:relative;z-index:1;}
 html:not([data-skin="classic"]) .heroCopy h1{font-size:clamp(42px,6vw,72px)!important;}
 html:not([data-skin="classic"]) .heroCopy p{max-width:620px!important;color:var(--rxui-text)!important;opacity:.86;}
@@ -806,7 +800,6 @@ html:not([data-skin="classic"]) .settingsSaveBottom{margin-top:12px!important;wi
 }
 @media (max-width:720px){
   html:not([data-skin="classic"]) .heroPanel.homeHeroPanel{grid-template-columns:1fr!important;padding:16px!important;min-height:0!important;}
-  html:not([data-skin="classic"]) .heroPanel.homeHeroPanel::before{background:linear-gradient(180deg,color-mix(in srgb,var(--rxui-page) 80%,transparent) 0%,color-mix(in srgb,var(--rxui-page) 88%,transparent) 100%),url('../skins/rxui/home-wallpaper.png') center/cover no-repeat;}
   html:not([data-skin="classic"]) .moduleGrid,
   html:not([data-skin="classic"]) .disciplineGrid415{grid-template-columns:1fr!important;}
   html:not([data-skin="classic"]) .settingsLayout{grid-template-columns:1fr!important;gap:8px!important;}
