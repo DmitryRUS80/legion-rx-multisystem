@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc55-workspace-wallpaper';
-  const displayVersion='4.2.0 CLEAN FULL APP RC55 · WORKSPACE WALLPAPER';
-  const cacheName='legion-rx-4-2-0-clean-full-rc55-workspace-wallpaper';
+  const appVersion='4.2.0-clean-full-rc56-update-recovery-workspace-wallpaper';
+  const displayVersion='4.2.0 CLEAN FULL APP RC56 · UPDATE RECOVERY / WORKSPACE WALLPAPER';
+  const cacheName='legion-rx-4-2-0-clean-full-rc56-update-recovery-workspace-wallpaper';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

@@ -1,3 +1,11 @@
+# RC56 — UPDATE RECOVERY / WORKSPACE WALLPAPER
+
+- Исправлена причина отказа установки RC55: GitHub-пакет RC55 не содержал `ui/shell/router.js` и `ui/discipline-ui.js`, хотя новый Service Worker требовал их свежие версии. При обновлении с реально установленной RC53 это гарантированно переводило новый worker в `redundant`.
+- RC56 выпускается как кумулятивный recovery-пакет от RC53: в `UPLOAD_TO_GITHUB` входят все файлы, которые реально отличаются от RC53 и нужны RC54–RC56, включая `router.js` и `discipline-ui.js`.
+- Проверки Service Worker по shell CSS сделаны семантическими, а не привязанными к строке `RC55`, чтобы служебная проверка не ломала следующий релиз из-за одного номера в комментарии.
+- Обои и UI RC55 сохранены без визуальных изменений: landscape/portrait wallpaper остаются фоном всего рабочего пространства только для новых тем; Classic не меняется.
+- Спортивная логика, LapWiz, storage, audio и reporting не менялись.
+
 # RC55 — WORKSPACE WALLPAPER
 
 - The selected rallycross artwork is now the built-in workspace background for every non-Classic theme, behind the page, sections and buttons rather than inside the top hero block.

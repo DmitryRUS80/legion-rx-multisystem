@@ -1,8 +1,8 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC55 · WORKSPACE WALLPAPER */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC56 · UPDATE RECOVERY / WORKSPACE WALLPAPER */
 'use strict';
-const LEGION_SW_BUILD='rc55-workspace-wallpaper';
+const LEGION_SW_BUILD='rc56-update-recovery-workspace-wallpaper';
 /* Unique import URL prevents an older HTTP-cached release manifest being reused during SW update. */
-importScripts('./offline-manifest.js?build=rc55-workspace-wallpaper');
+importScripts('./offline-manifest.js?build=rc56-update-recovery-workspace-wallpaper');
 
 const CFG=self.LEGION_OFFLINE_CONFIG;
 const CACHE=CFG.cacheName;
@@ -34,15 +34,15 @@ async function validate(url,response){
   if(url==='./'||url==='./index.html'){const s=await textOf(response);if(!s.includes('ui/skins/rxui/cobalt.css')||!s.includes('ui/classic-polish/classic-controls.css'))throw new Error(`${url}: stale index without removable skin files`);}
   if(url==='./ui/shell/views.js'){const s=await textOf(response);if(!s.includes('COBALT · BLUE CONTROL'))throw new Error(`${url}: stale views without COBALT`);}
   if(url==='./ui/shell/router.js'){const s=await textOf(response);if(!s.includes('homeViewClassic')||!s.includes('homeViewRxui'))throw new Error(`${url}: stale home theme isolation`);}
-  if(url==='./ui/shell/app.css'){const s=await textOf(response);if(!s.includes('RXUI UNIFIED SHELL SYSTEM · RC55'))throw new Error(`${url}: stale unified shell CSS`);}
+  if(url==='./ui/shell/app.css'){const s=await textOf(response);if(!s.includes('RXUI UNIFIED SHELL SYSTEM'))throw new Error(`${url}: stale unified shell CSS`);}
   if(url==='./ui/discipline-ui.js'){const s=await textOf(response);if(!s.includes('rxnTimeValue'))throw new Error(`${url}: stale time typography markup`);}
   if(url==='./ui/skins/rxui/cobalt.css'){const s=await textOf(response);if(!s.includes('data-skin="cobalt"'))throw new Error(`${url}: invalid COBALT skin`);}
-  if(url==='./ui/skins/rxui/base.css'){const s=await textOf(response);if(!s.includes('RC55 · NON-CLASSIC WORKSPACE WALLPAPER')||!s.includes('workspace-landscape.webp')||!s.includes('workspace-portrait.webp'))throw new Error(`${url}: stale workspace wallpaper layer`);}
+  if(url==='./ui/skins/rxui/base.css'){const s=await textOf(response);if(!s.includes('NON-CLASSIC WORKSPACE WALLPAPER')||!s.includes('workspace-landscape.webp')||!s.includes('workspace-portrait.webp'))throw new Error(`${url}: stale workspace wallpaper layer`);}
   if(url==='./ui/shell/discipline-pults.css'){const s=await textOf(response);if(!s.includes('Landscape phone / narrow browser viewport')||!s.includes('.rxnTimeValue')||!s.includes('.rxnPilotData .rxnGap'))throw new Error(`${url}: stale cockpit typography CSS`);}
   if(url==='./ui/classic-polish/classic-controls.css'){const s=await textOf(response);if(!s.includes('data-skin="classic"'))throw new Error(`${url}: invalid Classic polish CSS`);}
   if(url==='./ui/classic-polish/classic-icons.js'){const s=await textOf(response);if(!s.includes('ClassicControlPolish'))throw new Error(`${url}: invalid Classic polish icons`);}
-  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc55-workspace-wallpaper'))throw new Error(`${url}: stale release manifest`);}
-  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC55'))throw new Error(`${url}: stale VERSION`);}
+  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc56-update-recovery-workspace-wallpaper'))throw new Error(`${url}: stale release manifest`);}
+  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC56'))throw new Error(`${url}: stale VERSION`);}
   return response;
 }
 function freshRequestUrl(url){const u=new URL(url,self.registration.scope);u.searchParams.set('__legion_build',LEGION_SW_BUILD);return u.href;}
