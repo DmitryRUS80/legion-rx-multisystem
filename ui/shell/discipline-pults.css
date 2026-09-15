@@ -100,9 +100,10 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 .rxnCheck{font-family:"Segoe UI Symbol",Arial,sans-serif;font-weight:700}
 .rxnCheck.ok{color:var(--rxn-check-text)}
 .rxnBest,.rxnAvg,.rxnLast,.rxnLaps,.rxnGap{letter-spacing:-.02em}
-.rxnTimeValue{display:inline-flex;align-items:flex-start;justify-content:center;line-height:1;white-space:nowrap}
-.rxnMillis{display:inline-block;font-size:.75em;line-height:1;vertical-align:top;letter-spacing:-.01em}
+.rxnTimeValue{display:inline-flex;align-items:baseline;justify-content:center;line-height:1;white-space:nowrap}
+.rxnMillis{display:inline-block;font-size:.75em;line-height:1;vertical-align:baseline;letter-spacing:-.01em}
 .rxnDot{display:inline-block;line-height:1;margin-right:.01em}
+.rxnPilotHead .rxnGap,.rxnPilotHead .rxnCheck,.rxnPilotHead .rxnBest,.rxnPilotHead .rxnAvg,.rxnPilotHead .rxnLast,.rxnPilotHead .rxnLaps{font-size:1em;line-height:inherit}
 .rxnPhoneMetric{display:none}
 @keyframes rxnPassFlash{
   0%{background:color-mix(in srgb,var(--rxn-green) 36%,var(--rxn-row))}

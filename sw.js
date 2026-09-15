@@ -1,8 +1,8 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC51 · PHONE TABLE TYPOGRAPHY */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC52 · THOUSANDTHS BASELINE FIX */
 'use strict';
-const LEGION_SW_BUILD='rc51-phone-table-typography';
+const LEGION_SW_BUILD='rc52-thousandths-baseline-fix';
 /* Unique import URL prevents an older HTTP-cached release manifest being reused during SW update. */
-importScripts('./offline-manifest.js?build=rc51-phone-table-typography');
+importScripts('./offline-manifest.js?build=rc52-thousandths-baseline-fix');
 
 const CFG=self.LEGION_OFFLINE_CONFIG;
 const CACHE=CFG.cacheName;
@@ -37,7 +37,7 @@ async function validate(url,response){
   if(url==='./ui/shell/discipline-pults.css'){const s=await textOf(response);if(!s.includes('Landscape phone / narrow browser viewport')||!s.includes('.rxnTimeValue')||!s.includes('.rxnPilotData .rxnGap'))throw new Error(`${url}: stale cockpit typography CSS`);}
   if(url==='./ui/classic-polish/classic-controls.css'){const s=await textOf(response);if(!s.includes('data-skin="classic"'))throw new Error(`${url}: invalid Classic polish CSS`);}
   if(url==='./ui/classic-polish/classic-icons.js'){const s=await textOf(response);if(!s.includes('ClassicControlPolish'))throw new Error(`${url}: invalid Classic polish icons`);}
-  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc51-phone-table-typography'))throw new Error(`${url}: stale release manifest`);}
+  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc52-thousandths-baseline-fix'))throw new Error(`${url}: stale release manifest`);}
   if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC51'))throw new Error(`${url}: stale VERSION`);}
   return response;
 }

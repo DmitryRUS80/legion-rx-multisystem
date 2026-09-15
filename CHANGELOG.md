@@ -1,5 +1,12 @@
 # LEGION RX CHANGELOG
 
+## RC52 · THOUSANDTHS BASELINE FIX
+
+- Fixed shared cockpit time typography in all themes: when precision is `0.001`, the three digits after the dot now stay on the same lower baseline as the main digit; only the size is reduced.
+- Locked mobile cockpit table-header metric labels `GAP / BEST / AVG / LAST / LAPS` to the same size as `ПИЛОТ`, preventing them from appearing larger on phone landscape.
+- Kept the COBALT top stop-window square icon with a dark outline on the light button state for clearer contrast.
+- No sport logic, LapWiz, audio, storage or reporting changes.
+
 ## RC51 · PHONE TABLE TYPOGRAPHY
 
 - Kept the RC50 shared phone-landscape geometry and corrected only typography/contrast details.
