@@ -811,3 +811,34 @@ html:not([data-skin="classic"]) .settingsSaveBottom{margin-top:12px!important;wi
  .rxnSessionMode button{font-size:16px}
  .rxnSessionFields input,.rxnSessionFields select{font-size:20px}
 }
+
+
+/* ===== RC60 · RACE SIMULATOR ===== */
+.rxnSimulatorModal{width:min(720px,calc(100vw - 24px));padding:18px;border:1px solid var(--v4-line-strong);border-radius:5px;background:var(--v4-surface);color:var(--v4-text);box-shadow:0 20px 70px color-mix(in srgb,#000 48%,transparent)}
+.rxnSimulatorModal .modalHead{margin-bottom:14px}
+.rxnSimulatorModal .modalHead h2{font-size:28px}
+.rxnSimulatorModes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:14px}
+.rxnSimulatorModes button,.rxnSimulatorSpeed button{min-height:48px;padding:0 12px;border:1px solid var(--v4-line-strong);border-radius:4px;background:var(--v4-control);color:var(--v4-control-text);font:800 17px/1 var(--rxn-font);text-transform:uppercase;cursor:pointer}
+.rxnSimulatorModes button.active,.rxnSimulatorSpeed button.active{background:var(--v4-cobalt);border-color:color-mix(in srgb,var(--v4-cobalt) 72%,#fff);color:#fff}
+.rxnSimulatorModes button:disabled,.rxnSimulatorSpeed button:disabled{opacity:.45;cursor:default}
+.rxnSimulatorRow{min-height:62px;display:grid;grid-template-columns:150px 1fr;align-items:center;gap:12px;border-top:1px solid var(--v4-line);padding:10px 0}
+.rxnSimulatorRow>b,.rxnSimulatorLap>b{font:800 16px/1 var(--rxn-font);letter-spacing:.035em;color:var(--v4-text)}
+.rxnSimulatorSpeed{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.rxnSimulatorLap{display:grid;grid-template-columns:150px 1fr 1fr;gap:12px;align-items:end;border-top:1px solid var(--v4-line);padding:12px 0}
+.rxnSimulatorLap>b{align-self:center}
+.rxnSimulatorLap label{display:grid;gap:6px}
+.rxnSimulatorLap label span{font:800 13px/1 var(--rxn-font);color:var(--v4-muted);letter-spacing:.04em}
+.rxnSimulatorLap input{width:100%;min-height:50px;padding:8px 12px;border:1px solid var(--v4-line-strong);border-radius:4px;background:var(--v4-input);color:var(--v4-text);font:800 22px/1 var(--rxn-font);font-variant-numeric:tabular-nums}
+.rxnSimulatorState{min-height:48px;display:flex;align-items:center;border-top:1px solid var(--v4-line);padding:11px 0;font:800 15px/1.2 var(--rxn-font);color:var(--v4-muted);text-transform:uppercase}
+.rxnSimulatorActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.rxnSimulatorActions .btn{min-height:50px}
+@media(max-width:680px){
+ .rxnSimulatorModal{width:calc(100vw - 12px);padding:14px}
+ .rxnSimulatorModal .modalHead h2{font-size:24px}
+ .rxnSimulatorModes{grid-template-columns:1fr}
+ .rxnSimulatorModes button{min-height:44px;font-size:16px}
+ .rxnSimulatorRow{grid-template-columns:1fr;gap:8px}
+ .rxnSimulatorLap{grid-template-columns:1fr 1fr}
+ .rxnSimulatorLap>b{grid-column:1/-1}
+ .rxnSimulatorActions{grid-template-columns:1fr}
+}

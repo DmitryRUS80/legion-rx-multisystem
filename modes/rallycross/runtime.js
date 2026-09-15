@@ -1,15 +1,17 @@
 'use strict';
 function liveRanking(pilots,session){if(!session)return pilots;const startOrder=new Map((pilots||[]).map((p,i)=>[String(p.id),i]));return [...pilots].sort((a,b)=>{const A=session.live?.[a.id]||blankLive(),B=session.live?.[b.id]||blankLive();if(B.laps!==A.laps)return B.laps-A.laps;if(A.finished!==B.finished)return A.finished?-1:1;const ae=A.elapsedMs||Infinity,be=B.elapsedMs||Infinity;if(ae!==be)return ae-be;return(startOrder.get(String(a.id))??9999)-(startOrder.get(String(b.id))??9999);});}
 
-function sessionElapsed(s){if(!s)return 0;if(Number.isFinite(s.elapsedFinalMs))return s.elapsedFinalMs;const base=Number(s.elapsedBeforePause)||0;if(s.phase==='paused'||!s.startedAtPerf)return base;return base+(performance.now()-s.startedAtPerf);}
+function raceSimulationActive(){return typeof raceSimulator!=='undefined'&&raceSimulator.isEnabled()&&!lapwiz.connected;}
+function raceClockScale(s=state.session){if(s?.simulationMode)return Math.max(1,Number(s.simulationScale)||1);return raceSimulationActive()?raceSimulator.getScale():1;}
+function sessionElapsed(s){if(!s)return 0;if(Number.isFinite(s.elapsedFinalMs))return s.elapsedFinalMs;const base=Number(s.elapsedBeforePause)||0;if(s.phase==='paused'||!s.startedAtPerf)return base;return base+(performance.now()-s.startedAtPerf)*raceClockScale();}
 
 function startTicker(){if(state.sessionTick)clearInterval(state.sessionTick);state.sessionTick=setInterval(()=>{if(state.view!=='cockpit')return;updateDynamicCockpit();checkSessionLimit();},120);}
 
 function logEvent(text){state.race.runtime.eventLog.push({time:new Date().toISOString(),text});persistRace();}
 
-async function pauseSession(){const s=state.session;if(!s)return;if(s.phase==='paused')return resumeSession();if(!['running','finishing'].includes(s.phase))return;s.elapsedBeforePause=sessionElapsed(s);s.startedAtPerf=null;s.resumePhase=s.phase;s.phase='paused';Object.values(s.live).forEach(v=>{v.lastPassPerf=null;v.lastDeviceMs=null;});if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){toast(`LapWiz STOP: ${e.message}`);}}logEvent('Пауза');render();}
+async function pauseSession(){const s=state.session;if(!s)return;if(s.phase==='paused')return resumeSession();if(!['running','finishing'].includes(s.phase))return;s.elapsedBeforePause=sessionElapsed(s);s.startedAtPerf=null;s.resumePhase=s.phase;s.phase='paused';Object.values(s.live).forEach(v=>{v.lastPassPerf=null;v.lastDeviceMs=null;});if(raceSimulationActive())raceSimulator.pauseSession();if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){toast(`LapWiz STOP: ${e.message}`);}}logEvent('Пауза');render();}
 
-async function resumeSession(){const ev=currentEvent(state.race),s=state.session;if(!ev||s?.phase!=='paused')return;const rule=eventRule(state.race,ev);if(lapwiz.connected){try{const rr={...rule};if(rr.limitType==='time')rr.durationMin=Math.max(1/60,(timerTotalMs(ev,s)-sessionElapsed(s))/60000);await lapwiz.start(rr);}catch(e){toast(`LapWiz RESUME: ${e.message}`);return;}}s.phase=s.resumePhase||'running';s.startedAtPerf=performance.now();Object.values(s.live).forEach(v=>{v.lastPassPerf=null;v.lastDeviceMs=null;});logEvent('Продолжение после паузы');startTicker();render();}
+async function resumeSession(){const ev=currentEvent(state.race),s=state.session;if(!ev||s?.phase!=='paused')return;const rule=eventRule(state.race,ev);if(lapwiz.connected){try{const rr={...rule};if(rr.limitType==='time')rr.durationMin=Math.max(1/60,(timerTotalMs(ev,s)-sessionElapsed(s))/60000);await lapwiz.start(rr);}catch(e){toast(`LapWiz RESUME: ${e.message}`);return;}}s.phase=s.resumePhase||'running';s.startedAtPerf=performance.now();Object.values(s.live).forEach(v=>{v.lastPassPerf=null;v.lastDeviceMs=null;});if(raceSimulationActive())raceSimulator.resumeSession();logEvent('Продолжение после паузы');startTicker();render();}
 
 async function addMinute(){const ev=currentEvent(state.race),s=state.session;if(!ev||!s)return;const rule=eventRule(state.race,ev);if(rule.limitType!=='time')return toast('+1 мин доступна только для заезда по времени');s.extraMs=(s.extraMs||0)+60000;if(s.phase==='finishing'&&sessionElapsed(s)<timerTotalMs(ev,s)){s.phase='running';s.timeExpired=false;Object.values(s.live).forEach(v=>v.needsFinish=false);}if(s.phase==='paused'&&s.resumePhase==='finishing'&&sessionElapsed(s)<timerTotalMs(ev,s)){s.resumePhase='running';s.timeExpired=false;Object.values(s.live).forEach(v=>v.needsFinish=false);}logEvent('Добавлена 1 минута');if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();const remaining=Math.max(1000,timerTotalMs(ev,s)-sessionElapsed(s));await lapwiz.start({...rule,durationMin:remaining/60000});Object.values(s.live).forEach(v=>{v.lastDeviceMs=null;});}catch(e){toast(`LapWiz +1 мин: ${e.message}`);}}toast('К заезду добавлена 1 минута');updateDynamicCockpit();}
 
@@ -37,7 +39,7 @@ function applyCurrentSessionSettings(input={}){
 async function restartCurrentSession(){
   const race=state.race,ev=currentEvent(race),s=state.session;if(!race||!ev||!s)return{ok:false,error:'Нет активного заезда'};
   if(s.phase!=='finished')return{ok:false,error:'Сначала остановите или завершите текущую попытку'};
-  announcer.cancel();clearPrestartTimers();
+  announcer.cancel();clearPrestartTimers();if(typeof raceSimulator!=='undefined'){raceSimulator.stopSession();raceSimulator.clearWarmup();}
   if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){console.warn('restart stop',e);}}
   const raw=findRawEvent(ev.key);if(raw){raw.restartCount=Number(raw.restartCount||0)+1;raw.lastRestartAt=new Date().toISOString();raw.lastRestartReason=s.finishReason||'Рестарт судьёй';}
   logEvent(`РЕСТАРТ: ${ev.label||ev.key}${s.finishReason?` · ${s.finishReason}`:''}`);
@@ -47,7 +49,7 @@ async function restartCurrentSession(){
   return{ok:true};
 }
 
-async function finishSession(reason='Финиш судьёй'){const s=state.session;if(!s)return;const elapsed=sessionElapsed(s);if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){toast(`STOP: ${e.message}`);}}s.elapsedFinalMs=elapsed;s.phase='finished';s.finishedAtEpoch=Date.now();s.finishReason=reason;logEvent(reason);state.resultsOpen=true;state.widgetCollapsed.results=false;if(/Все пилоты/.test(reason))announceService('allPilotsFinished');else if(!/Аварийный|остановлен/i.test(reason))announceService('heatFinished');render();}
+async function finishSession(reason='Финиш судьёй'){const s=state.session;if(!s)return;const elapsed=sessionElapsed(s);if(typeof raceSimulator!=='undefined')raceSimulator.stopSession();if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){toast(`STOP: ${e.message}`);}}s.elapsedFinalMs=elapsed;s.phase='finished';s.finishedAtEpoch=Date.now();s.finishReason=reason;logEvent(reason);state.resultsOpen=true;state.widgetCollapsed.results=false;if(/Все пилоты/.test(reason))announceService('allPilotsFinished');else if(!/Аварийный|остановлен/i.test(reason))announceService('heatFinished');render();}
 
 function checkSessionLimit(){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||s.phase!=='running')return;const r=eventRule(state.race,ev),elapsed=sessionElapsed(s),limit=r.durationMin*60000+(s.extraMs||0),remaining=limit-elapsed;if(r.limitType==='time'&&remaining<=60000&&remaining>0&&!s.raceOneMinuteAnnounced){s.raceOneMinuteAnnounced=true;announceService('oneMinuteLeft');}if(r.limitType==='time'&&elapsed>=limit&&!s.timeExpired){s.timeExpired=true;s.phase='finishing';Object.values(s.live).forEach(v=>{if(!v.finished)v.needsFinish=true;});announceService('timeExpired').then(()=>announceService('finishCurrentLap'));toast('Время истекло — финиш на следующем проходе');}if(r.limitType==='laps'){const all=Object.values(s.live).every(v=>v.finished);if(all)finishSession('Все пилоты финишировали');}}
 
@@ -58,7 +60,7 @@ function schedulePrestartAt(perf,fn){const id=setTimeout(fn,Math.max(0,perf-perf
 function raceWarmupMinutes(ev=currentEvent(state.race)){const cfg=eventSessionSettings(state.race,ev);return Math.max(1,Math.min(5,Number(cfg?.warmupMinutes??state.race?.raceSettings?.warmupMinutes??state.settings.warmupMinutes??2)));}
 function raceCountdownSeconds(ev=currentEvent(state.race)){const cfg=eventSessionSettings(state.race,ev);return Math.max(1,Math.min(10,Number(cfg?.countdownSec??state.race?.raceSettings?.countdownSec??state.settings.countdownSec??10)));}
 
-function warmupRemainingMs(s){return s?.warmupEndsAtPerf?Math.max(0,s.warmupEndsAtPerf-performance.now()):0;}
+function warmupRemainingMs(s){return s?.warmupEndsAtPerf?Math.max(0,(s.warmupEndsAtPerf-performance.now())*raceClockScale()):0;}
 
 function warmupSeenCount(s){return Object.keys(s?.warmupDetected||{}).length;}
 
@@ -66,14 +68,14 @@ function minuteWords(n){return n===1?'одна минута':n===2?'две ми�
 
 function scheduleAlignedStart(s){
   const deadline=s.warmupEndsAtPerf;
-  const sec=raceCountdownSeconds(currentEvent(state.race));
+  const sec=raceCountdownSeconds(currentEvent(state.race)),scale=raceClockScale();
 
-  schedulePrestartAt(deadline-sec*1000-1450,()=>{
+  schedulePrestartAt(deadline-(sec*1000+1450)/scale,()=>{
     if(state.session!==s||!['warmup','countdown'].includes(s.phase))return;
     s.phase='countdown';s.countdownLeft=sec;announcer.play('goodRace',{wait:false});render();
   });
   for(let n=sec;n>=1;n--){
-    schedulePrestartAt(deadline-n*1000,()=>{
+    schedulePrestartAt(deadline-(n*1000)/scale,()=>{
       if(state.session===s&&['warmup','countdown'].includes(s.phase)){
         s.countdownLeft=n;announcer.play(`countdown_${n}`,{wait:false});updateDynamicCockpit();
       }
@@ -103,21 +105,23 @@ async function beginCountdown(){
     }catch(e){toast(`LapWiz Free Practice: ${e.message}`);return;}
   }
 
-  s.phase='warmup';s.warmupTotalSec=totalSec;s.warmupEndsAtPerf=performance.now()+totalSec*1000;
+  s.simulationMode=raceSimulationActive();s.simulationScale=s.simulationMode?raceSimulator.getScale():1;
+  s.phase='warmup';s.warmupTotalSec=totalSec;s.warmupEndsAtPerf=performance.now()+(totalSec*1000)/raceClockScale(s);
   s.warmupDetected={};s.lastPass='';s.countdownLeft=raceCountdownSeconds(ev);s.announcerLine='';
   Object.values(s.live).forEach(v=>Object.assign(v,blankLive()));
-  logEvent(`Прогрев перед стартом: ${minutes} мин · LapWiz ${lapwiz.connected?'Free Practice':'не подключён'}`);
+  logEvent(`Прогрев перед стартом: ${minutes} мин · ${lapwiz.connected?'LapWiz Free Practice':raceSimulationActive()?`SIM ×${raceSimulator.getScale()}`:'LapWiz не подключён'}`);
+  if(raceSimulationActive())raceSimulator.startWarmup({pilots:getEventPilots(state.race,ev),onPass:processSimulationWarmupPass});
 
   if(minutes>1)announceWarmupMinute(minutes,true);
   for(let n=minutes-1;n>=2;n--){
-    schedulePrestartAt(s.warmupEndsAtPerf-n*60000,()=>{
+    schedulePrestartAt(s.warmupEndsAtPerf-(n*60000)/raceClockScale(),()=>{
       if(state.session===s&&s.phase==='warmup')announceWarmupMinute(n,false);
     });
   }
-  schedulePrestartAt(s.warmupEndsAtPerf-60000,()=>{
+  schedulePrestartAt(s.warmupEndsAtPerf-60000/raceClockScale(),()=>{
     if(state.session===s&&s.phase==='warmup')announceStartCall(ev);
   });
-  schedulePrestartAt(s.warmupEndsAtPerf-30000,()=>{
+  schedulePrestartAt(s.warmupEndsAtPerf-30000/raceClockScale(),()=>{
     if(state.session===s&&s.phase==='warmup')announceWarmup30();
   });
   scheduleAlignedStart(s);
@@ -135,7 +139,8 @@ async function beginRaceNow(){
   s.elapsedBeforePause=0;s.elapsedFinalMs=null;s.extraMs=s.extraMs||0;s.timeExpired=false;s.lapFinishOpen=false;s.lapFinishLeaderId=null;s.lapFinishOpenedAtMs=null;s.warmupEndsAtPerf=null;
   Object.values(s.live).forEach(v=>Object.assign(v,blankLive()));
   s.lastPass='Старт дан · ожидаем первое пересечение засечки';
-  logEvent(`HORN / старт: ${ev.label} · LapWiz ${lapwiz.currentMode==='practice'?'Free Practice непрерывно':'Race'}`);
+  logEvent(`HORN / старт: ${ev.label} · ${raceSimulationActive()?`SIM ×${raceSimulator.getScale()}`:`LapWiz ${lapwiz.currentMode==='practice'?'Free Practice непрерывно':'Race'}`}`);
+  if(raceSimulationActive())startRaceSimulationForCurrentSession();
   startTicker();render();
 }
 
@@ -143,6 +148,7 @@ async function stopSession(){
   const s=state.session;if(!s)return;
   announcer.cancel();clearPrestartTimers();
   if(['warmup','countdown'].includes(s.phase)){
+    if(raceSimulationActive())raceSimulator.clearWarmup();
     if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){toast(`LapWiz STOP: ${e.message}`);}}
     s.phase='ready';s.warmupEndsAtPerf=null;s.warmupDetected={};s.lastPass='';
     s.countdownLeft=raceCountdownSeconds(currentEvent(state.race));
@@ -152,18 +158,36 @@ async function stopSession(){
   await finishSession('Аварийный STOP');
 }
 
-function blankLive(){return{laps:0,bestLapMs:Infinity,lastLapMs:null,lastPassPerf:null,lastDeviceMs:null,lastElapsedAtPass:null,elapsedMs:0,finished:false,finishedAt:null,needsFinish:false,status:'READY',startSeen:false,startSeenAtMs:null,lapTimes:[]};}
+function blankLive(){return{laps:0,bestLapMs:Infinity,lastLapMs:null,lastPassPerf:null,lastDeviceMs:null,lastElapsedAtPass:null,elapsedMs:0,finished:false,finishedAt:null,needsFinish:false,status:'READY',simStatus:'',startSeen:false,startSeenAtMs:null,lapTimes:[]};}
 
 function ensureSession(ev){
   if(!ev)return null;
-  if(state.session?.eventKey!==ev.key){state.session={eventKey:ev.key,phase:'ready',startedAtPerf:null,startedAtEpoch:null,finishedAtEpoch:null,elapsedBeforePause:0,elapsedFinalMs:null,extraMs:0,resumePhase:'running',countdownLeft:raceCountdownSeconds(ev),warmupTotalSec:raceWarmupMinutes(ev)*60,warmupEndsAtPerf:null,warmupDetected:{},lapFinishOpen:false,lapFinishLeaderId:null,lapFinishOpenedAtMs:null,live:Object.fromEntries(getEventPilots(state.race,ev).map(p=>[p.id,blankLive()])),unknown:{},lastPass:'',finishReason:'',restartCount:Number(findRawEvent(ev.key)?.restartCount||0)};}
-  state.session.warmupDetected=state.session.warmupDetected||{};if(state.session.lapFinishOpen===undefined)state.session.lapFinishOpen=false;Object.keys(state.session.live||{}).forEach(id=>{const l=state.session.live[id];if(l.startSeen===undefined)l.startSeen=false;if(l.needsFinish===undefined)l.needsFinish=false;if(!Array.isArray(l.lapTimes))l.lapTimes=[];});return state.session;
+  if(state.session?.eventKey!==ev.key){state.session={eventKey:ev.key,phase:'ready',startedAtPerf:null,startedAtEpoch:null,finishedAtEpoch:null,elapsedBeforePause:0,elapsedFinalMs:null,extraMs:0,resumePhase:'running',countdownLeft:raceCountdownSeconds(ev),warmupTotalSec:raceWarmupMinutes(ev)*60,warmupEndsAtPerf:null,warmupDetected:{},lapFinishOpen:false,lapFinishLeaderId:null,lapFinishOpenedAtMs:null,live:Object.fromEntries(getEventPilots(state.race,ev).map(p=>[p.id,blankLive()])),unknown:{},lastPass:'',finishReason:'',restartCount:Number(findRawEvent(ev.key)?.restartCount||0),simulationMode:false,simulationScale:1};}
+  state.session.warmupDetected=state.session.warmupDetected||{};if(state.session.lapFinishOpen===undefined)state.session.lapFinishOpen=false;Object.keys(state.session.live||{}).forEach(id=>{const l=state.session.live[id];if(l.startSeen===undefined)l.startSeen=false;if(l.needsFinish===undefined)l.needsFinish=false;if(l.simStatus===undefined)l.simStatus='';if(!Array.isArray(l.lapTimes))l.lapTimes=[];});return state.session;
+}
+
+function processSimulationWarmupPass(p){
+  const s=state.session;if(!s||!p||!['warmup','countdown'].includes(s.phase))return;
+  const hit=s.warmupDetected[p.id]||{count:0,lastDeviceMs:null};hit.count++;hit.lastAt=Date.now();s.warmupDetected[p.id]=hit;s.lastPass=`${p.name} · транспондер ✓ · проходов ${hit.count}`;if(state.settings.lapSound)announcer.playBleep();updateDynamicCockpit();
+}
+function applySimulationPilotStatus(p,status){
+  const s=state.session;if(!s||!p||!['DNS','DNF'].includes(status))return;
+  const l=s.live[p.id]||blankLive();l.simStatus=status;l.status=status;if(status==='DNF')l.elapsedMs=sessionElapsed(s);s.live[p.id]=l;s.lastPass=`${p.name} · ${status}`;updateDynamicCockpit();simulatorMaybeFinish();
+}
+function simulatorMaybeFinish(){
+  if(!raceSimulationActive()||!state.session||!['running','finishing'].includes(state.session.phase))return;
+  const ev=currentEvent(state.race),pilots=getEventPilots(state.race,ev),done=pilots.every(p=>{const l=state.session.live?.[p.id]||blankLive();return l.finished||l.simStatus==='DNS'||l.simStatus==='DNF';});
+  if(done)finishSession('Все пилоты завершили заезд');
+}
+function startRaceSimulationForCurrentSession(){
+  const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!raceSimulationActive())return;
+  raceSimulator.startSession({pilots:getEventPilots(state.race,ev),rule:eventRule(state.race,ev),getElapsed:()=>sessionElapsed(state.session),getLive:id=>state.session?.live?.[id],onPass:p=>{if(state.settings.lapSound)announcer.playBleep();processPilotPass(p,null,'SIMULATOR');},onStatus:(p,status)=>applySimulationPilotStatus(p,status),onTick:()=>updateDynamicCockpit(),onComplete:()=>simulatorMaybeFinish()});
 }
 
 function processPilotPass(p,deviceMs=null,source='MANUAL'){
   const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['running','finishing'].includes(s.phase))return;const l=s.live[p.id]||blankLive();if(l.finished)return;const oldHeatBest=Math.min(...Object.values(s.live||{}).map(v=>v?.bestLapMs).filter(Number.isFinite)),now=performance.now(),elapsedNow=sessionElapsed(s);if(!Array.isArray(l.lapTimes))l.lapTimes=[];
   if(!l.startSeen){l.startSeen=true;l.startSeenAtMs=elapsedNow;l.lastPassPerf=now;l.lastElapsedAtPass=elapsedNow;if(Number.isFinite(deviceMs))l.lastDeviceMs=deviceMs;l.elapsedMs=elapsedNow;l.status='STARTED';s.live[p.id]=l;s.lastPass=`${p.name} · СТАРТ ✓`;updateDynamicCockpit();return;}
-  let lapMs=null;if(l.laps===0)lapMs=elapsedNow;else if(Number.isFinite(deviceMs)&&source==='LAPWIZ'&&Number.isFinite(l.lastDeviceMs)&&deviceMs>l.lastDeviceMs)lapMs=deviceMs-l.lastDeviceMs;if(!Number.isFinite(lapMs)||lapMs<=0)lapMs=elapsedNow-(Number.isFinite(l.lastElapsedAtPass)?l.lastElapsedAtPass:0);if(Number.isFinite(deviceMs))l.lastDeviceMs=deviceMs;l.lastElapsedAtPass=elapsedNow;l.lastPassPerf=now;l.lastLapMs=lapMs;l.lapTimes.push(lapMs);l.laps=l.lapTimes.length;l.bestLapMs=Math.min(l.bestLapMs,lapMs);l.elapsedMs=elapsedNow;l.status='RACING';const rule=eventRule(state.race,ev),lapFinish=lapRaceFinishDecision(rule,s,l);if(lapFinish.finishPilot){l.finished=true;l.finishedAt=l.elapsedMs;l.needsFinish=false;}if(lapFinish.openFinishWindow&&!s.lapFinishOpen){s.lapFinishOpen=true;s.lapFinishLeaderId=p.id;s.lapFinishOpenedAtMs=l.elapsedMs;Object.entries(s.live).forEach(([id,v])=>{if(String(id)!==String(p.id)&&!v.finished)v.needsFinish=true;});}if(s.phase==='finishing'&&s.timeExpired){l.finished=true;l.finishedAt=l.elapsedMs;l.needsFinish=false;}const newHeatBest=Number.isFinite(lapMs)&&(!Number.isFinite(oldHeatBest)||lapMs<oldHeatBest);s.live[p.id]=l;s.lastPass=`${p.name} · ${l.laps} · ${fmtMs(lapMs)}`;if(l.finished)announcePilotFinish(p);else if(newHeatBest)announceBestLap(p);updateDynamicCockpit();if(Object.values(s.live).every(v=>v.finished)&&(rule.limitType==='laps'||s.phase==='finishing'))finishSession('Все пилоты завершили заезд');
+  let lapMs=null;if(l.laps===0)lapMs=elapsedNow;else if(Number.isFinite(deviceMs)&&source==='LAPWIZ'&&Number.isFinite(l.lastDeviceMs)&&deviceMs>l.lastDeviceMs)lapMs=deviceMs-l.lastDeviceMs;if(!Number.isFinite(lapMs)||lapMs<=0)lapMs=elapsedNow-(Number.isFinite(l.lastElapsedAtPass)?l.lastElapsedAtPass:0);if(Number.isFinite(deviceMs))l.lastDeviceMs=deviceMs;l.lastElapsedAtPass=elapsedNow;l.lastPassPerf=now;l.lastLapMs=lapMs;l.lapTimes.push(lapMs);l.laps=l.lapTimes.length;l.bestLapMs=Math.min(l.bestLapMs,lapMs);l.elapsedMs=elapsedNow;l.status='RACING';const rule=eventRule(state.race,ev),lapFinish=lapRaceFinishDecision(rule,s,l);if(lapFinish.finishPilot){l.finished=true;l.finishedAt=l.elapsedMs;l.needsFinish=false;}if(lapFinish.openFinishWindow&&!s.lapFinishOpen){s.lapFinishOpen=true;s.lapFinishLeaderId=p.id;s.lapFinishOpenedAtMs=l.elapsedMs;Object.entries(s.live).forEach(([id,v])=>{if(String(id)!==String(p.id)&&!v.finished)v.needsFinish=true;});}if(s.phase==='finishing'&&s.timeExpired){l.finished=true;l.finishedAt=l.elapsedMs;l.needsFinish=false;}const newHeatBest=Number.isFinite(lapMs)&&(!Number.isFinite(oldHeatBest)||lapMs<oldHeatBest);s.live[p.id]=l;s.lastPass=`${p.name} · ${l.laps} · ${fmtMs(lapMs)}`;if(l.finished)announcePilotFinish(p);else if(newHeatBest)announceBestLap(p);updateDynamicCockpit();if(Object.values(s.live).every(v=>v.finished)&&(rule.limitType==='laps'||s.phase==='finishing'))finishSession('Все пилоты завершили заезд');else simulatorMaybeFinish();
 }
 
 function snapshotRaceLapStats(ev){if(!ev||!state.session)return;ev.lapStats={};getEventPilots(state.race,ev).forEach(p=>{const l=state.session.live?.[p.id]||blankLive();ev.lapStats[p.id]={laps:l.laps||0,bestLapMs:Number.isFinite(l.bestLapMs)?l.bestLapMs:null,lastLapMs:l.lastLapMs,lapTimes:[...lapArray(l)],startSeen:Boolean(l.startSeen),elapsedMs:l.elapsedMs||0};});}
@@ -182,7 +206,7 @@ function cancelRawEvent(raw){
   return true;
 }
 
-async function stopActiveRaceForManagement(){announcer.cancel();clearPrestartTimers?.();if(state.session&&['warmup','countdown','running','finishing','paused'].includes(state.session.phase)){if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){console.warn(e);}}}state.session=null;}
+async function stopActiveRaceForManagement(){announcer.cancel();clearPrestartTimers?.();if(typeof raceSimulator!=='undefined'){raceSimulator.stopSession();raceSimulator.clearWarmup();}if(state.session&&['warmup','countdown','running','finishing','paused'].includes(state.session.phase)){if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){console.warn(e);}}}state.session=null;}
 
 async function skipRaceEvents(count=1){
   if(!state.race)return;await stopActiveRaceForManagement();let skipped=0,blockedRunoff=false;

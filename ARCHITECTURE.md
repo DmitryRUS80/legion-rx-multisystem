@@ -134,3 +134,11 @@ RC34 remains UI-only. `ui/shell/views.js` owns the open-card markup/data project
 
 RC36 is UI-only. `ui/discipline-ui.js` continues to read the existing live RallyCross state; it no longer appends a separate leader-photo block to the roster. `ui/shell/discipline-pults.css` remains the sole cockpit style source. The best-lap header is a presentation of the already-computed best lap and is refreshed through the existing cockpit ticker; no sport ranking, timing loop, BLE/storage path or duplicate responsive layer is introduced.
 
+
+## RC60 simulation boundary
+
+- `simulation/race-simulator.js` is an isolated synthetic timing-source engine used only for testing. It has no DOM, no BLE UUIDs and no RallyCross scoring/points/finals logic.
+- The simulator generates virtual pass events plus optional DNS/DNF statuses. `modes/rallycross/runtime.js` remains authoritative for elapsed race state, lap acceptance, finish rules, rankings and result lifecycle.
+- The simulator never writes official qualification/final points and never bypasses `RallyCrossModeAPI` result confirmation.
+- LapWiz and SIM are mutually exclusive input sources. UI blocks LapWiz connection while SIM is enabled.
+- Simulation speed is a runtime test clock multiplier only. It does not alter stored sport rules or the real LapWiz protocol.

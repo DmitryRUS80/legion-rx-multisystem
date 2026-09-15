@@ -113,7 +113,11 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 .rxnTimerPanel{min-height:0;background:var(--rxn-timer-bg);border-color:var(--rxn-timer-border);display:grid;grid-template-columns:minmax(0,1fr) minmax(100px,38%);align-items:center;padding:9px 10px;overflow:hidden}
 .rxnTimerCopy{min-width:0}
 .rxnTimerCopy>span{font-size:18px;color:var(--rxn-timer-label);text-transform:uppercase;line-height:1}
-.rxnTimerCopy>span.rxnTimerClass{color:var(--rxn-text);font-size:20px;font-weight:800;letter-spacing:.035em}
+.rxnTimerClassRow{display:flex;align-items:center;gap:10px;min-width:0}
+.rxnTimerClass{color:var(--rxn-text);font-size:20px;font-weight:800;letter-spacing:.035em;line-height:1;text-transform:uppercase}
+.rxnSimulatorButton{min-width:68px;height:30px;padding:0 11px;border:1px solid var(--rxn-control-border);border-radius:4px;background:var(--rxn-control-bg);color:var(--rxn-control-text);font:900 13px/1 var(--rxn-font);letter-spacing:.055em;text-transform:uppercase;cursor:pointer;box-shadow:none}
+.rxnSimulatorButton:hover{background:var(--rxn-control-hover);border-color:var(--rxn-control-border-hover)}
+.rxnSimulatorButton.active{background:var(--rxn-cobalt);border-color:color-mix(in srgb,var(--rxn-cobalt) 75%,#fff);color:#fff}
 .rxnTimerCopy strong{display:block;font-size:clamp(56px,7vw,92px);font-weight:600;line-height:.8;letter-spacing:-.055em;font-variant-numeric:tabular-nums;white-space:nowrap;margin:7px 0}
 .rxnTimerCopy small{display:block;color:var(--rxn-blue);font-size:16px;line-height:1;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rxnRing{width:min(100%,138px);aspect-ratio:1;border-radius:50%;justify-self:end;display:grid;place-items:center;background:conic-gradient(var(--rxn-cobalt) var(--ring-progress),var(--rxn-ring-track) 0);position:relative}
@@ -269,7 +273,9 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
   .rxnPilotData .rxnGap,.rxnPilotData .rxnCheck,.rxnPilotData .rxnBest,.rxnPilotData .rxnAvg,.rxnPilotData .rxnLast,.rxnPilotData .rxnLaps{font-size:20px;padding:0 1px}
   .rxnPilotHead .rxnGap,.rxnPilotHead .rxnCheck,.rxnPilotHead .rxnBest,.rxnPilotHead .rxnAvg,.rxnPilotHead .rxnLast,.rxnPilotHead .rxnLaps{font-size:inherit;padding:0 1px}
 
-  .rxnTimerCopy>span.rxnTimerClass{font-size:15px}
+  .rxnTimerClass{font-size:15px}
+  .rxnTimerClassRow{gap:6px}
+  .rxnSimulatorButton{min-width:54px;height:24px;padding:0 7px;font-size:10px}
   .rxnTimerCopy small{margin-top:8px}
   .rxnRing b{font-size:17px}
   .rxnRing small{font-size:9px;margin-top:5px}
@@ -334,6 +340,9 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
   .rxnMain{display:flex;flex-direction:column;gap:3px}
   .rxnSide{display:contents}
   .rxnTimerPanel{order:0;min-height:112px;max-height:124px;grid-template-columns:minmax(0,1fr) 104px;padding:6px 8px}
+  .rxnTimerClassRow{gap:6px}
+  .rxnTimerClass{font-size:15px}
+  .rxnSimulatorButton{min-width:52px;height:24px;padding:0 6px;font-size:10px}
   .rxnTimerCopy strong{font-size:54px}
   .rxnRing{width:92px}
   .rxnRing b{font-size:27px}

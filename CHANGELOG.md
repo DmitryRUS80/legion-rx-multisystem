@@ -1,3 +1,13 @@
+# RC60 — RACE SIMULATOR
+
+- Added isolated `simulation/race-simulator.js`; it only generates virtual timing/pass and DNS/DNF events and never calculates sporting positions, points, qualification or finals.
+- Added `SIM` control next to the class label in the cockpit timer. It is visible only while LapWiz is disconnected.
+- Three simulation scenarios: normal racing, position fight, and dense fight; selectable speed ×1 / ×2 / ×4 / ×8 and configurable lap-time range (default 8–15 s).
+- Simulation speed accelerates warm-up/countdown and race clock, while the normal RallyCross runtime remains authoritative for laps, BEST/AVG/LAST, rankings, finish rules, announcer and result confirmation.
+- Simulator stays enabled across successive heats until disabled, so an entire competition can be tested heat by heat.
+- Random DNS/DNF can be generated; result confirmation preselects the corresponding status.
+- LapWiz connection is blocked while SIM is enabled to prevent two timing sources from being mixed.
+
 # RC59 — SETTINGS UPDATE UX
 
 - Design Lab полностью удалён из пользовательского интерфейса: нет кнопки в верхней панели, блока в настройках и runtime-редактора.

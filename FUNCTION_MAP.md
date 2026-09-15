@@ -166,3 +166,14 @@ No new sport/timing loop is created. Free Practice delete remains `removeTrackDa
 - `ui/skins/rxui/light.css`: LIGHT material/state tokens.
 - `ui/skins/rxui/icons.js`: non-Classic RXUI SVG icon vocabulary.
 - `ui/shell/discipline-pults.css`: unchanged Classic cockpit geometry/source of layout truth.
+
+
+### RC46 Classic cockpit polish
+- `ui/classic-polish/classic-controls.css` — Classic cockpit control visual layer only.
+- `ui/classic-polish/classic-icons.js` — Classic cockpit SVG path replacement only; no actions or sport logic.
+
+## RC60 race simulation
+- Synthetic timing-source engine -> `simulation/race-simulator.js`
+- Simulation clock/input bridge -> `modes/rallycross/runtime.js::raceClockScale()` / `startRaceSimulationForCurrentSession()`
+- Simulator button + themed setup modal -> `ui/discipline-ui.js::rxnTimerPanel()` / `raceSimulatorModal()`
+- SIM action + LapWiz mutual-exclusion guard -> `ui/shell/actions.js`

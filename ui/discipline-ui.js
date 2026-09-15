@@ -181,7 +181,22 @@ function rxnRaceTitle(race,ev,s,pilots=[]){
 }
 function rxnTimerPanel(race,ev,pilots,s,done){
   const ring=rxnRingData(race,ev,pilots,s),progress=timerProgress(s,ev),classLabel=String(race?.className||'Rally-10').toUpperCase();
-  return `<section class="rxnTimerPanel"><div class="rxnTimerCopy"><span class="rxnTimerClass">${esc(classLabel)}</span><strong id="mainTimer">${done?'00:00':displayTimer(s,ev)}</strong><small id="timerSubline">${ev?timerSubline(s,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="rxnRing" style="--ring-progress:${progress*3.6}deg"><div><b id="rxnRingMain">${ring.main}</b><small id="rxnRingSub">${ring.sub}</small></div></div></section>`;
+  const simAvailable=!done&&!lapwiz.connected&&typeof raceSimulator!=='undefined',simOn=simAvailable&&raceSimulator.isEnabled(),simCfg=simOn?raceSimulator.getConfig():null;
+  const simButton=simAvailable?`<button type="button" class="rxnSimulatorButton ${simOn?'active':''}" data-action="race-simulator" title="Симуляция гонки">${simOn?`SIM ×${simCfg.speed}`:'SIM'}</button>`:'';
+  return `<section class="rxnTimerPanel"><div class="rxnTimerCopy"><div class="rxnTimerClassRow"><span class="rxnTimerClass">${esc(classLabel)}</span>${simButton}</div><strong id="mainTimer">${done?'00:00':displayTimer(s,ev)}</strong><small id="timerSubline">${ev?timerSubline(s,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="rxnRing" style="--ring-progress:${progress*3.6}deg"><div><b id="rxnRingMain">${ring.main}</b><small id="rxnRingSub">${ring.sub}</small></div></div></section>`;
+}
+function raceSimulatorModal(){
+  if(lapwiz.connected)return toast('Симуляция доступна только без подключённого LapWiz');
+  if(typeof raceSimulator==='undefined')return toast('Модуль симуляции не загружен');
+  const cfg=raceSimulator.getConfig(),running=Boolean(raceSimulator.running),enabled=raceSimulator.isEnabled();
+  const modeName={normal:'ОБЫЧНЫЙ',positions:'БОРЬБА ЗА ПОЗИЦИИ',dense:'ПЛОТНАЯ БОРЬБА'};
+  $('#modalHost').innerHTML=`<div class="modalBackdrop rxnSimulatorBackdrop"><section class="modal rxnSimulatorModal" role="dialog" aria-modal="true"><div class="modalHead"><div><div class="sectionLabel">ТЕСТОВЫЙ РЕЖИМ</div><h2>СИМУЛЯЦИЯ ГОНКИ</h2></div><button class="iconBtn" id="closeModal" type="button">×</button></div><div class="rxnSimulatorModes">${[['normal','1 · ОБЫЧНЫЙ'],['positions','2 · БОРЬБА ЗА ПОЗИЦИИ'],['dense','3 · ПЛОТНАЯ БОРЬБА']].map(([id,label])=>`<button type="button" data-sim-mode="${id}" class="${cfg.mode===id?'active':''}" ${running?'disabled':''}>${label}</button>`).join('')}</div><div class="rxnSimulatorRow"><b>СКОРОСТЬ</b><div class="rxnSimulatorSpeed">${[1,2,4,8].map(n=>`<button type="button" data-sim-speed="${n}" class="${cfg.speed===n?'active':''}" ${running?'disabled':''}>×${n}</button>`).join('')}</div></div><div class="rxnSimulatorLap"><b>ВРЕМЯ КРУГА · СЕК</b><label><span>ОТ</span><input id="simLapMin" type="number" min="3" max="120" step="0.5" value="${cfg.lapMinSec}" ${running?'disabled':''}></label><label><span>ДО</span><input id="simLapMax" type="number" min="3" max="120" step="0.5" value="${cfg.lapMaxSec}" ${running?'disabled':''}></label></div><div class="rxnSimulatorState">${running?`ИДЁТ СИМУЛЯЦИЯ · ${modeName[cfg.mode]} · ×${cfg.speed}`:enabled?`SIM ВКЛЮЧЁН · следующий заезд запустится автоматически`:'LapWiz не подключён · можно включить тестовый режим'}</div><div class="rxnSimulatorActions">${enabled?`<button class="btn secondary" id="simDisable" type="button" ${running?'disabled':''}>ВЫКЛЮЧИТЬ SIM</button>`:'<button class="btn secondary" id="simCancel" type="button">ОТМЕНА</button>'}<button class="btn primary" id="simApply" type="button" ${running?'disabled':''}>${enabled?'ПРИМЕНИТЬ':'ВКЛЮЧИТЬ'}</button></div></section></div>`;
+  let mode=cfg.mode,speed=cfg.speed;
+  const sync=()=>{$$('[data-sim-mode]').forEach(b=>b.classList.toggle('active',b.dataset.simMode===mode));$$('[data-sim-speed]').forEach(b=>b.classList.toggle('active',Number(b.dataset.simSpeed)===speed));};
+  $$('[data-sim-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.simMode;sync();});$$('[data-sim-speed]').forEach(b=>b.onclick=()=>{speed=Number(b.dataset.simSpeed);sync();});sync();
+  $('#closeModal').onclick=closeModal;const cancel=$('#simCancel');if(cancel)cancel.onclick=closeModal;
+  const disable=$('#simDisable');if(disable)disable.onclick=()=>{raceSimulator.disable();closeModal();toast('Симуляция выключена');render();};
+  $('#simApply').onclick=()=>{const next={mode,speed,lapMinSec:Number($('#simLapMin').value),lapMaxSec:Number($('#simLapMax').value)};raceSimulator.enable(next);closeModal();toast(`SIM включён · ×${raceSimulator.getScale()}`);render();};
 }
 function rxnControlButton(cls,attrs,icon,title,sub=''){
   return `<button class="rxnControl ${cls}" ${attrs}>${raceSvg(icon)}<span><b>${title}</b>${sub?`<small>${sub}</small>`:''}</span></button>`;
@@ -251,7 +266,7 @@ function updateDynamicCockpitUI(){
 
 function rxnRuleView(){return RallyCrossModeAPI.ruleView();}
 function rxnStatusLabel(status){return ({FIN:'FIN · ФИНИШ',DNF:'DNF · НЕ ФИНИШИРОВАЛ',DNS:'DNS · НЕ СТАРТОВАЛ',DSQ:'DSQ · ДИСКВАЛИФИКАЦИЯ'})[status]||status;}
-function rxnSuggestedStatus(p,s){const l=s?.live?.[p.id]||blankLive();return(!l.startSeen&&(l.laps||0)===0)?'DNS':'FIN';}
+function rxnSuggestedStatus(p,s){const l=s?.live?.[p.id]||blankLive();if(l.simStatus==='DNF'||l.simStatus==='DNS')return l.simStatus;return(!l.startSeen&&(l.laps||0)===0)?'DNS':'FIN';}
 function rxnResultConfirmModal(){
   const race=state.race,ev=currentEvent(race),s=state.session;
   if(!race||!ev||s?.phase!=='finished')return toast('Сначала завершите текущий заезд');

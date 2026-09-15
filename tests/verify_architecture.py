@@ -4,7 +4,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def text(paths):
     return '\n'.join(p.read_text(encoding='utf-8') for p in paths)
-core_paths=[p for d in ['platform','modes/rallycross','modes/free-practice'] for p in (ROOT/d).rglob('*.js')]
+core_paths=[p for d in ['platform','modes/rallycross','modes/free-practice','simulation'] for p in (ROOT/d).rglob('*.js')]
 ui_paths=list((ROOT/'ui').rglob('*.js'))
 core=text(core_paths); ui=text(ui_paths); app=(ROOT/'app.js').read_text(encoding='utf-8')
 checks={

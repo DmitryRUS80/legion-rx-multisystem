@@ -78,3 +78,28 @@ Automated checks include:
 - Existing RC44 skin isolation, architecture, CLEAN foundation, iOS START, RallyCross run-off, start-order/announcer and skip/state suites.
 
 A self-contained visual harness was also rendered at 1510×812 and 430×900 for STEEL and LIGHT to inspect proportional behavior without changing app geometry. Final installed-PWA visual acceptance remains device-side.
+
+
+## RC46 · CLASSIC CONTROL POLISH
+- `verify_rc46_classic_control_polish.py`: PASS
+- Architecture: PASS
+- CLEAN foundation (updated expected isolated style layer): PASS
+- iOS START safety / release namespace: PASS
+- RallyCross run-off behavior: 28/28 PASS
+- Start-order / announcer: 12/12 PASS
+- Skip/state safety: 11/11 PASS
+- Visual smoke rendered at 1510×812 and 430×900.
+- `ui/shell/discipline-pults.css` hash unchanged from RC45: `5dd02f18d959daa2da7275a965f7cfc1b13c0a718ff050324f872256ee81ee9a`.
+- `ui/discipline-ui.js` hash unchanged from RC45: `052ce3f901327b7ce6fa9365b1f091612577431092a9470b41fc854c9f5a00e1`.
+
+## RC60 · RACE SIMULATOR
+- Architecture boundary: PASS (simulation module has no DOM/BLE/sport constants)
+- Protected foundation: PASS with authorized `modes/rallycross/runtime.js` integration update; `app.js`, LapWiz, scoring, finals, storage and reporting remain unchanged
+- Simulator engine behavior: PASS
+- RC60 release cohesion/offline package: PASS
+- RallyCross run-off regression: 28/28 PASS
+- Start-order/announcer regression: 12/12 PASS
+- Skip/state regression: 11/11 PASS
+- RC57 session-control behavior: PASS
+- RC57 live pilot edit: PASS
+- RC58 pilot profile link: PASS

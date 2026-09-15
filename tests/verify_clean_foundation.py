@@ -17,7 +17,7 @@ expected={
 'modes/rallycross/finals.js':'9a57c3267921201c48b73166d07e304068d59238c9d1c3a0ffe2ab882913e8e4',
 'modes/rallycross/index.js':'63fef654a852591f5131fb1d10da4fbee15b1be731266b576c4c6a5049e5b901',
 'modes/rallycross/audio-actions.js':'56bc3301350365b87e78cbdbc76935fe94c3e89172fb424df31759de725cddef',
-'modes/rallycross/runtime.js':'a25b5e3d516f52fc19985927385a9916e259f00824074110cb1f8c771fb826db',
+'modes/rallycross/runtime.js':'e19124f9cc5709c62759042ea992d609a517102a8f84c9c943aa0260c6b03573',
 'modes/rallycross/self-test.js':'3f2be9c50b3a4b158505abd64f95ffd7d10856323a7fd7fb8e31f579cad1113a',
 'modes/free-practice/index.js':'aa43d3a87f0e9286635dbb5bbcfc7647dac310ea30d24af80bb9fe9cdd20845a',
 'modes/rally-sprint/index.js':'1f72a94e0f765212b98bd7af6b24589c1108001bcfaa9fcfc3db7fd97b025a71',
@@ -32,7 +32,7 @@ for rel,want in expected.items():
     p=ROOT/rel
     got=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else 'MISSING'
     if got!=want: changed.append((rel,got,want))
-checks['protected_foundation_hashes_match_rc57_authorized']=not changed
+checks['protected_foundation_hashes_match_rc60_authorized']=not changed
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])

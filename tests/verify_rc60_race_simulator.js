@@ -1,0 +1,18 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+if(typeof CustomEvent==='undefined')global.CustomEvent=class CustomEvent extends Event{constructor(type,opts={}){super(type);this.detail=opts.detail;}};
+const code=fs.readFileSync(require('path').join(__dirname,'../simulation/race-simulator.js'),'utf8')+'\nglobal.__raceSimulator=raceSimulator;';
+vm.runInThisContext(code,{filename:'race-simulator.js'});
+const sim=global.__raceSimulator;
+assert(sim && typeof sim.enable==='function' && typeof sim.startSession==='function');
+let cfg=sim.enable({mode:'dense',speed:8,lapMinSec:8,lapMaxSec:15});
+assert.equal(cfg.mode,'dense');assert.equal(cfg.speed,8);assert.equal(cfg.lapMinSec,8);assert.equal(cfg.lapMaxSec,15);
+assert.equal(sim.getScale(),8);
+const pilots=Array.from({length:8},(_,i)=>({id:String(i+1),name:'P'+(i+1),transponder:String(100+i)}));
+const live=Object.fromEntries(pilots.map(p=>[p.id,{finished:false}]));
+const bases=pilots.map((p,i)=>sim.paceForIndex(i,pilots.length));
+const denseTop=bases.slice(0,7);assert(Math.max(...denseTop)-Math.min(...denseTop)<3.5,'dense front pack is too spread');
+Math.random=()=>0.5;
+let passCount=0,done=false,start=performance.now();
+sim.configure({mode:'normal',speed:8,lapMinSec:3,lapMaxSec:3.2});
+sim.startSession({pilots,getElapsed:()=>Math.max(0,(performance.now()-start)*8),getLive:id=>live[id],onPass:p=>{passCount++;if(passCount>=6)pilots.forEach(x=>live[x.id].finished=true);},onStatus:()=>{},onComplete:()=>{done=true;}});
+setTimeout(()=>{sim.stopSession();assert(passCount>=6,'simulator did not generate passes');console.log('rc60 race simulator: PASS');},1800);
