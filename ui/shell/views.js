@@ -207,10 +207,10 @@ function pilotLapStatsModal(pilotId,context='race',refId=''){
   const {p,summary,trackMode}=data,fullName=esc(String(p.name||'ПИЛОТ').toUpperCase()),idText=esc(String(p.transponder||'—'));
   const portrait=`<div class="rxnPilotStatsPortrait">${pilotAvatarMarkup(p,'rxnPilotStatsAvatar')}${pilotTeamBadge(p)}${pilotFlagBadge(p)}</div>`;
   const hero=`<div class="rxnPilotStatsHero">${portrait}<div class="rxnPilotStatsMetrics"><span><small>POS</small><b data-stats-pos>${data.position}</b></span><span><small>BEST</small><b data-stats-best>${pilotStatsFmtLap(summary.best)}</b></span><span><small>AVG</small><b data-stats-avg>${pilotStatsFmtLap(summary.avg)}</b></span></div><button class="rxnPilotStatsClose" type="button" data-pilot-stats-close="1" aria-label="Закрыть">×</button></div>`;
-  const identity=`<div class="rxnPilotStatsIdentity"><span class="rxnPilotStatsId" style="--pilot-color:${rxnPilotColor(p)}">${idText}</span><strong>${fullName}</strong></div>`;
+  const profileEdit=!trackMode&&context==='race'?`<button class="rxnPilotStatsProfileEdit" type="button" data-race-pilot-profile="${esc(p.id)}" aria-label="Открыть профиль пилота" title="Профиль пилота">${pilotCardIcon('edit','rxnPilotStatsEditIcon')}</button>`:'';
+  const identity=`<div class="rxnPilotStatsIdentity"><span class="rxnPilotStatsId" style="--pilot-color:${rxnPilotColor(p)}">${idText}</span><strong>${fullName}</strong>${profileEdit}</div>`;
   const raceLine=`<div class="rxnPilotStatsRaceLine"><span>${esc(String(data.title).toUpperCase())}</span><b><small>LAPS</small><i data-stats-laps>${data.targetLaps?`${data.laps}/${data.targetLaps}`:data.laps}</i></b><b><small>TIME</small><i data-stats-time>${fmtClock(data.elapsedMs)}</i></b></div>`;
-  const editAction=!trackMode&&context==='race'?`<button class="rxnPilotStatsEdit" type="button" data-race-pilot-edit="${esc(p.id)}">РЕДАКТИРОВАТЬ ПИЛОТА</button>`:'';
-  const body=`<section class="rxnPilotStatsSheet ${trackMode?'track':''}" data-pilot-stats-root="1" data-lap-sig="${data.times.map(v=>Math.round(Number(v)||0)).join(',')}">${hero}${identity}${raceLine}${editAction}<div class="rxnPilotStatsLapHead"><span>LAP</span><span>TIME</span><span></span>${trackMode?'<span></span>':''}</div><div class="rxnPilotStatsLaps">${pilotStatsLapRows(data)||'<div class="rxnPilotStatsEmpty">ПОКА НЕТ ЗАВЕРШЁННЫХ КРУГОВ</div>'}</div><div class="rxnPilotStatsCorrectionsHost">${pilotStatsCorrectionsMarkup(data)}</div></section>`;
+  const body=`<section class="rxnPilotStatsSheet ${trackMode?'track':''}" data-pilot-stats-root="1" data-lap-sig="${data.times.map(v=>Math.round(Number(v)||0)).join(',')}">${hero}${identity}${raceLine}<div class="rxnPilotStatsLapHead"><span>LAP</span><span>TIME</span><span></span>${trackMode?'<span></span>':''}</div><div class="rxnPilotStatsLaps">${pilotStatsLapRows(data)||'<div class="rxnPilotStatsEmpty">ПОКА НЕТ ЗАВЕРШЁННЫХ КРУГОВ</div>'}</div><div class="rxnPilotStatsCorrectionsHost">${pilotStatsCorrectionsMarkup(data)}</div></section>`;
   const roster=document.querySelector('.rxnCockpit .rxnRoster'),host=$('#modalHost');if(!host)return;
   pilotStatsLiveView={pilotId:String(pilotId),context,refId:String(refId||'')};
   if(roster&&(context==='race'||context==='track')){
@@ -218,7 +218,7 @@ function pilotLapStatsModal(pilotId,context='race',refId=''){
   }else host.innerHTML=`<div class="modalBackdrop rxnPilotStatsGlobal" data-pilot-stats-close="1"><div class="rxnPilotStatsGlobalFrame" data-pilot-stats-frame="1">${body}</div></div>`;
   $$('[data-pilot-stats-close]').forEach(b=>b.onclick=e=>{e.stopPropagation();closePilotLapStatsModal();});
   const frame=document.querySelector('[data-pilot-stats-frame]');if(frame)frame.onclick=e=>e.stopPropagation();
-  $$('[data-race-pilot-edit]').forEach(b=>b.onclick=e=>{e.stopPropagation();const id=b.dataset.racePilotEdit;closePilotLapStatsModal();racePilotEditModal(id);});
+  $$('[data-race-pilot-profile]').forEach(b=>b.onclick=e=>{e.stopPropagation();const pilot=getPilot(state.race,b.dataset.racePilotProfile),profile=profileForPilot(pilot);if(!profile)return toast('Профиль пилота не найден');const origin=b.getBoundingClientRect();closePilotLapStatsModal();pilotModal(profile,false,origin);});
   pilotStatsBindLapDelete();refreshPilotLapStatsModal();
 }
 
@@ -234,13 +234,6 @@ function raceSessionSettingsModal(){
   $$('[data-session-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.sessionMode;syncMode();});syncMode();
   $('#closeModal').onclick=closeModal;$('#sessionSettingsCancel').onclick=closeModal;
   $('#sessionSettingsApply').onclick=()=>{const res=applyCurrentSessionSettings({limitType:mode,durationMin:$('#sessionDurationMin').value,targetLaps:$('#sessionTargetLaps').value,warmupMinutes:$('#sessionWarmup').value,countdownSec:$('#sessionCountdown').value,minLapSec:$('#sessionMinLap').value});if(!res.ok)return toast(res.error);closeModal();toast('Настройки сессии применены');render();};
-}
-
-function racePilotEditModal(pilotId){
-  const race=state.race,pilot=race?.pilots?.find(p=>String(p.id)===String(pilotId));if(!pilot)return toast('Пилот не найден');
-  $('#modalHost').innerHTML=`<div class="modalBackdrop rxnSessionBackdrop"><section class="modal rxnRacePilotEditModal" role="dialog" aria-modal="true"><div class="modalHead"><div><div class="sectionLabel">ПИЛОТ В СОРЕВНОВАНИИ</div><h2>РЕДАКТИРОВАТЬ</h2></div><button class="iconBtn" id="closeModal" type="button">×</button></div><div class="rxnSessionFields rxnPilotEditFields"><label class="wide"><span>ФАМИЛИЯ ИМЯ</span><input id="racePilotName" value="${esc(pilot.name||'')}"></label><label><span>ТРАНСПОНДЕР</span><input id="racePilotTransponder" inputmode="numeric" value="${esc(pilot.transponder||'')}"></label><label><span>СТРАНА</span><select id="racePilotCountry">${countryOptions(pilot.country||'')}</select></label><label class="wide"><span>КОМАНДА / КЛУБ</span><input id="racePilotClub" value="${esc(pilot.club||'')}"></label></div><div class="rxnSessionActions"><button class="btn secondary" id="racePilotEditCancel" type="button">ОТМЕНА</button><button class="btn primary" id="racePilotEditSave" type="button">СОХРАНИТЬ</button></div></section></div>`;
-  $('#closeModal').onclick=closeModal;$('#racePilotEditCancel').onclick=closeModal;
-  $('#racePilotEditSave').onclick=()=>{const res=updateActiveRacePilotIdentity(pilotId,{name:$('#racePilotName').value,transponder:$('#racePilotTransponder').value,country:$('#racePilotCountry').value,club:$('#racePilotClub').value});if(!res.ok)return toast(res.error);closeModal();toast('Пилот обновлён');render();};
 }
 
 function competitionFinishConfirmModal(){

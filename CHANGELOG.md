@@ -1,3 +1,11 @@
+# RC58 — PILOT PROFILE LINK
+
+- Removed the large `РЕДАКТИРОВАТЬ ПИЛОТА` button from the race pilot statistics sheet and restored the compact statistics layout.
+- Added a small pencil icon at the right edge of the pilot identity row.
+- The pencil now opens the existing authoritative pilot profile editor from the Pilots module; the temporary RC57 race-only editor was removed.
+- Saving the normal pilot profile while that pilot is in the active competition immediately synchronizes the active race identity and selected model transponder without re-keying lap/result data.
+- RC57 session settings / restart controls remain unchanged.
+
 # LEGION RX CHANGELOG
 
 ## RC57 · SESSION CONTROL
