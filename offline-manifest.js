@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc58-pilot-profile-link';
-  const displayVersion='4.2.0 CLEAN FULL APP RC58 · PILOT PROFILE LINK';
-  const cacheName='legion-rx-4-2-0-clean-full-rc58-pilot-profile-link';
+  const appVersion='4.2.0-clean-full-rc59-settings-update-ux';
+  const displayVersion='4.2.0 CLEAN FULL APP RC59 · SETTINGS UPDATE UX';
+  const cacheName='legion-rx-4-2-0-clean-full-rc59-settings-update-ux';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

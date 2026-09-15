@@ -1,5 +1,5 @@
 'use strict';
-function uiNav(view){state.view=view;document.body.classList.toggle('cockpitMode',['cockpit','trackDayCockpit'].includes(view));$$('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));render();}
+function uiNav(view){if(view==='settings'&&state.view!=='settings'){try{sessionStorage.removeItem('legionrx_settings_section');}catch{}}state.view=view;document.body.classList.toggle('cockpitMode',['cockpit','trackDayCockpit'].includes(view));$$('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));render();}
 
 function clearIntervalsIfNotCockpit(){
   if(state.view!=='cockpit'){

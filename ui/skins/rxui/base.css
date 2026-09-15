@@ -26,7 +26,6 @@ html:not([data-skin="classic"]) .appbar{
   background:var(--rxui-bar)!important;border-color:var(--rxui-line-strong)!important;box-shadow:none!important;
 }
 html:not([data-skin="classic"]) .brandMark,
-html:not([data-skin="classic"]) .designQuickBtn,
 html:not([data-skin="classic"]) .iconBtn,
 html:not([data-skin="classic"]) .mainNav button,
 html:not([data-skin="classic"]) .settingsNavItem,
@@ -39,9 +38,7 @@ html:not([data-skin="classic"]) .mainNav button{background:transparent!important
 html:not([data-skin="classic"]) .mainNav button:hover{background:var(--rxui-control-hover)!important;color:var(--rxui-text)!important;border-color:var(--rxui-line)!important}
 html:not([data-skin="classic"]) .mainNav button.active{background:var(--rxui-active)!important;color:var(--rxui-active-text)!important;border-color:var(--rxui-active-border)!important;box-shadow:none!important}
 html:not([data-skin="classic"]) .mainNav button.active svg{color:currentColor!important}
-html:not([data-skin="classic"]) .designQuickBtn,
 html:not([data-skin="classic"]) .iconBtn{background:var(--rxui-control)!important;color:var(--rxui-text)!important;border-color:var(--rxui-line)!important}
-html:not([data-skin="classic"]) .designQuickBtn:hover,
 html:not([data-skin="classic"]) .iconBtn:hover{background:var(--rxui-control-hover)!important;border-color:var(--rxui-line-strong)!important}
 
 /* Common surfaces: paint only, geometry comes from Classic. */

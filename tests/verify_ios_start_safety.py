@@ -16,7 +16,7 @@ checks['trackday_start_not_blocked_by_audio']=bool(track and 'ensureRaceAudioFro
 checks['safari_two_tap_after_hydration']="Нажмите «Включить звук» ещё раз" in off and 'return false;' in off
 checks['locked_audio_is_nonblocking']=audio.count('if(!this.unlocked)return false;')>=2 and "Сначала включите звук одним касанием" not in audio
 cfg=(ROOT/'offline-manifest.js').read_text(encoding='utf-8')
-checks['new_cache_namespace']='rc58-pilot-profile-link' in cfg and 'rc57-session-control' not in cfg
+checks['new_cache_namespace']='rc59-settings-update-ux' in cfg and 'rc58-pilot-profile-link' not in cfg
 
 checks['ios_finish_uses_in_app_confirm']="action==='complete-competition'" in actions and 'competitionFinishConfirmModal()' in actions
 views=(ROOT/'ui/shell/views.js').read_text(encoding='utf-8')

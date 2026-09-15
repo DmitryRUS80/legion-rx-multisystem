@@ -20,7 +20,7 @@ function updateAppUpdateUi(){
   if(typeof appUpdater==='undefined')return;
   const s=appUpdater.snapshot();
   document.querySelectorAll('[data-update-state]').forEach(el=>{
-    el.dataset.status=s.status;const title=el.querySelector('[data-update-title]'),meta=el.querySelector('[data-update-meta]');
+    el.dataset.status=s.status;el.classList.toggle('ready',s.ready||s.status==='current');el.classList.toggle('preparing',['checking','downloading','activating'].includes(s.status));el.classList.toggle('error',s.status==='error');const title=el.querySelector('[data-update-title]'),meta=el.querySelector('[data-update-meta]');
     if(title)title.textContent=appUpdater.label();
     if(meta){
       if(s.ready)meta.textContent=`Готово: ${s.availableDisplayVersion}. Текущая: ${s.currentDisplayVersion}.`;
@@ -28,6 +28,22 @@ function updateAppUpdateUi(){
       else if(s.status==='offline')meta.textContent='Нет сети. Установленная версия продолжает работать полностью локально.';
       else if(s.status==='error')meta.textContent=s.lastError||'Текущая версия сохранена.';
       else meta.textContent=`Установлено: ${s.currentDisplayVersion}.`;
+    }
+  });
+
+  document.querySelectorAll('[data-update-progress]').forEach(el=>{
+    const visible=['checking','downloading','ready','activating','current'].includes(s.status);
+    const pct=s.ready||s.status==='current'||s.status==='activating'?100:Math.max(0,Math.min(100,Number(s.progressPct)||0));
+    el.classList.toggle('visible',visible);
+    const bar=el.querySelector('[data-update-progress-bar]'),label=el.querySelector('[data-update-progress-label]'),percent=el.querySelector('[data-update-progress-percent]');
+    if(bar)bar.style.width=`${pct}%`;if(percent)percent.textContent=`${pct}%`;
+    if(label){
+      if(s.status==='ready')label.textContent='СКАЧИВАНИЕ ЗАВЕРШЕНО';
+      else if(s.status==='current')label.textContent='УСТАНОВЛЕНО';
+      else if(s.status==='activating')label.textContent='УСТАНОВКА…';
+      else if(s.status==='checking')label.textContent='ПРОВЕРКА ОБНОВЛЕНИЯ…';
+      else if(s.status==='downloading')label.textContent=`СКАЧИВАНИЕ ${s.progressCompleted||0}/${s.progressTotal||'—'}`;
+      else label.textContent='ГОТОВО';
     }
   });
   document.querySelectorAll('[data-action="update-check"]').forEach(btn=>{btn.disabled=!s.online||['checking','downloading','activating'].includes(s.status);btn.textContent=['checking','downloading'].includes(s.status)?'ПРОВЕРЯЮ / СКАЧИВАЮ…':'ПРОВЕРИТЬ ОБНОВЛЕНИЕ';});

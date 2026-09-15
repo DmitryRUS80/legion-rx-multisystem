@@ -3,10 +3,10 @@ class LegionUpdateManager extends EventTarget{
   constructor(){
     super();
     this.registration=null;this.waiting=null;this.availableVersion='';this.availableDisplayVersion='';
-    this.status='idle';this.lastError='';this.lastCheckedAt='';this._reloading=false;
-    window.addEventListener('online',()=>this.emit());window.addEventListener('offline',()=>this.emit());
+    this.status='idle';this.lastError='';this.lastCheckedAt='';this.progressCompleted=0;this.progressTotal=0;this.progressPct=0;this._reloading=false;
+    window.addEventListener('online',()=>this.emit());window.addEventListener('offline',()=>this.emit());navigator.serviceWorker?.addEventListener?.('message',e=>{const d=e.data;if(d?.type!=='LEGION_UPDATE_PROGRESS')return;this.progressCompleted=Number(d.completed)||0;this.progressTotal=Number(d.total)||0;this.progressPct=this.progressTotal?Math.round((this.progressCompleted/this.progressTotal)*100):0;if(this.status!=='activating'&&this.status!=='ready')this.status='downloading';this.emit();});
   }
-  snapshot(){return {status:this.status,currentVersion:LEGION_APP_VERSION,currentDisplayVersion:LEGION_APP_DISPLAY_VERSION,availableVersion:this.availableVersion,availableDisplayVersion:this.availableDisplayVersion,online:navigator.onLine,lastError:this.lastError,lastCheckedAt:this.lastCheckedAt,ready:Boolean(this.waiting)};}
+  snapshot(){return {status:this.status,currentVersion:LEGION_APP_VERSION,currentDisplayVersion:LEGION_APP_DISPLAY_VERSION,availableVersion:this.availableVersion,availableDisplayVersion:this.availableDisplayVersion,online:navigator.onLine,lastError:this.lastError,lastCheckedAt:this.lastCheckedAt,ready:Boolean(this.waiting),progressCompleted:this.progressCompleted,progressTotal:this.progressTotal,progressPct:this.progressPct};}
   emit(){this.dispatchEvent(new CustomEvent('status',{detail:this.snapshot()}));}
   async init(registration){
     this.registration=registration||null;
@@ -14,13 +14,16 @@ class LegionUpdateManager extends EventTarget{
     registration.addEventListener('updatefound',()=>this.watchInstalling(registration.installing));
     if(registration.installing)this.watchInstalling(registration.installing);
     if(registration.waiting)await this.captureWaiting(registration.waiting);
-    else{this.status='idle';this.emit();}
+    else{
+      let installedNow=false;try{installedNow=sessionStorage.getItem('legionrx_post_update')==='1';if(installedNow)sessionStorage.removeItem('legionrx_post_update');}catch{}
+      this.status=installedNow?'current':'idle';if(installedNow){this.progressPct=100;this.progressCompleted=this.progressTotal||1;this.progressTotal=this.progressTotal||1;}this.emit();
+    }
     navigator.serviceWorker.addEventListener('controllerchange',()=>{if(this._reloading)return;this._reloading=true;location.reload();});
     return true;
   }
   watchInstalling(worker){
     if(!worker)return;
-    this.status='downloading';this.lastError='';this.emit();
+    this.status='downloading';this.lastError='';if(!this.progressTotal){this.progressCompleted=0;this.progressPct=0;}this.emit();
     const onState=async()=>{
       if(worker.state==='installed'){
         if(navigator.serviceWorker.controller)await this.captureWaiting(this.registration?.waiting||worker);
@@ -46,13 +49,13 @@ class LegionUpdateManager extends EventTarget{
     const info=await this.workerInfo(worker);
     this.availableVersion=info?.appVersion||'новая версия';
     this.availableDisplayVersion=info?.displayVersion||this.availableVersion;
-    this.status='ready';this.lastError='';this.lastCheckedAt=new Date().toISOString();this.emit();
+    this.status='ready';this.lastError='';this.lastCheckedAt=new Date().toISOString();this.progressPct=100;if(this.progressTotal)this.progressCompleted=this.progressTotal;this.emit();
   }
   async check(){
     if(!this.registration){this.status='unsupported';this.emit();return false;}
     if(!navigator.onLine){this.status='offline';this.lastError='Нет соединения. Текущая версия продолжает работать локально.';this.emit();return false;}
     if(this.registration.waiting){await this.captureWaiting(this.registration.waiting);return true;}
-    this.status='checking';this.lastError='';this.emit();
+    this.status='checking';this.lastError='';this.progressCompleted=0;this.progressTotal=0;this.progressPct=0;this.emit();
     try{
       await this.registration.update();
       this.lastCheckedAt=new Date().toISOString();
@@ -72,7 +75,12 @@ class LegionUpdateManager extends EventTarget{
   async activate(){
     const worker=this.registration?.waiting||this.waiting;
     if(!worker){this.status='idle';this.emit();return false;}
-    this.status='activating';this.emit();
+    this.status='activating';this.progressPct=100;this.emit();
+    try{
+      sessionStorage.setItem('legionrx_resume_view','settings');
+      sessionStorage.setItem('legionrx_resume_settings_section','update');
+      sessionStorage.setItem('legionrx_post_update','1');
+    }catch{}
     try{worker.postMessage({type:'SKIP_WAITING'});return true;}
     catch(e){this.status='error';this.lastError=String(e?.message||e);this.emit();return false;}
   }

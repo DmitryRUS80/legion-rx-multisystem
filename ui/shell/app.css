@@ -82,30 +82,6 @@ svg{display:block}
   .headerRace{display:none}
   .cockpit{grid-template-columns:220px minmax(0,1fr) 265px}
 }
-/* Design Lab */
-.designLabCard{position:relative;overflow:hidden}
-.designLabSample{display:flex;gap:8px;margin:14px 0 16px}
-.designLabSample span{height:52px;flex:1;border:1px solid var(--line);background:var(--panel2);border-radius:var(--radius-card)}
-.designLabSample span:nth-child(2){border-radius:var(--radius-button);background:var(--blue2)}
-.designBackdrop{position:fixed;inset:0;background:rgba(6,12,22,.2);z-index:120;pointer-events:none}
-.designDrawer{pointer-events:auto;position:absolute;right:14px;top:14px;bottom:14px;width:min(410px,calc(100% - 28px));display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-modal);box-shadow:0 28px 80px rgba(0,0,0,.24);overflow:hidden}
-.designHead{padding:18px 18px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:14px}
-.designHead h2{margin:3px 0 4px}
-.designHead p{margin:0;color:var(--muted);font-size:12px}
-.designScroll{overflow:auto;padding:16px}
-.designSection{padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--line)}
-.designSection:last-child{border-bottom:0;margin-bottom:0}
-.designSection h3{margin:0 0 12px;font-size:14px}
-.rangeRow{display:grid;gap:7px;padding:9px 0}
-.rangeRow>span{display:flex;justify-content:space-between;gap:14px;align-items:center}
-.rangeRow b{font-size:12px}
-.rangeRow output{font-size:11px;color:var(--blue);font-weight:900;font-variant-numeric:tabular-nums}
-.rangeRow input[type=range]{width:100%;accent-color:var(--blue)}
-.presetRow{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.designFooter{padding:12px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:8px;background:var(--panel)}
-.designQuickBtn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue2)}
-.designQuickBtn svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.designQuickBtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 /* keep the approved compact industrial geometry throughout the application */
 .btn,.moduleCard,.disciplineTile,.card,.field input,.field select,.modal,.iconBtn{transition:border-color .16s ease,background .16s ease,color .16s ease,transform .16s ease}
 .card h2,.card h3,.pageHeader h1,.disciplineTile h3,.moduleCard b{font-family:var(--race-font);font-stretch:condensed}
@@ -381,7 +357,6 @@ body button,body input,body select,body textarea{font-family:inherit}
 /* App shell: same visual language as cockpit */
 .mainNav{display:flex;align-items:center;gap:3px;margin-left:8px;}
 .mainNav button small{font-size:11px;text-transform:uppercase;letter-spacing:.03em;}
-.designQuickBtn{padding:0 13px;border-radius:var(--radius-button);display:flex;align-items:center;gap:7px;font:inherit;font-size:12px;font-weight:850;cursor:pointer;white-space:nowrap;background:#071d2c;border:1px solid var(--rxn-line);color:var(--rxn-blue);height:42px;}
 .statusPill{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:800;background:#071d2c;border:1px solid var(--rxn-line);color:var(--rxn-muted);}
 .appbarStatus{margin-left:auto;display:flex;align-items:center;min-width:0;gap:6px;}
 #viewHost{position:fixed;left:0;right:0;bottom:0;overflow:auto;top:var(--appbarh);background:transparent;}
@@ -433,9 +408,9 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
 .mainNav button svg{stroke-width:2.15;color:currentColor;}
 .mainNav button:hover{background:var(--v4-surface2);color:var(--v4-text);}
 .mainNav button.active{background:var(--v4-control);color:var(--v4-control-text);border-color:var(--v4-line-strong);box-shadow:inset 0 -3px var(--v4-cobalt);}
-.designQuickBtn,.iconBtn,.statusPill{border-radius:4px;box-shadow:none;}
-.designQuickBtn,.iconBtn{background:var(--v4-control);border:1px solid var(--v4-line-strong);color:var(--v4-control-text)}
-.designQuickBtn svg,.iconBtn svg{color:currentColor}
+.iconBtn,.statusPill{border-radius:4px;box-shadow:none;}
+.iconBtn{background:var(--v4-control);border:1px solid var(--v4-line-strong);color:var(--v4-control-text)}
+.iconBtn svg{color:currentColor}
 .statusPill.neutral{background:var(--v4-surface2);border:1px solid var(--v4-line);color:var(--v4-muted);}
 .statusPill.good{border-color:#17693b;background:var(--v4-control);border:1px solid var(--v4-line-strong);color:var(--v4-control-text);box-shadow:inset 0 -3px var(--v4-green);}
 .headerRace{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:22vw;font-size:11px;color:var(--v4-text);}
@@ -528,6 +503,15 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
 .settingsSoundState.ready{color:var(--green)}
 .settingsSoundState.ready i{background:var(--green)}
 .settingsStatusList{border-top:1px solid rgba(183,211,236,.14)}
+.settingsLandingPrompt{min-height:420px;display:grid;place-items:center;font:700 26px/1 var(--rxn-font);letter-spacing:.03em;color:var(--v4-muted);text-transform:uppercase}
+.updateDownloadProgress{display:none;padding:12px 0 14px}
+.updateDownloadProgress.visible{display:block}
+.updateProgressLine{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:9px}
+.updateProgressLine b{font:700 17px/1 var(--rxn-font);letter-spacing:.02em;text-transform:uppercase}
+.updateProgressLine span{font:700 16px/1 var(--rxn-font);font-variant-numeric:tabular-nums;color:var(--v4-muted)}
+.updateProgressTrack{height:9px;overflow:hidden;background:rgba(141,166,189,.20);border-radius:2px}
+.updateProgressTrack>span{display:block;width:0;height:100%;background:var(--v4-cobalt);transition:width .18s linear}
+.updateStateBox.ready+.updateDownloadProgress .updateProgressTrack>span,.updateDownloadProgress[data-status="ready"] .updateProgressTrack>span{background:var(--v4-green)}
 .settingsPane .updateStateBox,.settingsPane .offlineReadyBox{margin:0;padding:13px 0;border:0;border-bottom:1px solid rgba(183,211,236,.14);border-radius:0;background:transparent;box-shadow:none;min-height:62px}
 .settingsPane .updateStateBox.ready,.settingsPane .updateStateBox.error{box-shadow:none}
 .settingsPane .updateStateBox b,.settingsPane .offlineReadyBox b{font-size:18px;line-height:1.05}
@@ -546,6 +530,9 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
   .settingsLayout{display:block;min-height:0}
   .settingsNav{display:none}
   .settingsPane{padding:0;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .settingsLandingPrompt{display:none}
+  .updateProgressLine b{font-size:16px}
+  .updateProgressTrack{height:8px}
   .settingsSection{display:block;margin-bottom:7px;background:rgba(4,10,16,.88);backdrop-filter:blur(14px) saturate(.78);-webkit-backdrop-filter:blur(14px) saturate(.78)}
   .settingsAccordionHead{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:58px;padding:10px 14px;border:0;border-left:3px solid transparent;background:transparent;color:var(--v4-text);text-align:left;cursor:pointer}
   .settingsAccordionHead span{font:700 24px/1 var(--rxn-font);text-transform:uppercase}
@@ -613,12 +600,9 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
   .formGrid{grid-template-columns:1fr}
   .cockpit{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) 126px;padding:7px}
   .homeSectionHead h2{font-size:21px}
-  .designDrawer{right:7px;left:7px;top:7px;bottom:7px;width:auto}
   .designFooter{grid-template-columns:1fr 1fr}
   .designFooter .btn.primary{grid-column:1/-1}
   .disciplineGrid{grid-template-columns:1fr}
-  .designQuickBtn{width:39px;padding:0;display:grid;place-items:center}
-  .designQuickBtn span{display:none}
   .formatRuleGrid,.moduleGrid,.champStageGrid,.archiveGrid{grid-template-columns:1fr}
   .scheduleRow{grid-template-columns:1fr auto}
   .scheduleRow span:nth-of-type(2){grid-column:1/-1}
@@ -628,7 +612,7 @@ body:not(.cockpitMode) button,body:not(.cockpitMode) input,body:not(.cockpitMode
   .appbar{gap:10px;height:54px;padding:5px 7px;}
   .brandMark{width:38px;height:38px;}
   .brandText{display:none}
-  .designQuickBtn,.appbarStatus{display:none}
+  .appbarStatus{display:none}
   .mainNav{gap:0;padding-bottom:env(safe-area-inset-bottom);position:fixed;left:0;right:0;bottom:0;height:54px;margin:0;padding:3px 5px;background:var(--v4-surface);border-top:1px solid var(--v4-line);display:grid;grid-template-columns:repeat(4,1fr);z-index:100;}
   .mainNav button{border-radius:0;place-content:center;justify-items:center;display:flex;flex-direction:column;gap:2px;padding:3px;}
   .mainNav button svg{width:18px;height:18px;}
@@ -685,7 +669,6 @@ html:not([data-skin="classic"]) .mainNav button,
 html:not([data-skin="classic"]) .sectionTabs button,
 html:not([data-skin="classic"]) .settingsNavItem,
 html:not([data-skin="classic"]) .iconBtn,
-html:not([data-skin="classic"]) .designQuickBtn,
 html:not([data-skin="classic"]) .rxSkinOption{
   min-height:var(--rxui-shell-btn-h-sm)!important;
   border-radius:var(--rxui-shell-radius)!important;
@@ -715,7 +698,6 @@ html:not([data-skin="classic"]) .mainNav button:hover:not(:disabled),
 html:not([data-skin="classic"]) .sectionTabs button:hover:not(:disabled),
 html:not([data-skin="classic"]) .settingsNavItem:hover:not(:disabled),
 html:not([data-skin="classic"]) .iconBtn:hover:not(:disabled),
-html:not([data-skin="classic"]) .designQuickBtn:hover:not(:disabled),
 html:not([data-skin="classic"]) .rxSkinOption:hover:not(:disabled){filter:brightness(1.06)!important;}
 html:not([data-skin="classic"]) .btn:active:not(:disabled),
 html:not([data-skin="classic"]) .tileAction:active:not(:disabled),
@@ -726,7 +708,6 @@ html:not([data-skin="classic"]) .mainNav button,
 html:not([data-skin="classic"]) .sectionTabs button,
 html:not([data-skin="classic"]) .settingsNavItem,
 html:not([data-skin="classic"]) .iconBtn,
-html:not([data-skin="classic"]) .designQuickBtn,
 html:not([data-skin="classic"]) .rxSkinOption{
   border:1px solid var(--rxui-line)!important;
   background:var(--rxui-control)!important;

@@ -21,4 +21,15 @@ window.addEventListener('beforeunload',()=>persistAll());
 $('#brandBtn')?.addEventListener('click',()=>nav('home'));$('#settingsBtn')?.addEventListener('click',()=>nav('settings'));$$('#bottomNav button').forEach(b=>b.addEventListener('click',()=>nav(b.dataset.view)));
 document.addEventListener('click',e=>{const qp=e.target.closest?.('[data-quick-panel]');if(qp){state.quickPanel=qp.dataset.quickPanel||'';render();return;}if(e.target.closest?.('[data-quick-panel-close]')){state.quickPanel='';render();return;}});
 if(storedSettings.visualPreset!=='race-console-v1')save(KEYS.settings,state.settings);
+try{
+ const resumeView=sessionStorage.getItem('legionrx_resume_view')||'';
+ const resumeSection=sessionStorage.getItem('legionrx_resume_settings_section')||'';
+ if(resumeView==='settings'){
+   state.view='settings';
+   if(resumeSection)sessionStorage.setItem('legionrx_settings_section',resumeSection);
+   document.body.classList.remove('cockpitMode');
+   $$('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.view==='settings'));
+ }
+ sessionStorage.removeItem('legionrx_resume_view');sessionStorage.removeItem('legionrx_resume_settings_section');
+}catch{}
 applySettings();render();
