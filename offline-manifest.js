@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc56-update-recovery-workspace-wallpaper';
-  const displayVersion='4.2.0 CLEAN FULL APP RC56 · UPDATE RECOVERY / WORKSPACE WALLPAPER';
-  const cacheName='legion-rx-4-2-0-clean-full-rc56-update-recovery-workspace-wallpaper';
+  const appVersion='4.2.0-clean-full-rc57-session-control';
+  const displayVersion='4.2.0 CLEAN FULL APP RC57 · SESSION CONTROL';
+  const cacheName='legion-rx-4-2-0-clean-full-rc57-session-control';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',
@@ -12,7 +12,7 @@
     './audio/voice/countdown_01.wav','./audio/voice/countdown_02.wav','./audio/voice/countdown_03.wav','./audio/voice/countdown_04.wav','./audio/voice/countdown_05.wav','./audio/voice/countdown_06.wav','./audio/voice/countdown_07.wav','./audio/voice/countdown_08.wav','./audio/voice/countdown_09.wav','./audio/voice/countdown_10.wav',
     './audio/voice/good_race.wav','./audio/voice/prestart_10.wav','./audio/voice/warmup_01.wav','./audio/voice/warmup_02.wav','./audio/voice/warmup_03.wav','./audio/voice/warmup_04.wav','./audio/voice/warmup_05.wav','./audio/voice/warmup_30.wav',
     './audio/voice/events/all_pilots_finished.wav','./audio/voice/events/call_to_start.wav','./audio/voice/events/finish_current_lap.wav','./audio/voice/events/heat_finished.wav','./audio/voice/events/heat_results.wav','./audio/voice/events/lapwiz_disconnected.wav','./audio/voice/events/new_best_lap.wav','./audio/voice/events/one_minute_left.wav','./audio/voice/events/pilot_finished.wav','./audio/voice/events/race_stopped.wav','./audio/voice/events/time_expired.wav','./audio/voice/events/unknown_transponder.wav',
-    './platform/utils.js','./platform/storage.js','./platform/timing.js','./platform/lapwiz.js','./platform/offline-core.js','./platform/updater.js','./platform/audio.js','./platform/state.js','./platform/pilots.js',
+    './platform/utils.js','./platform/storage.js','./platform/timing.js','./platform/lapwiz.js','./platform/offline-core.js','./platform/updater.js','./platform/audio.js','./platform/state.js','./platform/pilots.js','./platform/pilot-live-edit.js',
     './modes/rallycross/rules.js','./modes/rallycross/qualifying.js','./modes/rallycross/finals.js','./modes/rallycross/index.js','./modes/rallycross/audio-actions.js','./modes/rallycross/runtime.js','./modes/rallycross/self-test.js','./modes/free-practice/index.js','./modes/rally-sprint/index.js','./modes/classic-rc/index.js',
     './ui/fonts/oswald.css','./ui/themes/theme.css','./ui/shell/app.css','./ui/pilots/pilot-cards.css','./ui/shell/discipline-pults.css','./ui/skins/rxui/base.css','./ui/skins/rxui/steel.css','./ui/skins/rxui/cobalt.css','./ui/skins/rxui/workspace-landscape.webp','./ui/skins/rxui/workspace-portrait.webp','./ui/skins/rxui/light.css','./ui/skins/rxui/modern.css','./ui/skins/rxui/heritage.css','./ui/skins/rxui/icons.js','./ui/classic-polish/classic-controls.css','./ui/classic-polish/classic-icons.js','./ui/shell/runtime-error.js','./ui/shell/discipline-shared.js','./ui/pilots/pilot-cards.js','./ui/shell/views.js','./ui/shell/router.js','./ui/shell/actions.js','./ui/shell/offline-runtime.js','./ui/discipline-ui.js',
     './reporting/core.js','./reporting/sections/practice.js','./reporting/sections/rally.js','./reporting/sections/rallycross.js'

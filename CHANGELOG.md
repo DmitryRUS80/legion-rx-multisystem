@@ -1,3 +1,15 @@
+# LEGION RX CHANGELOG
+
+## RC57 · SESSION CONTROL
+
+- RallyCross main control grid is now `START / PAUSE / FINISH / RESTART / SESSION SETTINGS / STOP`; `+1 МИН` and `РУЧНОЙ КРУГ` are removed from the main RallyCross pult.
+- Added event-local session settings overlay directly over the pult: time/laps mode, minutes/laps, warm-up, countdown and Min Lap. `ПРИМЕНИТЬ` saves, closes the overlay and immediately updates the current heat only.
+- Added race restart for an unsaved attempt. After STOP/finish, RESTART resets live timing for the same event without changing pilots, event order or session settings.
+- Added live pilot editing from the pilot stats card during a competition: name, transponder, country and club update immediately. Existing laps/results remain keyed by stable pilot id. Duplicate transponders in the active race are rejected.
+- Added isolated `platform/pilot-live-edit.js`; live identity editing is not mixed into sport scoring or BLE parsing.
+- Session-specific rule overrides are owned by RallyCross mode (`event.sessionSettings`) and do not alter application-wide defaults or later heats.
+- Session/pilot overlays use one surface, large controls and theme tokens; no nested-card layout or micro-help text.
+
 # RC56 — UPDATE RECOVERY / WORKSPACE WALLPAPER
 
 - Исправлена причина отказа установки RC55: GitHub-пакет RC55 не содержал `ui/shell/router.js` и `ui/discipline-ui.js`, хотя новый Service Worker требовал их свежие версии. При обновлении с реально установленной RC53 это гарантированно переводило новый worker в `redundant`.

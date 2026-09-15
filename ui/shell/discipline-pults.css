@@ -406,7 +406,7 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 /* ===== PILOT LAP STATS · AUTHORITATIVE LIVE BROADCAST CARD ===== */
 .rxnPilotStatsViewport{position:fixed;z-index:1200;overflow:hidden;isolation:isolate;font-family:var(--rxn-font);color:var(--rxn-text)}
 .rxnPilotStatsDim{position:absolute;inset:0;background:color-mix(in srgb,var(--rxn-bg) 10%,transparent);backdrop-filter:blur(1.4px) saturate(.92);-webkit-backdrop-filter:blur(1.4px) saturate(.92)}
-.rxnPilotStatsSheet{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:clamp(420px,52%,620px);max-width:calc(100% - 12px);height:min(540px,calc(100% - 16px));min-width:0;min-height:0;display:grid;grid-template-rows:auto auto auto auto minmax(0,1fr) auto;padding:9px 10px 10px;gap:6px;overflow:hidden;border:1px solid color-mix(in srgb,var(--rxn-line-strong) 38%,transparent);border-radius:3px;background:color-mix(in srgb,var(--rxn-modal-panel) 78%,transparent);backdrop-filter:blur(7px) saturate(.94);-webkit-backdrop-filter:blur(7px) saturate(.94);box-shadow:0 12px 34px color-mix(in srgb,#000 30%,transparent)}
+.rxnPilotStatsSheet{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:clamp(420px,52%,620px);max-width:calc(100% - 12px);height:min(540px,calc(100% - 16px));min-width:0;min-height:0;display:grid;grid-template-rows:auto auto auto auto auto minmax(0,1fr) auto;padding:9px 10px 10px;gap:6px;overflow:hidden;border:1px solid color-mix(in srgb,var(--rxn-line-strong) 38%,transparent);border-radius:3px;background:color-mix(in srgb,var(--rxn-modal-panel) 78%,transparent);backdrop-filter:blur(7px) saturate(.94);-webkit-backdrop-filter:blur(7px) saturate(.94);box-shadow:0 12px 34px color-mix(in srgb,#000 30%,transparent)}
 .rxnPilotStatsHero{position:relative;display:grid;grid-template-columns:132px minmax(0,1fr);gap:12px;align-items:stretch;min-width:0}
 .rxnPilotStatsPortrait{position:relative;width:132px;height:132px;overflow:hidden;background:color-mix(in srgb,var(--rxn-panel2) 68%,transparent)}
 .rxnPilotStatsAvatar{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;color:var(--rxn-muted)}
@@ -428,6 +428,8 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 .rxnPilotStatsRaceLine>b{display:flex;align-items:baseline;gap:4px;color:var(--rxn-text);font:800 13px/1 var(--rxn-font);white-space:nowrap}
 .rxnPilotStatsRaceLine small{color:var(--rxn-muted);font:700 10px/1 var(--rxn-font);letter-spacing:.03em}
 .rxnPilotStatsRaceLine i{font-style:normal;font-variant-numeric:tabular-nums}
+.rxnPilotStatsEdit{min-height:34px;padding:0 10px;border:1px solid var(--rxn-control-border);border-radius:3px;background:var(--rxn-control-bg);color:var(--rxn-text);font:800 15px/1 var(--rxn-font);letter-spacing:.025em;text-transform:uppercase;cursor:pointer}
+.rxnPilotStatsEdit:hover{background:var(--rxn-control-hover);border-color:var(--rxn-control-border-hover)}
 .rxnPilotStatsLapHead,.rxnPilotStatsLap{display:grid;grid-template-columns:42px 116px minmax(0,1fr);align-items:center;gap:0;min-width:0;padding:0 7px}
 .rxnPilotStatsSheet.track .rxnPilotStatsLapHead,.rxnPilotStatsSheet.track .rxnPilotStatsLap{grid-template-columns:42px 116px minmax(0,1fr) 31px}
 .rxnPilotStatsLapHead{min-height:20px;background:transparent;border:0;font:700 10px/1 var(--rxn-font);letter-spacing:.04em;color:var(--rxn-muted);text-transform:uppercase}

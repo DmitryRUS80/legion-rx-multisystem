@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('fs'),vm=require('vm'),path=require('path');const R=path.resolve(__dirname,'..');
+let saved=0,persisted=0;global.KEYS={pilots:'pilots'};global.save=()=>saved++;global.persistRace=()=>persisted++;
+const profile={id:'prof1',name:'OLD NAME',club:'OLD',country:'RU',transponder:'11',voice:{status:'ready',text:'OLD NAME'},models:[{id:'m1',name:'CAR',number:'11',transponder:'11',className:'SC10',uiColor:'#fff'}]};
+const rp={id:'p1',profileId:'prof1',modelId:'m1',name:'OLD NAME',club:'OLD',country:'RU',transponder:'11'};
+global.state={pilotDb:[profile],race:{pilots:[rp,{id:'p2',profileId:'prof2',name:'OTHER',transponder:'22'}]},session:{live:{p1:{lastDeviceMs:123,lastElapsedAtPass:1000}}}};
+global.profileForPilot=p=>state.pilotDb.find(x=>String(x.id)===String(p.profileId||p.id))||null;
+vm.runInThisContext(fs.readFileSync(path.join(R,'platform/pilot-live-edit.js'),'utf8'),{filename:'platform/pilot-live-edit.js'});
+let r=updateActiveRacePilotIdentity('p1',{name:'NEW NAME',transponder:'33',club:'LEGION RX',country:'ru'});if(!r.ok)throw new Error(r.error);if(rp.id!=='p1'||rp.transponder!=='33'||rp.name!=='NEW NAME')throw new Error('race pilot identity not updated');if(profile.models[0].transponder!=='33'||profile.name!=='NEW NAME')throw new Error('profile/model not synced');if(profile.voice.status!=='stale')throw new Error('voice not marked stale');if(state.session.live.p1.lastDeviceMs!==null)throw new Error('device timestamp not reset safely');if(!saved||!persisted)throw new Error('storage not persisted');
+r=updateActiveRacePilotIdentity('p1',{name:'NEW NAME',transponder:'22'});if(r.ok||!/уже используется/.test(r.error))throw new Error('duplicate transponder not rejected');console.log('RC57 LIVE PILOT EDIT: PASS');

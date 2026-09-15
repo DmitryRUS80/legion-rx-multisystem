@@ -804,3 +804,29 @@ html:not([data-skin="classic"]) .settingsSaveBottom{margin-top:12px!important;wi
   html:not([data-skin="classic"]) .disciplineGrid415{grid-template-columns:1fr!important;}
   html:not([data-skin="classic"]) .settingsLayout{grid-template-columns:1fr!important;gap:8px!important;}
 }
+
+/* ===== RC57 · IN-COCKPIT SESSION / PILOT EDITORS ===== */
+.rxnSessionBackdrop{background:color-mix(in srgb,var(--v4-bg) 56%,transparent);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.rxnSessionSettingsModal,.rxnRacePilotEditModal{width:min(620px,calc(100vw - 24px));padding:18px;border-radius:5px;background:var(--v4-surface);border:1px solid var(--v4-line-strong);color:var(--v4-text);box-shadow:0 20px 70px color-mix(in srgb,#000 48%,transparent);overflow:visible}
+.rxnSessionSettingsModal .modalHead,.rxnRacePilotEditModal .modalHead{margin-bottom:14px}
+.rxnSessionSettingsModal .modalHead h2,.rxnRacePilotEditModal .modalHead h2{font-size:28px}
+.rxnSessionMode{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
+.rxnSessionMode button{min-height:48px;padding:0 12px;border:1px solid var(--v4-line-strong);border-radius:4px;background:var(--v4-control);color:var(--v4-control-text);font:800 18px/1 var(--rxn-font);text-transform:uppercase;cursor:pointer}
+.rxnSessionMode button.active{background:var(--v4-cobalt);color:#fff;border-color:color-mix(in srgb,var(--v4-cobalt) 72%,#fff)}
+.rxnSessionFields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.rxnSessionFields label{display:grid;gap:6px;min-width:0}
+.rxnSessionFields label.wide{grid-column:1/-1}
+.rxnSessionFields label[hidden]{display:none}
+.rxnSessionFields label>span{font:800 14px/1 var(--rxn-font);letter-spacing:.035em;color:var(--v4-muted);text-transform:uppercase}
+.rxnSessionFields input,.rxnSessionFields select{width:100%;min-height:50px;padding:8px 12px;border:1px solid var(--v4-line-strong);border-radius:4px;background:var(--v4-input);color:var(--v4-text);font:800 22px/1 var(--rxn-font);font-variant-numeric:tabular-nums;outline:none}
+.rxnSessionFields input:focus,.rxnSessionFields select:focus{border-color:var(--v4-cobalt);box-shadow:0 0 0 1px var(--v4-cobalt)}
+.rxnSessionActions{display:grid;grid-template-columns:1fr 1.35fr;gap:8px;margin-top:16px}
+.rxnSessionActions .btn{min-height:50px;font-size:18px}
+@media(max-width:560px){
+ .rxnSessionSettingsModal,.rxnRacePilotEditModal{width:calc(100vw - 12px);padding:14px;max-height:calc(100dvh - 12px)}
+ .rxnSessionSettingsModal .modalHead h2,.rxnRacePilotEditModal .modalHead h2{font-size:24px}
+ .rxnSessionFields{grid-template-columns:1fr}
+ .rxnSessionFields label.wide{grid-column:auto}
+ .rxnSessionMode button{font-size:16px}
+ .rxnSessionFields input,.rxnSessionFields select{font-size:20px}
+}

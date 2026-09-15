@@ -21,6 +21,6 @@ assert 'grid-template-rows:22px 18px' in css
 # Theme CSS must not own responsive cockpit geometry anymore.
 assert '.rxnControlPanel{gap:7px!important}' not in cobalt
 assert '@media (min-width:1400px)' not in cobalt
-assert 'RC55' in ver
-assert 'rc55-workspace-wallpaper' in sw
+assert 'RC57' in ver
+assert 'rc57-session-control' in sw
 print('RC50 PHONE LANDSCAPE GEOMETRY: PASS')

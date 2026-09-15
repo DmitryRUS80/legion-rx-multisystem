@@ -1,0 +1,21 @@
+'use strict';
+const fs=require('fs'),vm=require('vm'),path=require('path');
+const R=path.resolve(__dirname,'..');
+function loadTestScript(rel){vm.runInThisContext(fs.readFileSync(path.join(R,rel),'utf8'),{filename:rel});}
+let seq=0;global.uid=(p='id')=>`${p}_${++seq}`;
+global.toast=()=>{};global.render=()=>{};global.persistRace=()=>{};global.save=()=>{};global.KEYS={pilots:'pilots'};
+global.announcer={cancel(){},preload(){},play(){return Promise.resolve();}};
+global.lapwiz={connected:false,running:false,currentMode:'',stop:async()=>{},start:async()=>{}};
+global.announceService=()=>Promise.resolve();global.announceWarmupMinute=()=>{};global.announceStartCall=()=>{};global.announceWarmup30=()=>{};global.announcePilotFinish=()=>{};global.announceBestLap=()=>{};global.announceHeatResults=()=>{};
+loadTestScript('modes/rallycross/rules.js');loadTestScript('modes/rallycross/qualifying.js');loadTestScript('modes/rallycross/finals.js');loadTestScript('modes/rallycross/index.js');
+const p1=makePilot({id:'p1',name:'ONE',transponder:'11'},1),p2=makePilot({id:'p2',name:'TWO',transponder:'22'},2);
+global.state={race:{raceSettings:{qualificationLimitType:'time',qualificationMinutes:5,qualificationLaps:8,finalLimitType:'laps',finalMinutes:5,finalLaps:7,minLapSec:2,countdownSec:10,warmupMinutes:2},pilots:[p1,p2],heats:[{key:'q1',type:'qualifying',round:1,heat:1,order:1,enabled:true,saved:false,pilots:['p1','p2'],label:'Q1'}],finals:[],runtime:{eventLog:[]}},session:null,settings:{countdownSec:10,warmupMinutes:2,minLapSec:2},prestartTimers:[],resultsOpen:false,widgetCollapsed:{results:false}};
+loadTestScript('modes/rallycross/runtime.js');
+let ev=currentEvent(state.race),s=ensureSession(ev);
+let res=applyCurrentSessionSettings({limitType:'laps',targetLaps:4,durationMin:3,warmupMinutes:1,countdownSec:5,minLapSec:3});
+if(!res.ok)throw new Error('session settings rejected');
+let rule=eventRule(state.race,currentEvent(state.race));
+if(rule.limitType!=='laps'||rule.targetLaps!==4||rule.minLapSec!==3)throw new Error('event local rule not applied');
+if(raceWarmupMinutes()!==1||raceCountdownSeconds()!==5)throw new Error('prestart overrides not applied');
+state.session.phase='finished';state.session.finishReason='Аварийный STOP';state.session.elapsedFinalMs=12000;state.session.live.p1.laps=2;
+(async()=>{const rr=await restartCurrentSession();if(!rr.ok)throw new Error('restart rejected');if(state.session.phase!=='ready')throw new Error('restart did not reset to ready');if(state.session.live.p1.laps!==0)throw new Error('restart retained live laps');if(state.race.heats[0].restartCount!==1)throw new Error('restart count missing');const r2=eventRule(state.race,currentEvent(state.race));if(r2.limitType!=='laps'||r2.targetLaps!==4)throw new Error('restart lost session settings');console.log('RC57 SESSION CONTROL BEHAVIOR: PASS');})().catch(e=>{console.error(e);process.exit(2);});

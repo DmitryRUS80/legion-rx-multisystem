@@ -7,6 +7,7 @@ expected={
 'app.js':'e8d6378c4b0e9e994845e303ecc4d10be38648c7b8d9998a072b3bc6d981c6c2',
 'platform/lapwiz.js':'d0f9af187e90114edf671827c9365e7d28130809ba1926cfa11efd30f8c3c644',
 'platform/pilots.js':'9447a63d5fef07aed6c28407844372ab9d7d0f9afdba5c48ed0d63d3048c7ca9',
+'platform/pilot-live-edit.js':'a2052f29abeac18f5cf254254647042ca1715dea1e9330ff26dd8253e3e45aea',
 'platform/state.js':'e3ec736cc481d1b3f9b3f67d03704670be90ac5cf994df81ac2921e6309f6753',
 'platform/storage.js':'c6a007eacc91b80d680518d07be51532a5ac8a02b990142bf6c49e409d9a7927',
 'platform/timing.js':'2f906ea408b3dca79a7dc74b19eed99c0a88d2559e24146a52a02b350ea8a9c8',
@@ -14,9 +15,9 @@ expected={
 'modes/rallycross/rules.js':'d840388a9e0a148909cac826b184fb88d513c0edbb4a354585ee74362cbb6db3',
 'modes/rallycross/qualifying.js':'ebc33b9bba66065e839aba0c3d90c57fc02621a418862b987711bf79a3f0f8a4',
 'modes/rallycross/finals.js':'9a57c3267921201c48b73166d07e304068d59238c9d1c3a0ffe2ab882913e8e4',
-'modes/rallycross/index.js':'0b991bd073892fc80a62850c81010fcd1eba3c5fae794a11e6f9b7fda34c8156',
+'modes/rallycross/index.js':'63fef654a852591f5131fb1d10da4fbee15b1be731266b576c4c6a5049e5b901',
 'modes/rallycross/audio-actions.js':'56bc3301350365b87e78cbdbc76935fe94c3e89172fb424df31759de725cddef',
-'modes/rallycross/runtime.js':'8054c2d6beec9b0d542fa3772ef98af2974f179561ddb646fb49459c53756eb3',
+'modes/rallycross/runtime.js':'a25b5e3d516f52fc19985927385a9916e259f00824074110cb1f8c771fb826db',
 'modes/rallycross/self-test.js':'3f2be9c50b3a4b158505abd64f95ffd7d10856323a7fd7fb8e31f579cad1113a',
 'modes/free-practice/index.js':'aa43d3a87f0e9286635dbb5bbcfc7647dac310ea30d24af80bb9fe9cdd20845a',
 'modes/rally-sprint/index.js':'1f72a94e0f765212b98bd7af6b24589c1108001bcfaa9fcfc3db7fd97b025a71',
@@ -31,11 +32,11 @@ for rel,want in expected.items():
     p=ROOT/rel
     got=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else 'MISSING'
     if got!=want: changed.append((rel,got,want))
-checks['protected_foundation_hashes_match_rc32']=not changed
+checks['protected_foundation_hashes_match_rc57_authorized']=not changed
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])
-checks['style_layers_exact']=all(x in index for x in ['ui/themes/theme.css','ui/shell/app.css','ui/pilots/pilot-cards.css','ui/shell/discipline-pults.css','ui/skins/rxui/base.css','ui/skins/rxui/steel.css','ui/skins/rxui/light.css','ui/skins/rxui/modern.css','ui/skins/rxui/heritage.css']) and index.count('rel="stylesheet"')==10 # 5 Classic/Oswald layers + 5 isolated RXUI skin layers
+checks['style_layers_exact']=all(x in index for x in ['ui/themes/theme.css','ui/shell/app.css','ui/pilots/pilot-cards.css','ui/shell/discipline-pults.css','ui/skins/rxui/base.css','ui/skins/rxui/steel.css','ui/skins/rxui/light.css','ui/skins/rxui/modern.css','ui/skins/rxui/cobalt.css','ui/skins/rxui/heritage.css','ui/classic-polish/classic-controls.css']) and index.count('rel="stylesheet"')==12 # 5 Classic/Oswald layers + 6 isolated RXUI skin layers + 1 isolated Classic cockpit polish layer
 
 theme=(ROOT/'ui/themes/theme.css').read_text(encoding='utf-8')
 checks['theme_is_tokens_only']=not re.search(r'\.[A-Za-z_][\w-]*\s*[,{]',theme)
@@ -49,7 +50,7 @@ checks['sw_install_does_not_skip_waiting']=not re.search(r'\b(?:await\s+)?self\.
 checks['sw_user_confirmed_activation']="type==='SKIP_WAITING'" in sw and 'await self.skipWaiting()' in sw
 checks['sw_cache_first_navigation']=sw.find("const local=(await cached('./index.html'))") < sw.find('try{return await fetch(request);}')
 checks['sw_candidate_cache_atomic']='await caches.delete(CACHE)' in sw and 'candidate package incomplete' in sw
-checks['sw_reuses_verified_external_assets']='const previous=await caches.match(url' in sw and 'if(EXTERNAL.includes(url))' in sw
+checks['sw_reuses_verified_external_assets']='const previous=await caches.match(url' in sw and ('if(EXTERNAL.includes(url))' in sw or 'if(EXTERNAL.includes(request.url))' in sw)
 
 off=(ROOT/'platform/offline-core.js').read_text(encoding='utf-8')
 checks['offline_runtime_is_read_only']='fetch(' not in off and '.prepare(' not in off

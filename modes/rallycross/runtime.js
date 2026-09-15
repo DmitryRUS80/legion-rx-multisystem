@@ -13,7 +13,41 @@ async function resumeSession(){const ev=currentEvent(state.race),s=state.session
 
 async function addMinute(){const ev=currentEvent(state.race),s=state.session;if(!ev||!s)return;const rule=eventRule(state.race,ev);if(rule.limitType!=='time')return toast('+1 мин доступна только для заезда по времени');s.extraMs=(s.extraMs||0)+60000;if(s.phase==='finishing'&&sessionElapsed(s)<timerTotalMs(ev,s)){s.phase='running';s.timeExpired=false;Object.values(s.live).forEach(v=>v.needsFinish=false);}if(s.phase==='paused'&&s.resumePhase==='finishing'&&sessionElapsed(s)<timerTotalMs(ev,s)){s.resumePhase='running';s.timeExpired=false;Object.values(s.live).forEach(v=>v.needsFinish=false);}logEvent('Добавлена 1 минута');if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();const remaining=Math.max(1000,timerTotalMs(ev,s)-sessionElapsed(s));await lapwiz.start({...rule,durationMin:remaining/60000});Object.values(s.live).forEach(v=>{v.lastDeviceMs=null;});}catch(e){toast(`LapWiz +1 мин: ${e.message}`);}}toast('К заезду добавлена 1 минута');updateDynamicCockpit();}
 
-async function finishSession(reason='Финиш судьёй'){const s=state.session;if(!s)return;const elapsed=sessionElapsed(s);if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){toast(`STOP: ${e.message}`);}}s.elapsedFinalMs=elapsed;s.phase='finished';s.finishedAtEpoch=Date.now();logEvent(reason);state.resultsOpen=true;state.widgetCollapsed.results=false;if(/Все пилоты/.test(reason))announceService('allPilotsFinished');else if(!/Аварийный|остановлен/i.test(reason))announceService('heatFinished');render();}
+function currentSessionSettingsEditable(){const p=state.session?.phase||'ready';return p==='ready'||p==='finished';}
+
+function applyCurrentSessionSettings(input={}){
+  const race=state.race,ev=currentEvent(race),s=state.session;if(!race||!ev)return{ok:false,error:'Нет активного заезда'};
+  if(s&&!currentSessionSettingsEditable())return{ok:false,error:'Настройки сессии доступны до старта или после STOP'};
+  const raw=findRawEvent(ev.key);if(!raw)return{ok:false,error:'Не найден текущий заезд'};
+  const limitType=input.limitType==='laps'?'laps':'time';
+  raw.sessionSettings={
+    limitType,
+    durationMin:Math.max(1,Math.min(60,Number(input.durationMin)||3)),
+    targetLaps:Math.max(1,Math.min(200,Number(input.targetLaps)||5)),
+    warmupMinutes:Math.max(1,Math.min(5,Number(input.warmupMinutes)||2)),
+    countdownSec:Math.max(1,Math.min(10,Number(input.countdownSec)||5)),
+    minLapSec:Math.max(1,Math.min(60,Number(input.minLapSec)||2))
+  };
+  if(s){s.countdownLeft=raw.sessionSettings.countdownSec;s.warmupTotalSec=raw.sessionSettings.warmupMinutes*60;s.extraMs=0;}
+  logEvent(`Настройки сессии: ${limitType==='time'?`${raw.sessionSettings.durationMin} мин`:`${raw.sessionSettings.targetLaps} кругов`} · прогрев ${raw.sessionSettings.warmupMinutes} мин · отсчёт ${raw.sessionSettings.countdownSec} сек`);
+  persistRace();
+  return{ok:true,settings:{...raw.sessionSettings}};
+}
+
+async function restartCurrentSession(){
+  const race=state.race,ev=currentEvent(race),s=state.session;if(!race||!ev||!s)return{ok:false,error:'Нет активного заезда'};
+  if(s.phase!=='finished')return{ok:false,error:'Сначала остановите или завершите текущую попытку'};
+  announcer.cancel();clearPrestartTimers();
+  if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){console.warn('restart stop',e);}}
+  const raw=findRawEvent(ev.key);if(raw){raw.restartCount=Number(raw.restartCount||0)+1;raw.lastRestartAt=new Date().toISOString();raw.lastRestartReason=s.finishReason||'Рестарт судьёй';}
+  logEvent(`РЕСТАРТ: ${ev.label||ev.key}${s.finishReason?` · ${s.finishReason}`:''}`);
+  state.session=null;state.resultsOpen=false;state.widgetCollapsed.results=true;
+  const fresh=ensureSession(currentEvent(race));fresh.restartCount=Number(raw?.restartCount||0);
+  persistRace();render();
+  return{ok:true};
+}
+
+async function finishSession(reason='Финиш судьёй'){const s=state.session;if(!s)return;const elapsed=sessionElapsed(s);if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){toast(`STOP: ${e.message}`);}}s.elapsedFinalMs=elapsed;s.phase='finished';s.finishedAtEpoch=Date.now();s.finishReason=reason;logEvent(reason);state.resultsOpen=true;state.widgetCollapsed.results=false;if(/Все пилоты/.test(reason))announceService('allPilotsFinished');else if(!/Аварийный|остановлен/i.test(reason))announceService('heatFinished');render();}
 
 function checkSessionLimit(){const ev=currentEvent(state.race),s=state.session;if(!ev||!s||s.phase!=='running')return;const r=eventRule(state.race,ev),elapsed=sessionElapsed(s),limit=r.durationMin*60000+(s.extraMs||0),remaining=limit-elapsed;if(r.limitType==='time'&&remaining<=60000&&remaining>0&&!s.raceOneMinuteAnnounced){s.raceOneMinuteAnnounced=true;announceService('oneMinuteLeft');}if(r.limitType==='time'&&elapsed>=limit&&!s.timeExpired){s.timeExpired=true;s.phase='finishing';Object.values(s.live).forEach(v=>{if(!v.finished)v.needsFinish=true;});announceService('timeExpired').then(()=>announceService('finishCurrentLap'));toast('Время истекло — финиш на следующем проходе');}if(r.limitType==='laps'){const all=Object.values(s.live).every(v=>v.finished);if(all)finishSession('Все пилоты финишировали');}}
 
@@ -21,7 +55,8 @@ function clearPrestartTimers(){(state.prestartTimers||[]).forEach(clearTimeout);
 
 function schedulePrestartAt(perf,fn){const id=setTimeout(fn,Math.max(0,perf-performance.now()));state.prestartTimers.push(id);return id;}
 
-function raceWarmupMinutes(){return Math.max(1,Math.min(5,Number(state.race?.raceSettings?.warmupMinutes??state.settings.warmupMinutes??2)));}
+function raceWarmupMinutes(ev=currentEvent(state.race)){const cfg=eventSessionSettings(state.race,ev);return Math.max(1,Math.min(5,Number(cfg?.warmupMinutes??state.race?.raceSettings?.warmupMinutes??state.settings.warmupMinutes??2)));}
+function raceCountdownSeconds(ev=currentEvent(state.race)){const cfg=eventSessionSettings(state.race,ev);return Math.max(1,Math.min(10,Number(cfg?.countdownSec??state.race?.raceSettings?.countdownSec??state.settings.countdownSec??10)));}
 
 function warmupRemainingMs(s){return s?.warmupEndsAtPerf?Math.max(0,s.warmupEndsAtPerf-performance.now()):0;}
 
@@ -31,7 +66,7 @@ function minuteWords(n){return n===1?'одна минута':n===2?'две ми�
 
 function scheduleAlignedStart(s){
   const deadline=s.warmupEndsAtPerf;
-  const sec=Math.max(1,Math.min(10,Number(state.race?.raceSettings?.countdownSec||state.settings.countdownSec||10)));
+  const sec=raceCountdownSeconds(currentEvent(state.race));
 
   schedulePrestartAt(deadline-sec*1000-1450,()=>{
     if(state.session!==s||!['warmup','countdown'].includes(s.phase))return;
@@ -69,7 +104,7 @@ async function beginCountdown(){
   }
 
   s.phase='warmup';s.warmupTotalSec=totalSec;s.warmupEndsAtPerf=performance.now()+totalSec*1000;
-  s.warmupDetected={};s.lastPass='';s.countdownLeft=state.race?.raceSettings?.countdownSec||state.settings.countdownSec||10;s.announcerLine='';
+  s.warmupDetected={};s.lastPass='';s.countdownLeft=raceCountdownSeconds(ev);s.announcerLine='';
   Object.values(s.live).forEach(v=>Object.assign(v,blankLive()));
   logEvent(`Прогрев перед стартом: ${minutes} мин · LapWiz ${lapwiz.connected?'Free Practice':'не подключён'}`);
 
@@ -110,7 +145,7 @@ async function stopSession(){
   if(['warmup','countdown'].includes(s.phase)){
     if(lapwiz.connected&&lapwiz.running){try{await lapwiz.stop();}catch(e){toast(`LapWiz STOP: ${e.message}`);}}
     s.phase='ready';s.warmupEndsAtPerf=null;s.warmupDetected={};s.lastPass='';
-    s.countdownLeft=state.race?.raceSettings?.countdownSec||state.settings.countdownSec||10;
+    s.countdownLeft=raceCountdownSeconds(currentEvent(state.race));
     logEvent('Предстартовая процедура отменена');announceService('raceStopped');render();return;
   }
   announceService('raceStopped');
@@ -121,7 +156,7 @@ function blankLive(){return{laps:0,bestLapMs:Infinity,lastLapMs:null,lastPassPer
 
 function ensureSession(ev){
   if(!ev)return null;
-  if(state.session?.eventKey!==ev.key){state.session={eventKey:ev.key,phase:'ready',startedAtPerf:null,startedAtEpoch:null,finishedAtEpoch:null,elapsedBeforePause:0,elapsedFinalMs:null,extraMs:0,resumePhase:'running',countdownLeft:state.race.raceSettings.countdownSec,warmupTotalSec:raceWarmupMinutes()*60,warmupEndsAtPerf:null,warmupDetected:{},lapFinishOpen:false,lapFinishLeaderId:null,lapFinishOpenedAtMs:null,live:Object.fromEntries(getEventPilots(state.race,ev).map(p=>[p.id,blankLive()])),unknown:{},lastPass:''};}
+  if(state.session?.eventKey!==ev.key){state.session={eventKey:ev.key,phase:'ready',startedAtPerf:null,startedAtEpoch:null,finishedAtEpoch:null,elapsedBeforePause:0,elapsedFinalMs:null,extraMs:0,resumePhase:'running',countdownLeft:raceCountdownSeconds(ev),warmupTotalSec:raceWarmupMinutes(ev)*60,warmupEndsAtPerf:null,warmupDetected:{},lapFinishOpen:false,lapFinishLeaderId:null,lapFinishOpenedAtMs:null,live:Object.fromEntries(getEventPilots(state.race,ev).map(p=>[p.id,blankLive()])),unknown:{},lastPass:'',finishReason:'',restartCount:Number(findRawEvent(ev.key)?.restartCount||0)};}
   state.session.warmupDetected=state.session.warmupDetected||{};if(state.session.lapFinishOpen===undefined)state.session.lapFinishOpen=false;Object.keys(state.session.live||{}).forEach(id=>{const l=state.session.live[id];if(l.startSeen===undefined)l.startSeen=false;if(l.needsFinish===undefined)l.needsFinish=false;if(!Array.isArray(l.lapTimes))l.lapTimes=[];});return state.session;
 }
 

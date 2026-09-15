@@ -7,15 +7,28 @@ function currentEvent(race){const all=eventList(race);return all.find(e=>!e.save
 
 function eventStatus(race,event){if(event.cancelled)return'cancelled';if(event.saved)return'completed';const cur=currentEvent(race);if(cur&&cur.key===event.key)return'current';if(event.enabled)return'ready';return'locked';}
 
+function eventSessionSettings(race,event){
+  if(!event)return null;
+  const rs=race?.raceSettings||{},ov=event.sessionSettings||{};
+  const qualifying=event.type==='qualifying'&&!event.tieBreak;
+  const defaultType=qualifying?(rs.qualificationLimitType||'time'):(rs.finalLimitType||'laps');
+  const limitType=ov.limitType==='laps'?'laps':ov.limitType==='time'?'time':defaultType;
+  const defaultMinutes=qualifying?Number(rs.qualificationMinutes||5):Number(rs.finalMinutes||5);
+  const defaultLaps=qualifying?Number(rs.qualificationLaps||8):Number(rs.finalLaps||7);
+  return {
+    limitType,
+    durationMin:Math.max(1,Number(ov.durationMin||defaultMinutes||5)),
+    targetLaps:Math.max(1,Number(ov.targetLaps||defaultLaps||7)),
+    minLapSec:Math.max(1,Number(ov.minLapSec||rs.minLapSec||2)),
+    countdownSec:Math.max(1,Math.min(10,Number(ov.countdownSec||rs.countdownSec||10))),
+    warmupMinutes:Math.max(1,Math.min(5,Number(ov.warmupMinutes||rs.warmupMinutes||2)))
+  };
+}
+
 function eventRule(race,event){
   if(!event)return null;
-  const rs=race.raceSettings||{};
-  if(event.type==='qualifying'&&!event.tieBreak){
-    const limitType=rs.qualificationLimitType||'time';
-    return {mode:'qualification',limitType,durationMin:limitType==='time'?Number(rs.qualificationMinutes||5):0,targetLaps:limitType==='laps'?Number(rs.qualificationLaps||8):0,minLapSec:Number(rs.minLapSec||2),finishCurrentLap:true};
-  }
-  const limitType=rs.finalLimitType||'laps';
-  return {mode:'race',limitType,durationMin:limitType==='time'?Number(rs.finalMinutes||5):0,targetLaps:limitType==='laps'?Number(rs.finalLaps||7):0,minLapSec:Number(rs.minLapSec||2),finishCurrentLap:true};
+  const cfg=eventSessionSettings(race,event),qualifying=event.type==='qualifying'&&!event.tieBreak;
+  return {mode:qualifying?'qualification':'race',limitType:cfg.limitType,durationMin:cfg.limitType==='time'?cfg.durationMin:0,targetLaps:cfg.limitType==='laps'?cfg.targetLaps:0,minLapSec:cfg.minLapSec,finishCurrentLap:true};
 }
 
 function getEventPilots(race,event){return(event?.pilots||[]).map(id=>getPilot(race,id)).filter(Boolean);}
