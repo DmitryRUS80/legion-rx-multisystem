@@ -7,3 +7,7 @@ RC65 is a surgical Classic RC UI-input repair over RC64. The Schedule drawer act
 No EFRA sport rules, Classic RC engine/runtime, Competition Scheduler logic, RallyCross rules/runtime, LapWiz, storage foundation or simulator architecture are changed.
 
 Use **FULL** as the source for future development. Use **UPLOAD_TO_GITHUB** only as the exact RC64 → RC65 deployment delta.
+
+
+## RC66
+Classic Schedule is a true fixed overlay. Its tab no longer participates in cockpit layout, and Schedule actions use direct per-render event bindings for reliable mouse/touch operation.

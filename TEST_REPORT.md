@@ -1,20 +1,8 @@
-# LEGION RX — RC65 TEST REPORT
+# TEST REPORT · RC66
 
-**Candidate:** `4.2.0 CLEAN FULL APP RC65 · CLASSIC SCHEDULE BUTTON FIX`
+RC66 targets only Classic RC Schedule UI reliability.
 
-RC65 fixes the Classic RC Schedule overlay input path only. EFRA rules, Classic RC engine/runtime, Competition Scheduler, RallyCross, LapWiz and protected foundation are unchanged.
-
-Verified:
-- delegated Schedule action router: PASS;
-- capture-phase click/touch path: PASS;
-- resume competition / break -1 / +1 / +5 / skip break / start early dispatch: PASS;
-- Classic RC EFRA rules: PASS;
-- full Classic RC competition flow: PASS;
-- Scheduler director controls: PASS;
-- SIM shared race/schedule clock: PASS;
-- RallyCross run-off suite: 27/27 PASS;
-- RallyCross start order: 12/12 PASS;
-- skip/state: 11/11 PASS;
-- architecture boundaries: PASS;
-- protected foundation: PASS;
-- RC65 release cohesion: PASS.
+- Real Chromium DOM: tail fixed at right edge and cockpit/roster/side geometry unchanged when drawer opens.
+- Real Chromium DOM actions: open/close, tabs, competition resume, break -1/+1/+5, skip break, skip heat — PASS.
+- Protected foundation comparison against RC65: required sporting/platform files unchanged.
+- RallyCross / Classic EFRA / Scheduler regression suites: PASS (see build verification).

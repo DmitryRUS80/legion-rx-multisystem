@@ -106,15 +106,15 @@ function classicRCScheduleRows(){
 }
 function classicRCScheduleFooter(snap){
   const c=ClassicRCEngine.get(),s=ClassicRCRuntime.session(),phase=s?.phase||'ready',current=snap.current,nextHeat=CompetitionScheduler.nextHeat(c?.timeline),hold=Boolean(c?.directorHold?.active);
-  if(hold)return `<button class="classicScheduleAction primary wide" data-classic-action="competition-resume">${raceSvg('play')} ПРОДОЛЖИТЬ СОРЕВНОВАНИЕ</button>`;
-  if(current?.status==='active')return `<button class="classicScheduleAction primary wide" data-classic-action="director-finish">${raceSvg('flag')} ЗАВЕРШИТЬ ЗАЕЗД</button><div class="classicScheduleActionGrid"><button class="classicScheduleAction" data-classic-action="heat-settings">НАСТРОЙКА ЗАЕЗДА</button><button class="classicScheduleAction warning" data-classic-action="competition-stop">ОСТАНОВИТЬ СОРЕВНОВАНИЕ</button></div>`;
-  if(current?.kind==='break')return `<button class="classicScheduleAction primary wide" data-classic-action="start-early">${raceSvg('next')} НАЧАТЬ СЛЕДУЮЩИЙ</button><div class="classicBreakAdjust"><button data-classic-action="break-minus" data-break-id="${esc(current.id)}">−1 МИН</button><button data-classic-action="break-plus-one" data-break-id="${esc(current.id)}">+1 МИН</button><button data-classic-action="break-plus" data-break-id="${esc(current.id)}">+5 МИН</button></div><div class="classicScheduleActionGrid"><button class="classicScheduleAction" data-classic-action="skip-break" data-break-id="${esc(current.id)}">ПРОПУСТИТЬ ПАУЗУ</button><button class="classicScheduleAction warning" data-classic-action="competition-stop">ОСТАНОВИТЬ СОРЕВНОВАНИЕ</button></div>`;
-  if(nextHeat?.status==='pending')return `<button class="classicScheduleAction primary wide" data-classic-action="start-early">${raceSvg('next')} НАЧАТЬ РАНЬШЕ</button><div class="classicScheduleActionGrid"><button class="classicScheduleAction" data-classic-action="heat-settings">НАСТРОЙКА ЗАЕЗДА</button><button class="classicScheduleAction" data-classic-action="skip-heat">ПРОПУСТИТЬ ЗАЕЗД</button></div><button class="classicScheduleAction warning wide" data-classic-action="competition-stop">ОСТАНОВИТЬ СОРЕВНОВАНИЕ</button>`;
-  return `<button class="classicScheduleAction" data-classic-action="schedule-close">ЗАКРЫТЬ</button>`;
+  if(hold)return `<button type="button" class="classicScheduleAction primary wide" data-classic-action="competition-resume">${raceSvg('play')} ПРОДОЛЖИТЬ СОРЕВНОВАНИЕ</button>`;
+  if(current?.status==='active')return `<button type="button" class="classicScheduleAction primary wide" data-classic-action="director-finish">${raceSvg('flag')} ЗАВЕРШИТЬ ЗАЕЗД</button><div class="classicScheduleActionGrid"><button type="button" class="classicScheduleAction" data-classic-action="heat-settings">НАСТРОЙКА ЗАЕЗДА</button><button type="button" class="classicScheduleAction warning" data-classic-action="competition-stop">ОСТАНОВИТЬ СОРЕВНОВАНИЕ</button></div>`;
+  if(current?.kind==='break')return `<button type="button" class="classicScheduleAction primary wide" data-classic-action="start-early">${raceSvg('next')} НАЧАТЬ СЛЕДУЮЩИЙ</button><div class="classicBreakAdjust"><button type="button" data-classic-action="break-minus" data-break-id="${esc(current.id)}">−1 МИН</button><button type="button" data-classic-action="break-plus-one" data-break-id="${esc(current.id)}">+1 МИН</button><button type="button" data-classic-action="break-plus" data-break-id="${esc(current.id)}">+5 МИН</button></div><div class="classicScheduleActionGrid"><button type="button" class="classicScheduleAction" data-classic-action="skip-break" data-break-id="${esc(current.id)}">ПРОПУСТИТЬ ПАУЗУ</button><button type="button" class="classicScheduleAction warning" data-classic-action="competition-stop">ОСТАНОВИТЬ СОРЕВНОВАНИЕ</button></div>`;
+  if(nextHeat?.status==='pending')return `<button type="button" class="classicScheduleAction primary wide" data-classic-action="start-early">${raceSvg('next')} НАЧАТЬ РАНЬШЕ</button><div class="classicScheduleActionGrid"><button type="button" class="classicScheduleAction" data-classic-action="heat-settings">НАСТРОЙКА ЗАЕЗДА</button><button type="button" class="classicScheduleAction" data-classic-action="skip-heat">ПРОПУСТИТЬ ЗАЕЗД</button></div><button type="button" class="classicScheduleAction warning wide" data-classic-action="competition-stop">ОСТАНОВИТЬ СОРЕВНОВАНИЕ</button>`;
+  return `<button type="button" class="classicScheduleAction" data-classic-action="schedule-close">ЗАКРЫТЬ</button>`;
 }
 function classicRCScheduleDrawer(){
   const c=ClassicRCEngine.get(),tl=c?.timeline;if(!tl)return'';const snap=classicRCScheduleSnapshot(),rows=classicRCScheduleRows(),current=snap.current;classicScheduleSig=`${current?.id||''}:${current?.status||''}:${snap.hold}:${ClassicRCRuntime.testScale()}`;
-  return `<button class="classicScheduleTail ${classicScheduleOpen?'open':''}" data-classic-action="schedule" title="Расписание"><span>${raceSvg('list')}</span><b>РАСПИСАНИЕ</b></button>${classicScheduleOpen?`<div class="classicScheduleScrim" data-classic-action="schedule-close"></div><aside class="classicScheduleDrawer"><header><div><small>CLASSIC RC · EFRA</small><h2>РАСПИСАНИЕ</h2></div><button data-classic-action="schedule-close">×</button></header>${classicRCScheduleStatusStrip(false)}<nav class="classicScheduleTabs"><button class="${classicScheduleTab==='now'?'active':''}" data-classic-schedule-tab="now">СЕЙЧАС</button><button class="${classicScheduleTab==='next'?'active':''}" data-classic-schedule-tab="next">ДАЛЕЕ</button><button class="${classicScheduleTab==='all'?'active':''}" data-classic-schedule-tab="all">ВЕСЬ ДЕНЬ</button></nav><div class="classicScheduleList">${rows.map(it=>{const live=it===current&&(it.status==='active'||(it.kind==='break'&&snap.now>=Number(it.plannedStartEpoch||0)));const status=live?'live':it.status;return `<div class="classicScheduleRow ${status} ${it.kind==='break'?'break':''}"><time>${CompetitionScheduler.formatTime(it.actualStartEpoch||it.plannedStartEpoch)}</time><i></i><div><b>${esc(it.label)}</b><span>${esc(it.kind==='break'?`${it.durationMin} МИН`:it.subLabel||'')}</span></div>${live?`<strong>${it.kind==='break'?'ПАУЗА':'СЕЙЧАС'}</strong>`:it.status==='completed'?'<em>✓</em>':''}</div>`;}).join('')}</div><footer>${classicRCScheduleFooter(snap)}</footer></aside>`:''}`;
+  return `<button type="button" class="classicScheduleTail ${classicScheduleOpen?'open':''}" data-classic-action="schedule" title="Расписание"><span>${raceSvg('list')}</span><b>РАСПИСАНИЕ</b></button>${classicScheduleOpen?`<div class="classicScheduleScrim" data-classic-action="schedule-close"></div><aside class="classicScheduleDrawer"><header><div><small>CLASSIC RC · EFRA</small><h2>РАСПИСАНИЕ</h2></div><button type="button" data-classic-action="schedule-close">×</button></header>${classicRCScheduleStatusStrip(false)}<nav class="classicScheduleTabs"><button type="button" class="${classicScheduleTab==='now'?'active':''}" data-classic-schedule-tab="now">СЕЙЧАС</button><button type="button" class="${classicScheduleTab==='next'?'active':''}" data-classic-schedule-tab="next">ДАЛЕЕ</button><button type="button" class="${classicScheduleTab==='all'?'active':''}" data-classic-schedule-tab="all">ВЕСЬ ДЕНЬ</button></nav><div class="classicScheduleList">${rows.map(it=>{const live=it===current&&(it.status==='active'||(it.kind==='break'&&snap.now>=Number(it.plannedStartEpoch||0)));const status=live?'live':it.status;return `<div class="classicScheduleRow ${status} ${it.kind==='break'?'break':''}"><time>${CompetitionScheduler.formatTime(it.actualStartEpoch||it.plannedStartEpoch)}</time><i></i><div><b>${esc(it.label)}</b><span>${esc(it.kind==='break'?`${it.durationMin} МИН`:it.subLabel||'')}</span></div>${live?`<strong>${it.kind==='break'?'ПАУЗА':'СЕЙЧАС'}</strong>`:it.status==='completed'?'<em>✓</em>':''}</div>`;}).join('')}</div><footer>${classicRCScheduleFooter(snap)}</footer></aside>`:''}`;
 }
 
 function classicRCCockpitView(){rxnEnsureSystemClockTicker();classicRCEnsureScheduleTicker();const c=ClassicRCEngine.get();if(!c||c.status==='setup')return `<section class="page"><div class="card"><h2>Classic RC ещё не подготовлен</h2><button class="btn primary" data-classic-action="setup">К НАСТРОЙКЕ</button></div></section>`;const ev=ClassicRCRuntime.event(),cls=rxnColumnClass(),count=rxnMetricCount();if(!ev&&c.status==='finished')return `<section class="rxnCockpit classicRCCockpit ${cls}" style="--rxn-metric-count:${count}">${classicRCHeader()}${classicRCTitle()}<main class="rxnMain"><section class="rxnRoster"><div class="classicFinalProtocol">${classicRCFinalProtocolMarkup()}</div></section><aside class="rxnSide"><section class="rxnTimerPanel"><div class="rxnTimerCopy"><span>СОРЕВНОВАНИЕ</span><strong>FIN</strong><small>EFRA 2026</small></div></section>${classicRCControls()}</aside></main>${classicRCScheduleDrawer()}</section>`;ClassicRCRuntime.ensureSession();return `<section class="rxnCockpit classicRCCockpit ${cls}" style="--rxn-metric-count:${count}">${classicRCHeader()}${classicRCTitle()}<main class="rxnMain"><section class="rxnRoster"><div id="classicPilotBoard" class="rxnTable">${classicRCPilotTable()}</div></section><aside class="rxnSide">${classicRCScheduleStatusStrip(true)}${classicRCTimerPanel()}${classicRCMobileInfo()}${classicRCControls()}</aside></main>${classicRCScheduleDrawer()}</section>`;}
@@ -149,8 +149,6 @@ function classicRCUpdateScheduleClock(){
 function classicRCEnsureScheduleTicker(){if(classicScheduleTicker)return;classicScheduleTicker=setInterval(()=>{if(state.view==='classicCockpit'){classicRCUpdateScheduleClock();ClassicRCRuntime.checkLimit?.();}},250);}
 function classicRCUpdateDynamic(){if(state.view!=='classicCockpit')return;rxnUpdateSystemClock();classicRCUpdateScheduleClock();const s=ClassicRCRuntime.session(),ev=ClassicRCRuntime.event();if(!s||!ev)return;const timer=document.querySelector('#classicMainTimer');if(timer)timer.textContent=ClassicRCRuntime.timerValue();const label=document.querySelector('#classicTimerLabel');if(label)label.textContent=s.phase==='countdown'?'ДО СТАРТА':s.phase==='finished'?'ФИНИШ':['seeding','controlled','finalPractice'].includes(ev.stage)?'ДО КОНЦА':'ДО ФИНИША';const sub=document.querySelector('#classicTimerSubline');if(sub)sub.textContent=`ЗАЕЗД ${ev.durationMin||ClassicRCEngine.category().raceMinutes} МИН${['qualifying','final'].includes(ev.stage)?' + LAST LAP':''}${ev.stage==='qualifying'?' · STAGGERED':''}`;const ranked=ClassicRCRuntime.liveRanking(),leader=ranked[0],ring=document.querySelector('#classicRingMain');if(ring)ring.textContent=leader?String(s.live?.[leader.id]?.laps||0):'0';let best=null,bp=null;ranked.forEach(p=>{const v=Number(s.live?.[p.id]?.bestLapMs);if(Number.isFinite(v)&&v>0&&(best===null||v<best)){best=v;bp=p;}});document.querySelectorAll('[data-classic-best-name]').forEach(x=>x.textContent=bp?rxnPilotDisplayName(bp):'—');document.querySelectorAll('[data-classic-best-time]').forEach(x=>x.textContent=best?rxnFormatDuration(best):'—');const board=document.querySelector('#classicPilotBoard');if(board){const sig=ranked.map(p=>{const l=s.live[p.id]||ClassicRCRuntime.blank();return`${p.id}:${l.laps}:${Math.round(l.lastLapMs||0)}:${l.finished}:${l.status}`;}).join('|')+rxnLoadPrecision();if(sig!==cRCBoardSig){cRCBoardSig=sig;rxnAnimateBoard(board,classicRCPilotTable());}}}
 let cRCBoardSig='';
-
-let classicRCDelegatedBound=false;
 
 async function classicRCDispatchAction(b){
   if(!b||b.disabled)return;
@@ -190,10 +188,10 @@ async function classicRCDispatchAction(b){
     if(!r.ok)return toast(r.error||'Не удалось пропустить');
     classicScheduleOpen=true;return render();
   }
-  if(a==='skip-break'){ClassicRCEngine.skipScheduleBreak(b.dataset.breakId,ClassicRCRuntime.nowEpoch());return render();}
-  if(a==='break-minus'){ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,-1,ClassicRCRuntime.nowEpoch());return render();}
-  if(a==='break-plus-one'){ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,1,ClassicRCRuntime.nowEpoch());return render();}
-  if(a==='break-plus'){ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,5,ClassicRCRuntime.nowEpoch());return render();}
+  if(a==='skip-break'){const r=ClassicRCEngine.skipScheduleBreak(b.dataset.breakId,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось пропустить паузу');toast('Пауза пропущена');return render();}
+  if(a==='break-minus'){const r=ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,-1,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось изменить паузу');toast(`Пауза · ${r.item.durationMin} мин`);return render();}
+  if(a==='break-plus-one'){const r=ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,1,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось изменить паузу');toast(`Пауза · ${r.item.durationMin} мин`);return render();}
+  if(a==='break-plus'){const r=ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,5,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось изменить паузу');toast(`Пауза · ${r.item.durationMin} мин`);return render();}
   if(a==='competition-stop'){
     if(!confirm('Остановить соревнование? Расписание и текущий заезд будут поставлены на паузу.'))return;
     const ss=ClassicRCRuntime.session();
@@ -204,34 +202,48 @@ async function classicRCDispatchAction(b){
   if(a==='competition-resume'){
     const r=ClassicRCEngine.resumeCompetition(ClassicRCRuntime.rawNowEpoch());
     if(!r?.ok)return toast('Соревнование уже продолжено');
+    const ss=ClassicRCRuntime.session();
+    if(ss?.phase==='paused')await ClassicRCRuntime.pause();
+    toast('Соревнование продолжено');
     classicScheduleOpen=true;return render();
   }
   if(a==='archive'){if(confirm('Сохранить Classic RC в архив и закрыть активный модуль?')){ClassicRCRuntime.dispose();ClassicRCEngine.archive();nav('home');}return;}
   if(a==='next'){const ev=ClassicRCRuntime.event();toast(ev?ev.label:'Соревнование завершено');return;}
 }
 
-function classicRCEnsureDelegatedBindings(){
-  if(classicRCDelegatedBound)return;
-  classicRCDelegatedBound=true;
-  document.addEventListener('click',e=>{
-    const tab=e.target.closest?.('[data-classic-schedule-tab]');
-    if(tab){e.preventDefault();e.stopPropagation();classicScheduleTab=tab.dataset.classicScheduleTab||'now';return render();}
-    const modalClose=e.target.closest?.('[data-classic-modal-close]');
-    if(modalClose){e.preventDefault();e.stopPropagation();return closeModal();}
-    const b=e.target.closest?.('[data-classic-action]');
-    if(!b||b.disabled)return;
+
+function classicRCBindActionElement(b){
+  if(!b||b.dataset.classicBound==='1')return;
+  b.dataset.classicBound='1';
+  b.addEventListener('click',e=>{
+    if(b.disabled)return;
     e.preventDefault();e.stopPropagation();
     Promise.resolve(classicRCDispatchAction(b)).catch(err=>{console.error('Classic RC action failed',err);toast(err?.message||'Ошибка Classic RC');});
-  },true);
-  document.addEventListener('keydown',e=>{
-    const b=e.target.closest?.('.classicScheduleStatus[data-classic-action]');
-    if(!b||!(e.key==='Enter'||e.key===' '))return;
-    e.preventDefault();
-    Promise.resolve(classicRCDispatchAction(b)).catch(err=>{console.error('Classic RC key action failed',err);toast(err?.message||'Ошибка Classic RC');});
-  },true);
+  });
+  if(!/^(BUTTON|INPUT|SELECT|A)$/.test(b.tagName)){
+    b.addEventListener('keydown',e=>{
+      if(!(e.key==='Enter'||e.key===' '))return;
+      e.preventDefault();e.stopPropagation();
+      Promise.resolve(classicRCDispatchAction(b)).catch(err=>{console.error('Classic RC key action failed',err);toast(err?.message||'Ошибка Classic RC');});
+    });
+  }
+}
+
+function classicRCBindScheduleTab(tab){
+  if(!tab||tab.dataset.classicTabBound==='1')return;
+  tab.dataset.classicTabBound='1';
+  tab.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();classicScheduleTab=tab.dataset.classicScheduleTab||'now';render();});
+}
+
+function classicRCBindModalClose(b){
+  if(!b||b.dataset.classicModalBound==='1')return;
+  b.dataset.classicModalBound='1';
+  b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();closeModal();});
 }
 
 function bindClassicRC(){
-  classicRCEnsureDelegatedBindings();
-  $$('[data-classic-pilot]').forEach(b=>b.onclick=()=>{b.classList.toggle('active');b.querySelector('i').textContent=b.classList.contains('active')?'✓':'+';const n=$$('[data-classic-pilot].active').length,el=$('#classicPilotCount');if(el)el.textContent=n;const prepare=$('[data-classic-action="prepare"]');if(prepare)prepare.disabled=n<2;});
+  $$('[data-classic-action]').forEach(classicRCBindActionElement);
+  $$('[data-classic-schedule-tab]').forEach(classicRCBindScheduleTab);
+  $$('[data-classic-modal-close]').forEach(classicRCBindModalClose);
+  $$('[data-classic-pilot]').forEach(b=>{b.onclick=()=>{b.classList.toggle('active');b.querySelector('i').textContent=b.classList.contains('active')?'✓':'+';const n=$$('[data-classic-pilot].active').length,el=$('#classicPilotCount');if(el)el.textContent=n;const prepare=$('[data-classic-action="prepare"]');if(prepare)prepare.disabled=n<2;};});
 }

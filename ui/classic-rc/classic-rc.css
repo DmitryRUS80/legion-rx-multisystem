@@ -190,8 +190,23 @@ html:not([data-skin="classic"]) .classicRCCockpit{
 .classicRCCockpit .classicScheduleStatus.break b,.classicRCCockpit .classicScheduleStatus.break .classicScheduleClock strong{color:var(--classic-schedule-warning)}
 .classicRCCockpit .classicScheduleStatus.hold b,.classicRCCockpit .classicScheduleStatus.hold .classicScheduleClock strong{color:var(--classic-schedule-warning)}
 
-/* RC65 · Schedule touch/click reliability. UI-only; no sport or scheduler rules. */
-.classicScheduleDrawer{isolation:isolate;touch-action:manipulation}
-.classicScheduleDrawer button,.classicScheduleTail{position:relative;z-index:1;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.classicScheduleDrawer button:active,.classicScheduleTail:active{transform:translateY(1px)}
-.classicScheduleTabs button:active{transform:none}
+/* RC66 · Schedule overlay isolation / stable hit areas. UI-only. */
+.classicScheduleTail{
+  position:fixed!important;z-index:420;right:0;top:50%;bottom:auto;left:auto;
+  transform:translateY(-50%);margin:0!important;pointer-events:auto;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;contain:layout style paint;
+}
+.classicScheduleTail.open{opacity:0;visibility:hidden;pointer-events:none}
+.classicScheduleDrawer{position:fixed!important;z-index:440;isolation:isolate;touch-action:manipulation;contain:layout style paint}
+.classicScheduleScrim{position:fixed!important;z-index:430}
+.classicScheduleDrawer button{position:relative;z-index:2;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.classicScheduleDrawer button:active{filter:brightness(.92)}
+.classicScheduleTail:active{transform:translateY(-50%);filter:brightness(.92)}
+.classicScheduleList{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+@media (orientation:landscape) and (max-width:1100px) and (max-height:600px){
+  .classicScheduleTail{top:50%;right:0;bottom:auto;transform:translateY(-50%)}
+}
+@media (orientation:portrait) and (max-width:599px){
+  .classicScheduleTail{top:auto;right:10px;bottom:126px;left:auto;transform:none}
+  .classicScheduleTail:active{transform:none}
+}

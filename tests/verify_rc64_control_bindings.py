@@ -8,7 +8,7 @@ for a in actions:
     checks[f'action_markup_or_handler_{a}']=f"a==='{a}'" in ui or f'data-classic-action="{a}"' in ui
 checks.update({
  'schedule_scrim_conditional_only': "${classicScheduleOpen?`<div class=\"classicScheduleScrim\"" in ui and ui.count('classicScheduleScrim')==1,
- 'status_not_fixed_overlay': '.classicRCCockpit .classicScheduleStatus{' in css and 'position:fixed' not in css[css.rfind('/* RC64 · compact race-state strip'):],
+ 'status_not_fixed_overlay': '.classicRCCockpit .classicScheduleStatus{' in css and '.classicRCCockpit .classicScheduleStatus{position:fixed' not in css,
  'cockpit_controls_not_restyled': '.rxnControl{' not in css[css.rfind('/* RC64 · compact race-state strip'):],
  'status_keyboard_activation': "e.key==='Enter'||e.key===' '" in ui,
 })

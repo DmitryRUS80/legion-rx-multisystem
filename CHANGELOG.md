@@ -1,8 +1,8 @@
-# RC65 — CLASSIC SCHEDULE BUTTON FIX
+# CHANGELOG
 
-- Fixed non-responsive controls inside the Classic RC Schedule overlay.
-- Replaced per-node Schedule action `onclick` wiring with one capture-phase delegated action router.
-- Schedule buttons remain live after dynamic render/re-render cycles.
-- Schedule tabs, close controls and keyboard access use the resilient route.
-- Added touch-action / pointer reliability styling for drawer controls.
-- No sport rules, scoring, Classic runtime, Competition Scheduler, RallyCross or LapWiz changes.
+## RC66 · Classic Schedule Overlay Fix
+- Fixed the schedule tail becoming a normal cockpit grid child because RC65 touch CSS overrode `position: fixed` with `position: relative`.
+- Schedule tail/drawer/scrim are now isolated fixed overlays and cannot change cockpit/pilot geometry.
+- Replaced global capture delegation with direct per-render action bindings for Schedule controls.
+- Added explicit button types and stable touch/click hit areas.
+- No EFRA scoring, Scheduler rules, Classic runtime, RallyCross, LapWiz, or protected foundation changes.

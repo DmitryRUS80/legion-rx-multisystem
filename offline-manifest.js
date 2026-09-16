@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc65-classic-schedule-button-fix';
-  const displayVersion='4.2.0 CLEAN FULL APP RC65 · CLASSIC SCHEDULE BUTTON FIX';
-  const cacheName='legion-rx-4-2-0-clean-full-rc65-classic-schedule-button-fix';
+  const appVersion='4.2.0-clean-full-rc66-classic-schedule-overlay-fix';
+  const displayVersion='4.2.0 CLEAN FULL APP RC66 · CLASSIC SCHEDULE OVERLAY FIX';
+  const cacheName='legion-rx-4-2-0-clean-full-rc66-classic-schedule-overlay-fix';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',
