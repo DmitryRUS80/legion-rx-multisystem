@@ -1,9 +1,7 @@
-# RC63 MASTER ADDENDUM
+# RC64 MASTER ADDENDUM
 
-Current source of truth: **RC63 FULL**.
+Current source of truth: **RC64 FULL**.
 
-Classic RC is the EFRA/MyRCM-style standard RC module and remains independent from RallyCross. Competition Scheduler is a neutral orchestration layer and is not part of EFRA scoring. The shared cockpit is UI only.
+RC64 changes only Classic RC cockpit presentation/control reachability plus release metadata/tests. It does not change the EFRA sport engine, Competition Scheduler logic, RallyCross or LapWiz.
 
-RC63 operational additions: live next-event countdown, contextual Schedule Director controls, heat override, break shortening/extension, skip, competition hold/resume, and Classic RC SIM ×1/×2/×4/×8 using one virtual Classic competition clock.
-
-Do not move these controls or EFRA rules into RallyCross. Do not make Scheduler calculate sporting results. Race Simulator remains pre-release/removable.
+Classic RC cockpit status contract: compact single-line state + next event + whole-second countdown; clicking the strip opens Schedule; the main timer below remains the race timer.

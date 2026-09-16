@@ -1,8 +1,8 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC63 · CLASSIC DIRECTOR CONTROL */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC64 · CLASSIC STATUS CONTROL FIX */
 'use strict';
-const LEGION_SW_BUILD='rc63-classic-director-control';
+const LEGION_SW_BUILD='rc64-classic-status-control-fix';
 /* Unique import URL prevents an older HTTP-cached release manifest being reused during SW update. */
-importScripts('./offline-manifest.js?build=rc63-classic-director-control');
+importScripts('./offline-manifest.js?build=rc64-classic-status-control-fix');
 
 const CFG=self.LEGION_OFFLINE_CONFIG;
 const CACHE=CFG.cacheName;
@@ -38,7 +38,7 @@ async function validate(url,response){
   if(!response||!response.ok)throw new Error(`${url}: HTTP ${response?.status||0}`);
   const type=(response.headers.get('content-type')||'').toLowerCase();
   if(/\.(wav|mp3|png|webp|svg|js|css|woff2)$/i.test(url)&&type.includes('text/html'))throw new Error(`${url}: HTML instead of asset`);
-  if(url==='./'||url==='./index.html'){const s=await textOf(response);if(!s.includes('ui/skins/rxui/cobalt.css')||!s.includes('ui/classic-polish/classic-controls.css')||!s.includes('platform/pilot-live-edit.js')||!s.includes('runtime/race-event-bus.js')||!s.includes('runtime/race-clock-adapter.js')||!s.includes('runtime/race-test-source-adapter.js')||!s.includes('simulation/race-simulator.js')||!s.includes('runtime/competition-scheduler.js')||!s.includes('runtime/active-race-controller.js')||!s.includes('modes/classic-rc/efra-engine.js')||!s.includes('ui/classic-rc/classic-rc-ui.js')||!s.includes('ui/classic-rc/classic-rc.css')||s.includes('designQuickBtn')||s.includes('Design Lab'))throw new Error(`${url}: stale RC63 index or Design Lab still present`);}
+  if(url==='./'||url==='./index.html'){const s=await textOf(response);if(!s.includes('ui/skins/rxui/cobalt.css')||!s.includes('ui/classic-polish/classic-controls.css')||!s.includes('platform/pilot-live-edit.js')||!s.includes('runtime/race-event-bus.js')||!s.includes('runtime/race-clock-adapter.js')||!s.includes('runtime/race-test-source-adapter.js')||!s.includes('simulation/race-simulator.js')||!s.includes('runtime/competition-scheduler.js')||!s.includes('runtime/active-race-controller.js')||!s.includes('modes/classic-rc/efra-engine.js')||!s.includes('ui/classic-rc/classic-rc-ui.js')||!s.includes('ui/classic-rc/classic-rc.css')||s.includes('designQuickBtn')||s.includes('Design Lab'))throw new Error(`${url}: stale RC64 index or Design Lab still present`);}
   if(url==='./ui/shell/views.js'){const s=await textOf(response);if(!s.includes('COBALT · BLUE CONTROL')||!s.includes('raceSessionSettingsModal')||!s.includes('data-race-pilot-profile')||!s.includes('updateDownloadProgress')||!s.includes('legionrx_settings_section')||s.includes('racePilotEditModal')||s.includes('openDesignLab')||s.includes('Design Lab'))throw new Error(`${url}: stale settings/update view`);}
   if(url==='./ui/shell/router.js'){const s=await textOf(response);if(!s.includes('homeViewClassic')||!s.includes('homeViewRxui')||!s.includes('classicCockpit')||!s.includes('EFRA 2026'))throw new Error(`${url}: stale Classic RC router/home`);}
   if(url==='./modes/rallycross/index.js'){const s=await textOf(response);if(!s.includes('function eventSessionSettings'))throw new Error(`${url}: stale session rule adapter`);}
@@ -62,15 +62,15 @@ async function validate(url,response){
   if(url==='./modes/classic-rc/groups.js'){const s=await textOf(response);if(!s.includes('classicRCOffroadHeatOrder')||!s.includes('classicRCFinalGroupsFromQualification'))throw new Error(`${url}: stale EFRA grouping module`);}
   if(url==='./modes/classic-rc/efra-engine.js'){const s=await textOf(response);if(!s.includes('legionrx4_classic_rc_efra_event_v1')||!s.includes('buildFinals')||!s.includes('CompetitionScheduler')||!s.includes('updateCurrentHeatSettings')||!s.includes('pauseCompetition'))throw new Error(`${url}: stale Classic RC engine`);}
   if(url==='./modes/classic-rc/efra-runtime.js'){const s=await textOf(response);if(!s.includes('const ClassicRCRuntime')||!s.includes("ev.stage==='qualifying'")||!s.includes('canStartScheduleHeat')||!s.includes('rawNowEpoch')||!s.includes('cycleSimulationSpeed')||!s.includes("['seeding','controlled','finalPractice','qualifying'].includes(ev.stage)")||s.includes('raceSimulator')||s.includes('rxnFormatDuration')||s.includes('document.'))throw new Error(`${url}: stale/coupled Classic RC runtime`);}
-  if(url==='./ui/classic-rc/classic-rc-ui.js'){const s=await textOf(response);if(!s.includes('classicRCScheduleDrawer')||!s.includes('classicRCScheduleStatusStrip')||!s.includes('НАЧАТЬ РАНЬШЕ')||!s.includes('ОСТАНОВИТЬ СОРЕВНОВАНИЕ')||!s.includes('sim-speed')||!s.includes('EFRA 2026'))throw new Error(`${url}: stale Classic RC UI`);}
-  if(url==='./ui/classic-rc/classic-rc.css'){const s=await textOf(response);if(!s.includes('.classicScheduleDrawer')||!s.includes('orientation:portrait')||!s.includes('position:fixed'))throw new Error(`${url}: stale schedule overlay style`);}
+  if(url==='./ui/classic-rc/classic-rc-ui.js'){const s=await textOf(response);if(!s.includes('classicRCScheduleDrawer')||!s.includes('classicRCScheduleStatusStrip')||!s.includes('classicScheduleNext')||!s.includes('Math.ceil((Number(ms)||0)/1000)')||!s.includes('НАЧАТЬ РАНЬШЕ')||!s.includes('ОСТАНОВИТЬ СОРЕВНОВАНИЕ')||!s.includes('sim-speed')||!s.includes('EFRA 2026'))throw new Error(`${url}: stale Classic RC UI`);}
+  if(url==='./ui/classic-rc/classic-rc.css'){const s=await textOf(response);if(!s.includes('.classicScheduleDrawer')||!s.includes('orientation:portrait')||!s.includes('position:fixed')||!s.includes('grid-template-rows:38px minmax(145px,34%) minmax(0,1fr)')||!s.includes('.classicScheduleClock'))throw new Error(`${url}: stale schedule overlay/status style`);}
   if(url==='./ui/skins/rxui/cobalt.css'){const s=await textOf(response);if(!s.includes('data-skin="cobalt"'))throw new Error(`${url}: invalid COBALT skin`);}
   if(url==='./ui/skins/rxui/base.css'){const s=await textOf(response);if(!s.includes('NON-CLASSIC WORKSPACE WALLPAPER')||!s.includes('workspace-landscape.webp')||!s.includes('workspace-portrait.webp'))throw new Error(`${url}: stale workspace wallpaper layer`);}
   if(url==='./ui/shell/discipline-pults.css'){const s=await textOf(response);if(!s.includes('Landscape phone / narrow browser viewport')||!s.includes('.rxnTimeValue')||!s.includes('.rxnPilotStatsProfileEdit')||!s.includes('.rxnSimulatorButton')||!s.includes('.rxnSystemClock')||!s.includes('.rxnMobileRaceInfo'))throw new Error(`${url}: stale RC61 cockpit/profile CSS`);}
   if(url==='./ui/classic-polish/classic-controls.css'){const s=await textOf(response);if(!s.includes('data-skin="classic"'))throw new Error(`${url}: invalid Classic polish CSS`);}
   if(url==='./ui/classic-polish/classic-icons.js'){const s=await textOf(response);if(!s.includes('ClassicControlPolish'))throw new Error(`${url}: invalid Classic polish icons`);}
-  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc63-classic-director-control')||!s.includes('./runtime/race-event-bus.js'))throw new Error(`${url}: stale RC63 release manifest`);}
-  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC63')||!s.includes('CLASSIC DIRECTOR CONTROL'))throw new Error(`${url}: stale VERSION`);}
+  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc64-classic-status-control-fix')||!s.includes('./runtime/race-event-bus.js'))throw new Error(`${url}: stale RC64 release manifest`);}
+  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC64')||!s.includes('CLASSIC STATUS CONTROL FIX'))throw new Error(`${url}: stale VERSION`);}
   return response;
 }
 function freshRequestUrl(url){const u=new URL(url,self.registration.scope);u.searchParams.set('__legion_build',LEGION_SW_BUILD);return u.href;}

@@ -1,28 +1,29 @@
-# LEGION RX — RC63 TEST REPORT
+# LEGION RX — RC64 TEST REPORT
 
-**Candidate:** `4.2.0 CLEAN FULL APP RC63 · CLASSIC DIRECTOR CONTROL`  
-**Base:** RC62 CLASSIC RC EFRA + SCHEDULER
+**Candidate:** `4.2.0 CLEAN FULL APP RC64 · CLASSIC STATUS CONTROL FIX`
 
-## PASS — current release gates
+## Scope
+RC64 is a surgical Classic RC cockpit repair over RC63. Sport rules, Classic RC EFRA engine/runtime, Competition Scheduler logic, RallyCross, LapWiz and protected foundation are unchanged.
 
-- Protected clean foundation / architecture gates.
-- Classic RC architecture isolation: no RallyCross state/rules inside Classic RC; Scheduler remains sport-neutral.
-- EFRA qualifying/finals/grouping and full 23-pilot end-to-end flow.
-- RallyCross current regressions: run-offs 27/27, start order 12/12, skip/state 11/11, session control, Race Simulator, RC61 Final A third-result rule.
-- RC63 Director control contract: live next-event countdown, early finish, current-heat settings, skip heat, break −1/+1/+5, skip break, competition hold/resume.
-- RC63 Scheduler behavior: shortening a break reflows only the future; heat duration changes reflow the future while preserving start-gap span.
-- RC63 SIM clock: Classic schedule time and race elapsed time accelerate together; speed can be reconfigured ×1/×2/×4/×8.
-- Neutral simulator DNS/DNF/complete routing to Classic runtime.
-- Service Worker local package validators.
-- JavaScript syntax for all project JS files.
-- CSS parse for all project CSS files.
+## Passed gates
+- Clean/protected foundation: PASS.
+- Architecture separation: PASS.
+- iOS/start/audio/update safety: PASS.
+- RallyCross run-off regression: 27/27 PASS.
+- RallyCross start-order regression: 12/12 PASS.
+- RallyCross skip/state regression: 11/11 PASS.
+- Session Control, Race Simulator and RC61 Final-A third-result tie-break: PASS.
+- Classic RC EFRA rules/groups/scheduler/full-flow: PASS.
+- Classic RC architecture separation: PASS.
+- RC63 Director controls, break reflow and SIM shared clock: PASS.
+- RC64 compact status/countdown geometry: PASS.
+- RC64 control binding/hit-layer audit: PASS.
+- Service-worker local validators: 105 PASS / 0 FAIL.
+- All non-test JavaScript syntax: PASS.
 
-## Visual contract checked structurally
-
-- Schedule remains fixed overlay; cockpit does not resize.
-- Landscape/right drawer and portrait/bottom sheet rules remain present.
-- Portrait sheet clears the bottom navigation.
-- Schedule/Director paint is token-driven for every app skin and adds no hard-coded neon theme.
-- Text sizes were kept compact but Schedule state/action text is not reduced to micro labels.
-
-Final acceptance still requires the deployed PWA/device and a real LapWiz field run before GOLD.
+## RC64 fixes specifically verified
+- Scheduler countdown rounds to whole seconds (`MM:SS` / `HH:MM:SS`); no floating-point tails.
+- Classic RC side panel has explicit rows for compact status / race timer / controls.
+- Compact status shows current state, next event and countdown and opens Schedule directly.
+- Schedule scrim/drawer are emitted only while Schedule is open; no invisible full-screen layer remains over cockpit controls.
+- Main cockpit controls were not restyled or moved into a new overlay layer.

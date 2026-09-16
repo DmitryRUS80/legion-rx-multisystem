@@ -110,3 +110,82 @@ html:not([data-skin="classic"]) .classicRCCockpit{
  .classicScheduleDrawer footer{padding:5px 8px 7px;gap:4px}.classicScheduleAction{height:34px;font-size:10px}.classicBreakAdjust button{height:30px;font-size:9px}.classicScheduleActionGrid{gap:4px}
  .classicScheduleTail{bottom:132px}.classicHeatSettingsFields{grid-template-columns:1fr}.classicRCCockpit .classicSimSpeed{height:22px;min-width:34px;font-size:10px}
 }
+
+/* RC64 · compact race-state strip + cockpit hit-area repair */
+.classicRCCockpit .rxnSide{
+  grid-template-rows:38px minmax(145px,34%) minmax(0,1fr);
+}
+.classicRCCockpit .classicScheduleStatus{
+  height:38px;min-height:38px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;gap:10px;padding:0 10px;border:0;border-bottom:1px solid var(--classic-schedule-line);
+  background:transparent;color:var(--classic-schedule-text);overflow:hidden;font-family:var(--rxn-font);
+}
+.classicRCCockpit .classicScheduleStatus b{
+  display:block;min-width:0;color:var(--classic-schedule-text);font:700 13px/1 var(--rxn-font);
+  letter-spacing:.035em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.classicRCCockpit .classicScheduleStatus .classicScheduleNext{
+  min-width:0;margin:0;color:var(--classic-schedule-muted);font:600 11px/1 var(--rxn-font);
+  letter-spacing:.025em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.classicRCCockpit .classicScheduleClock{display:flex;align-items:baseline;justify-content:flex-end;gap:7px;min-width:0;white-space:nowrap}
+.classicRCCockpit .classicScheduleClock small{color:var(--classic-schedule-muted);font:600 9px/1 var(--rxn-font);letter-spacing:.045em;text-transform:uppercase}
+.classicRCCockpit .classicScheduleClock strong{color:var(--classic-schedule-active);font:700 20px/1 var(--rxn-font);font-variant-numeric:tabular-nums;letter-spacing:.015em}
+.classicRCCockpit .classicScheduleStatus.hold b,.classicRCCockpit .classicScheduleStatus.hold .classicScheduleClock strong{color:var(--classic-schedule-warning)}
+.classicRCCockpit .classicScheduleStatus.clickable{cursor:pointer;user-select:none}
+.classicRCCockpit .classicScheduleStatus.clickable:hover{background:color-mix(in srgb,var(--classic-schedule-control-hover) 45%,transparent)}
+.classicRCCockpit .classicScheduleStatus.clickable:focus-visible{outline:1px solid var(--classic-schedule-accent);outline-offset:-1px}
+
+/* The drawer is an overlay only. When it is closed there is no full-screen hit layer. */
+.classicScheduleTail{pointer-events:auto}
+.classicScheduleScrim,.classicScheduleDrawer{pointer-events:auto}
+.classicScheduleDrawer>.classicScheduleStatus{
+  height:42px;min-height:42px;grid-template-columns:auto minmax(0,1fr) auto;padding:0 10px;background:transparent;
+}
+.classicScheduleDrawer>.classicScheduleStatus b{font-size:11px}
+.classicScheduleDrawer>.classicScheduleStatus .classicScheduleNext{font-size:10px}
+.classicScheduleDrawer>.classicScheduleStatus .classicScheduleClock strong{font-size:18px}
+.classicScheduleDrawer>.classicScheduleStatus .classicScheduleClock small{font-size:8px}
+
+@media (min-width:1400px) and (min-height:650px){
+ .classicRCCockpit .rxnSide{grid-template-rows:40px minmax(210px,32%) minmax(0,1fr)}
+ .classicRCCockpit .classicScheduleStatus{height:40px;min-height:40px}
+ .classicRCCockpit .classicScheduleStatus b{font-size:14px}
+ .classicRCCockpit .classicScheduleStatus .classicScheduleNext{font-size:12px}
+ .classicRCCockpit .classicScheduleClock strong{font-size:21px}
+ .classicRCCockpit .classicScheduleClock small{font-size:10px}
+}
+@media (orientation:landscape) and (max-width:1100px) and (max-height:600px){
+ .classicRCCockpit .rxnSide{grid-template-rows:27px 100px minmax(0,1fr);gap:3px}
+ .classicRCCockpit .classicScheduleStatus{height:27px;min-height:27px;padding:0 6px;gap:6px}
+ .classicRCCockpit .classicScheduleStatus b{font-size:9px}
+ .classicRCCockpit .classicScheduleStatus .classicScheduleNext{font-size:8px}
+ .classicRCCockpit .classicScheduleClock{gap:4px}
+ .classicRCCockpit .classicScheduleClock small{font-size:7px}
+ .classicRCCockpit .classicScheduleClock strong{font-size:14px}
+ .classicScheduleDrawer>.classicScheduleStatus{height:31px;min-height:31px;padding:0 7px}
+ .classicScheduleDrawer>.classicScheduleStatus b{font-size:9px}.classicScheduleDrawer>.classicScheduleStatus .classicScheduleNext{font-size:8px}
+ .classicScheduleDrawer>.classicScheduleStatus .classicScheduleClock strong{font-size:14px}
+}
+@media (orientation:portrait){
+ .classicRCCockpit .classicScheduleStatus{order:-1;height:30px;min-height:30px;padding:0 5px;gap:6px}
+ .classicRCCockpit .classicScheduleStatus b{font-size:10px}
+ .classicRCCockpit .classicScheduleStatus .classicScheduleNext{font-size:9px}
+ .classicRCCockpit .classicScheduleClock{gap:4px}
+ .classicRCCockpit .classicScheduleClock small{font-size:7px}
+ .classicRCCockpit .classicScheduleClock strong{font-size:15px}
+}
+@media (orientation:portrait) and (max-width:599px){
+ .classicRCCockpit .classicScheduleStatus{height:27px;min-height:27px;padding:0 4px;gap:5px}
+ .classicRCCockpit .classicScheduleStatus b{font-size:9px}
+ .classicRCCockpit .classicScheduleStatus .classicScheduleNext{font-size:8px}
+ .classicRCCockpit .classicScheduleClock small{display:none}
+ .classicRCCockpit .classicScheduleClock strong{font-size:14px}
+ .classicScheduleDrawer>.classicScheduleStatus{height:34px;min-height:34px;padding:0 7px}
+ .classicScheduleDrawer>.classicScheduleStatus .classicScheduleNext{font-size:8px}
+}
+/* RC64 tone discipline: countdown follows the active skin, not a hard green signal. */
+.classicRCCockpit .classicScheduleClock strong{color:var(--classic-schedule-text)}
+.classicRCCockpit .classicScheduleStatus.running b,.classicRCCockpit .classicScheduleStatus.running .classicScheduleClock strong{color:var(--classic-schedule-accent)}
+.classicRCCockpit .classicScheduleStatus.break b,.classicRCCockpit .classicScheduleStatus.break .classicScheduleClock strong{color:var(--classic-schedule-warning)}
+.classicRCCockpit .classicScheduleStatus.hold b,.classicRCCockpit .classicScheduleStatus.hold .classicScheduleClock strong{color:var(--classic-schedule-warning)}

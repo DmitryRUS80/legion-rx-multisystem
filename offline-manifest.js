@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc63-classic-director-control';
-  const displayVersion='4.2.0 CLEAN FULL APP RC63 · CLASSIC DIRECTOR CONTROL';
-  const cacheName='legion-rx-4-2-0-clean-full-rc63-classic-director-control';
+  const appVersion='4.2.0-clean-full-rc64-classic-status-control-fix';
+  const displayVersion='4.2.0 CLEAN FULL APP RC64 · CLASSIC STATUS CONTROL FIX';
+  const cacheName='legion-rx-4-2-0-clean-full-rc64-classic-status-control-fix';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',
