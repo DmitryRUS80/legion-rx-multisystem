@@ -150,33 +150,88 @@ function classicRCEnsureScheduleTicker(){if(classicScheduleTicker)return;classic
 function classicRCUpdateDynamic(){if(state.view!=='classicCockpit')return;rxnUpdateSystemClock();classicRCUpdateScheduleClock();const s=ClassicRCRuntime.session(),ev=ClassicRCRuntime.event();if(!s||!ev)return;const timer=document.querySelector('#classicMainTimer');if(timer)timer.textContent=ClassicRCRuntime.timerValue();const label=document.querySelector('#classicTimerLabel');if(label)label.textContent=s.phase==='countdown'?'ДО СТАРТА':s.phase==='finished'?'ФИНИШ':['seeding','controlled','finalPractice'].includes(ev.stage)?'ДО КОНЦА':'ДО ФИНИША';const sub=document.querySelector('#classicTimerSubline');if(sub)sub.textContent=`ЗАЕЗД ${ev.durationMin||ClassicRCEngine.category().raceMinutes} МИН${['qualifying','final'].includes(ev.stage)?' + LAST LAP':''}${ev.stage==='qualifying'?' · STAGGERED':''}`;const ranked=ClassicRCRuntime.liveRanking(),leader=ranked[0],ring=document.querySelector('#classicRingMain');if(ring)ring.textContent=leader?String(s.live?.[leader.id]?.laps||0):'0';let best=null,bp=null;ranked.forEach(p=>{const v=Number(s.live?.[p.id]?.bestLapMs);if(Number.isFinite(v)&&v>0&&(best===null||v<best)){best=v;bp=p;}});document.querySelectorAll('[data-classic-best-name]').forEach(x=>x.textContent=bp?rxnPilotDisplayName(bp):'—');document.querySelectorAll('[data-classic-best-time]').forEach(x=>x.textContent=best?rxnFormatDuration(best):'—');const board=document.querySelector('#classicPilotBoard');if(board){const sig=ranked.map(p=>{const l=s.live[p.id]||ClassicRCRuntime.blank();return`${p.id}:${l.laps}:${Math.round(l.lastLapMs||0)}:${l.finished}:${l.status}`;}).join('|')+rxnLoadPrecision();if(sig!==cRCBoardSig){cRCBoardSig=sig;rxnAnimateBoard(board,classicRCPilotTable());}}}
 let cRCBoardSig='';
 
+let classicRCDelegatedBound=false;
+
+async function classicRCDispatchAction(b){
+  if(!b||b.disabled)return;
+  const a=b.dataset.classicAction;
+  if(!a)return;
+  if(a==='open')return classicRCOpen();
+  if(a==='home'){ClassicRCRuntime.dispose();return nav('home');}
+  if(a==='setup')return nav('classicSetup');
+  if(a==='cockpit')return nav('classicCockpit');
+  if(a==='prepare'){
+    const ids=$$('[data-classic-pilot].active').map(x=>x.dataset.classicPilot);
+    ClassicRCEngine.updateSetup({name:$('#classicName')?.value||'Classic RC',date:$('#classicDate')?.value,location:$('#classicLocation')?.value||'',category:$('#classicCategory')?.value,pilotIds:ids,settings:{startTime:$('#classicStartTime')?.value||'09:00',seedingRounds:Number($('#classicSeedRounds')?.value)||2,seedingConsecutiveLaps:Number($('#classicSeedLaps')?.value)||3,controlledPracticeRounds:Number($('#classicPracticeRounds')?.value)||2,qualifyingRounds:Number($('#classicQRounds')?.value)||5,minLapSec:Number($('#classicMinLap')?.value)||2,roundBreakMin:Number($('#classicRoundBreak')?.value)||0,finalBreakMin:Number($('#classicFinalBreak')?.value)||0,finalPractice:Boolean($('#classicFinalPractice')?.checked),lowestFinalPolicy:$('#classicLowestFinal')?.value==='rebalance'?'rebalance':'keep'}});
+    try{ClassicRCEngine.prepare();return nav('classicCockpit');}catch(e){return toast(e.message);}
+  }
+  if(a==='delete'){if(confirm('Удалить текущее Classic RC соревнование?')){ClassicRCRuntime.dispose();ClassicRCEngine.reset();nav('home');}return;}
+  if(a==='start')return ClassicRCRuntime.beginStart();
+  if(a==='pause')return ClassicRCRuntime.pause();
+  if(a==='finish')return ClassicRCRuntime.finish();
+  if(a==='stop')return ClassicRCRuntime.stop();
+  if(a==='restart'){if(confirm('Сбросить текущую попытку и подготовить этот же заезд заново?'))ClassicRCRuntime.restart();return;}
+  if(a==='confirm-result')return classicRCResultModal();
+  if(a==='save-result')return classicRCSaveResult();
+  if(a==='results')return classicRCResultsModal();
+  if(a==='schedule'){classicScheduleOpen=!classicScheduleOpen;return render();}
+  if(a==='schedule-close'){classicScheduleOpen=false;return render();}
+  if(a==='sim-settings'){if(typeof raceSimulatorModal==='function')return raceSimulatorModal();return toast('Симулятор не загружен');}
+  if(a==='sim-speed'){const speed=ClassicRCRuntime.cycleSimulationSpeed();toast(`SIM ×${speed}`);return render();}
+  if(a==='start-early'){classicScheduleOpen=false;return ClassicRCRuntime.beginStart();}
+  if(a==='director-finish'){classicScheduleOpen=false;return ClassicRCRuntime.finish('Досрочно завершено директором');}
+  if(a==='heat-settings')return classicRCHeatSettingsModal();
+  if(a==='heat-settings-apply')return classicRCApplyHeatSettings();
+  if(a==='skip-heat'){
+    if(!confirm('Пропустить текущий заезд? Для его пилотов будет записан DNS.'))return;
+    const ss=ClassicRCRuntime.session();
+    if(ss&&['countdown','running','finishing','paused'].includes(ss.phase))return toast('Сначала завершите активный заезд');
+    const r=ClassicRCEngine.skipCurrentEvent(ClassicRCRuntime.nowEpoch());
+    if(!r.ok)return toast(r.error||'Не удалось пропустить');
+    classicScheduleOpen=true;return render();
+  }
+  if(a==='skip-break'){ClassicRCEngine.skipScheduleBreak(b.dataset.breakId,ClassicRCRuntime.nowEpoch());return render();}
+  if(a==='break-minus'){ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,-1,ClassicRCRuntime.nowEpoch());return render();}
+  if(a==='break-plus-one'){ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,1,ClassicRCRuntime.nowEpoch());return render();}
+  if(a==='break-plus'){ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,5,ClassicRCRuntime.nowEpoch());return render();}
+  if(a==='competition-stop'){
+    if(!confirm('Остановить соревнование? Расписание и текущий заезд будут поставлены на паузу.'))return;
+    const ss=ClassicRCRuntime.session();
+    if(ss?.phase==='countdown')await ClassicRCRuntime.stop();
+    else if(ss&&['running','finishing'].includes(ss.phase))await ClassicRCRuntime.pause();
+    ClassicRCEngine.pauseCompetition(ClassicRCRuntime.rawNowEpoch());classicScheduleOpen=true;return render();
+  }
+  if(a==='competition-resume'){
+    const r=ClassicRCEngine.resumeCompetition(ClassicRCRuntime.rawNowEpoch());
+    if(!r?.ok)return toast('Соревнование уже продолжено');
+    classicScheduleOpen=true;return render();
+  }
+  if(a==='archive'){if(confirm('Сохранить Classic RC в архив и закрыть активный модуль?')){ClassicRCRuntime.dispose();ClassicRCEngine.archive();nav('home');}return;}
+  if(a==='next'){const ev=ClassicRCRuntime.event();toast(ev?ev.label:'Соревнование завершено');return;}
+}
+
+function classicRCEnsureDelegatedBindings(){
+  if(classicRCDelegatedBound)return;
+  classicRCDelegatedBound=true;
+  document.addEventListener('click',e=>{
+    const tab=e.target.closest?.('[data-classic-schedule-tab]');
+    if(tab){e.preventDefault();e.stopPropagation();classicScheduleTab=tab.dataset.classicScheduleTab||'now';return render();}
+    const modalClose=e.target.closest?.('[data-classic-modal-close]');
+    if(modalClose){e.preventDefault();e.stopPropagation();return closeModal();}
+    const b=e.target.closest?.('[data-classic-action]');
+    if(!b||b.disabled)return;
+    e.preventDefault();e.stopPropagation();
+    Promise.resolve(classicRCDispatchAction(b)).catch(err=>{console.error('Classic RC action failed',err);toast(err?.message||'Ошибка Classic RC');});
+  },true);
+  document.addEventListener('keydown',e=>{
+    const b=e.target.closest?.('.classicScheduleStatus[data-classic-action]');
+    if(!b||!(e.key==='Enter'||e.key===' '))return;
+    e.preventDefault();
+    Promise.resolve(classicRCDispatchAction(b)).catch(err=>{console.error('Classic RC key action failed',err);toast(err?.message||'Ошибка Classic RC');});
+  },true);
+}
+
 function bindClassicRC(){
+  classicRCEnsureDelegatedBindings();
   $$('[data-classic-pilot]').forEach(b=>b.onclick=()=>{b.classList.toggle('active');b.querySelector('i').textContent=b.classList.contains('active')?'✓':'+';const n=$$('[data-classic-pilot].active').length,el=$('#classicPilotCount');if(el)el.textContent=n;const prepare=$('[data-classic-action="prepare"]');if(prepare)prepare.disabled=n<2;});
-  $$('[data-classic-schedule-tab]').forEach(b=>b.onclick=()=>{classicScheduleTab=b.dataset.classicScheduleTab||'now';render();});
-  $$('[data-classic-modal-close]').forEach(b=>b.onclick=closeModal);
-  $$('[data-classic-action]').forEach(b=>{if(b.classList?.contains('classicScheduleStatus'))b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();b.click();}};b.onclick=async()=>{const a=b.dataset.classicAction;
-    if(a==='open')return classicRCOpen();
-    if(a==='home'){ClassicRCRuntime.dispose();return nav('home');}
-    if(a==='setup')return nav('classicSetup');if(a==='cockpit')return nav('classicCockpit');
-    if(a==='prepare'){const ids=$$('[data-classic-pilot].active').map(x=>x.dataset.classicPilot);ClassicRCEngine.updateSetup({name:$('#classicName')?.value||'Classic RC',date:$('#classicDate')?.value,location:$('#classicLocation')?.value||'',category:$('#classicCategory')?.value,pilotIds:ids,settings:{startTime:$('#classicStartTime')?.value||'09:00',seedingRounds:Number($('#classicSeedRounds')?.value)||2,seedingConsecutiveLaps:Number($('#classicSeedLaps')?.value)||3,controlledPracticeRounds:Number($('#classicPracticeRounds')?.value)||2,qualifyingRounds:Number($('#classicQRounds')?.value)||5,minLapSec:Number($('#classicMinLap')?.value)||2,roundBreakMin:Number($('#classicRoundBreak')?.value)||0,finalBreakMin:Number($('#classicFinalBreak')?.value)||0,finalPractice:Boolean($('#classicFinalPractice')?.checked),lowestFinalPolicy:$('#classicLowestFinal')?.value==='rebalance'?'rebalance':'keep'}});try{ClassicRCEngine.prepare();return nav('classicCockpit');}catch(e){return toast(e.message);}}
-    if(a==='delete'){if(confirm('Удалить текущее Classic RC соревнование?')){ClassicRCRuntime.dispose();ClassicRCEngine.reset();nav('home');}return;}
-    if(a==='start')return ClassicRCRuntime.beginStart();if(a==='pause')return ClassicRCRuntime.pause();if(a==='finish')return ClassicRCRuntime.finish();if(a==='stop')return ClassicRCRuntime.stop();
-    if(a==='restart'){if(confirm('Сбросить текущую попытку и подготовить этот же заезд заново?'))ClassicRCRuntime.restart();return;}
-    if(a==='confirm-result')return classicRCResultModal();if(a==='save-result')return classicRCSaveResult();if(a==='results')return classicRCResultsModal();
-    if(a==='schedule'){classicScheduleOpen=!classicScheduleOpen;return render();}if(a==='schedule-close'){classicScheduleOpen=false;return render();}
-    if(a==='sim-settings'){if(typeof raceSimulatorModal==='function')return raceSimulatorModal();return toast('Симулятор не загружен');}
-    if(a==='sim-speed'){const speed=ClassicRCRuntime.cycleSimulationSpeed();toast(`SIM ×${speed}`);return render();}
-    if(a==='start-early'){classicScheduleOpen=false;return ClassicRCRuntime.beginStart();}
-    if(a==='director-finish'){classicScheduleOpen=false;return ClassicRCRuntime.finish('Досрочно завершено директором');}
-    if(a==='heat-settings')return classicRCHeatSettingsModal();if(a==='heat-settings-apply')return classicRCApplyHeatSettings();
-    if(a==='skip-heat'){if(!confirm('Пропустить текущий заезд? Для его пилотов будет записан DNS.'))return;const ss=ClassicRCRuntime.session();if(ss&&['countdown','running','finishing','paused'].includes(ss.phase))return toast('Сначала завершите активный заезд');const r=ClassicRCEngine.skipCurrentEvent(ClassicRCRuntime.nowEpoch());if(!r.ok)return toast(r.error||'Не удалось пропустить');classicScheduleOpen=true;return render();}
-    if(a==='skip-break'){ClassicRCEngine.skipScheduleBreak(b.dataset.breakId,ClassicRCRuntime.nowEpoch());return render();}
-    if(a==='break-minus'){ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,-1,ClassicRCRuntime.nowEpoch());return render();}
-    if(a==='break-plus-one'){ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,1,ClassicRCRuntime.nowEpoch());return render();}
-    if(a==='break-plus'){ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,5,ClassicRCRuntime.nowEpoch());return render();}
-    if(a==='competition-stop'){if(!confirm('Остановить соревнование? Расписание и текущий заезд будут поставлены на паузу.'))return;const ss=ClassicRCRuntime.session();if(ss?.phase==='countdown')await ClassicRCRuntime.stop();else if(ss&&['running','finishing'].includes(ss.phase))await ClassicRCRuntime.pause();ClassicRCEngine.pauseCompetition(ClassicRCRuntime.rawNowEpoch());classicScheduleOpen=true;return render();}
-    if(a==='competition-resume'){ClassicRCEngine.resumeCompetition(ClassicRCRuntime.rawNowEpoch());classicScheduleOpen=true;return render();}
-    if(a==='archive'){if(confirm('Сохранить Classic RC в архив и закрыть активный модуль?')){ClassicRCRuntime.dispose();ClassicRCEngine.archive();nav('home');}return;}
-    if(a==='next'){const ev=ClassicRCRuntime.event();toast(ev?ev.label:'Соревнование завершено');return;}
-  };});
 }

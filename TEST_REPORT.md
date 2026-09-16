@@ -1,29 +1,20 @@
-# LEGION RX — RC64 TEST REPORT
+# LEGION RX — RC65 TEST REPORT
 
-**Candidate:** `4.2.0 CLEAN FULL APP RC64 · CLASSIC STATUS CONTROL FIX`
+**Candidate:** `4.2.0 CLEAN FULL APP RC65 · CLASSIC SCHEDULE BUTTON FIX`
 
-## Scope
-RC64 is a surgical Classic RC cockpit repair over RC63. Sport rules, Classic RC EFRA engine/runtime, Competition Scheduler logic, RallyCross, LapWiz and protected foundation are unchanged.
+RC65 fixes the Classic RC Schedule overlay input path only. EFRA rules, Classic RC engine/runtime, Competition Scheduler, RallyCross, LapWiz and protected foundation are unchanged.
 
-## Passed gates
-- Clean/protected foundation: PASS.
-- Architecture separation: PASS.
-- iOS/start/audio/update safety: PASS.
-- RallyCross run-off regression: 27/27 PASS.
-- RallyCross start-order regression: 12/12 PASS.
-- RallyCross skip/state regression: 11/11 PASS.
-- Session Control, Race Simulator and RC61 Final-A third-result tie-break: PASS.
-- Classic RC EFRA rules/groups/scheduler/full-flow: PASS.
-- Classic RC architecture separation: PASS.
-- RC63 Director controls, break reflow and SIM shared clock: PASS.
-- RC64 compact status/countdown geometry: PASS.
-- RC64 control binding/hit-layer audit: PASS.
-- Service-worker local validators: 105 PASS / 0 FAIL.
-- All non-test JavaScript syntax: PASS.
-
-## RC64 fixes specifically verified
-- Scheduler countdown rounds to whole seconds (`MM:SS` / `HH:MM:SS`); no floating-point tails.
-- Classic RC side panel has explicit rows for compact status / race timer / controls.
-- Compact status shows current state, next event and countdown and opens Schedule directly.
-- Schedule scrim/drawer are emitted only while Schedule is open; no invisible full-screen layer remains over cockpit controls.
-- Main cockpit controls were not restyled or moved into a new overlay layer.
+Verified:
+- delegated Schedule action router: PASS;
+- capture-phase click/touch path: PASS;
+- resume competition / break -1 / +1 / +5 / skip break / start early dispatch: PASS;
+- Classic RC EFRA rules: PASS;
+- full Classic RC competition flow: PASS;
+- Scheduler director controls: PASS;
+- SIM shared race/schedule clock: PASS;
+- RallyCross run-off suite: 27/27 PASS;
+- RallyCross start order: 12/12 PASS;
+- skip/state: 11/11 PASS;
+- architecture boundaries: PASS;
+- protected foundation: PASS;
+- RC65 release cohesion: PASS.

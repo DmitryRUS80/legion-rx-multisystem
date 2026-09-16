@@ -1,7 +1,5 @@
-# RC64 MASTER ADDENDUM
+# RC65 MASTER ADDENDUM
 
-Current source of truth: **RC64 FULL**.
+Current source of truth: **RC65 FULL**.
 
-RC64 changes only Classic RC cockpit presentation/control reachability plus release metadata/tests. It does not change the EFRA sport engine, Competition Scheduler logic, RallyCross or LapWiz.
-
-Classic RC cockpit status contract: compact single-line state + next event + whole-second countdown; clicking the strip opens Schedule; the main timer below remains the race timer.
+RC65 fixes Schedule overlay input reliability only. Continue development from FULL, never from UPLOAD_TO_GITHUB. Protected sport/platform boundaries remain unchanged.

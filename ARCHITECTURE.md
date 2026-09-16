@@ -1,7 +1,13 @@
-# LEGION RX — CURRENT CLEAN ARCHITECTURE · RC64
+# LEGION RX — CURRENT CLEAN ARCHITECTURE · RC65
 
-RC64 is a presentation-layer repair over RC63. No sport/core boundary is changed.
+RC65 is a UI input-binding repair only.
 
-`Classic RC EFRA rules/runtime` and `Competition Scheduler` stay independent. `RallyCross` and `LapWiz` are untouched. The cockpit status component reads neutral scheduler state through the existing Classic RC UI adapter only.
+Protected separation remains:
+- RallyCross sport engine is independent.
+- Classic RC EFRA sport engine/runtime is independent.
+- Competition Scheduler is neutral and unchanged.
+- LapWiz/event source layer is unchanged.
+- Race Simulator remains a removable test source.
+- Shared cockpit remains presentation-only.
 
-The Schedule drawer is still a fixed overlay outside cockpit geometry. Its scrim is rendered conditionally only when the drawer is open. The compact status strip above the Classic RC timer occupies an explicit fixed-height row and can open the drawer directly.
+RC65 changes only `ui/classic-rc/classic-rc-ui.js`, `ui/classic-rc/classic-rc.css`, release metadata/tests and PWA build identity.

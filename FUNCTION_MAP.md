@@ -1,7 +1,7 @@
-# RC64 FUNCTION MAP ADDENDUM
+# RC65 FUNCTION MAP ADDENDUM
 
-- `ui/classic-rc/classic-rc-ui.js` — compact Classic RC scheduler state strip, whole-second countdown, direct Schedule entry.
-- `ui/classic-rc/classic-rc.css` — explicit status/timer/control rows and compact responsive geometry.
-- `modes/classic-rc/*` — unchanged from RC63.
-- `runtime/competition-scheduler.js` — unchanged from RC63.
-- `modes/rallycross/*`, `platform/lapwiz.js` — unchanged from RC63.
+Classic RC Schedule control flow:
+
+`click/touch -> delegated capture listener -> classicRCDispatchAction(button) -> existing ClassicRCEngine / ClassicRCRuntime public action`
+
+The drawer no longer depends on attaching a fresh `onclick` function to every action button after each render. Sport calculations and scheduler methods are unchanged.

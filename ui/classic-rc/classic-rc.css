@@ -189,3 +189,9 @@ html:not([data-skin="classic"]) .classicRCCockpit{
 .classicRCCockpit .classicScheduleStatus.running b,.classicRCCockpit .classicScheduleStatus.running .classicScheduleClock strong{color:var(--classic-schedule-accent)}
 .classicRCCockpit .classicScheduleStatus.break b,.classicRCCockpit .classicScheduleStatus.break .classicScheduleClock strong{color:var(--classic-schedule-warning)}
 .classicRCCockpit .classicScheduleStatus.hold b,.classicRCCockpit .classicScheduleStatus.hold .classicScheduleClock strong{color:var(--classic-schedule-warning)}
+
+/* RC65 · Schedule touch/click reliability. UI-only; no sport or scheduler rules. */
+.classicScheduleDrawer{isolation:isolate;touch-action:manipulation}
+.classicScheduleDrawer button,.classicScheduleTail{position:relative;z-index:1;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.classicScheduleDrawer button:active,.classicScheduleTail:active{transform:translateY(1px)}
+.classicScheduleTabs button:active{transform:none}
