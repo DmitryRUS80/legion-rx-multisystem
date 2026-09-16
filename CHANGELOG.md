@@ -1,3 +1,13 @@
+# RC62 — CLASSIC RC EFRA + NEUTRAL SCHEDULER
+
+- Added a fully independent Classic RC sports engine implementing the EFRA 2026 Appendix 3 Round-by-Round format. It has its own state/storage, scoring, grouping, qualifying, finals and live runtime and does not import RallyCross sporting logic.
+- Added Practice/Seeding, max-10 balanced heats, 2/3 consecutive-lap seeding, Off-Road rotating heat order, staggered qualifying, automatic A/B/C finals, three final legs / BEST 2 and official EFRA tie-breaks.
+- Added a neutral `CompetitionScheduler`: planned/actual times, minimum start gap, breaks, +5 min, skip break, start-next-earlier, and live future recalculation after delays. Scheduler never calculates sport results.
+- Added fixed Schedule overlay/tail in the accepted current visual language: right overlay on wide/landscape, bottom sheet on portrait; cockpit geometry never moves. Schedule paint is token-driven for CLASSIC / COBALT / STEEL / LIGHT / MODERN / HERITAGE instead of hard-coded blue/neon styling.
+- Added `ActiveRaceController` at the shell boundary so one neutral timing stream can route safely to the live sport mode without RallyCross/Classic RC importing one another.
+- Verification fixes: valid Q DNF classification, active input ownership while another page is open, SW candidate validator defects, actual-start scheduler bookkeeping, delayed-heat schedule reflow, and practice first-pass baseline timing.
+- Protected RC61 RallyCross/LapWiz/foundation files remain byte-identical.
+
 # RC61 — RUNTIME ISOLATION + COCKPIT INFO
 
 - Critical architecture fix: the pre-release Race Simulator is detached from `modes/rallycross/runtime.js`. RallyCross now talks only to neutral `raceTestSourceAdapter`, `raceEventBus` and `raceClockAdapter`; `runtime.js` contains no `raceSimulator` reference. LapWiz passes and simulator passes enter through the same neutral event bus.

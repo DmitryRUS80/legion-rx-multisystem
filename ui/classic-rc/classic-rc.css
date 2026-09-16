@@ -1,0 +1,88 @@
+/* LEGION RX · CLASSIC RC / EFRA 2026 · RC62 */
+.classicSetupPage .pageHeader p{max-width:760px}
+.classicSetupGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+.classicSetupMain,.classicPilotCard,.classicPlanCard{margin:0}
+.classicPilotCard,.classicPlanCard{grid-column:1/-1}
+.classicFields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.classicFieldsMain{grid-template-columns:2fr 1fr 1.5fr 1fr}
+.classicFields label{display:flex;flex-direction:column;gap:6px;min-width:0}
+.classicFields label>span{font:600 12px/1 var(--rxn-font);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.classicFields input,.classicFields select{height:42px;width:100%;border:1px solid var(--line);border-radius:4px;background:var(--input);color:var(--text);padding:0 11px;font:600 15px/1 var(--rxn-font)}
+.classicFields .classicCheck{flex-direction:row;align-items:center;gap:9px;align-self:end;height:42px;padding:0 10px;border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.025)}
+.classicFields .classicCheck input{width:18px;height:18px;padding:0}
+.classicRuleLine{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-family:var(--rxn-font)}
+.classicRuleLine b{font-size:14px;color:var(--accent)}.classicRuleLine span{font-size:13px;color:var(--muted);text-align:right}
+.classicPilotGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:10px}
+.classicPilotSelect{height:58px;display:grid;grid-template-columns:54px minmax(0,1fr) 22px;align-items:center;gap:8px;padding:5px;border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.025);color:var(--text);text-align:left;cursor:pointer}
+.classicPilotSelect:hover{background:color-mix(in srgb,var(--panel2) 78%,var(--text) 4%)}.classicPilotSelect.active{border-color:color-mix(in srgb,var(--blue) 72%,var(--line));background:color-mix(in srgb,var(--blue) 12%,var(--panel))}
+.classicPilotId{height:46px;display:flex;align-items:center;justify-content:center;background:var(--pilot-color,#eee);color:#081019;font:700 20px/1 var(--rxn-font)}
+.classicPilotSelect b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:600 15px/1 var(--rxn-font)}.classicPilotSelect small{display:block;margin-top:5px;color:var(--muted);font:500 10px/1 var(--rxn-font);text-transform:uppercase}.classicPilotSelect i{font-style:normal;font:700 18px/1 var(--rxn-font);color:var(--accent)}
+.classicPlanStats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0 14px}.classicPlanStats span{min-height:64px;padding:9px 11px;border-top:2px solid color-mix(in srgb,var(--blue) 58%,transparent);background:color-mix(in srgb,var(--panel2) 88%,transparent)}.classicPlanStats b{display:block;font:700 24px/1 var(--rxn-font)}.classicPlanStats small{display:block;margin-top:7px;color:var(--muted);font:600 10px/1 var(--rxn-font);letter-spacing:.05em}
+.classicPreparedSummary{display:flex;align-items:center;gap:18px}.classicPreparedSummary>b{font:700 19px/1 var(--rxn-font)}.classicPreparedSummary>span{color:var(--muted);font:500 14px/1.2 var(--rxn-font)}.classicPreparedSummary .btnRow{margin-left:auto}
+
+/* Shared cockpit, Classic RC-specific details only */
+.classicRCCockpit .classicEfraChip{height:24px;display:inline-flex;align-items:center;padding:0 9px;border:1px solid var(--rxn-control-border);border-radius:3px;color:var(--rxn-blue);font:700 10px/1 var(--rxn-font);letter-spacing:.05em}
+.classicRCCockpit .rxnRaceTitleLeft{background:var(--rxn-race-banner);color:#fff}
+.classicRCCockpit .rxnPilotData{cursor:default}
+.classicFinalProtocol{min-height:100%;padding:4px}
+
+/* Schedule overlay: fixed above cockpit; never participates in cockpit geometry.
+   Paint is token-driven so CLASSIC / COBALT / STEEL / LIGHT / MODERN / HERITAGE
+   keep their own visual language. */
+.classicRCCockpit{
+ --classic-schedule-bg:var(--rxn-panel);
+ --classic-schedule-surface:var(--rxn-panel2);
+ --classic-schedule-control:var(--rxn-control-bg);
+ --classic-schedule-control-hover:var(--rxn-control-hover);
+ --classic-schedule-line:var(--rxn-line);
+ --classic-schedule-line-strong:var(--rxn-line-strong);
+ --classic-schedule-text:var(--rxn-text);
+ --classic-schedule-muted:var(--rxn-muted);
+ --classic-schedule-accent:var(--rxn-blue);
+ --classic-schedule-active:var(--rxn-green);
+ --classic-schedule-warning:var(--rxn-yellow);
+ --classic-schedule-primary:var(--rxn-cobalt);
+ --classic-schedule-primary-text:#fff;
+}
+html:not([data-skin="classic"]) .classicRCCockpit{
+ --classic-schedule-bg:var(--rxui-surface);
+ --classic-schedule-surface:var(--rxui-surface2);
+ --classic-schedule-control:var(--rxui-cockpit-control);
+ --classic-schedule-control-hover:var(--rxui-cockpit-control-hover);
+ --classic-schedule-line:var(--rxui-line);
+ --classic-schedule-line-strong:var(--rxui-line-strong);
+ --classic-schedule-text:var(--rxui-text);
+ --classic-schedule-muted:var(--rxui-muted);
+ --classic-schedule-accent:var(--rxui-accent);
+ --classic-schedule-active:var(--rxui-success);
+ --classic-schedule-warning:var(--rxui-warning);
+ --classic-schedule-primary:var(--rxui-cockpit-on);
+ --classic-schedule-primary-text:var(--rxui-cockpit-on-text);
+}
+.classicScheduleTail{position:fixed;z-index:420;right:0;top:44%;transform:translateY(-50%);width:32px;height:104px;padding:0;border:1px solid var(--classic-schedule-line-strong);border-right:0;border-radius:4px 0 0 4px;background:var(--classic-schedule-control);color:var(--classic-schedule-muted);box-shadow:0 8px 18px rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer}
+.classicScheduleTail span svg{width:16px;height:16px}.classicScheduleTail b{writing-mode:vertical-rl;transform:rotate(180deg);font:600 10px/1 var(--rxn-font);letter-spacing:.07em}.classicScheduleTail:hover,.classicScheduleTail.open{background:var(--classic-schedule-control-hover);color:var(--classic-schedule-text);border-color:var(--classic-schedule-accent)}
+.classicScheduleScrim{position:fixed;z-index:430;inset:0;background:rgba(0,0,0,.32);backdrop-filter:blur(1px)}
+.classicScheduleDrawer{position:fixed;z-index:440;top:4px;right:4px;bottom:4px;width:min(390px,38vw);display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;background:color-mix(in srgb,var(--classic-schedule-bg) 97%,transparent);border:1px solid var(--classic-schedule-line-strong);border-radius:5px;box-shadow:-10px 0 24px rgba(0,0,0,.24);overflow:hidden;color:var(--classic-schedule-text);font-family:var(--rxn-font)}
+.classicScheduleDrawer header{min-height:64px;display:flex;align-items:center;justify-content:space-between;padding:10px 13px;border-bottom:1px solid var(--classic-schedule-line)}
+.classicScheduleDrawer header small{display:block;color:var(--classic-schedule-muted);font:600 9px/1 var(--rxn-font);letter-spacing:.07em}.classicScheduleDrawer header h2{margin:4px 0 0;font:700 24px/1 var(--rxn-font)}.classicScheduleDrawer header button{width:32px;height:32px;border:0;background:transparent;color:var(--classic-schedule-muted);font:300 28px/1 sans-serif;cursor:pointer}.classicScheduleDrawer header button:hover{color:var(--classic-schedule-text)}
+.classicScheduleTabs{height:38px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:0 10px;border-bottom:1px solid var(--classic-schedule-line)}.classicScheduleTabs button{border:0;border-bottom:2px solid transparent;background:transparent;color:var(--classic-schedule-muted);font:600 11px/1 var(--rxn-font);letter-spacing:.04em}.classicScheduleTabs button.active{color:var(--classic-schedule-text);border-bottom-color:var(--classic-schedule-accent)}
+.classicScheduleList{overflow:auto;padding:3px 10px 7px}
+.classicScheduleRow{position:relative;min-height:54px;display:grid;grid-template-columns:48px 12px minmax(0,1fr) auto;align-items:center;gap:8px;border-bottom:1px solid var(--classic-schedule-line)}
+.classicScheduleRow time{color:var(--classic-schedule-muted);font:600 13px/1 var(--rxn-font)}.classicScheduleRow>i{width:8px;height:8px;border-radius:50%;background:var(--classic-schedule-muted)}.classicScheduleRow>div b{display:block;font:600 16px/1.05 var(--rxn-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.classicScheduleRow>div span{display:block;margin-top:4px;color:var(--classic-schedule-muted);font:500 10px/1 var(--rxn-font);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.classicScheduleRow.active{background:color-mix(in srgb,var(--classic-schedule-accent) 10%,transparent)}.classicScheduleRow.active>i{background:var(--classic-schedule-active)}.classicScheduleRow.active>strong{color:var(--classic-schedule-active);font:700 9px/1 var(--rxn-font);letter-spacing:.05em}.classicScheduleRow.completed{opacity:.55}.classicScheduleRow>em{font-style:normal;color:var(--classic-schedule-active)}.classicScheduleRow.break>i{border-radius:2px;background:var(--classic-schedule-warning)}.classicScheduleRow.break>div b{color:var(--classic-schedule-warning)}
+.classicScheduleDrawer footer{display:grid;grid-template-columns:1fr;gap:5px;padding:9px 10px 10px;border-top:1px solid var(--classic-schedule-line)}
+.classicScheduleAction{height:42px;border:1px solid var(--classic-schedule-line-strong);border-radius:3px;background:var(--classic-schedule-control);color:var(--classic-schedule-text);font:600 14px/1 var(--rxn-font);letter-spacing:.03em;cursor:pointer;box-shadow:none}.classicScheduleAction:hover{background:var(--classic-schedule-control-hover)}.classicScheduleAction.primary{background:var(--classic-schedule-primary);border-color:var(--classic-schedule-accent);color:var(--classic-schedule-primary-text)}.classicScheduleAction svg{width:17px;height:17px;vertical-align:-3px;margin-right:7px}
+
+.classicResultModal{width:min(940px,94vw)}.classicResultList{display:grid;gap:3px;margin-top:10px}.classicResultRow{min-height:58px;display:grid;grid-template-columns:38px 54px minmax(180px,1fr) 100px 72px;align-items:center;gap:7px;padding:4px 6px;border-bottom:1px solid var(--line)}.classicResultRow>strong{font:700 20px/1 var(--rxn-font)}.classicResultRow>div b{display:block;font:600 16px/1 var(--rxn-font)}.classicResultRow>div small{display:block;color:var(--muted);font:500 11px/1 var(--rxn-font);margin-top:4px}.classicResultRow select,.classicResultRow input{height:38px;border:1px solid var(--line);border-radius:3px;background:var(--input);color:var(--text);font:600 13px/1 var(--rxn-font);padding:0 8px}.classicTablesModal{width:min(1200px,96vw);max-height:92vh;overflow:auto}.classicRulesBar{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 16px}.classicRulesBar span{padding:6px 9px;border:1px solid var(--line);border-radius:3px;background:rgba(255,255,255,.025);font:600 11px/1 var(--rxn-font)}.classicTablesModal td.counted{background:rgba(47,143,241,.12);font-weight:700}
+
+@media (max-width:900px){.classicSetupGrid{grid-template-columns:1fr}.classicPilotCard,.classicPlanCard{grid-column:auto}.classicFields,.classicFieldsMain{grid-template-columns:repeat(2,minmax(0,1fr))}.classicPilotGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.classicScheduleDrawer{width:min(430px,48vw)}}
+@media (orientation:landscape) and (max-width:1100px) and (max-height:600px){
+ .classicScheduleTail{top:50%;width:27px;height:78px;border-radius:6px 0 0 6px}.classicScheduleTail b{display:none}.classicScheduleDrawer{top:3px;right:3px;bottom:3px;width:44vw;max-width:410px;border-radius:6px}.classicScheduleDrawer header{min-height:48px;padding:7px 10px}.classicScheduleDrawer header h2{font-size:20px;margin-top:2px}.classicScheduleDrawer header small{font-size:9px}.classicScheduleTabs{height:30px;padding:0 8px}.classicScheduleTabs button{font-size:9px}.classicScheduleList{padding:2px 8px 4px}.classicScheduleRow{min-height:38px;grid-template-columns:38px 9px minmax(0,1fr) auto;gap:6px}.classicScheduleRow time{font-size:10px}.classicScheduleRow>i{width:6px;height:6px}.classicScheduleRow>div b{font-size:12px}.classicScheduleRow>div span{margin-top:2px;font-size:9px}.classicScheduleDrawer footer{padding:6px 8px 7px;gap:4px}.classicScheduleAction{height:31px;font-size:10px}.classicScheduleScrim{backdrop-filter:none;background:rgba(0,0,0,.28)}
+}
+@media (orientation:portrait) and (max-width:599px){
+ .classicScheduleTail{top:auto;right:10px;bottom:126px;transform:none;width:42px;height:30px;border:1px solid var(--classic-schedule-line-strong);border-radius:4px;background:var(--classic-schedule-control)}.classicScheduleTail span svg{width:15px;height:15px}.classicScheduleTail b{display:none}
+ .classicScheduleDrawer{top:auto;left:3px;right:3px;bottom:3px;width:auto;height:min(62dvh,520px);border-radius:8px}.classicScheduleDrawer header{min-height:54px;padding:8px 11px}.classicScheduleDrawer header h2{font-size:21px}.classicScheduleTabs{height:34px;padding:0 9px}.classicScheduleList{padding:2px 9px 5px}.classicScheduleRow{min-height:44px;grid-template-columns:42px 10px minmax(0,1fr) auto;gap:6px}.classicScheduleRow time{font-size:11px}.classicScheduleRow>div b{font-size:13px}.classicScheduleRow>div span{font-size:9px;margin-top:3px}.classicScheduleDrawer footer{padding:7px 9px 9px}.classicScheduleAction{height:36px;font-size:11px}
+ .classicFields,.classicFieldsMain{grid-template-columns:1fr}.classicPilotGrid{grid-template-columns:1fr 1fr}.classicPlanStats{grid-template-columns:1fr 1fr}.classicPilotSelect{height:52px;grid-template-columns:44px minmax(0,1fr) 18px}.classicPilotId{height:40px;font-size:17px}.classicPilotSelect b{font-size:12px}.classicResultRow{grid-template-columns:28px 42px minmax(0,1fr) 72px 48px;gap:4px}.classicResultRow .classicPilotId{height:38px}.classicResultRow>div b{font-size:12px}
+}
+
+.classicTieInfo{display:block;margin-top:3px;color:var(--muted);font:500 9px/1.15 var(--rxn-font);white-space:nowrap}

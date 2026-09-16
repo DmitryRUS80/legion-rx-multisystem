@@ -1,42 +1,70 @@
-# RC61 FINAL A TIE-BREAK
+# LEGION RX — CURRENT SPORT RULES · RC62
 
-Final A uses BEST 2 of A1+A2+A3. Equal BEST-2 sums are resolved only by sporting results: best counted place, then second counted place, then the discarded third result. If still absolutely equal, create a RUN-OFF for the disputed final places. Race duration, lap time, elapsed time and hidden timing performance are not tie-break criteria. The RUN-OFF is not A4 and adds no Final A score; it only fixes the order of the tied final places.
+Sport modules are independent. **RallyCross rules never apply to Classic RC and EFRA rules never apply to RallyCross.** Shared cockpit/LapWiz infrastructure does not own sport scoring.
 
-# LEGION RX — RALLYCROSS SPORT RULES · RC36 (official scoring unchanged from RC29)
+## 1. RallyCross · current LEGION RX rules
 
-RC36 changes cockpit presentation only: removes the portrait leader-photo artifact and simplifies the BEST LAP strip. RC35 pilot-stat typography, RC34 live presentation/refresh and RC33 legacy-stats removal are preserved. RC32 administrative cancellation/state handling and the official scoring, BEST-3, LCQ/finals and genuine run-off rules remain unchanged from the RC29 ruleset `RALLYCROSS-2026.09.2`. A cancelled/unrun heat is not itself a sport result and therefore cannot manufacture a mandatory equality/run-off.
-
-## Qualification
-- Q points: 50,45,42,40,39...28 through 16th; current continuation after 16th preserved pending explicit decision.
-- BEST 3 qualification results are counted.
+### Qualification
+- Existing LEGION RX qualification scoring / BEST 3 / LCQ chain is preserved from the accepted RallyCross ruleset.
 - FIN / DNF / DNS / DSQ are preserved.
-- Qualification ranking: total BEST 3 points -> countback of better finishing positions in the counted BEST 3 -> quality of discarded results.
-- The former random draw is removed completely.
-- If pilots remain absolutely equal after the qualification criteria above, only those tied pilots receive a qualification run-off.
-- A qualification run-off gives **no qualification points** and creates **no extra qualification result**. It only orders the pilots inside the positions that were tied.
+- Exact qualification equality after the configured sporting countback is resolved by the existing RallyCross run-off flow; a run-off orders the tied places only and adds no qualification score.
 
-## Finals / LCQ
-- 1-6 -> A1/A2/A3.
-- 7-10 -> top4 + single LCQ top2.
-- 11-16 -> top4 + LCQ B/C winners.
-- 17+ -> preliminary LCQ chain.
-- Final A: A1/A2/A3, BEST 2 are counted, non-FIN score = 7.
+### Final A
+- A1 + A2 + A3; **BEST 2** count.
+- Equal BEST-2 total is resolved in this order: best counted finish -> second counted finish -> discarded third result.
+- If all three sporting results are still exactly equal, only the tied pilots run a **RUN-OFF** for the disputed final places.
+- Race time, lap time and elapsed time are **not hidden RallyCross tie-break criteria**.
+- A RUN-OFF is not A4 and adds no Final A score; it only fixes the order of the tied final places.
 
-### Final A equality rule
-If the BEST-2 sum is equal:
-1. Better individual counted finishing place.
-2. If still equal: result of the counted run with that best place — more laps is better, then lower elapsed time.
-3. If still equal: second counted result, then its laps/time by the same rule.
-4. If everything above is exactly equal: only the tied pilots receive a Final A run-off.
-5. The Final A run-off gives **no bonus/event points of its own** and is not added as a fourth scored A-run. It only orders the tied pilots inside their disputed final positions.
+### Lap-limited finish
+- When the leader completes the configured target laps, the finish window opens.
+- Every other active pilot finishes on the next valid timing-line pass, including lapped pilots; they do not continue until their own target-lap count.
 
-## Event points
-- Final event points: 25,18,15,12,10,8,6,4,2,1.
-- These points are assigned only after the official final order is resolved. A run-off itself never adds points.
+## 2. Classic RC · EFRA 2026 Round-by-Round
 
-## Lap-limited finish
-- When the first pilot completes the configured target laps, that pilot is FIN and the finish window opens.
-- Every other active pilot is FIN on their next valid timing-line pass, regardless of being one or more laps behind.
-- They do not continue until they individually reach the target-lap count.
+Authoritative rule source used for RC62: **EFRA Handbook 2026, Appendix 3 — Electric Cars**, rules 9–10.  
+Source: https://www.efra.ws/wp-content/uploads/2026/03/EFRA%20Handbook%202026%20Appendix%203.pdf
 
-No rule change is allowed as a side-effect of UI work.
+### Categories / race duration
+- 1/10 Off-Road: 5 min + last lap; standard last-lap window up to 40 s and may be extended if needed.
+- 1/10 On-Road: 5 min + last lap; standard last-lap window up to 40 s and may be extended if needed.
+- 1/12 Track: 8 min + last lap, max 40 s.
+- Minimum between **starts**: 7 min for 1/10, 10 min for 1/12.
+
+### Practice / seeding / groups
+- Organised practice is divided into heats.
+- Seeding uses the best 2 or 3 consecutive laps from specified practice rounds.
+- Maximum 10 drivers per qualifying heat; heat sizes are kept as equal as possible.
+- Reseeded groups place the faster drivers in the faster/high-number heats.
+- Off-Road qualifying heat order follows the EFRA rotating sequence; On-Road stays ascending.
+- Qualifying uses staggered starts. The first timing-line pass establishes the individual start; only subsequent full laps are timed as laps.
+
+### Round-by-Round qualifying
+- Completed rounds -> rounds counted: `1=VOID, 2=1, 3=2, 4=2, 5=2, 6=3`.
+- Fewer than two completed qualifying rounds means the EFRA qualifying event is not valid.
+- Per round: fastest overall across all heats = **0**, second = **2**, third = **3**, fourth = **4**, etc.
+- Equal laps/time receive equal points; the next non-tied driver receives the points corresponding to the real position.
+- No recorded time / disqualified time receives last-place points for that round.
+- Overall qualifying: lowest total from the counted rounds wins.
+- Tie-break: best counted finishing position -> laps/time of that best counted round -> laps/time of the second counted round. Only counted rounds are used.
+- No extra hidden criterion is invented if all official criteria are still exactly equal.
+
+### Finals
+- Qualification forms Final A (1–10), B (11–20), C (21–30), etc.
+- If the lowest final has fewer than 4 drivers, Race Director may keep it or redistribute drivers as evenly as possible with the next final while preserving qualifying order.
+- All finals run **3 legs**, slow final to fast final; **BEST 2 of 3** count.
+- Final leg points: P1=1, P2=2 ... P10=10.
+- Equal race time receives equal points; the next non-tied driver receives the real next-position score.
+- Non-runners receive the remaining points in car-number order.
+- Final tie-break: best counted finishing position -> laps/time of that best finish -> laps/time of the second counted finish.
+- Finals use a common grid start. After the 10-second call the start signal has a random 1–5 s delay.
+- Jump start: +10 s; crossing by about 1 m: −1 lap. Jump start alone does not force a restart.
+
+## 3. Competition Scheduler
+
+The Scheduler is **not a sport rule module**. It only executes the timeline supplied by a sport mode.
+- Maintains planned and actual heat times, breaks and the day timeline.
+- Enforces the mode-provided minimum start gap.
+- Director may start the next heat earlier once the minimum gap is legal; the pending future timeline is recalculated.
+- A real overrun pushes only the still-pending future timeline. An early finish does not pull the day forward automatically; the director may explicitly do so.
+- Breaks can be skipped or extended without changing scoring.

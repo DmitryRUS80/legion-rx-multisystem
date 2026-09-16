@@ -9,10 +9,10 @@ AudioUIBridge.createPlayer=(role)=>{const a=document.createElement('audio');a.pr
 AudioUIBridge.setGate=(message='',kind='')=>{const stateEl=document.getElementById('audioGateState');if(stateEl){stateEl.textContent=message||'';stateEl.className=`audioGateState ${kind||''}`.trim();}};AudioUIBridge.showGate=()=>document.getElementById('audioGate')?.classList.remove('hidden');AudioUIBridge.hideGate=()=>document.getElementById('audioGate')?.classList.add('hidden');AudioUIBridge.setUnlockBusy=busy=>{const btn=document.getElementById('audioGateBtn');if(btn)btn.disabled=!!busy;};AudioUIBridge.refreshOffline=()=>updateOfflineReadyUi();
 initFreePracticeState();
 lapwiz.addEventListener('pass',e=>raceEventBus.pass({transponder:e.detail.transponder,deviceMs:e.detail.deviceMs,source:'LAPWIZ'}));
-raceEventBus.addEventListener('pass',e=>processPass(e.detail.transponder,e.detail.deviceMs,e.detail.source||'EXTERNAL'));
-raceEventBus.addEventListener('pilotstatus',e=>processRaceSourceStatus(e.detail||{}));
-raceEventBus.addEventListener('tick',()=>updateDynamicCockpit());
-raceEventBus.addEventListener('complete',()=>raceSourceMaybeFinish());
+raceEventBus.addEventListener('pass',e=>ActiveRaceController.processPass(e.detail||{}));
+raceEventBus.addEventListener('pilotstatus',e=>ActiveRaceController.processPilotStatus(e.detail||{}));
+raceEventBus.addEventListener('tick',()=>ActiveRaceController.tick());
+raceEventBus.addEventListener('complete',()=>ActiveRaceController.complete());
 lapwiz.addEventListener('status',e=>{updateHeader();if(e.detail?.connected===false&&state.session&&['warmup','countdown','running','finishing'].includes(state.session.phase))announceService('lapwizDisconnected');});
 announcer.ensurePlayers();setupAudioGate();bootOfflineAudio();
 window.addEventListener('pointerdown',()=>{lapwiz.ensureAudio();},{once:true});

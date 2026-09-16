@@ -1,154 +1,68 @@
-# LEGION RX — CLEAN ARCHITECTURE
+# LEGION RX — CURRENT CLEAN ARCHITECTURE · RC62
 
 ```text
-LEGION RX
-├── platform/
-│   ├── lapwiz.js          # BLE LapWiz only
-│   ├── timing.js          # shared timing helpers
-│   ├── storage.js         # current persistent storage API
-│   ├── audio.js           # local audio engine
-│   ├── pilots.js          # pilot helpers
-│   ├── state.js           # application state
-│   ├── offline-core.js    # read-only verification of active offline package
-│   ├── updater.js         # safe staged PWA update manager
-│   └── utils.js
-├── modes/
-│   ├── rallycross/        # sport rules + qualifying + finals + live runtime
-│   ├── free-practice/     # independent practice / Track Day logic
-│   ├── rally-sprint/      # future independent mode
-│   └── classic-rc/        # future independent mode
-├── ui/
-│   ├── themes/theme.css   # palette tokens ONLY
-│   ├── shell/app.css      # general shell/components/layout source
-│   ├── pilots/
-│   │   ├── pilot-cards.js # pilot DB cards, model tiles, editor, race picker
-│   │   └── pilot-cards.css# authoritative pilot-card component styles
-│   ├── shell/discipline-pults.css # RallyCross / Free Practice cockpit source
-│   ├── shell/views.js     # application screens
-│   ├── shell/actions.js   # UI actions/bindings
-│   ├── shell/offline-runtime.js # UI bridge for offline/audio/update state
-│   └── discipline-ui.js   # discipline cockpit rendering
-├── reporting/             # hidden future output-preparation layer
-├── offline-manifest.js    # one version/cache/offline asset manifest
-├── sw.js                  # atomic cache install + cache-first active release
-├── app.js                 # coordination only
-├── boot.js                # startup wiring
-└── index.html             # ordered module shell
+LapWiz / manual timing source
+        |
+        v
+race-event-bus + ActiveRaceController       Race Simulator (pre-release only)
+        |                                      -> test-source adapter only
+        +-----------------------+
+        |                       |
+        v                       v
+RallyCross controller      Classic RC controller
+RallyCross rules/state     EFRA 2026 rules/state
+        |                       |
+        +-----------+-----------+
+                    v
+          shared cockpit renderer/UI
+
+Sport mode -> neutral Competition Scheduler -> timeline / pauses / actual times
+            (Scheduler never calculates points, rankings or finals)
 ```
 
 ## Hard boundaries
 
-- `platform/lapwiz.js` knows BLE only. It does not know RallyCross, Free Practice or UI.
-- `modes/rallycross/*` owns RallyCross sport truth: scoring, BEST 3, LCQ, A1/A2/A3, final protocol and live finish rules. It contains no DOM/CSS/BLE UUID.
-- `modes/free-practice/*` owns practice/Track Day rules and does not calculate RallyCross.
-- `ui/*` renders state and sends explicit commands. It does not implement BLE packets or RallyCross scoring.
-- `reporting/*` accepts already-official result snapshots. It does not calculate sport results and is not connected to UI yet.
-- `app.js` coordinates modules and contains no DOM/CSS.
+- `platform/lapwiz.js`: BLE/LapWiz only; no sport scoring or UI.
+- `modes/rallycross/*`: RallyCross sport truth only. It imports no Classic RC rule/state.
+- `modes/classic-rc/efra-rules.js`, `groups.js`, `efra-engine.js`, `efra-runtime.js`: independent EFRA 2026 Classic RC module. It imports no RallyCross rule/state and owns its own storage namespace.
+- `runtime/competition-scheduler.js`: neutral time-line engine only. It contains no RallyCross/Classic RC scoring knowledge.
+- `runtime/active-race-controller.js`: the shell boundary that routes neutral timing input to the currently live sport controller. A visible Settings/Pilots page must not steal timing ownership from an active heat.
+- `runtime/race-event-bus.js` / `race-clock-adapter.js`: neutral timing infrastructure.
+- `simulation/race-simulator.js`: pre-release removable test source. RallyCross runtime contains no direct simulator dependency.
+- `ui/*`: presentation/actions only; sport calculations remain in mode modules.
+- `reporting/*`: consumes already-official result snapshots; it does not calculate sport results.
+- `app.js`: orchestration; no DOM/CSS.
+- `index.html`: ordered dependency shell only.
 
-## UI style architecture
+## Classic RC internal ownership
 
-There are four explicit style responsibilities:
+```text
+modes/classic-rc/
+  index.js          # legacy placeholder kept byte-identical for compatibility
+  efra-rules.js     # pure EFRA scoring/tie-break constants/helpers
+  groups.js         # heat seeding / EFRA heat order / final groups
+  efra-engine.js    # own competition state, event progression, results, storage
+  efra-runtime.js   # live timing/session controller, no DOM
 
-1. `ui/themes/theme.css` — Dark/Light palette variables only. No component overrides.
-2. `ui/shell/app.css` — general screens, forms, navigation, shared cards/modals and layout.
-3. `ui/pilots/pilot-cards.css` — the single authoritative style source for pilot database cards, model tiles, expanding pilot editor and race model picker.
-4. `ui/shell/discipline-pults.css` — RallyCross / Free Practice cockpit and sport-result/grid presentation.
+ui/classic-rc/
+  classic-rc-ui.js  # setup, shared-cockpit adapter, results, Schedule overlay
+  classic-rc.css    # Classic RC-specific setup/schedule surfaces only
+```
 
-Historical `variant4.css`, `current-base.css` multi-generation race-console blocks and `*-rc5restore*` runtime names are removed from the active build. RC22 also removes the former pilot-card/pilot-picker implementation from `views.js`/`app.css`; the new pilot component is not an override layer.
+Classic RC reuses the accepted cockpit primitives/pilot-row geometry; it does **not** reuse RallyCross sporting logic.
 
-## Offline/update architecture
+## Scheduler UI contract
 
-The currently active release is cache-first and never requires network to start a race. A candidate update is downloaded into its own cache by the new service worker. It cannot replace the active release unless its complete offline package installs successfully and the user explicitly confirms installation in Settings. Interrupted downloads leave the active release untouched.
+- Schedule trigger/drawer is `position: fixed`; it never participates in cockpit grid/layout.
+- Wide/landscape: drawer overlays from the right.
+- Portrait phone: bottom sheet overlays upward.
+- Cockpit does not move or shrink.
+- Visual language: flat dark surfaces, restrained neutral lines, existing blue action accent; no neon/cosmic outline layer and no nested card stack.
 
+## Offline/update boundary
 
-### RC23 pilot-card correction
-RC23 keeps this boundary intact: pilot visual composition remains in `ui/pilots/`; `views.js` only places the reusable race-setup mini-card. No RallyCross rule, BLE, storage, audio or reporting logic is moved into the pilot UI.
+The active release remains cache-first. New builds are staged into a separate cache and validated before explicit install. Interrupted updates cannot replace the current working release.
 
+## Protected RC61 baseline for RC62
 
-### RC24 pilot-card visual correction
-RC24 changes only the authoritative pilot UI component. Compact race participant tiles remain a presentation of already-selected race pilots; selection/storage/sport behavior is not moved into CSS or RallyCross rules. No additional style layer is introduced.
-
-
-### RC25 pilot UI / data boundary
-RC25 does not move pilot timing identity into `platform/` or `modes/`. The pilot UI exposes one `ID LAPWIZ` field and writes the same canonical value to the existing compatibility properties `model.number`, `model.transponder`, and the selected race pilot `transponder`. RallyCross and LapWiz code remain unchanged and continue consuming the established transponder field. Picker state updates are local DOM presentation updates; sport state still changes only through the existing race-pilot selection path.
-
-
-### RC26 pilot/practice UI boundary
-RC26 keeps pilot/model selection presentation in `ui/pilots/`. RallyCross setup and Free Practice setup both consume that component. The selected Free Practice model is converted by the UI setup layer into the existing Track Day participant snapshot (`transponder`, model metadata); `modes/free-practice/` remains unchanged and continues to process only the participant/transponder data it already owns. Avatar center-cropping is a pilot UI media-preparation concern and does not touch timing/storage architecture.
-
-
-### RC26 live UI / finish safety boundary
-- Application page background is a UI-shell setting only: solid color or a locally stored compressed image. The old page stripe/grid background is removed outside the RallyCross/Practice cockpit. Sport modules do not read this setting.
-- Dark/light switching is persisted and applied immediately in the UI shell; it does not wait for the general settings Save button.
-- Pilot model color changes are previewed immediately in the authoritative pilot component and persisted immediately for existing profiles. The selected active race snapshot receives only the color presentation field; transponder/sport identity is unchanged.
-- The completed-competition button uses an in-app confirmation modal on the UI side. `app.js::completeCompetition(confirmed)` remains DOM-free and owns only archival/state completion. This avoids relying on the native Safari `confirm()` path for the cockpit button.
-
-
-## RC27 UI boundary
-RC27 changes only pilot-selection presentation and shell background rendering. Free Practice rules remain in `modes/free-practice/`; selection UI remains in `ui/pilots/`; theme/background rendering remains in `ui/shell/`.
-
-
-## RC28 manual action / storage boundary
-
-- `ui/pilots/pilot-cards.js::pilotActionTileMarkup()` is the single shared visual component for choosing a pilot from cockpit manual-lap/manual-pass dialogs. RallyCross and Free Practice dialogs only supply pilot state/lap counts and action attributes; they do not define separate pilot-card visuals.
-- `ui/pilots/pilot-cards.css` owns the matching ID/name/flag action-tile style. The old initials-based `.manualPilotGrid button` composition has been removed from `ui/shell/app.css`.
-- Pilot avatars remain owned by the pilot database (`KEYS.pilots`). `platform/storage.js` stores race/archive/Track Day snapshots without duplicated embedded `data:image/...` pilot photos. `profileId` remains the link back to the pilot profile for current avatar presentation.
-- Storage compaction is a persistence concern only. It does not change RallyCross results, lap timing, LapWiz IDs, scoring or reporting contracts.
-- Completed-race archival is transactional at the application coordination layer: the active race is cleared only after the compact archive snapshot has been persisted successfully.
-
-
-## RC29 RallyCross run-off boundary
-- All equality resolution remains inside `modes/rallycross/`: qualification tie detection/order is owned by `qualifying.js`; Final A comparison/run-off order is owned by `finals.js`; runtime only routes the official result to the correct sport function.
-- A run-off is an ordinary RallyCross timing event but **not** a scoring event. Qualification run-offs never call `savePilotResult()`. Final A run-offs never append to `pilot.finalResults`.
-- The UI only labels a run-off and saves its FIN/DNF/DNS/DSQ order. It contains no tie-break arithmetic.
-- No random draw or registration-order fallback is allowed to resolve an official sport tie. Registration/qualification order may be used only for temporary stable display while the run-off is still unresolved.
-- Run-offs reuse the established timing/LapWiz runtime; there is no duplicate timing implementation and no new BLE path.
-
-## RC30 start-order / selection boundary
-- `modes/rallycross/index.js::getEventStartPilots()` owns prepared pre-start order only; it does not calculate qualification points or final results. Qualification consumes the already-generated heat sequence; finals consume the existing qualification rank.
-- UI reads this order through `RallyCrossModeAPI.startPilots()` / `startGrid()` and may apply live timing ranking on top. UI does not create a second grid algorithm.
-- `modes/rallycross/audio-actions.js` consumes the same prepared order and therefore has no independent pilot sorting policy.
-- `ui/pilots/pilot-cards.css` remains the only owner of pilot/model picker selected-state visuals. RC30 edits those authoritative selectors directly; no patch/override stylesheet is added.
-## RC31 cockpit column visibility boundary
-
-- `ui/discipline-ui.js` owns only the operator's column visibility state and calculates the visible metric count; it does not own cockpit geometry.
-- `ui/shell/discipline-pults.css` is the single authoritative owner of RallyCross / Free Practice pilot-row grid geometry and the `rxnHide-*` presentation rules.
-- RC31 adds the missing selectors directly to that stylesheet. No patch/override stylesheet, duplicate row renderer or sport/platform change is introduced.
-## RC32 administrative race-state boundary
-
-- `modes/rallycross/runtime.js` owns operator skip/cancel/force-finish transitions; UI only issues commands.
-- A cancelled event is an administrative absence of a result, not an implicit DNS result for all pilots.
-- Genuine run-off creation remains in qualification/final sport modules and still requires an equality derived from recorded sport results.
-- Explicit force-finish does not execute ordinary advancement callbacks: it marks remaining events cancelled and terminates the lifecycle directly, preventing recursive event creation.
-- No patch layer or alternate state machine is introduced.
-
-
-## RC33 pilot lap-statistics UI boundary
-
-Pilot lap statistics remain a presentation concern. `ui/shell/views.js` reads already-computed live/practice state and the authoritative ranking adapters; it does not calculate RallyCross points or alter lap data. `ui/shell/discipline-pults.css` owns the one cockpit-native overlay style. During active cockpit use the overlay is constrained to the rendered roster rectangle, so no alternate cockpit geometry or second pult layer is introduced. Free Practice lap deletion continues to call the existing `removeTrackDayLap()` mode function.
-
-## RC34 live pilot-statistics presentation boundary
-
-RC34 remains UI-only. `ui/shell/views.js` owns the open-card markup/data projection and one live refresh function. `ui/discipline-ui.js` merely invokes that refresh from the already-existing RallyCross and Free Practice UI tickers; no new timing loop, sport rule or persistence path is created. `ui/shell/discipline-pults.css` remains the single owner of the card geometry and visuals. The overlay is always bounded by `.rxnRoster`, so control-panel geometry is never covered.
-## RC36 best-lap / leader-photo presentation boundary
-
-RC36 is UI-only. `ui/discipline-ui.js` continues to read the existing live RallyCross state; it no longer appends a separate leader-photo block to the roster. `ui/shell/discipline-pults.css` remains the sole cockpit style source. The best-lap header is a presentation of the already-computed best lap and is refreshed through the existing cockpit ticker; no sport ranking, timing loop, BLE/storage path or duplicate responsive layer is introduced.
-
-
-## RC60 simulation boundary
-
-- `simulation/race-simulator.js` is an isolated synthetic timing-source engine used only for testing. It has no DOM, no BLE UUIDs and no RallyCross scoring/points/finals logic.
-- The simulator generates virtual pass events plus optional DNS/DNF statuses. `modes/rallycross/runtime.js` remains authoritative for elapsed race state, lap acceptance, finish rules, rankings and result lifecycle.
-- The simulator never writes official qualification/final points and never bypasses `RallyCrossModeAPI` result confirmation.
-- LapWiz and SIM are mutually exclusive input sources. UI blocks LapWiz connection while SIM is enabled.
-- Simulation speed is a runtime test clock multiplier only. It does not alter stored sport rules or the real LapWiz protocol.
-
-
-## RC61 removable test-source boundary
-
-The simulator is a pre-release test source and must remain removable without changing RallyCross sport code. Neutral runtime adapters are under `runtime/`:
-- `race-event-bus.js` — pass/status/tick/complete transport shared by LapWiz and test sources.
-- `race-clock-adapter.js` — defaults to x1 and exposes optional test-time scale.
-- `race-test-source-adapter.js` — neutral lifecycle bridge for an optional test source.
-
-`modes/rallycross/runtime.js` must not reference `raceSimulator`. Removing the simulator for release requires removing the simulator module/UI registration and script include, not modifying RallyCross scoring/runtime.
+RC62 verification compares protected files byte-for-byte to RC61. RallyCross core/runtime, LapWiz, storage/state/timing/audio, Free Practice, Rally Sprint, simulator isolation adapters, `ui/discipline-ui.js` and the shared discipline cockpit stylesheet remain unchanged.

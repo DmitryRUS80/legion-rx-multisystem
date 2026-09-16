@@ -16,8 +16,10 @@ checks={
 }
 funcs={}
 for p in ROOT.rglob('*.js'):
+    if 'tests' in p.parts: continue
     t=p.read_text(encoding='utf-8')
-    for m in re.finditer(r'(?m)^\s*(?:async\s+)?function\s+([A-Za-z_$][\w$]*)\s*\(',t): funcs.setdefault(m.group(1),[]).append(str(p.relative_to(ROOT)))
+    # Only column-zero declarations are global in these script modules; functions inside IIFEs are private.
+    for m in re.finditer(r'(?m)^(?:async\s+)?function\s+([A-Za-z_$][\w$]*)\s*\(',t): funcs.setdefault(m.group(1),[]).append(str(p.relative_to(ROOT)))
 dups={k:v for k,v in funcs.items() if len(v)>1}
 checks['no_duplicate_global_functions']=not dups
 cfg=(ROOT/'offline-manifest.js').read_text(encoding='utf-8')

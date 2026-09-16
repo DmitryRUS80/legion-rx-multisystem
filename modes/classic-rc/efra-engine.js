@@ -1,0 +1,111 @@
+'use strict';
+/* LEGION RX · CLASSIC RC EFRA 2026 engine.
+   Independent sport state / rules / results. No cross-mode imports. */
+const ClassicRCEngine=(()=>{
+  const STORAGE_KEY='legionrx4_classic_rc_efra_event_v1';
+  const ARCHIVE_KEY='legionrx4_classic_rc_efra_archive_v1';
+  const clone=v=>JSON.parse(JSON.stringify(v));
+  const uid2=p=>`${p}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2,7)}`;
+  let event=null;
+  try{event=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');}catch{}
+  function persist(){try{if(event)localStorage.setItem(STORAGE_KEY,JSON.stringify(event));else localStorage.removeItem(STORAGE_KEY);}catch(e){console.warn('Classic RC persist',e);}return event;}
+  function get(){return event;}
+  function hasActive(){return Boolean(event&&event.status!=='archived');}
+  function create(input={}){
+    const category=ClassicRCEFRARules.categories[input.category]||ClassicRCEFRARules.categories['10-offroad'];
+    event={
+      id:uid2('classic'),mode:'classic-rc-efra',ruleset:ClassicRCEFRARules.version,status:'setup',name:String(input.name||'Classic RC'),date:input.date||new Date().toISOString().slice(0,10),location:String(input.location||''),category:category.id,
+      pilotIds:[...(input.pilotIds||[])],settings:{
+        seedingRounds:Math.max(2,Math.min(4,Number(input.seedingRounds)||2)),
+        seedingConsecutiveLaps:[2,3].includes(Number(input.seedingConsecutiveLaps))?Number(input.seedingConsecutiveLaps):3,
+        controlledPracticeRounds:Math.max(1,Math.min(4,Number(input.controlledPracticeRounds)||2)),
+        qualifyingRounds:Math.max(2,Math.min(6,Number(input.qualifyingRounds)||5)),
+        startTime:String(input.startTime||'09:00'),roundBreakMin:Math.max(0,Math.min(60,Number(input.roundBreakMin)||5)),finalBreakMin:Math.max(0,Math.min(120,Number(input.finalBreakMin)||20)),
+        minLapSec:Math.max(1,Math.min(60,Number(input.minLapSec)||2)),finalPractice:Boolean(input.finalPractice!==false),lowestFinalPolicy:input.lowestFinalPolicy==='rebalance'?'rebalance':'keep'
+      },
+      groups:[],seedResults:[],seedStandings:[],controlledPractice:[],qualifying:[],qualifyingScores:[],qualifyingStandings:[],finalGroups:[],finalLegs:[],finalStandings:[],events:[],timeline:null,currentEventKey:'',session:null,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),completedAt:''
+    };persist();return event;
+  }
+  function updateSetup(input={}){if(!event||event.status!=='setup')return event;Object.assign(event,{name:String(input.name??event.name),date:input.date||event.date,location:String(input.location??event.location),category:ClassicRCEFRARules.categories[input.category]?input.category:event.category,pilotIds:[...(input.pilotIds||event.pilotIds)]});Object.assign(event.settings,input.settings||{});persist();return event;}
+  function category(){return ClassicRCEFRARules.categories[event?.category]||ClassicRCEFRARules.categories['10-offroad'];}
+  function pilot(id){return state.pilotDb.find(p=>String(p.id)===String(id))||{id,name:'Пилот',transponder:'',country:''};}
+  function pilots(ids=event?.pilotIds||[]){return(ids||[]).map(pilot).filter(Boolean);}
+  function baseHeatGroups(){return classicRCInitialHeats(event.pilotIds,ClassicRCEFRARules.maxDriversPerHeat);}
+  function makeHeat({stage,round,heat,pilots,label,durationMin,order,groupName=''}){return{key:uid2('ce'),type:'heat',stage,round:Number(round)||1,heat:Number(heat)||1,groupName,label,pilots:[...pilots],durationMin:Number(durationMin)||category().raceMinutes,order:Number(order)||0,status:'pending',saved:false,result:[],lapStats:{},startMode:stage==='qualifying'?'staggered':'common'};}
+  function buildPreFinalEvents(){
+    const c=category(),base=baseHeatGroups(),out=[];let order=0;
+    for(let r=1;r<=event.settings.seedingRounds;r++)for(const g of base)out.push(makeHeat({stage:'seeding',round:r,heat:g.heat,pilots:g.pilots,label:`SEED ${r} · HEAT ${g.heat}/${base.length}`,durationMin:c.raceMinutes,order:++order}));
+    for(let r=1;r<=event.settings.controlledPracticeRounds;r++)for(const g of base)out.push(makeHeat({stage:'controlled',round:r,heat:g.heat,pilots:g.pilots,label:`PRACTICE ${r} · HEAT ${g.heat}/${base.length}`,durationMin:c.raceMinutes,order:++order}));
+    for(let r=1;r<=event.settings.qualifyingRounds;r++){
+      const seq=classicRCHeatOrder(event.category,base.length,r);
+      for(const h of seq){const g=base.find(x=>x.heat===h);out.push(makeHeat({stage:'qualifying',round:r,heat:h,pilots:g.pilots,label:`Q${r} · HEAT ${h}/${base.length}`,durationMin:c.raceMinutes,order:++order}));}
+    }
+    return out;
+  }
+  function scheduleBuild(){
+    const c=category(),tl=CompetitionScheduler.make({date:event.date,startTime:event.settings.startTime,meta:{mode:'classic-rc',ruleset:event.ruleset}}),roundBreak=Number(event.settings.roundBreakMin)||0;
+    let cursor=tl.startEpoch,prevStage='',prevRound=0;
+    event.events.forEach((ev,i)=>{
+      if(i&& (ev.stage!==prevStage||ev.round!==prevRound) && roundBreak>0){CompetitionScheduler.add(tl,{kind:'break',stage:'break',label:'ПАУЗА',durationMin:roundBreak,plannedStartEpoch:cursor});cursor+=roundBreak*60000;}
+      CompetitionScheduler.add(tl,{kind:'heat',stage:ev.stage,label:ev.label,subLabel:`${c.label} · ${ev.pilots.length} пилотов`,eventKey:ev.key,durationMin:ev.durationMin,minStartGapMin:c.minStartGapMin,plannedStartEpoch:cursor,participantCount:ev.pilots.length,meta:{round:ev.round,heat:ev.heat}});
+      cursor+=Math.max(ev.durationMin,c.minStartGapMin)*60000;prevStage=ev.stage;prevRound=ev.round;
+    });
+    if(event.settings.finalBreakMin>0){CompetitionScheduler.add(tl,{kind:'break',stage:'pre-finals',label:'ПЕРЕРЫВ ПЕРЕД ФИНАЛАМИ',durationMin:event.settings.finalBreakMin,plannedStartEpoch:cursor});cursor+=event.settings.finalBreakMin*60000;}
+    const predictedCount=Math.max(1,Math.ceil(event.pilotIds.length/10)),predicted=Array.from({length:predictedCount},(_,i)=>String.fromCharCode(65+i));
+    if(event.settings.finalPractice){const fp=event.category==='10-offroad'?predicted.filter(x=>x==='A'):predicted;for(const name of [...fp].reverse()){CompetitionScheduler.add(tl,{kind:'heat',stage:'finalPractice',label:`PRACTICE FINAL ${name}`,subLabel:`${c.label} · состав после Q`,durationMin:c.raceMinutes,minStartGapMin:c.minStartGapMin,plannedStartEpoch:cursor,participantCount:0,meta:{placeholder:true,group:name,leg:0}});cursor+=Math.max(c.raceMinutes,c.minStartGapMin)*60000;}}
+    for(let leg=1;leg<=3;leg++)for(const name of [...predicted].reverse()){CompetitionScheduler.add(tl,{kind:'heat',stage:'final',label:`FINAL ${name} · LEG ${leg}/3`,subLabel:`${c.label} · состав после Q`,durationMin:c.raceMinutes,minStartGapMin:c.minStartGapMin,plannedStartEpoch:cursor,participantCount:0,meta:{placeholder:true,group:name,leg}});cursor+=Math.max(c.raceMinutes,c.minStartGapMin)*60000;}
+    event.timeline=tl;
+  }
+  function prepare(){if(!event)throw new Error('Classic RC event not created');if(event.pilotIds.length<2)throw new Error('Нужно минимум два пилота');event.groups=baseHeatGroups();event.events=buildPreFinalEvents();event.status='seeding';event.currentEventKey=event.events[0]?.key||'';scheduleBuild();persist();return event;}
+  function currentEvent(){if(!event)return null;return event.events.find(x=>!x.saved&&x.status!=='cancelled')||null;}
+  function findEvent(key){return event?.events?.find(x=>x.key===key)||null;}
+  function nextEvent(){return currentEvent();}
+  function stageLabel(stage){return({seeding:'SEEDING',controlled:'CONTROLLED PRACTICE',qualifying:'QUALIFYING',finalPractice:'FINAL PRACTICE',final:'FINAL',finished:'FINISHED'})[stage]||String(stage||'').toUpperCase();}
+  function bestConsecutive(laps,n){const a=(laps||[]).filter(x=>Number.isFinite(Number(x))&&Number(x)>0).map(Number);if(a.length<n)return null;let best=null;for(let i=0;i<=a.length-n;i++){const slice=a.slice(i,i+n),total=slice.reduce((s,x)=>s+x,0);if(!best||total<best.totalMs)best={totalMs:total,avgMs:total/n,laps:slice};}return best;}
+  function rebuildSeeding(){
+    const n=event.settings.seedingConsecutiveLaps,rows=event.pilotIds.map((id,idx)=>{let best=null;event.events.filter(e=>e.stage==='seeding'&&e.saved).forEach(e=>{const st=e.lapStats?.[id];const hit=bestConsecutive(st?.lapTimes,n);if(hit&&(!best||hit.totalMs<best.totalMs))best={...hit,eventKey:e.key};});return{pilotId:id,registrationRank:idx+1,best};});
+    event.seedStandings=rows.sort((a,b)=>(a.best?.totalMs??Infinity)-(b.best?.totalMs??Infinity)||a.registrationRank-b.registrationRank).map((r,i)=>({...r,rank:i+1}));
+    if(event.seedStandings.every(x=>x.best||event.events.filter(e=>e.stage==='seeding'&&e.saved).length===event.events.filter(e=>e.stage==='seeding').length))applySeededGroups();
+  }
+  function applySeededGroups(){
+    const ranked=event.seedStandings.map(x=>x.pilotId),groups=classicRCSeededHeats(ranked,ClassicRCEFRARules.maxDriversPerHeat);event.groups=groups;
+    const byHeat=new Map(groups.map(g=>[g.heat,g.pilots]));
+    event.events.filter(e=>!e.saved&&['controlled','qualifying'].includes(e.stage)).forEach(e=>{e.pilots=[...(byHeat.get(e.heat)||e.pilots)];});
+  }
+  function roundHeatResults(round){return event.events.filter(e=>e.stage==='qualifying'&&e.round===round&&e.saved&&!e.cancelled);}
+  function rebuildQualification(){
+    const completed=[];for(let r=1;r<=event.settings.qualifyingRounds;r++){const all=event.events.filter(e=>e.stage==='qualifying'&&e.round===r);if(all.length&&all.every(e=>e.saved)){const raw=[];all.forEach(e=>(e.result||[]).forEach(x=>raw.push({...x,eventKey:e.key,round:r})));const scored=classicRCScoreQualifyingRound(raw,event.pilotIds);event.qualifyingScores[r-1]=scored;completed.push(r);}else break;}
+    event.qualifyingStandings=classicRCBuildQualifyingStandings(event.pilotIds,event.qualifyingScores,completed.length);
+    if(completed.length===event.settings.qualifyingRounds&&event.events.filter(e=>e.stage==='qualifying').every(e=>e.saved))buildFinals();
+  }
+  function buildFinals(){if(event.finalGroups.length)return;event.finalGroups=classicRCFinalGroupsFromQualification(event.qualifyingStandings,10,event.settings.lowestFinalPolicy||'keep');const c=category();let order=Math.max(0,...event.events.map(e=>e.order||0));
+    const qRank=new Map(event.qualifyingStandings.map(x=>[String(x.pilotId),x.rank]));
+    if(event.settings.finalPractice){const groups=event.category==='10-offroad'?event.finalGroups.filter(g=>g.name==='A'):event.finalGroups;for(const g of [...groups].reverse())event.events.push(makeHeat({stage:'finalPractice',round:1,heat:event.finalGroups.indexOf(g)+1,groupName:g.name,pilots:g.pilots,label:`PRACTICE FINAL ${g.name}`,durationMin:c.raceMinutes,order:++order}));}
+    for(let leg=1;leg<=3;leg++)for(const g of [...event.finalGroups].reverse())event.events.push(makeHeat({stage:'final',round:leg,heat:event.finalGroups.indexOf(g)+1,groupName:g.name,pilots:g.pilots,label:`FINAL ${g.name} · LEG ${leg}/3`,durationMin:c.raceMinutes,order:++order}));
+    /* Bind pre-built neutral schedule placeholders to the real finals. */
+    event.events.filter(e=>['finalPractice','final'].includes(e.stage)).forEach(ev=>{const item=event.timeline?.items?.find(x=>x.kind==='heat'&&!x.eventKey&&x.stage===ev.stage&&String(x.meta?.group||'')===String(ev.groupName||'')&&Number(x.meta?.leg||0)===Number(ev.stage==='final'?ev.round:0));if(item){item.eventKey=ev.key;item.participantCount=ev.pilots.length;item.subLabel=`${c.label} · ${ev.pilots.length} пилотов`;item.meta.placeholder=false;}else{const cursor=event.timeline?.items?.length?Math.max(...event.timeline.items.map(i=>i.plannedStartEpoch+(i.kind==='break'?i.durationMin:Math.max(i.durationMin,c.minStartGapMin))*60000)):Date.now();CompetitionScheduler.add(event.timeline,{kind:'heat',stage:ev.stage,label:ev.label,subLabel:`${c.label} · ${ev.pilots.length} пилотов`,eventKey:ev.key,durationMin:ev.durationMin,minStartGapMin:c.minStartGapMin,plannedStartEpoch:cursor,participantCount:ev.pilots.length,meta:{group:ev.groupName,leg:ev.round}});}});
+    event.status=event.settings.finalPractice?'finalPractice':'final';persist();
+  }
+  function startPilots(ev=currentEvent()){
+    if(!ev)return[];const ids=[...(ev.pilots||[])],seedRank=new Map((event.seedStandings||[]).map(x=>[String(x.pilotId),x.rank])),qRank=new Map((event.qualifyingStandings||[]).map(x=>[String(x.pilotId),x.rank]));
+    if(['controlled','finalPractice','final'].includes(ev.stage)){const rank=ev.stage==='controlled'?seedRank:qRank;return ids.sort((a,b)=>(rank.get(String(a))||9999)-(rank.get(String(b))||9999));}
+    if(ev.stage==='qualifying'){
+      const perf=new Map();
+      if(ev.round===1){event.events.filter(x=>x.stage==='controlled'&&x.saved).forEach(x=>(x.result||[]).forEach(r=>{const old=perf.get(String(r.pilotId));if(!old||classicRCCompareLapsTime(r,old)<0)perf.set(String(r.pilotId),r);}));}
+      else{event.events.filter(x=>x.stage==='qualifying'&&x.saved&&x.round<ev.round).forEach(x=>(x.result||[]).forEach(r=>{const old=perf.get(String(r.pilotId));if(!old||classicRCCompareLapsTime(r,old)<0)perf.set(String(r.pilotId),r);}));}
+      return ids.sort((a,b)=>{const A=perf.get(String(a)),B=perf.get(String(b));if(A&&B)return classicRCCompareLapsTime(A,B);if(A)return-1;if(B)return 1;return(seedRank.get(String(a))||9999)-(seedRank.get(String(b))||9999);});
+    }
+    return ids;
+  }
+  function lapStatsFromSession(session){const out={};Object.entries(session?.live||{}).forEach(([id,l])=>{out[id]={laps:Number(l.laps)||0,bestLapMs:Number.isFinite(l.bestLapMs)?l.bestLapMs:null,lastLapMs:Number.isFinite(l.lastLapMs)?l.lastLapMs:null,lapTimes:[...(l.lapTimes||[])],timeMs:Number(l.timeMs||l.elapsedMs)||0,started:Boolean(l.started),finished:Boolean(l.finished)};});return out;}
+  function saveHeat(key,result,session){const ev=findEvent(key);if(!ev)throw new Error('Classic RC heat not found');ev.result=clone(result||[]);ev.lapStats=lapStatsFromSession(session);ev.saved=true;ev.status='completed';CompetitionScheduler.finish(event.timeline,key,Date.now());event.session=null;event.currentEventKey='';if(ev.stage==='seeding')rebuildSeeding();if(ev.stage==='qualifying')rebuildQualification();if(ev.stage==='final'){const group=event.finalGroups.find(g=>g.name===ev.groupName),scored=classicRCFinalLegPoints(ev.result,group?.pilots?.length||10);ev.scored=scored;rebuildFinalsStanding(ev.groupName);}const next=currentEvent();if(next){event.status=next.stage;event.currentEventKey=next.key;}else if(event.finalGroups.length){event.status='finished';event.completedAt=new Date().toISOString();buildOverallFinalProtocol();}persist();return next;}
+  function rebuildFinalsStanding(groupName){const group=event.finalGroups.find(g=>g.name===groupName);if(!group)return;const legs=event.events.filter(e=>e.stage==='final'&&e.groupName===groupName&&e.saved).map(e=>({result:e.result,scored:e.scored||classicRCFinalLegPoints(e.result,group.pilots.length)}));const qr=new Map(event.qualifyingStandings.map(x=>[String(x.pilotId),x.rank]));const standings=classicRCBuildFinalStandings(group,legs,qr);event.finalStandings=event.finalStandings.filter(x=>x.groupName!==groupName);event.finalStandings.push({groupName,standings});}
+  function buildOverallFinalProtocol(){const all=[];let offset=0;event.finalGroups.forEach(g=>{const fs=event.finalStandings.find(x=>x.groupName===g.name)?.standings||[];fs.forEach(r=>all.push({...r,groupName:g.name,overallRank:offset+r.rank}));offset+=g.pilots.length;});event.finalProtocol=all.sort((a,b)=>a.overallRank-b.overallRank);return event.finalProtocol;}
+  function canStartScheduleHeat(key,now=Date.now()){return CompetitionScheduler.canStart(event.timeline,key,now);}
+  function startScheduleHeat(key,now=Date.now()){const res=CompetitionScheduler.start(event.timeline,key,now);if(res.ok){const ev=findEvent(key);if(ev)ev.status='active';persist();}return res;}
+  function skipScheduleBreak(id){const res=CompetitionScheduler.skipBreak(event.timeline,id,Date.now());persist();return res;}
+  function addScheduleBreak(id,min=5){const res=CompetitionScheduler.addBreakMinutes(event.timeline,id,min);persist();return res;}
+  function reset(){event=null;persist();}
+  function archive(){if(!event)return;try{const a=JSON.parse(localStorage.getItem(ARCHIVE_KEY)||'[]');a.push(clone(event));localStorage.setItem(ARCHIVE_KEY,JSON.stringify(a));}catch{}event=null;persist();}
+  return Object.freeze({get,hasActive,create,updateSetup,prepare,persist,reset,archive,pilot,pilots,category,currentEvent,findEvent,nextEvent,startPilots,stageLabel,saveHeat,canStartScheduleHeat,startScheduleHeat,skipScheduleBreak,addScheduleBreak,rebuildSeeding,rebuildQualification,buildFinals,bestConsecutive});
+})();

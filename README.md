@@ -1,3 +1,9 @@
+# RC62 CURRENT BUILD
+
+Current candidate: **LEGION RX 4.2.0 CLEAN FULL APP RC62 · CLASSIC RC EFRA + SCHEDULER**.
+
+RC62 adds the independent EFRA 2026 Classic RC module and a sport-neutral Competition Scheduler. RallyCross, LapWiz and the protected RC61 foundation remain separate. Use the FULL package as the only source for the next development step; use UPLOAD_TO_GITHUB only to update the deployed RC61 tree.
+
 # LEGION RX 4.2.0 CLEAN FULL APP RC61 · RUNTIME ISOLATION + COCKPIT INFO
 
 Direct code base: **RC34 LIVE PILOT STATS BROADCAST**.

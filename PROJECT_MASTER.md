@@ -1,3 +1,11 @@
+# RC62 MASTER ADDENDUM
+
+Classic RC is now the dedicated **EFRA 2026 electric Round-by-Round** discipline. It is not a RallyCross variant. Shared cockpit visuals and neutral timing infrastructure are allowed; sport rules/state are not shared.
+
+Competition scheduling is a separate reusable layer above sport modes. It executes the stage/heat queue, planned/actual times and breaks but has zero authority over points/rankings. The Race Director may bring the next heat forward when the mode-defined minimum start interval is legal; future pending times are recalculated.
+
+RC62 source-of-truth is the FULL modular package. Protected RC61 foundation/core must remain unchanged unless a later task explicitly requires it.
+
 # LEGION RX — PROJECT MASTER
 
 Current development candidate: **4.2.0 CLEAN FULL APP RC61 · RUNTIME ISOLATION + COCKPIT INFO**  

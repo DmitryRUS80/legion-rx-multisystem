@@ -1,115 +1,39 @@
-# RC61 TEST REPORT
+# LEGION RX — RC62 TEST REPORT
 
-PASS: architecture boundaries; RallyCross runtime contains no direct simulator reference.
-PASS: neutral event bus routes LapWiz/test-source passes.
-PASS: separate clock adapter/test source adapter present and offline-cached.
-PASS: Final A third-result tie-break + exact RUN-OFF case.
-PASS: hidden time comparison removed from Final A.
-PASS: cockpit system clock / BEST LAP name+time / distance labels present.
-PASS: RallyCross run-off suite 27/27, start order 12/12, skip/state 11/11, session control, live pilot edit, simulator engine.
+**Candidate:** `4.2.0 CLEAN FULL APP RC62 · CLASSIC RC EFRA + SCHEDULER`  
+**Base:** RC61 RUNTIME ISOLATION + COCKPIT INFO
 
-# LEGION RX 4.2.0 CLEAN FULL APP RC40 · CLEAN SETTINGS UI — TEST REPORT
+## Current release gates
 
-## Scope
+PASS:
+- Classic RC EFRA rules: qualifying count table, Round-by-Round 0/2/3/4..., equal-time points, DNF with recorded result, official counted-round tie-breaks.
+- EFRA finals: 3 legs / BEST 2, equal-time points, non-runner car-number order, official final tie-break.
+- Grouping: max 10, balanced heat sizes, fast drivers in high heat, exact 13-heat Off-Road round sequences R1–R5, A/B/C final generation and optional lowest-final rebalance.
+- Scheduler: non-mutating start preflight, minimum start gap, early start, break closing, actual-start commit, overrun pushes pending future, early finish does not pull future automatically.
+- Architecture: Classic RC has no RallyCross rules/state; RallyCross has no Classic RC references; Scheduler is sport-neutral; Classic runtime has no DOM; own Classic storage namespace.
+- Input safety: active Classic heat keeps timing ownership even if another application page is visible.
+- PWA cohesion: RC62 VERSION/manifest/SW synchronized, all manifest files exist, SW validators accept every local offline asset.
+- JS syntax: all project `.js` files parse.
+- CSS parser: all project `.css` files parse without syntax errors.
+- HTML local script/style resources resolve.
+- Protected RC61 runtime/foundation bytes are unchanged.
+- Current RallyCross JS regression suites: run-offs, start order, skip/state, session control, Race Simulator, RC61 Final A third-result rule remain PASS.
+- Schedule visual contract: fixed overlay, no cockpit resize, desktop/phone-landscape/phone-portrait responsive geometry, and theme-token paint for CLASSIC / COBALT / STEEL / LIGHT / MODERN / HERITAGE PASS. Exact project CSS was rendered in a headless static fixture for desktop plus Cobalt phone landscape/portrait inspection.
 
-Settings UI shell rebuild from the RC38 FULL baseline. Runtime changes: `ui/shell/views.js`, `ui/shell/actions.js`, `ui/shell/app.css`, `ui/shell/discipline-shared.js`. Release files synchronized: `VERSION.txt`, `offline-manifest.js`, `sw.js`. Sport rules, LapWiz parser/timing, audio engine internals, storage engine, pilot database, reporting and cockpit UI are unchanged.
+## Verification fixes made before packaging
 
-## RC40 verification
+1. Fixed Qualifying DNF handling: a DNF with valid laps/time remains classified; only DNS/DSQ/no-time receives last-place treatment.
+2. Fixed active input ownership so opening Settings/Pilots during a Classic heat cannot route LapWiz passes into RallyCross.
+3. Fixed two Service Worker validator defects that could reject a valid RC62 candidate package.
+4. Changed Scheduler start bookkeeping: countdown is only a preflight; `actualStartEpoch` is committed at the real race start, so the minimum-gap calculation uses actual starts rather than the beginning of the 10-second procedure.
+5. A delayed/overrunning heat now pushes only the still-pending schedule tail. Finishing early does not silently pull later heats forward.
+6. Seeding/controlled/final practice first timing-line crossing is a baseline/start crossing, not a fake first lap.
+7. Raised the smallest Schedule overlay labels on phone landscape/portrait to avoid micro-text.
 
-- JavaScript syntax check passes for every `.js` file in the package.
-- Settings section navigation does not call `render()`: unsaved values remain in the DOM while switching desktop sections.
-- Mobile accordion logic removes/open classes directly and allows the currently open section to close.
-- Old settings classes (`settingsGrid`, `settingGroup`, `toggleRow`, `backgroundSettingGrid`, old background-setting helpers) are no longer used by Settings and their dedicated CSS rules were removed.
-- Update UI remains wired to the existing `data-update-state`, `data-offline-ready`, `update-check`, `update-install`, and `offline-check` contracts.
-- Existing save IDs are preserved for `save-settings`.
-- `VERSION.txt`, `offline-manifest.js` display/app/cache version and service-worker release namespace are synchronized to RC40.
-- Every local path listed in the offline manifest exists in the FULL package.
-- Hash comparison against RC38 confirms no changes under `platform/`, `modes/`, `reporting/`, `ui/pilots/`, `ui/discipline-ui.js`, or `ui/shell/discipline-pults.css`.
+## Historical frozen tests
+
+Some old RC-specific tests intentionally hard-code obsolete release numbers, hashes or superseded UI wording (for example RC36/45/46/49/50/59). They are retained as history and are **not** RC62 release gates. A failure that only asserts an old cache namespace/hash/text is not treated as a new regression. Current behavior is covered by the RC61/RC62 gates above.
 
 ## Physical acceptance still required
 
-- PWA update RC38 -> RC40 on the real hosted GitHub build.
-- Phone portrait visual check with the user background pattern.
-- Desktop/tablet horizontal visual check.
-- Real-device interaction check for save/theme/background upload and Update/Offline buttons.
-
----
-
-# LEGION RX 4.2.0 CLEAN FULL APP RC38 · AVATAR CROP LAYER FIX — TEST REPORT
-
-## Scope
-
-Pilot UI image pipeline only. Runtime changes are limited to `ui/pilots/pilot-cards.js` and `ui/pilots/pilot-cards.css`, plus release metadata/tests. Sport/timing, LapWiz, audio, storage engine and reporting are not modified.
-
-## RC38 verification
-
-- Crop backdrop stacks above the pilot editor (`1400 > 1200`), so gallery/camera selection opens the crop UI immediately instead of underneath the editor.
-- On a 390×844 mobile viewport, the crop panel is centered vertically rather than bottom-aligned.
-- Headless Chromium smoke test: selected JPG -> crop visible while editor remains open -> `ГОТОВО` -> crop closes -> editor preview receives a valid `data:image/webp` avatar.
-- The sample 3000×2000 JPG produced a processed avatar of about 67 KB, below the new ~72 KB target.
-- Output remains square 480×480 first choice, with 420×420 fallback only when required by compression.
-- Original gallery/camera file is never written to the pilot database.
-- Cancel preserves the previous avatar.
-
-## Regression
-
-Run architecture, clean-foundation, iOS start/storage, pilot-card, RC29 run-off, RC30 start-order/announcer, RC31 columns, RC32 skip flow, RC33–36 UI tests, RC37 avatar pipeline, RC38 crop-layer test, JavaScript syntax and offline-manifest checks. Physical camera launch/permission remains user-side on iPhone/Android.
-
-
-## RC44 · RXUI removable skins
-- Base: RC40 CLEAN SETTINGS UI.
-- Classic visual source files remain authoritative and were not edited for the skin look.
-- Added removable `ui/skins/rxui/` layer with STEEL, LIGHT, MODERN and HERITAGE.
-- Existing Classic markup/actions are reused; sport/platform/storage/audio/reporting logic is unchanged.
-- RallyCross pilot-row geometry remains untouched; skins only paint rows/shell and replace icon artwork outside Classic.
-- Skin selection is stored as `settings.uiSkin`; `classic` is always available as rollback.
-
-### RC44 verification result
-- JS syntax (views/actions/discipline-shared/icons): PASS.
-- RC44 skin isolation test: PASS.
-- Architecture test: PASS.
-- CLEAN foundation test (updated for isolated RXUI style layer): PASS.
-- iOS start safety: PASS.
-- RallyCross run-off: 28/28 PASS.
-- Start order / announcer: 12/12 PASS.
-- Skip / state safety: 11/11 PASS.
-- Offline manifest: 85 local assets, 0 missing.
-- Headless browser rendering was attempted with system Chromium but local HTTP navigation is blocked by the execution environment administrator; physical/browser visual acceptance remains user-side.
-
-## RC45 · COCKPIT STEEL / LIGHT POLISH
-Focused acceptance target: cockpit appearance only. Classic geometry and sport/platform layers are protected.
-
-Automated checks include:
-- RC45 cockpit skin scope + no pilot-row geometry ownership.
-- Classic cockpit CSS / `ui/discipline-ui.js` baseline hashes unchanged from RC44.
-- No STEEL/LIGHT legacy side/bottom activation strips or top status dots.
-- Full-surface enabled/on/disabled tokens present in both STEEL and LIGHT.
-- Required cockpit/navigation icons present in the unified non-Classic SVG vocabulary.
-- Existing RC44 skin isolation, architecture, CLEAN foundation, iOS START, RallyCross run-off, start-order/announcer and skip/state suites.
-
-A self-contained visual harness was also rendered at 1510×812 and 430×900 for STEEL and LIGHT to inspect proportional behavior without changing app geometry. Final installed-PWA visual acceptance remains device-side.
-
-
-## RC46 · CLASSIC CONTROL POLISH
-- `verify_rc46_classic_control_polish.py`: PASS
-- Architecture: PASS
-- CLEAN foundation (updated expected isolated style layer): PASS
-- iOS START safety / release namespace: PASS
-- RallyCross run-off behavior: 28/28 PASS
-- Start-order / announcer: 12/12 PASS
-- Skip/state safety: 11/11 PASS
-- Visual smoke rendered at 1510×812 and 430×900.
-- `ui/shell/discipline-pults.css` hash unchanged from RC45: `5dd02f18d959daa2da7275a965f7cfc1b13c0a718ff050324f872256ee81ee9a`.
-- `ui/discipline-ui.js` hash unchanged from RC45: `052ce3f901327b7ce6fa9365b1f091612577431092a9470b41fc854c9f5a00e1`.
-
-## RC60 · RACE SIMULATOR
-- Architecture boundary: PASS (simulation module has no DOM/BLE/sport constants)
-- Protected foundation: PASS with authorized `modes/rallycross/runtime.js` integration update; `app.js`, LapWiz, scoring, finals, storage and reporting remain unchanged
-- Simulator engine behavior: PASS
-- RC60 release cohesion/offline package: PASS
-- RallyCross run-off regression: 28/28 PASS
-- Start-order/announcer regression: 12/12 PASS
-- Skip/state regression: 11/11 PASS
-- RC57 session-control behavior: PASS
-- RC57 live pilot edit: PASS
-- RC58 pilot profile link: PASS
+The full app URL cannot be opened by the container Chromium because local-site navigation is blocked by the environment policy. I therefore rendered the exact project CSS against a representative cockpit/Schedule DOM fixture and verified the responsive geometry and all six skin token palettes; Cobalt landscape and portrait screenshots were also inspected. Final acceptance still requires the deployed PWA/device and a real LapWiz field run before GOLD.

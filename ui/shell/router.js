@@ -1,5 +1,5 @@
 'use strict';
-function uiNav(view){if(view==='settings'&&state.view!=='settings'){try{sessionStorage.removeItem('legionrx_settings_section');}catch{}}state.view=view;document.body.classList.toggle('cockpitMode',['cockpit','trackDayCockpit'].includes(view));$$('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));render();}
+function uiNav(view){if(view==='settings'&&state.view!=='settings'){try{sessionStorage.removeItem('legionrx_settings_section');}catch{}}state.view=view;document.body.classList.toggle('cockpitMode',['cockpit','trackDayCockpit','classicCockpit'].includes(view));$$('#bottomNav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));render();}
 
 function clearIntervalsIfNotCockpit(){
   if(state.view!=='cockpit'){
@@ -7,6 +7,7 @@ function clearIntervalsIfNotCockpit(){
     if(state.countdownTick){clearInterval(state.countdownTick);state.countdownTick=null;}
   }
   if(state.view!=='trackDayCockpit'&&state.trackTick){clearInterval(state.trackTick);state.trackTick=null;}
+  if(typeof ClassicRCRuntime!=='undefined'&&state.view!=='classicCockpit')ClassicRCRuntime.stopTicker();
 }
 
 function uiRender(){
@@ -17,19 +18,23 @@ function uiRender(){
   else if(state.view==='cockpit')host.innerHTML=cockpitView();
   else if(state.view==='trackDaySetup')host.innerHTML=trackDaySetupView();
   else if(state.view==='trackDayCockpit')host.innerHTML=trackDayCockpitView();
+  else if(state.view==='classicSetup')host.innerHTML=classicRCSetupView();
+  else if(state.view==='classicCockpit')host.innerHTML=classicRCCockpitView();
   else if(state.view==='championships')host.innerHTML=championshipsView();
   else if(state.view==='championshipDetail')host.innerHTML=championshipDetailView();
   else if(state.view==='archive')host.innerHTML=archiveView();
   else if(state.view==='pilots')host.innerHTML=pilotsView();
   else if(state.view==='settings')host.innerHTML=settingsView();
-  bindView();bind415();updateHeader();applySettings();
+  bindView();bind415();if(typeof bindClassicRC==='function')bindClassicRC();updateHeader();applySettings();
   if(state.view==='cockpit')startTicker();
   if(state.view==='trackDayCockpit')startTrackTicker();
+  if(state.view==='classicCockpit'&&typeof ClassicRCRuntime!=='undefined')ClassicRCRuntime.startTicker();
 }
 
 function uiUpdateHeader(){
-  const td=state.trackDay;
+  const td=state.trackDay,classic=(typeof ClassicRCEngine!=='undefined'?ClassicRCEngine.get():null);
   if(td?.status==='active')$('#headerRace').textContent=`Track Day · ${td.name}`;
+  else if(classic&&classic.status!=='archived')$('#headerRace').textContent=`Classic RC · ${classic.name} · ${String(classic.status||'').toUpperCase()}`;
   else {const race=state.race;$('#headerRace').textContent=race?`${race.eventName} · ${stageLabel(race.stage)}`:'Нет активной гонки';}
   const el=$('#headerLapwiz');el.textContent=lapwiz.connected?`LapWiz · ${lapwiz.device?.name||'подключён'}`:'LapWiz · не подключён';el.className=`statusPill ${lapwiz.connected?'good':'neutral'}`;
 }
@@ -46,7 +51,7 @@ function homeViewClassic(){
  <div class="disciplineGrid disciplineGrid415">
   <article class="disciplineTile activeDiscipline"><div class="tileTop"><div class="tileIcon">${uiIcon('flag')}</div><span class="badge liveBadge"><span class="liveDot"></span>АКТИВНО</span></div><div><h3>Ралли-кросс</h3><p>Квалификации, очки, LCQ, переходы и финалы.</p></div><button class="tileAction" data-action="open-rx"><span>${race?'Открыть соревнование':'Создать соревнование'}</span>${uiIcon('chevron')}</button></article>
   <article class="disciplineTile locked"><div class="tileTop"><div class="tileIcon">${uiIcon('timer')}</div><span class="badge soon">СКОРО</span></div><div><h3>Ралли-спринт</h3><p>Одиночные попытки, лучшее время и протокол результатов.</p></div><button class="tileAction" disabled><span>В разработке</span>${uiIcon('chevron')}</button></article>
-  <article class="disciplineTile locked"><div class="tileTop"><div class="tileIcon">${uiIcon('car')}</div><span class="badge soon">СКОРО</span></div><div><h3>Классическая RC-гонка</h3><p>Practice, seeding, qualifying и A/B/C Finals.</p></div><button class="tileAction" disabled><span>В разработке</span>${uiIcon('chevron')}</button></article>
+  <article class="disciplineTile activeDiscipline"><div class="tileTop"><div class="tileIcon">${uiIcon('car')}</div><span class="badge liveBadge">EFRA 2026</span></div><div><h3>Классическая RC-гонка</h3><p>Practice, seeding, Round-by-Round qualifying и A/B/C Finals.</p></div><button class="tileAction" data-classic-action="open"><span>${typeof ClassicRCEngine!=='undefined'&&ClassicRCEngine.hasActive()?'Открыть соревнование':'Создать соревнование'}</span>${uiIcon('chevron')}</button></article>
   <article class="disciplineTile activeDiscipline trackTile"><div class="tileTop"><div class="tileIcon">${uiIcon('timer')}</div><span class="badge liveBadge">${trackActive?'СЕССИЯ ИДЁТ':'PRACTICE'}</span></div><div><h3>Track Day</h3><p>Свободная практика 10–120 минут, PIT/PIT OUT, круги, лучшее и последнее время, подробный отчёт по каждому пилоту.</p></div><button class="tileAction" data-track-action="open"><span>${trackActive?'Вернуться в сессию':'Свободная практика'}</span>${uiIcon('chevron')}</button></article>
  </div>
  <div class="homeSectionHead modulesHead"><div><div class="sectionLabel">СИСТЕМА</div><h2>Общие разделы</h2></div></div>
@@ -70,7 +75,7 @@ function homeViewRxui(){
  <div class="disciplineGrid disciplineGrid415">
   <article class="disciplineTile activeDiscipline"><div class="tileTop"><div class="tileIcon">${uiIcon('flag')}</div><span class="badge liveBadge">RALLYCROSS</span></div><div><h3>Ралли-кросс</h3><p>Квалификации, переходы и финалы.</p></div><button class="tileAction" data-action="open-rx"><span>${race?'Открыть соревнование':'Создать соревнование'}</span>${uiIcon('chevron')}</button></article>
   <article class="disciplineTile locked"><div class="tileTop"><div class="tileIcon">${uiIcon('timer')}</div><span class="badge soon">СКОРО</span></div><div><h3>Ралли-спринт</h3><p>Одиночные попытки и лучший результат.</p></div><button class="tileAction" disabled><span>В разработке</span>${uiIcon('chevron')}</button></article>
-  <article class="disciplineTile locked"><div class="tileTop"><div class="tileIcon">${uiIcon('car')}</div><span class="badge soon">СКОРО</span></div><div><h3>Классическая RC-гонка</h3><p>Practice, qualifying и финалы.</p></div><button class="tileAction" disabled><span>В разработке</span>${uiIcon('chevron')}</button></article>
+  <article class="disciplineTile activeDiscipline"><div class="tileTop"><div class="tileIcon">${uiIcon('car')}</div><span class="badge liveBadge">EFRA 2026</span></div><div><h3>Классическая RC-гонка</h3><p>Practice, seeding, qualifying и финалы EFRA.</p></div><button class="tileAction" data-classic-action="open"><span>${typeof ClassicRCEngine!=='undefined'&&ClassicRCEngine.hasActive()?'Открыть соревнование':'Создать соревнование'}</span>${uiIcon('chevron')}</button></article>
   <article class="disciplineTile activeDiscipline trackTile"><div class="tileTop"><div class="tileIcon">${uiIcon('timer')}</div><span class="badge liveBadge">${trackActive?'СЕССИЯ ИДЁТ':'PRACTICE'}</span></div><div><h3>Track Day</h3><p>Свободная практика, круги и отчёт по пилотам.</p></div><button class="tileAction" data-track-action="open"><span>${trackActive?'Вернуться в сессию':'Свободная практика'}</span>${uiIcon('chevron')}</button></article>
  </div>
  <div class="homeSectionHead modulesHead"><div><div class="sectionLabel">СИСТЕМА</div><h2>Общие разделы</h2></div></div>

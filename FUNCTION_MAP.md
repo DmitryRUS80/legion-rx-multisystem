@@ -1,3 +1,15 @@
+# RC62 FUNCTION MAP ADDENDUM
+
+- `modes/classic-rc/efra-rules.js` — pure EFRA 2026 Round-by-Round points, counted-round and final tie-break helpers.
+- `modes/classic-rc/groups.js` — balanced heats, seeded heats, Off-Road heat sequence, A/B/C final grouping.
+- `modes/classic-rc/efra-engine.js` — Classic event state/storage, event graph, seeding/Q/finals rebuild, Scheduler integration.
+- `modes/classic-rc/efra-runtime.js` — Classic live session/timing controller; countdown, actual start, staggered timing, pass handling, finish/result suggestion; no DOM.
+- `runtime/competition-scheduler.js` — sport-neutral timeline, min start gap, breaks, early start and delay reflow.
+- `runtime/active-race-controller.js` — neutral timing-input ownership at shell boundary.
+- `ui/classic-rc/classic-rc-ui.js` — Classic setup, shared cockpit adapter, result tables and Schedule overlay.
+- `ui/classic-rc/classic-rc.css` — only Classic setup/Schedule presentation; Schedule is fixed overlay, never cockpit layout.
+
+
 # LEGION RX — FUNCTION MAP
 
 - LapWiz BLE/connect/start/stop/pass parsing -> `platform/lapwiz.js`

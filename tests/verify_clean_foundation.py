@@ -36,7 +36,7 @@ checks['protected_foundation_hashes_match_rc61_authorized']=not changed
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])
-checks['style_layers_exact']=all(x in index for x in ['ui/themes/theme.css','ui/shell/app.css','ui/pilots/pilot-cards.css','ui/shell/discipline-pults.css','ui/skins/rxui/base.css','ui/skins/rxui/steel.css','ui/skins/rxui/light.css','ui/skins/rxui/modern.css','ui/skins/rxui/cobalt.css','ui/skins/rxui/heritage.css','ui/classic-polish/classic-controls.css']) and index.count('rel="stylesheet"')==12 # 5 Classic/Oswald layers + 6 isolated RXUI skin layers + 1 isolated Classic cockpit polish layer
+checks['style_layers_exact']=all(x in index for x in ['ui/themes/theme.css','ui/shell/app.css','ui/pilots/pilot-cards.css','ui/shell/discipline-pults.css','ui/classic-rc/classic-rc.css','ui/skins/rxui/base.css','ui/skins/rxui/steel.css','ui/skins/rxui/light.css','ui/skins/rxui/modern.css','ui/skins/rxui/cobalt.css','ui/skins/rxui/heritage.css','ui/classic-polish/classic-controls.css']) and index.count('rel="stylesheet"')==13 # existing layers + isolated Classic RC module stylesheet
 
 theme=(ROOT/'ui/themes/theme.css').read_text(encoding='utf-8')
 checks['theme_is_tokens_only']=not re.search(r'\.[A-Za-z_][\w-]*\s*[,{]',theme)
