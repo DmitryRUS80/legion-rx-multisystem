@@ -9,5 +9,5 @@ No EFRA sport rules, Classic RC engine/runtime, Competition Scheduler logic, Ral
 Use **FULL** as the source for future development. Use **UPLOAD_TO_GITHUB** only as the exact RC64 → RC65 deployment delta.
 
 
-## RC66
+## RC67
 Classic Schedule is a true fixed overlay. Its tab no longer participates in cockpit layout, and Schedule actions use direct per-render event bindings for reliable mouse/touch operation.

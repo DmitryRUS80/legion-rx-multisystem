@@ -29,7 +29,7 @@
 /* Schedule overlay: fixed above cockpit; never participates in cockpit geometry.
    Paint is token-driven so CLASSIC / COBALT / STEEL / LIGHT / MODERN / HERITAGE
    keep their own visual language. */
-.classicRCCockpit{
+.classicRCCockpit,#classicScheduleHost{
  --classic-schedule-bg:var(--rxn-panel);
  --classic-schedule-surface:var(--rxn-panel2);
  --classic-schedule-control:var(--rxn-control-bg);
@@ -44,7 +44,7 @@
  --classic-schedule-primary:var(--rxn-cobalt);
  --classic-schedule-primary-text:#fff;
 }
-html:not([data-skin="classic"]) .classicRCCockpit{
+html:not([data-skin="classic"]) .classicRCCockpit,#classicScheduleHost{
  --classic-schedule-bg:var(--rxui-surface);
  --classic-schedule-surface:var(--rxui-surface2);
  --classic-schedule-control:var(--rxui-cockpit-control);
@@ -190,23 +190,41 @@ html:not([data-skin="classic"]) .classicRCCockpit{
 .classicRCCockpit .classicScheduleStatus.break b,.classicRCCockpit .classicScheduleStatus.break .classicScheduleClock strong{color:var(--classic-schedule-warning)}
 .classicRCCockpit .classicScheduleStatus.hold b,.classicRCCockpit .classicScheduleStatus.hold .classicScheduleClock strong{color:var(--classic-schedule-warning)}
 
-/* RC66 · Schedule overlay isolation / stable hit areas. UI-only. */
-.classicScheduleTail{
-  position:fixed!important;z-index:420;right:0;top:50%;bottom:auto;left:auto;
-  transform:translateY(-50%);margin:0!important;pointer-events:auto;touch-action:manipulation;
-  -webkit-tap-highlight-color:transparent;contain:layout style paint;
+/* RC67 · Schedule portal. The whole drawer lives outside #viewHost / cockpit.
+   This removes cockpit/grid/overflow stacking from hit testing completely. */
+#classicScheduleHost{
+  position:fixed;inset:0;z-index:410;pointer-events:none;overflow:visible;
+  font-family:var(--rxn-font);color:var(--classic-schedule-text);
 }
-.classicScheduleTail.open{opacity:0;visibility:hidden;pointer-events:none}
-.classicScheduleDrawer{position:fixed!important;z-index:440;isolation:isolate;touch-action:manipulation;contain:layout style paint}
-.classicScheduleScrim{position:fixed!important;z-index:430}
-.classicScheduleDrawer button{position:relative;z-index:2;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.classicScheduleDrawer button:active{filter:brightness(.92)}
-.classicScheduleTail:active{transform:translateY(-50%);filter:brightness(.92)}
-.classicScheduleList{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+#classicScheduleHost:empty{display:none}
+#classicScheduleHost .classicScheduleTail,
+#classicScheduleHost .classicScheduleScrim,
+#classicScheduleHost .classicScheduleDrawer{box-sizing:border-box}
+#classicScheduleHost .classicScheduleTail{
+  position:absolute!important;z-index:1;right:0;top:50%;bottom:auto;left:auto;
+  transform:translateY(-50%);margin:0!important;pointer-events:auto;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+#classicScheduleHost .classicScheduleTail.open{opacity:0;visibility:hidden;pointer-events:none}
+#classicScheduleHost .classicScheduleScrim{
+  position:absolute!important;z-index:2;inset:0;pointer-events:auto;
+}
+#classicScheduleHost .classicScheduleDrawer{
+  position:absolute!important;z-index:3;top:4px;right:4px;bottom:4px;left:auto;
+  pointer-events:auto;touch-action:auto;isolation:isolate;contain:none;
+}
+#classicScheduleHost .classicScheduleDrawer button,
+#classicScheduleHost .classicScheduleDrawer [data-classic-schedule-tab]{
+  position:relative;z-index:1;pointer-events:auto;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;user-select:none;
+}
+#classicScheduleHost .classicScheduleDrawer button:active{filter:brightness(.92)}
+#classicScheduleHost .classicScheduleTail:active{transform:translateY(-50%);filter:brightness(.92)}
+#classicScheduleHost .classicScheduleList{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 @media (orientation:landscape) and (max-width:1100px) and (max-height:600px){
-  .classicScheduleTail{top:50%;right:0;bottom:auto;transform:translateY(-50%)}
+  #classicScheduleHost .classicScheduleTail{top:50%;right:0;bottom:auto;transform:translateY(-50%)}
 }
 @media (orientation:portrait) and (max-width:599px){
-  .classicScheduleTail{top:auto;right:10px;bottom:126px;left:auto;transform:none}
-  .classicScheduleTail:active{transform:none}
+  #classicScheduleHost .classicScheduleTail{top:auto;right:10px;bottom:126px;left:auto;transform:none}
+  #classicScheduleHost .classicScheduleTail:active{transform:none}
 }

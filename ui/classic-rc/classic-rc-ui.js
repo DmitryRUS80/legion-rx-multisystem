@@ -117,7 +117,30 @@ function classicRCScheduleDrawer(){
   return `<button type="button" class="classicScheduleTail ${classicScheduleOpen?'open':''}" data-classic-action="schedule" title="Расписание"><span>${raceSvg('list')}</span><b>РАСПИСАНИЕ</b></button>${classicScheduleOpen?`<div class="classicScheduleScrim" data-classic-action="schedule-close"></div><aside class="classicScheduleDrawer"><header><div><small>CLASSIC RC · EFRA</small><h2>РАСПИСАНИЕ</h2></div><button type="button" data-classic-action="schedule-close">×</button></header>${classicRCScheduleStatusStrip(false)}<nav class="classicScheduleTabs"><button type="button" class="${classicScheduleTab==='now'?'active':''}" data-classic-schedule-tab="now">СЕЙЧАС</button><button type="button" class="${classicScheduleTab==='next'?'active':''}" data-classic-schedule-tab="next">ДАЛЕЕ</button><button type="button" class="${classicScheduleTab==='all'?'active':''}" data-classic-schedule-tab="all">ВЕСЬ ДЕНЬ</button></nav><div class="classicScheduleList">${rows.map(it=>{const live=it===current&&(it.status==='active'||(it.kind==='break'&&snap.now>=Number(it.plannedStartEpoch||0)));const status=live?'live':it.status;return `<div class="classicScheduleRow ${status} ${it.kind==='break'?'break':''}"><time>${CompetitionScheduler.formatTime(it.actualStartEpoch||it.plannedStartEpoch)}</time><i></i><div><b>${esc(it.label)}</b><span>${esc(it.kind==='break'?`${it.durationMin} МИН`:it.subLabel||'')}</span></div>${live?`<strong>${it.kind==='break'?'ПАУЗА':'СЕЙЧАС'}</strong>`:it.status==='completed'?'<em>✓</em>':''}</div>`;}).join('')}</div><footer>${classicRCScheduleFooter(snap)}</footer></aside>`:''}`;
 }
 
-function classicRCCockpitView(){rxnEnsureSystemClockTicker();classicRCEnsureScheduleTicker();const c=ClassicRCEngine.get();if(!c||c.status==='setup')return `<section class="page"><div class="card"><h2>Classic RC ещё не подготовлен</h2><button class="btn primary" data-classic-action="setup">К НАСТРОЙКЕ</button></div></section>`;const ev=ClassicRCRuntime.event(),cls=rxnColumnClass(),count=rxnMetricCount();if(!ev&&c.status==='finished')return `<section class="rxnCockpit classicRCCockpit ${cls}" style="--rxn-metric-count:${count}">${classicRCHeader()}${classicRCTitle()}<main class="rxnMain"><section class="rxnRoster"><div class="classicFinalProtocol">${classicRCFinalProtocolMarkup()}</div></section><aside class="rxnSide"><section class="rxnTimerPanel"><div class="rxnTimerCopy"><span>СОРЕВНОВАНИЕ</span><strong>FIN</strong><small>EFRA 2026</small></div></section>${classicRCControls()}</aside></main>${classicRCScheduleDrawer()}</section>`;ClassicRCRuntime.ensureSession();return `<section class="rxnCockpit classicRCCockpit ${cls}" style="--rxn-metric-count:${count}">${classicRCHeader()}${classicRCTitle()}<main class="rxnMain"><section class="rxnRoster"><div id="classicPilotBoard" class="rxnTable">${classicRCPilotTable()}</div></section><aside class="rxnSide">${classicRCScheduleStatusStrip(true)}${classicRCTimerPanel()}${classicRCMobileInfo()}${classicRCControls()}</aside></main>${classicRCScheduleDrawer()}</section>`;}
+
+function classicRCEnsureScheduleHostEvents(){
+  const host=document.getElementById('classicScheduleHost');if(!host||host.dataset.classicScheduleBound==='1')return;
+  host.dataset.classicScheduleBound='1';
+  const controlFrom=e=>e.target?.closest?.('[data-classic-action],[data-classic-schedule-tab]');
+  const activate=(el,e)=>{
+    if(!el||el.disabled)return;
+    e?.preventDefault?.();e?.stopPropagation?.();
+    if(el.dataset.classicScheduleTab){classicScheduleTab=el.dataset.classicScheduleTab||'now';classicRCSyncScheduleHost();return;}
+    Promise.resolve(classicRCDispatchAction(el)).catch(err=>{console.error('Classic RC schedule action failed',err);toast(err?.message||'Ошибка Classic RC');});
+  };
+  /* Native click/tap only. Pointerdown/pointerup synthesis was fragile on real mobile/PWA
+     and could cancel or double-trigger controls after drawer re-render. */
+  host.addEventListener('click',e=>{const el=controlFrom(e);if(el)activate(el,e);});
+  host.addEventListener('keydown',e=>{if(!(e.key==='Enter'||e.key===' '))return;const el=controlFrom(e);if(el)activate(el,e);});
+}
+function classicRCSyncScheduleHost(){
+  const host=document.getElementById('classicScheduleHost');if(!host)return;
+  classicRCEnsureScheduleHostEvents();
+  if(state.view!=='classicCockpit'||!ClassicRCEngine.get()?.timeline){host.replaceChildren();return;}
+  host.innerHTML=classicRCScheduleDrawer();
+}
+
+function classicRCCockpitView(){rxnEnsureSystemClockTicker();classicRCEnsureScheduleTicker();const c=ClassicRCEngine.get();if(!c||c.status==='setup')return `<section class="page"><div class="card"><h2>Classic RC ещё не подготовлен</h2><button class="btn primary" data-classic-action="setup">К НАСТРОЙКЕ</button></div></section>`;const ev=ClassicRCRuntime.event(),cls=rxnColumnClass(),count=rxnMetricCount();if(!ev&&c.status==='finished')return `<section class="rxnCockpit classicRCCockpit ${cls}" style="--rxn-metric-count:${count}">${classicRCHeader()}${classicRCTitle()}<main class="rxnMain"><section class="rxnRoster"><div class="classicFinalProtocol">${classicRCFinalProtocolMarkup()}</div></section><aside class="rxnSide"><section class="rxnTimerPanel"><div class="rxnTimerCopy"><span>СОРЕВНОВАНИЕ</span><strong>FIN</strong><small>EFRA 2026</small></div></section>${classicRCControls()}</aside></main></section>`;ClassicRCRuntime.ensureSession();return `<section class="rxnCockpit classicRCCockpit ${cls}" style="--rxn-metric-count:${count}">${classicRCHeader()}${classicRCTitle()}<main class="rxnMain"><section class="rxnRoster"><div id="classicPilotBoard" class="rxnTable">${classicRCPilotTable()}</div></section><aside class="rxnSide">${classicRCScheduleStatusStrip(true)}${classicRCTimerPanel()}${classicRCMobileInfo()}${classicRCControls()}</aside></main></section>`;}
 
 
 function classicRCHeatSettingsModal(){
@@ -144,7 +167,7 @@ function classicRCUpdateScheduleClock(){
   document.querySelectorAll('[data-classic-schedule-label]').forEach(x=>x.textContent=snap.state);
   document.querySelectorAll('[data-classic-schedule-sub]').forEach(x=>x.textContent=snap.nextText);
   document.querySelectorAll('.classicScheduleClock small').forEach(x=>x.textContent=snap.countdownLabel);
-  const sig=`${snap.current?.id||''}:${snap.current?.status||''}:${snap.current?.kind||''}:${snap.hold}:${ClassicRCRuntime.testScale()}`;if(classicScheduleOpen&&classicScheduleSig&&sig!==classicScheduleSig){classicScheduleSig=sig;render();}else classicScheduleSig=sig;
+  const sig=`${snap.current?.id||''}:${snap.current?.status||''}:${snap.current?.kind||''}:${snap.hold}:${ClassicRCRuntime.testScale()}`;if(classicScheduleOpen&&classicScheduleSig&&sig!==classicScheduleSig){classicScheduleSig=sig;classicRCSyncScheduleHost();}else classicScheduleSig=sig;
 }
 function classicRCEnsureScheduleTicker(){if(classicScheduleTicker)return;classicScheduleTicker=setInterval(()=>{if(state.view==='classicCockpit'){classicRCUpdateScheduleClock();ClassicRCRuntime.checkLimit?.();}},250);}
 function classicRCUpdateDynamic(){if(state.view!=='classicCockpit')return;rxnUpdateSystemClock();classicRCUpdateScheduleClock();const s=ClassicRCRuntime.session(),ev=ClassicRCRuntime.event();if(!s||!ev)return;const timer=document.querySelector('#classicMainTimer');if(timer)timer.textContent=ClassicRCRuntime.timerValue();const label=document.querySelector('#classicTimerLabel');if(label)label.textContent=s.phase==='countdown'?'ДО СТАРТА':s.phase==='finished'?'ФИНИШ':['seeding','controlled','finalPractice'].includes(ev.stage)?'ДО КОНЦА':'ДО ФИНИША';const sub=document.querySelector('#classicTimerSubline');if(sub)sub.textContent=`ЗАЕЗД ${ev.durationMin||ClassicRCEngine.category().raceMinutes} МИН${['qualifying','final'].includes(ev.stage)?' + LAST LAP':''}${ev.stage==='qualifying'?' · STAGGERED':''}`;const ranked=ClassicRCRuntime.liveRanking(),leader=ranked[0],ring=document.querySelector('#classicRingMain');if(ring)ring.textContent=leader?String(s.live?.[leader.id]?.laps||0):'0';let best=null,bp=null;ranked.forEach(p=>{const v=Number(s.live?.[p.id]?.bestLapMs);if(Number.isFinite(v)&&v>0&&(best===null||v<best)){best=v;bp=p;}});document.querySelectorAll('[data-classic-best-name]').forEach(x=>x.textContent=bp?rxnPilotDisplayName(bp):'—');document.querySelectorAll('[data-classic-best-time]').forEach(x=>x.textContent=best?rxnFormatDuration(best):'—');const board=document.querySelector('#classicPilotBoard');if(board){const sig=ranked.map(p=>{const l=s.live[p.id]||ClassicRCRuntime.blank();return`${p.id}:${l.laps}:${Math.round(l.lastLapMs||0)}:${l.finished}:${l.status}`;}).join('|')+rxnLoadPrecision();if(sig!==cRCBoardSig){cRCBoardSig=sig;rxnAnimateBoard(board,classicRCPilotTable());}}}
@@ -172,8 +195,8 @@ async function classicRCDispatchAction(b){
   if(a==='confirm-result')return classicRCResultModal();
   if(a==='save-result')return classicRCSaveResult();
   if(a==='results')return classicRCResultsModal();
-  if(a==='schedule'){classicScheduleOpen=!classicScheduleOpen;return render();}
-  if(a==='schedule-close'){classicScheduleOpen=false;return render();}
+  if(a==='schedule'){classicScheduleOpen=!classicScheduleOpen;classicRCSyncScheduleHost();return;}
+  if(a==='schedule-close'){classicScheduleOpen=false;classicRCSyncScheduleHost();return;}
   if(a==='sim-settings'){if(typeof raceSimulatorModal==='function')return raceSimulatorModal();return toast('Симулятор не загружен');}
   if(a==='sim-speed'){const speed=ClassicRCRuntime.cycleSimulationSpeed();toast(`SIM ×${speed}`);return render();}
   if(a==='start-early'){classicScheduleOpen=false;return ClassicRCRuntime.beginStart();}
@@ -188,10 +211,10 @@ async function classicRCDispatchAction(b){
     if(!r.ok)return toast(r.error||'Не удалось пропустить');
     classicScheduleOpen=true;return render();
   }
-  if(a==='skip-break'){const r=ClassicRCEngine.skipScheduleBreak(b.dataset.breakId,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось пропустить паузу');toast('Пауза пропущена');return render();}
-  if(a==='break-minus'){const r=ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,-1,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось изменить паузу');toast(`Пауза · ${r.item.durationMin} мин`);return render();}
-  if(a==='break-plus-one'){const r=ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,1,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось изменить паузу');toast(`Пауза · ${r.item.durationMin} мин`);return render();}
-  if(a==='break-plus'){const r=ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,5,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось изменить паузу');toast(`Пауза · ${r.item.durationMin} мин`);return render();}
+  if(a==='skip-break'){const r=ClassicRCEngine.skipScheduleBreak(b.dataset.breakId,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось пропустить паузу');toast('Пауза пропущена');classicRCSyncScheduleHost();classicRCUpdateScheduleClock();return;}
+  if(a==='break-minus'){const r=ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,-1,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось изменить паузу');toast(`Пауза · ${r.item.durationMin} мин`);classicRCSyncScheduleHost();classicRCUpdateScheduleClock();return;}
+  if(a==='break-plus-one'){const r=ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,1,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось изменить паузу');toast(`Пауза · ${r.item.durationMin} мин`);classicRCSyncScheduleHost();classicRCUpdateScheduleClock();return;}
+  if(a==='break-plus'){const r=ClassicRCEngine.adjustScheduleBreak(b.dataset.breakId,5,ClassicRCRuntime.nowEpoch());if(!r?.ok)return toast('Не удалось изменить паузу');toast(`Пауза · ${r.item.durationMin} мин`);classicRCSyncScheduleHost();classicRCUpdateScheduleClock();return;}
   if(a==='competition-stop'){
     if(!confirm('Остановить соревнование? Расписание и текущий заезд будут поставлены на паузу.'))return;
     const ss=ClassicRCRuntime.session();
@@ -242,8 +265,9 @@ function classicRCBindModalClose(b){
 }
 
 function bindClassicRC(){
-  $$('[data-classic-action]').forEach(classicRCBindActionElement);
-  $$('[data-classic-schedule-tab]').forEach(classicRCBindScheduleTab);
+  classicRCSyncScheduleHost();
+  $$('[data-classic-action]').filter(b=>!b.closest('#classicScheduleHost')).forEach(classicRCBindActionElement);
+  $$('[data-classic-schedule-tab]').filter(b=>!b.closest('#classicScheduleHost')).forEach(classicRCBindScheduleTab);
   $$('[data-classic-modal-close]').forEach(classicRCBindModalClose);
   $$('[data-classic-pilot]').forEach(b=>{b.onclick=()=>{b.classList.toggle('active');b.querySelector('i').textContent=b.classList.contains('active')?'✓':'+';const n=$$('[data-classic-pilot].active').length,el=$('#classicPilotCount');if(el)el.textContent=n;const prepare=$('[data-classic-action="prepare"]');if(prepare)prepare.disabled=n<2;};});
 }

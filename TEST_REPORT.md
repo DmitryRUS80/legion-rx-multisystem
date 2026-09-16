@@ -1,3 +1,12 @@
+RC67 PORTAL / HIT-AREA CHECK
+- Chromium 1792x863: PASS
+- Chromium 844x390: PASS
+- Chromium 390x844: PASS
+- Close button 9-point hit map: PASS
+- Resume button 9-point hit map: PASS
+- Schedule tabs multi-point clicks: PASS
+- Cockpit geometry before/after drawer: unchanged
+
 # TEST REPORT · RC66
 
 RC66 targets only Classic RC Schedule UI reliability.
