@@ -4,7 +4,7 @@ ROOT=Path(__file__).resolve().parents[1]
 checks={}
 
 expected={
-'app.js':'e8d6378c4b0e9e994845e303ecc4d10be38648c7b8d9998a072b3bc6d981c6c2',
+'app.js':'93367fb5182d7bdeb3d30a4d92015ff84e071d8a83819142298baab2f090fc3e',
 'platform/lapwiz.js':'d0f9af187e90114edf671827c9365e7d28130809ba1926cfa11efd30f8c3c644',
 'platform/pilots.js':'9447a63d5fef07aed6c28407844372ab9d7d0f9afdba5c48ed0d63d3048c7ca9',
 'platform/pilot-live-edit.js':'a2052f29abeac18f5cf254254647042ca1715dea1e9330ff26dd8253e3e45aea',
@@ -14,10 +14,10 @@ expected={
 'platform/utils.js':'488d5cc91485d8511fa46b7c043cb21d61048ee3d9caf0a3e03724493432fecd',
 'modes/rallycross/rules.js':'d840388a9e0a148909cac826b184fb88d513c0edbb4a354585ee74362cbb6db3',
 'modes/rallycross/qualifying.js':'ebc33b9bba66065e839aba0c3d90c57fc02621a418862b987711bf79a3f0f8a4',
-'modes/rallycross/finals.js':'9a57c3267921201c48b73166d07e304068d59238c9d1c3a0ffe2ab882913e8e4',
+'modes/rallycross/finals.js':'8d3f3f5b067fc0cca29f1caae17cfa950386cddbd364f7e61ff39bc24e458d59',
 'modes/rallycross/index.js':'63fef654a852591f5131fb1d10da4fbee15b1be731266b576c4c6a5049e5b901',
 'modes/rallycross/audio-actions.js':'56bc3301350365b87e78cbdbc76935fe94c3e89172fb424df31759de725cddef',
-'modes/rallycross/runtime.js':'e19124f9cc5709c62759042ea992d609a517102a8f84c9c943aa0260c6b03573',
+'modes/rallycross/runtime.js':'ca72c00a433c70b5bd2b6852d7285cd5412b72f084f38d18d39b8ee3c10aacf6',
 'modes/rallycross/self-test.js':'3f2be9c50b3a4b158505abd64f95ffd7d10856323a7fd7fb8e31f579cad1113a',
 'modes/free-practice/index.js':'aa43d3a87f0e9286635dbb5bbcfc7647dac310ea30d24af80bb9fe9cdd20845a',
 'modes/rally-sprint/index.js':'1f72a94e0f765212b98bd7af6b24589c1108001bcfaa9fcfc3db7fd97b025a71',
@@ -32,7 +32,7 @@ for rel,want in expected.items():
     p=ROOT/rel
     got=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else 'MISSING'
     if got!=want: changed.append((rel,got,want))
-checks['protected_foundation_hashes_match_rc60_authorized']=not changed
+checks['protected_foundation_hashes_match_rc61_authorized']=not changed
 
 index=(ROOT/'index.html').read_text(encoding='utf-8')
 checks['clean_runtime_names']=all(x not in index for x in ['rc5restore','variant4.css','current-base.css','current-ui.js','bindings.js','offline-audio.js','offline-config.js'])

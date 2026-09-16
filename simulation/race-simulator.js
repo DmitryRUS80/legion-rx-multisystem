@@ -122,3 +122,21 @@ class LegionRaceSimulator extends EventTarget{
   emitStatus(){this.dispatchEvent(new CustomEvent('status',{detail:{enabled:this.enabled,running:this.running,config:this.getConfig()}}));}
 }
 const raceSimulator=new LegionRaceSimulator();
+
+/* Removable registration layer. RallyCross runtime never references raceSimulator directly. */
+if(typeof raceTestSourceAdapter!=='undefined'){
+  raceTestSourceAdapter.register({
+    id:'SIMULATOR',
+    isEnabled:()=>raceSimulator.isEnabled(),
+    isRunning:()=>raceSimulator.running,
+    getScale:()=>raceSimulator.getScale(),
+    label:()=>`SIM ×${raceSimulator.getScale()}`,
+    startWarmup:ctx=>{raceSimulator.startWarmup(ctx);return true;},
+    clearWarmup:()=>raceSimulator.clearWarmup(),
+    startSession:ctx=>raceSimulator.startSession(ctx),
+    pauseSession:()=>raceSimulator.pauseSession(),
+    resumeSession:()=>raceSimulator.resumeSession(),
+    stopSession:()=>raceSimulator.stopSession(),
+    disable:()=>raceSimulator.disable()
+  });
+}

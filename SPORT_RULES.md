@@ -1,3 +1,7 @@
+# RC61 FINAL A TIE-BREAK
+
+Final A uses BEST 2 of A1+A2+A3. Equal BEST-2 sums are resolved only by sporting results: best counted place, then second counted place, then the discarded third result. If still absolutely equal, create a RUN-OFF for the disputed final places. Race duration, lap time, elapsed time and hidden timing performance are not tie-break criteria. The RUN-OFF is not A4 and adds no Final A score; it only fixes the order of the tied final places.
+
 # LEGION RX — RALLYCROSS SPORT RULES · RC36 (official scoring unchanged from RC29)
 
 RC36 changes cockpit presentation only: removes the portrait leader-photo artifact and simplifies the BEST LAP strip. RC35 pilot-stat typography, RC34 live presentation/refresh and RC33 legacy-stats removal are preserved. RC32 administrative cancellation/state handling and the official scoring, BEST-3, LCQ/finals and genuine run-off rules remain unchanged from the RC29 ruleset `RALLYCROSS-2026.09.2`. A cancelled/unrun heat is not itself a sport result and therefore cannot manufacture a mandatory equality/run-off.

@@ -37,38 +37,31 @@ function saveFinalEvent(race,eventKey,result){
 
 function mainRunScore(item){return item?.status==='FIN'?Number(item.place||SPORT_RULES.finalNonFinishScore):SPORT_RULES.finalNonFinishScore;}
 
-function finalRunPerformance(final,pilotId){
-  const stats=final?.lapStats?.[pilotId]||final?.lapStats?.[String(pilotId)]||{};
-  return {laps:Math.max(0,Number(stats.laps||0)),elapsedMs:Number.isFinite(Number(stats.elapsedMs))&&Number(stats.elapsedMs)>0?Number(stats.elapsedMs):Infinity};
-}
-
-function compareRunPerformance(a,b){
-  const ap=a?.performance||{laps:0,elapsedMs:Infinity},bp=b?.performance||{laps:0,elapsedMs:Infinity};
-  if(ap.laps!==bp.laps)return bp.laps-ap.laps;
-  if(ap.elapsedMs!==bp.elapsedMs)return ap.elapsedMs-bp.elapsedMs;
-  return 0;
-}
 
 function buildMainStandingItems(race){
   const rank=qualificationRankMap(race),main=FINAL_A_RUNS.map(n=>finalByName(race,n)).filter(Boolean),pilotIds=main[0]?.pilots||[];
   return pilotIds.map(pilotId=>{
-    const runs=main.map((f,index)=>{const result=f.saved&&!f.cancelled?(f.result.find(i=>String(i.pilotId)===String(pilotId))||{status:'DNS'}):null;return{index,final:f,result,score:result?mainRunScore(result):null,performance:finalRunPerformance(f,pilotId)};});
-    const countedRuns=runs.filter(r=>Number.isFinite(r.score)).sort((a,b)=>a.score-b.score||compareRunPerformance(a,b)||a.index-b.index).slice(0,SPORT_RULES.finalBestCount);
+    const runs=main.map((f,index)=>{const result=f.saved&&!f.cancelled?(f.result.find(i=>String(i.pilotId)===String(pilotId))||{status:'DNS'}):null;return{index,final:f,result,score:result?mainRunScore(result):null};});
+    const scoredRuns=runs.filter(r=>Number.isFinite(r.score)).sort((a,b)=>a.score-b.score||a.index-b.index);
+    const countedRuns=scoredRuns.slice(0,SPORT_RULES.finalBestCount);
+    const discardedRuns=scoredRuns.slice(SPORT_RULES.finalBestCount);
     const bestTwo=countedRuns.map(r=>r.score),total=bestTwo.length?bestTwo.reduce((s,v)=>s+v,0):null;
-    return{pilotId,results:runs.map(r=>r.result),scores:runs.map(r=>r.score),runs,countedRuns,bestTwo,total,qRank:rank.get(String(pilotId))||9999};
+    const thirdResult=discardedRuns.length?discardedRuns[0].score:null;
+    return{pilotId,results:runs.map(r=>r.result),scores:runs.map(r=>r.score),runs,scoredRuns,countedRuns,discardedRuns,bestTwo,thirdResult,total,qRank:rank.get(String(pilotId))||9999};
   });
 }
 
-/* Final A tie-break: BEST-2 sum -> best counted place -> laps/time of that run ->
-   second counted result -> laps/time of that run. If all equal, return 0 and run-off. */
+/* Final A tie-break: BEST-2 sum -> best counted place -> second counted place ->
+   discarded third result. No lap/race time is used. Absolute equality -> run-off. */
 function compareMainStandingsCore(a,b){
   if(a.total===null&&b.total!==null)return 1;if(a.total!==null&&b.total===null)return-1;if(a.total!==b.total)return(a.total??9999)-(b.total??9999);
   const ar=a.countedRuns||[],br=b.countedRuns||[],len=Math.max(ar.length,br.length);
   for(let i=0;i<len;i++){
     if(!ar[i]&&!br[i])continue;if(!ar[i])return 1;if(!br[i])return-1;
     if(ar[i].score!==br[i].score)return ar[i].score-br[i].score;
-    const pd=compareRunPerformance(ar[i],br[i]);if(pd!==0)return pd;
   }
+  const at=Number.isFinite(a.thirdResult)?a.thirdResult:null,bt=Number.isFinite(b.thirdResult)?b.thirdResult:null;
+  if(at===null&&bt!==null)return 1;if(at!==null&&bt===null)return-1;if(at!==bt)return(at??9999)-(bt??9999);
   return 0;
 }
 

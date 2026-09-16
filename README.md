@@ -1,4 +1,4 @@
-# LEGION RX 4.2.0 CLEAN FULL APP RC38 · AVATAR CROP LAYER FIX
+# LEGION RX 4.2.0 CLEAN FULL APP RC61 · RUNTIME ISOLATION + COCKPIT INFO
 
 Direct code base: **RC34 LIVE PILOT STATS BROADCAST**.
 
@@ -140,3 +140,7 @@ Settings is rebuilt from RC38: desktop uses left navigation and one right surfac
 
 ## RC45 · COCKPIT STEEL / LIGHT POLISH
 RC45 is a focused visual pass over RC44 removable skins. It refines only RallyCross / Free Practice cockpit appearance for STEEL and LIGHT while preserving Classic markup, Classic cockpit geometry and all sport/platform behavior. The skin layer uses one SVG icon family and full-surface control states; no legacy side/bottom state strips are used in STEEL/LIGHT cockpit.
+
+
+### RC46 visual note
+Classic remains the authoritative cockpit layout. RC46 adds a removable Classic-only control/icon polish layer without changing pilot-row geometry or race logic.

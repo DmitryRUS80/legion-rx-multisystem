@@ -1,3 +1,12 @@
+# RC61 — RUNTIME ISOLATION + COCKPIT INFO
+
+- Critical architecture fix: the pre-release Race Simulator is detached from `modes/rallycross/runtime.js`. RallyCross now talks only to neutral `raceTestSourceAdapter`, `raceEventBus` and `raceClockAdapter`; `runtime.js` contains no `raceSimulator` reference. LapWiz passes and simulator passes enter through the same neutral event bus.
+- Final A tie-break changed to explicit sporting order only: BEST-2 sum -> best counted result -> second counted result -> discarded third result -> RUN-OFF. Hidden lap/race-time comparisons were removed completely. Run-off still only orders disputed final places and does not add an A4 result or points.
+- RallyCross cockpit timer now shows `ДО ФИНИША` (or `ДО СТАРТА` during warm-up), with the configured distance below: `ЗАЕЗД N МИН` or `ЗАЕЗД N КРУГОВ`. Lap races show remaining leader laps in the main display.
+- BEST LAP now shows pilot name plus best lap time.
+- Added a frameless live system clock: landscape in the top header; portrait in a compact one-line info strip with BEST LAP directly above the controls.
+- No new container nesting; portrait info strip is 28–32 px high.
+
 # RC60 — RACE SIMULATOR
 
 - Added isolated `simulation/race-simulator.js`; it only generates virtual timing/pass and DNS/DNF events and never calculates sporting positions, points, qualification or finals.

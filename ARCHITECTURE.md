@@ -142,3 +142,13 @@ RC36 is UI-only. `ui/discipline-ui.js` continues to read the existing live Rally
 - The simulator never writes official qualification/final points and never bypasses `RallyCrossModeAPI` result confirmation.
 - LapWiz and SIM are mutually exclusive input sources. UI blocks LapWiz connection while SIM is enabled.
 - Simulation speed is a runtime test clock multiplier only. It does not alter stored sport rules or the real LapWiz protocol.
+
+
+## RC61 removable test-source boundary
+
+The simulator is a pre-release test source and must remain removable without changing RallyCross sport code. Neutral runtime adapters are under `runtime/`:
+- `race-event-bus.js` — pass/status/tick/complete transport shared by LapWiz and test sources.
+- `race-clock-adapter.js` — defaults to x1 and exposes optional test-time scale.
+- `race-test-source-adapter.js` — neutral lifecycle bridge for an optional test source.
+
+`modes/rallycross/runtime.js` must not reference `raceSimulator`. Removing the simulator for release requires removing the simulator module/UI registration and script include, not modifying RallyCross scoring/runtime.

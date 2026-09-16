@@ -489,3 +489,40 @@ body.cockpitMode{margin:0!important;overflow:hidden!important;background:var(--r
 }
 /* ===== /PILOT LAP STATS ===== */
 /* ===== /TRACK DAY JUDGE LAP CORRECTION ===== */
+
+/* ===== RC61 · COCKPIT INFORMATION LAYER ===== */
+.rxnSystemClock{margin-left:auto;min-width:0;flex:none;display:flex;align-items:baseline;justify-content:flex-end;gap:8px;padding:0 8px;background:transparent;border:0;color:var(--rxn-text);white-space:nowrap}
+.rxnSystemClock strong{font-size:18px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.rxnSystemClock span{font-size:11px;line-height:1;font-weight:700;color:var(--rxn-muted);letter-spacing:.08em;text-transform:uppercase}
+.rxnBestLapPilot{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;font-size:14px;font-weight:700;color:var(--rxn-text);text-transform:uppercase}
+.rxnMobileRaceInfo{display:none}
+
+@media (min-width:1400px) and (min-height:650px){
+  .rxnSystemClock strong{font-size:20px}
+  .rxnSystemClock span{font-size:12px}
+  .rxnBestLapPilot{font-size:15px}
+}
+@media (orientation:landscape) and (max-width:1100px) and (max-height:600px){
+  .rxnSystemClock{gap:5px;padding:0 5px}
+  .rxnSystemClock strong{font-size:14px}
+  .rxnSystemClock span{font-size:9px}
+  .rxnBestLapPilot{font-size:11px}
+}
+@media (orientation:portrait){
+  .rxnSystemClock{display:none!important}
+  .rxnMobileRaceInfo{display:flex;align-items:center;justify-content:space-between;gap:8px;order:2;height:32px;min-height:32px;padding:0 4px;background:transparent;border:0;color:var(--rxn-text);overflow:hidden}
+  .rxnMobileBest{min-width:0;display:flex;align-items:center;gap:7px;overflow:hidden;white-space:nowrap}
+  .rxnMobileBest b{flex:none;color:var(--rxn-bestlap-label);font-size:11px;line-height:1;font-weight:900;letter-spacing:.045em}
+  .rxnMobileBest span{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:12px;line-height:1;font-weight:700;text-transform:uppercase}
+  .rxnMobileBest strong{flex:none;font-size:14px;line-height:1;font-weight:800;font-variant-numeric:tabular-nums}
+  .rxnMobileRaceInfo time{flex:none;font-size:15px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  .rxnControlPanel{order:3}
+}
+@media (orientation:portrait) and (max-width:599px){
+  .rxnMobileRaceInfo{height:28px;min-height:28px;padding:0 3px}
+  .rxnMobileBest{gap:5px}
+  .rxnMobileBest b{font-size:10px}
+  .rxnMobileBest span{font-size:11px;max-width:120px}
+  .rxnMobileBest strong{font-size:13px}
+  .rxnMobileRaceInfo time{font-size:14px}
+}

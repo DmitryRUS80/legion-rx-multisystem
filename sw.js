@@ -1,8 +1,8 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC60 · RACE SIMULATOR */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC61 · RUNTIME ISOLATION + COCKPIT INFO */
 'use strict';
-const LEGION_SW_BUILD='rc60-race-simulator';
+const LEGION_SW_BUILD='rc61-runtime-isolation-cockpit-info';
 /* Unique import URL prevents an older HTTP-cached release manifest being reused during SW update. */
-importScripts('./offline-manifest.js?build=rc60-race-simulator');
+importScripts('./offline-manifest.js?build=rc61-runtime-isolation-cockpit-info');
 
 const CFG=self.LEGION_OFFLINE_CONFIG;
 const CACHE=CFG.cacheName;
@@ -10,7 +10,7 @@ const LOCAL=[...CFG.assets];
 const EXTERNAL=[...(CFG.externalAssets||[])];
 const PACKAGE=[...LOCAL,...EXTERNAL];
 /* These files define this release and are never allowed to fall back to older cached bytes. */
-const FRESH_REQUIRED=new Set(['./','./index.html','./VERSION.txt','./offline-manifest.js','./boot.js','./platform/updater.js','./platform/pilot-live-edit.js','./modes/rallycross/index.js','./modes/rallycross/runtime.js','./simulation/race-simulator.js','./ui/pilots/pilot-cards.js','./ui/shell/views.js','./ui/shell/router.js','./ui/shell/actions.js','./ui/shell/offline-runtime.js','./ui/shell/app.css','./ui/discipline-ui.js','./ui/shell/discipline-pults.css','./ui/skins/rxui/base.css','./ui/skins/rxui/cobalt.css','./ui/skins/rxui/workspace-landscape.webp','./ui/skins/rxui/workspace-portrait.webp','./ui/classic-polish/classic-controls.css','./ui/classic-polish/classic-icons.js']);
+const FRESH_REQUIRED=new Set(['./','./index.html','./VERSION.txt','./offline-manifest.js','./app.js','./boot.js','./platform/updater.js','./platform/pilot-live-edit.js','./runtime/race-event-bus.js','./runtime/race-clock-adapter.js','./runtime/race-test-source-adapter.js','./modes/rallycross/index.js','./modes/rallycross/finals.js','./modes/rallycross/runtime.js','./simulation/race-simulator.js','./ui/pilots/pilot-cards.js','./ui/shell/views.js','./ui/shell/router.js','./ui/shell/actions.js','./ui/shell/offline-runtime.js','./ui/shell/app.css','./ui/discipline-ui.js','./ui/shell/discipline-pults.css','./ui/skins/rxui/base.css','./ui/skins/rxui/cobalt.css','./ui/skins/rxui/workspace-landscape.webp','./ui/skins/rxui/workspace-portrait.webp','./ui/classic-polish/classic-controls.css','./ui/classic-polish/classic-icons.js']);
 
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 async function broadcastUpdateProgress(completed,total,url=''){
@@ -38,27 +38,31 @@ async function validate(url,response){
   if(!response||!response.ok)throw new Error(`${url}: HTTP ${response?.status||0}`);
   const type=(response.headers.get('content-type')||'').toLowerCase();
   if(/\.(wav|mp3|png|webp|svg|js|css|woff2)$/i.test(url)&&type.includes('text/html'))throw new Error(`${url}: HTML instead of asset`);
-  if(url==='./'||url==='./index.html'){const s=await textOf(response);if(!s.includes('ui/skins/rxui/cobalt.css')||!s.includes('ui/classic-polish/classic-controls.css')||!s.includes('platform/pilot-live-edit.js')||!s.includes('simulation/race-simulator.js')||s.includes('designQuickBtn')||s.includes('Design Lab'))throw new Error(`${url}: stale index or Design Lab still present`);}
+  if(url==='./'||url==='./index.html'){const s=await textOf(response);if(!s.includes('ui/skins/rxui/cobalt.css')||!s.includes('ui/classic-polish/classic-controls.css')||!s.includes('platform/pilot-live-edit.js')||!s.includes('runtime/race-event-bus.js')||!s.includes('runtime/race-clock-adapter.js')||!s.includes('runtime/race-test-source-adapter.js')||!s.includes('simulation/race-simulator.js')||s.includes('designQuickBtn')||s.includes('Design Lab'))throw new Error(`${url}: stale RC61 index or Design Lab still present`);}
   if(url==='./ui/shell/views.js'){const s=await textOf(response);if(!s.includes('COBALT · BLUE CONTROL')||!s.includes('raceSessionSettingsModal')||!s.includes('data-race-pilot-profile')||!s.includes('updateDownloadProgress')||!s.includes('legionrx_settings_section')||s.includes('racePilotEditModal')||s.includes('openDesignLab')||s.includes('Design Lab'))throw new Error(`${url}: stale RC59 settings/update view`);}
   if(url==='./ui/shell/router.js'){const s=await textOf(response);if(!s.includes('homeViewClassic')||!s.includes('homeViewRxui'))throw new Error(`${url}: stale home theme isolation`);}
   if(url==='./modes/rallycross/index.js'){const s=await textOf(response);if(!s.includes('function eventSessionSettings'))throw new Error(`${url}: stale session rule adapter`);}
-  if(url==='./modes/rallycross/runtime.js'){const s=await textOf(response);if(!s.includes('function applyCurrentSessionSettings')||!s.includes('function restartCurrentSession')||!s.includes('function startRaceSimulationForCurrentSession')||!s.includes('raceClockScale'))throw new Error(`${url}: stale RC60 race runtime`);}
-  if(url==='./simulation/race-simulator.js'){const s=await textOf(response);if(!s.includes('class LegionRaceSimulator')||!s.includes('startSession(context')||!s.includes("mode:'normal'")||!s.includes("'dense'"))throw new Error(`${url}: stale race simulator engine`);}
+  if(url==='./modes/rallycross/runtime.js'){const s=await textOf(response);if(!s.includes('function applyCurrentSessionSettings')||!s.includes('function restartCurrentSession')||!s.includes('function startRaceTestSourceForCurrentSession')||!s.includes('raceClockScale')||s.includes('raceSimulator'))throw new Error(`${url}: stale/coupled RC61 race runtime`);}
+  if(url==='./modes/rallycross/finals.js'){const s=await textOf(response);if(!s.includes('thirdResult')||!s.includes('discarded third result')||s.includes('compareRunPerformance'))throw new Error(`${url}: stale hidden-time Final A tie-break`);}
+  if(url==='./simulation/race-simulator.js'){const s=await textOf(response);if(!s.includes('class LegionRaceSimulator')||!s.includes('raceTestSourceAdapter.register')||!s.includes('startSession(context')||!s.includes("mode:'normal'")||!s.includes("'dense'"))throw new Error(`${url}: stale/unregistered race simulator engine`);}
+  if(url==='./runtime/race-event-bus.js'){const s=await textOf(response);if(!s.includes('class LegionRaceEventBus')||!s.includes('pilotStatus'))throw new Error(`${url}: invalid race event bus`);}
+  if(url==='./runtime/race-clock-adapter.js'){const s=await textOf(response);if(!s.includes('raceClockAdapter')||!s.includes('setScaleProvider'))throw new Error(`${url}: invalid race clock adapter`);}
+  if(url==='./runtime/race-test-source-adapter.js'){const s=await textOf(response);if(!s.includes('raceTestSourceAdapter')||!s.includes('raceEventBus.pass')||!s.includes('raceClockAdapter.setScaleProvider'))throw new Error(`${url}: invalid test source adapter`);}
   if(url==='./platform/pilot-live-edit.js'){const s=await textOf(response);if(!s.includes('function updateActiveRacePilotIdentity'))throw new Error(`${url}: stale live pilot editor`);}
   if(url==='./ui/pilots/pilot-cards.js'){const s=await textOf(response);if(!s.includes('pilotRaceEntryForProfile')||!s.includes('updateActiveRacePilotIdentity')||!s.includes('raceModel'))throw new Error(`${url}: stale pilot profile live-sync`);}
   if(url==='./ui/shell/actions.js'){const s=await textOf(response);if(!s.includes("action==='restart-session'")||!s.includes("action==='session-settings'")||!s.includes("action==='race-simulator'")||!s.includes('legionrx_settings_section')||s.includes('open-design-lab'))throw new Error(`${url}: stale RC59 settings action bindings`);}
   if(url==='./platform/updater.js'){const s=await textOf(response);if(!s.includes('LEGION_UPDATE_PROGRESS')||!s.includes('legionrx_resume_settings_section')||!s.includes('legionrx_post_update'))throw new Error(`${url}: stale updater without progress/resume`);}
   if(url==='./ui/shell/offline-runtime.js'){const s=await textOf(response);if(!s.includes('[data-update-progress]')||!s.includes('data-update-progress-bar'))throw new Error(`${url}: stale update progress UI runtime`);}
-  if(url==='./boot.js'){const s=await textOf(response);if(!s.includes('legionrx_resume_settings_section'))throw new Error(`${url}: stale boot without settings resume`);}
+  if(url==='./boot.js'){const s=await textOf(response);if(!s.includes('legionrx_resume_settings_section')||!s.includes('raceEventBus.addEventListener')||!s.includes('raceEventBus.pass'))throw new Error(`${url}: stale boot without race event bus`);}
   if(url==='./ui/shell/app.css'){const s=await textOf(response);if(!s.includes('RXUI UNIFIED SHELL SYSTEM')||!s.includes('RC58 · IN-COCKPIT SESSION SETTINGS')||!s.includes('RC60 · RACE SIMULATOR')||!s.includes('.updateProgressTrack')||s.includes('.designQuickBtn')||s.includes('.designDrawer'))throw new Error(`${url}: stale RC59 shell CSS`);}
-  if(url==='./ui/discipline-ui.js'){const s=await textOf(response);if(!s.includes('rxnTimeValue')||!s.includes('data-action=\"restart-session\"')||!s.includes('data-action=\"session-settings\"')||!s.includes('data-action=\"race-simulator\"')||!s.includes('function raceSimulatorModal'))throw new Error(`${url}: stale RC60 simulator cockpit`);}
+  if(url==='./ui/discipline-ui.js'){const s=await textOf(response);if(!s.includes('rxnTimeValue')||!s.includes('data-action=\"restart-session\"')||!s.includes('data-action=\"session-settings\"')||!s.includes('data-action=\"race-simulator\"')||!s.includes('function raceSimulatorModal')||!s.includes('function rxnSystemClockText')||!s.includes('ДО ФИНИША')||!s.includes('data-rxn-best-name'))throw new Error(`${url}: stale RC61 cockpit info`);}
   if(url==='./ui/skins/rxui/cobalt.css'){const s=await textOf(response);if(!s.includes('data-skin="cobalt"'))throw new Error(`${url}: invalid COBALT skin`);}
   if(url==='./ui/skins/rxui/base.css'){const s=await textOf(response);if(!s.includes('NON-CLASSIC WORKSPACE WALLPAPER')||!s.includes('workspace-landscape.webp')||!s.includes('workspace-portrait.webp'))throw new Error(`${url}: stale workspace wallpaper layer`);}
-  if(url==='./ui/shell/discipline-pults.css'){const s=await textOf(response);if(!s.includes('Landscape phone / narrow browser viewport')||!s.includes('.rxnTimeValue')||!s.includes('.rxnPilotStatsProfileEdit')||!s.includes('.rxnSimulatorButton'))throw new Error(`${url}: stale cockpit/profile CSS`);}
+  if(url==='./ui/shell/discipline-pults.css'){const s=await textOf(response);if(!s.includes('Landscape phone / narrow browser viewport')||!s.includes('.rxnTimeValue')||!s.includes('.rxnPilotStatsProfileEdit')||!s.includes('.rxnSimulatorButton')||!s.includes('.rxnSystemClock')||!s.includes('.rxnMobileRaceInfo'))throw new Error(`${url}: stale RC61 cockpit/profile CSS`);}
   if(url==='./ui/classic-polish/classic-controls.css'){const s=await textOf(response);if(!s.includes('data-skin="classic"'))throw new Error(`${url}: invalid Classic polish CSS`);}
   if(url==='./ui/classic-polish/classic-icons.js'){const s=await textOf(response);if(!s.includes('ClassicControlPolish'))throw new Error(`${url}: invalid Classic polish icons`);}
-  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc60-race-simulator'))throw new Error(`${url}: stale release manifest`);}
-  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC60'))throw new Error(`${url}: stale VERSION`);}
+  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc61-runtime-isolation-cockpit-info')||!s.includes('./runtime/race-event-bus.js'))throw new Error(`${url}: stale RC61 release manifest`);}
+  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC61'))throw new Error(`${url}: stale VERSION`);}
   return response;
 }
 function freshRequestUrl(url){const u=new URL(url,self.registration.scope);u.searchParams.set('__legion_build',LEGION_SW_BUILD);return u.href;}

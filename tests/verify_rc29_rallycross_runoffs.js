@@ -43,22 +43,23 @@ const placeRace=mainRace();
 const core1={total:5,countedRuns:[{score:1,performance:stats(7,70000)},{score:4,performance:stats(7,80000)}]},core2={total:5,countedRuns:[{score:2,performance:stats(7,50000)},{score:3,performance:stats(7,60000)}]};
 ok('Final tie-break criterion 2: best individual place',rx.compareMainStandingsCore(core1,core2)<0);
 
-// FINAL: same 2+3, best-place run performance separates by time.
-const perfRace=mainRace(59000,60000,70000,70000);const perfStand=rx.buildMainStandings(perfRace);
-ok('Final tie-break criterion 3: best-place laps/time',perfStand.findIndex(x=>x.pilotId==='B')<perfStand.findIndex(x=>x.pilotId==='C'));
-const coreSecondA={total:5,countedRuns:[{score:2,performance:stats(7,60000)},{score:3,performance:stats(7,69000)}]},coreSecondB={total:5,countedRuns:[{score:2,performance:stats(7,60000)},{score:3,performance:stats(7,70000)}]};
-ok('Final tie-break criterion 4: second counted result laps/time',rx.compareMainStandingsCore(coreSecondA,coreSecondB)<0);
-const beforeCount=perfRace.finals.length;rx.buildFinalProtocol(perfRace);ok('No run-off when laps/time resolves final tie',perfRace.stage==='finished'&&perfRace.finals.length===beforeCount);
+// FINAL: same BEST-2 pair is resolved by the discarded third sporting result, never by time.
+const coreThirdA={total:5,countedRuns:[{score:2},{score:3}],thirdResult:4};
+const coreThirdB={total:5,countedRuns:[{score:2},{score:3}],thirdResult:5};
+ok('Final tie-break criterion 3: discarded third result',rx.compareMainStandingsCore(coreThirdA,coreThirdB)<0);
+const coreExactA={total:5,countedRuns:[{score:2},{score:3}],thirdResult:4};
+const coreExactB={total:5,countedRuns:[{score:2},{score:3}],thirdResult:4};
+ok('Final exact equality ignores race/lap time',rx.compareMainStandingsCore(coreExactA,coreExactB)===0);
 
-// FINAL: exact equality after all four criteria creates a run-off, no bonus points.
+// FINAL: exact equality after BEST-2 + third result creates a run-off, no bonus points.
 const frace=mainRace(60000,60000,70000,70000);const proto0=rx.buildFinalProtocol(frace),ftb=frace.finals.find(f=>f.tieBreak&&f.tieScope==='final');
 ok('Exact Final A tie creates run-off',Array.isArray(proto0)&&proto0.length===0&&Boolean(ftb)&&frace.stage==='finals');
-ok('Final run-off contains tied pilots only',ftb&&ftb.pilots.length===2&&ftb.pilots.includes('B')&&ftb.pilots.includes('C'));
-const bLen=frace.pilots.find(p=>p.id==='B').finalResults.length,cLen=frace.pilots.find(p=>p.id==='C').finalResults.length;
-rx.saveFinalEvent(frace,ftb.key,[{pilotId:'B',status:'FIN',place:1},{pilotId:'C',status:'FIN',place:2}]);
+ok('Final run-off contains tied pilots only',ftb&&ftb.pilots.length===3&&['B','C','D'].every(id=>ftb.pilots.includes(id)));
+const bLen=frace.pilots.find(p=>p.id==='B').finalResults.length,cLen=frace.pilots.find(p=>p.id==='C').finalResults.length,dLen=frace.pilots.find(p=>p.id==='D').finalResults.length;
+rx.saveFinalEvent(frace,ftb.key,[{pilotId:'B',status:'FIN',place:1},{pilotId:'C',status:'FIN',place:2},{pilotId:'D',status:'FIN',place:3}]);
 ok('Final run-off resolves only disputed positions',frace.finalProtocol.slice(0,3).map(x=>x.pilotId).join(',')==='A,B,C');
 ok('Final event points awarded only by final protocol',frace.finalProtocol[0].eventPoints===25&&frace.finalProtocol[1].eventPoints===18&&frace.finalProtocol[2].eventPoints===15&&frace.finalProtocol[3].eventPoints===12);
-ok('Final run-off adds no final scoring record',frace.pilots.find(p=>p.id==='B').finalResults.length===bLen&&frace.pilots.find(p=>p.id==='C').finalResults.length===cLen);
+ok('Final run-off adds no final scoring record',frace.pilots.find(p=>p.id==='B').finalResults.length===bLen&&frace.pilots.find(p=>p.id==='C').finalResults.length===cLen&&frace.pilots.find(p=>p.id==='D').finalResults.length===dLen);
 ok('Final run-off itself has no eventPoints field',!Object.prototype.hasOwnProperty.call(ftb,'eventPoints'));
 
 
@@ -72,7 +73,7 @@ const screenshotRace={pilots:[K,AX,AN,IL],heats:[],finalProtocol:[],qualificatio
 const ss=rx.buildMainStandings(screenshotRace);
 ok('Screenshot case: 1+4 beats 2+3 at equal total 5',ss.findIndex(x=>x.pilotId==='AX')<ss.findIndex(x=>x.pilotId==='AN')&&ss.findIndex(x=>x.pilotId==='AX')<ss.findIndex(x=>x.pilotId==='IL'));
 rx.buildFinalProtocol(screenshotRace);const ssTb=screenshotRace.finals.find(f=>f.tieBreak&&f.tieScope==='final');
-ok('Screenshot case: only still-equal Andrey/Ilya go to run-off',ssTb&&ssTb.pilots.length===2&&ssTb.pilots.includes('AN')&&ssTb.pilots.includes('IL')&&!ssTb.pilots.includes('AX'));
+ok('Screenshot case: third result resolves Andrey/Ilya without run-off',!ssTb&&screenshotRace.finalProtocol.length===4&&screenshotRace.finalProtocol.findIndex(x=>x.pilotId==='AN')<screenshotRace.finalProtocol.findIndex(x=>x.pilotId==='IL'));
 
 
 // QUALIFICATION: an exact tie in the middle of the table must not involve pilots above/below it.
@@ -101,7 +102,7 @@ const qa2=pilot('QA','QA',1,[q(1,1),q(2,2),q(3,3),q(4,4)]),qb2=pilot('QB','QB',2
 const qrace2={qualifyingCount:4,pilots:[qa2,qb2],heats:[1,2,3,4].map(n=>({key:`QX${n}`,type:'qualifying',round:n,heat:1,pilots:['QA','QB'],saved:true,result:[],enabled:false,order:n*100})),finals:[],finalProtocol:[],qualificationRunoffOrder:{},finalRunoffOrder:{},runoffCounter:0,stage:'qualifying'};rx.calculateBest3(qa2);rx.calculateBest3(qb2);rx.finalizeQualificationOrCreateRunoffs(qrace2);const qtb2=qrace2.heats.find(h=>h.tieBreak&&!h.saved);rx.saveQualificationRunoffEvent(qrace2,qtb2.key,[{pilotId:'QA',status:'DNS'},{pilotId:'QB',status:'DNS'}]);const qtb2retry=qrace2.heats.find(h=>h.tieBreak&&!h.saved&&!h.cancelled);
 ok('Qualification run-off equal DNS creates another run-off instead of arbitrary order',Boolean(qtb2retry)&&!Number.isInteger(qrace2.qualificationRunoffOrder.QA)&&!Number.isInteger(qrace2.qualificationRunoffOrder.QB));
 
-const frace2=mainRace(60000,60000,70000,70000);rx.buildFinalProtocol(frace2);const ftb2=frace2.finals.find(f=>f.tieBreak&&!f.saved);rx.saveFinalEvent(frace2,ftb2.key,[{pilotId:'B',status:'DNS'},{pilotId:'C',status:'DNS'}]);const ftb2retry=frace2.finals.find(f=>f.tieBreak&&!f.saved&&!f.cancelled);
+const frace2=mainRace(60000,60000,70000,70000);rx.buildFinalProtocol(frace2);const ftb2=frace2.finals.find(f=>f.tieBreak&&!f.saved);rx.saveFinalEvent(frace2,ftb2.key,[{pilotId:'B',status:'DNS'},{pilotId:'C',status:'DNS'},{pilotId:'D',status:'DNS'}]);const ftb2retry=frace2.finals.find(f=>f.tieBreak&&!f.saved&&!f.cancelled);
 ok('Final run-off equal DNS creates another run-off instead of qualification fallback',Boolean(ftb2retry)&&frace2.stage==='finals'&&frace2.finalProtocol.length===0);
 
 const modeText=files.map(f=>fs.readFileSync(path.join(ROOT,f),'utf8')).join('\n');

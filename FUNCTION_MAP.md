@@ -88,7 +88,7 @@
 ## RC29 run-off functions
 - `comparePilotsWithoutRunoff()` — qualification sport comparison only; 0 means a real unresolved tie.
 - `createQualificationRunoffs()` / `saveQualificationRunoffEvent()` — run only tied qualification pilots; write local order only, no Q points.
-- `compareMainStandingsCore()` — Final A BEST-2 sum -> best place -> laps/time -> second counted result.
+- `compareMainStandingsCore()` — Final A BEST-2 sum -> best counted place -> second counted place -> discarded third result -> exact tie / RUN-OFF. No time comparison.
 - `createFinalRunoffs()` — creates a run-off only for exact Final A tie groups.
 - `saveFinalEvent()` tie-break branch — stores run-off order only and then rebuilds the official final protocol.
 
@@ -177,3 +177,12 @@ No new sport/timing loop is created. Free Practice delete remains `removeTrackDa
 - Simulation clock/input bridge -> `modes/rallycross/runtime.js::raceClockScale()` / `startRaceSimulationForCurrentSession()`
 - Simulator button + themed setup modal -> `ui/discipline-ui.js::rxnTimerPanel()` / `raceSimulatorModal()`
 - SIM action + LapWiz mutual-exclusion guard -> `ui/shell/actions.js`
+
+
+## RC61 runtime adapters / cockpit information
+- `runtime/race-event-bus.js::raceEventBus` — neutral pass/status event path used by LapWiz and optional test sources.
+- `runtime/race-clock-adapter.js::raceClockAdapter` — x1 production clock with removable test scale provider.
+- `runtime/race-test-source-adapter.js::raceTestSourceAdapter` — optional test-source lifecycle; no sport calculations.
+- `ui/discipline-ui.js::rxnSystemClockText()` — cockpit system clock.
+- `ui/discipline-ui.js::rxnRaceDistanceText()` — `ЗАЕЗД N МИН / N КРУГОВ`.
+- `ui/discipline-ui.js::rxnMobileRaceInfo()` — compact portrait BEST LAP + system time row.

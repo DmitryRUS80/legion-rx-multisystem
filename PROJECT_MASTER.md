@@ -1,7 +1,7 @@
 # LEGION RX — PROJECT MASTER
 
-Current development candidate: **4.2.0 CLEAN FULL APP RC36 · BEST LAP STRIP + HERO CLEANUP**  
-Direct code base: **RC35 PILOT STATS TYPOGRAPHY DENSITY**.  
+Current development candidate: **4.2.0 CLEAN FULL APP RC61 · RUNTIME ISOLATION + COCKPIT INFO**  
+Direct code base: **RC60 RACE SIMULATOR**, with the simulator now detached from RallyCross runtime through neutral adapters.  
 Last repository state explicitly verified with the user before RC21 upload: **RC20 CLEAN FOUNDATION**.
 
 ## Non-negotiable architecture
@@ -196,3 +196,7 @@ UI-only refinement on the RC26 foundation: Free Practice selection visibility, t
 - RC45 does not introduce a new renderer. It keeps the RC44 removable-skin architecture and the established Classic cockpit markup/actions.
 - STEEL/LIGHT cockpit styling is now an explicit instrument-surface treatment with full-surface states and one SVG icon family.
 - Classic cockpit CSS and pilot-row geometry are frozen for this task; no sport/platform modules are touched.
+
+
+### RC46 cockpit visual layer
+Classic cockpit layout remains authoritative. Control/icon refinement is isolated under `ui/classic-polish/` and can be removed without altering sport/core/layout files.

@@ -13,8 +13,8 @@ checks={
  'lap_range': 'simLapMin' in ui and 'simLapMax' in ui,
  'lapwiz_gate': '!lapwiz.connected' in ui and "Сначала выключите SIM" in actions,
  'timer_location': 'rxnTimerClassRow' in ui and 'rxnSimulatorButton' in ui,
- 'runtime_bridge': 'startRaceSimulationForCurrentSession' in rt and "processPilotPass(p,null,'SIMULATOR')" in rt and 'processSimulationWarmupPass' in rt,
- 'clock_scale': 'raceClockScale' in rt and 'simulationScale' in rt,
+ 'runtime_bridge': 'startRaceTestSourceForCurrentSession' in rt and 'raceTestSourceAdapter' in rt and 'raceSimulator' not in rt,
+ 'clock_scale': 'raceClockScale' in rt and 'runtimeClockScale' in rt,
  'result_status': "l.simStatus==='DNF'" in ui and "l.simStatus==='DNS'" in ui,
  'theme_styles': '.rxnSimulatorModal' in css and '.rxnSimulatorButton' in css,
 }

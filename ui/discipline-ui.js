@@ -132,6 +132,7 @@ function rxnHeader(race,ev,s){
         <button type="button" data-nav="championships" title="Чемпионаты">${raceSvg('trophy')}<b>ЧЕМПИОНАТЫ</b></button>
         <button type="button" data-nav="pilots" title="Пилоты">${uiIcon('users','raceSvg')}<b>ПИЛОТЫ</b></button>
       </nav>
+      <div class="rxnSystemClock"><strong data-rxn-system-clock>${rxnSystemClockText()}</strong><span>ВРЕМЯ</span></div>
     </div>
     <nav class="rxnTopActions" aria-label="Пульт RallyCross">
       ${rxnTopButton({cls:lapwiz.connected?'ok':'',attrs:'data-quick-panel="lapwiz" title="LapWiz"',icon:'wave'})}
@@ -153,9 +154,29 @@ function rxnBestLapLeader(pilots,s){
   }
   return{pilot,bestLapMs:Number.isFinite(bestLapMs)?bestLapMs:null};
 }
+function rxnSystemClockText(){
+  return new Intl.DateTimeFormat('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date());
+}
+let rxnSystemClockTicker=null;
+function rxnUpdateSystemClock(){document.querySelectorAll('[data-rxn-system-clock]').forEach(el=>el.textContent=rxnSystemClockText());}
+function rxnEnsureSystemClockTicker(){if(rxnSystemClockTicker)return;rxnSystemClockTicker=setInterval(rxnUpdateSystemClock,1000);}
 function rxnBestLapStrip(pilots,s){
-  const best=rxnBestLapLeader(pilots,s),time=Number.isFinite(best.bestLapMs)?fmtMs(best.bestLapMs):'—';
-  return `<div class="rxnBestLapStrip"><small>BEST LAP</small><strong id="rxnBestLapTime">${time}</strong></div>`;
+  const best=rxnBestLapLeader(pilots,s),time=Number.isFinite(best.bestLapMs)?rxnFormatDuration(best.bestLapMs):'—',name=best.pilot?rxnPilotDisplayName(best.pilot):'—';
+  return `<div class="rxnBestLapStrip"><small>BEST LAP</small><span class="rxnBestLapPilot" data-rxn-best-name>${esc(name)}</span><strong data-rxn-best-time>${time}</strong></div>`;
+}
+function rxnRaceDistanceText(race,ev){
+  if(!ev)return'СОРЕВНОВАНИЕ ЗАВЕРШЕНО';const r=eventRule(race,ev);
+  return r.limitType==='laps'?`ЗАЕЗД ${r.targetLaps} КРУГОВ`:`ЗАЕЗД ${r.durationMin} МИН`;
+}
+function rxnTimerLabel(s,ev){if(!ev)return'ФИНИШ';if(['warmup','countdown'].includes(s?.phase))return'ДО СТАРТА';if(s?.phase==='finished')return'ФИНИШ';return'ДО ФИНИША';}
+function rxnMainTimerValue(race,ev,s,done=false){
+  if(done||!ev||!s)return'00:00';if(['warmup','countdown'].includes(s.phase))return displayTimer(s,ev);
+  const r=eventRule(race,ev);if(r.limitType==='time')return displayTimer(s,ev);
+  const leaderLaps=Math.max(0,...Object.values(s.live||{}).map(v=>Number(v?.laps)||0));return `${Math.max(0,(Number(r.targetLaps)||0)-leaderLaps)} КР`;
+}
+function rxnMobileRaceInfo(pilots,s){
+  const best=rxnBestLapLeader(pilots,s),time=Number.isFinite(best.bestLapMs)?rxnFormatDuration(best.bestLapMs):'—',name=best.pilot?rxnPilotDisplayName(best.pilot):'—';
+  return `<div class="rxnMobileRaceInfo"><div class="rxnMobileBest"><b>BEST LAP</b><span data-rxn-best-name>${esc(name)}</span><strong data-rxn-best-time>${time}</strong></div><time data-rxn-system-clock>${rxnSystemClockText()}</time></div>`;
 }
 function rxnRaceBannerData(race,ev,pilots=[]){
   const count=Math.max(0,pilots?.length||0),capacity=Math.max(0,ev?.pilots?.length||count);
@@ -180,10 +201,10 @@ function rxnRaceTitle(race,ev,s,pilots=[]){
   return `<section class="rxnRaceTitle"><div class="rxnRaceTitleLeft rxnRaceBanner"><div class="rxnRaceBannerLine"><strong>${esc(info.stage)}</strong><i>·</i><span class="rxnBannerHeat">${esc(info.heat)}</span><i class="rxnBannerDisciplineSep">·</i><span class="rxnBannerDiscipline">${esc(info.discipline)}</span><i>·</i><span class="rxnBannerPilots">${esc(info.pilots)}</span></div>${grid}</div>${rxnBestLapStrip(pilots,s)}</section>`;
 }
 function rxnTimerPanel(race,ev,pilots,s,done){
-  const ring=rxnRingData(race,ev,pilots,s),progress=timerProgress(s,ev),classLabel=String(race?.className||'Rally-10').toUpperCase();
+  const ring=rxnRingData(race,ev,pilots,s),progress=timerProgress(s,ev);
   const simAvailable=!done&&!lapwiz.connected&&typeof raceSimulator!=='undefined',simOn=simAvailable&&raceSimulator.isEnabled(),simCfg=simOn?raceSimulator.getConfig():null;
   const simButton=simAvailable?`<button type="button" class="rxnSimulatorButton ${simOn?'active':''}" data-action="race-simulator" title="Симуляция гонки">${simOn?`SIM ×${simCfg.speed}`:'SIM'}</button>`:'';
-  return `<section class="rxnTimerPanel"><div class="rxnTimerCopy"><div class="rxnTimerClassRow"><span class="rxnTimerClass">${esc(classLabel)}</span>${simButton}</div><strong id="mainTimer">${done?'00:00':displayTimer(s,ev)}</strong><small id="timerSubline">${ev?timerSubline(s,ev):'Соревнование завершено'}</small></div><div id="timerRing" class="rxnRing" style="--ring-progress:${progress*3.6}deg"><div><b id="rxnRingMain">${ring.main}</b><small id="rxnRingSub">${ring.sub}</small></div></div></section>`;
+  return `<section class="rxnTimerPanel"><div class="rxnTimerCopy"><div class="rxnTimerClassRow"><span class="rxnTimerClass" id="rxnTimerLabel">${esc(rxnTimerLabel(s,ev))}</span>${simButton}</div><strong id="mainTimer">${esc(rxnMainTimerValue(race,ev,s,done))}</strong><small id="timerSubline">${esc(rxnRaceDistanceText(race,ev))}</small></div><div id="timerRing" class="rxnRing" style="--ring-progress:${progress*3.6}deg"><div><b id="rxnRingMain">${ring.main}</b><small id="rxnRingSub">${ring.sub}</small></div></div></section>`;
 }
 function raceSimulatorModal(){
   if(lapwiz.connected)return toast('Симуляция доступна только без подключённого LapWiz');
@@ -219,11 +240,12 @@ function rxnPrecisionToggles(){
 function rxnDisplayTools(){return `<div class="rxnDisplayTools">${rxnColumnToggles()}${rxnPrecisionToggles()}</div>`;}
 function rxnControlPanel(done,s,tie=false){return `<section class="rxnControlPanel">${rxnControlGrid(done,s,tie)}${rxnDisplayTools()}</section>`;}
 function cockpitView(){
+  rxnEnsureSystemClockTicker();
   if(!state.race||state.race.stage==='setup')return `<section class="page"><div class="card"><h2>Соревнование ещё не подготовлено</h2><button class="btn primary" data-action="open-rx">К настройке</button></div></section>`;
   const race=state.race,ev=currentEvent(race),events=eventList(race),s=ensureSession(ev),pilots=ev?liveRanking(RallyCrossModeAPI.startPilots(race,ev),s):[],done=race.stage==='finished',tie=race.stage==='tie';
   const cls=rxnColumnClass(),count=rxnMetricCount();
   if(tie)return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s,pilots)}<main class="rxnTieMain"><div class="rxnTieBox">${tieWidget(race)}</div>${rxnControlPanel(false,s,true)}</main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
-  return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s,pilots)}<main class="rxnMain"><section class="rxnRoster"><div class="rxnTable">${done?rxnFinalProtocolTable(race):rxnPilotTable(pilots,s)}</div></section><aside class="rxnSide">${rxnTimerPanel(race,ev,pilots,s,done)}${rxnControlPanel(done,s,false)}</aside></main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
+  return `<section class="rxnCockpit ${cls}" style="--rxn-metric-count:${count}">${rxnHeader(race,ev,s)}${rxnRaceTitle(race,ev,s,pilots)}<main class="rxnMain"><section class="rxnRoster"><div class="rxnTable">${done?rxnFinalProtocolTable(race):rxnPilotTable(pilots,s)}</div></section><aside class="rxnSide">${rxnTimerPanel(race,ev,pilots,s,done)}${rxnMobileRaceInfo(pilots,s)}${rxnControlPanel(done,s,false)}</aside></main>${eventDrawer(race,events)}${quickPanelDrawer(race,ev,pilots,s,done)}</section>`;
 }
 
 function rxnAnimateBoard(board,html){
@@ -243,13 +265,17 @@ function rxnUpdateProgress(ranked,s){
 }
 function updateDynamicCockpitUI(){
   const race=state.race,ev=currentEvent(race),s=state.session;if(!race||!ev||!s)return;
-  const timer=document.querySelector('#mainTimer');if(timer)timer.textContent=displayTimer(s,ev);
+  const timer=document.querySelector('#mainTimer');if(timer)timer.textContent=rxnMainTimerValue(race,ev,s,false);
+  const timerLabel=document.querySelector('#rxnTimerLabel');if(timerLabel)timerLabel.textContent=rxnTimerLabel(s,ev);
+  rxnUpdateSystemClock();
   if(s.phase==='countdown'&&s.warmupEndsAtPerf)s.countdownLeft=Math.max(0,Math.ceil(warmupRemainingMs(s)/1000));
   const ranked=liveRanking(RallyCrossModeAPI.startPilots(race,ev),s),ring=document.querySelector('#timerRing');
   const bestLap=rxnBestLapLeader(ranked,s);
   if(ring)ring.style.setProperty('--ring-progress',`${timerProgress(s,ev)*3.6}deg`);
   const rd=rxnRingData(race,ev,ranked,s),set=(q,v)=>{const e=document.querySelector(q);if(e)e.textContent=v;};
-  set('#rxnRingMain',rd.main);set('#rxnRingSub',rd.sub);set('#timerSubline',timerSubline(s,ev));set('#rxnBestLapTime',Number.isFinite(bestLap.bestLapMs)?fmtMs(bestLap.bestLapMs):'—');
+  set('#rxnRingMain',rd.main);set('#rxnRingSub',rd.sub);set('#timerSubline',rxnRaceDistanceText(race,ev));
+  document.querySelectorAll('[data-rxn-best-time]').forEach(el=>el.textContent=Number.isFinite(bestLap.bestLapMs)?rxnFormatDuration(bestLap.bestLapMs):'—');
+  document.querySelectorAll('[data-rxn-best-name]').forEach(el=>el.textContent=bestLap.pilot?rxnPilotDisplayName(bestLap.pilot):'—');
   const board=document.querySelector('.rxnTable');
   if(board&&s.phase!=='finished'){
     const warmSig=Object.keys(s.warmupDetected||{}).sort().join(','),sig=ranked.map(p=>{const l=s.live[p.id]||blankLive();return`${p.id}:${l.laps}:${l.startSeen}:${Math.round(l.lastLapMs||0)}:${Math.round(rxnLapAvg(l)||0)}:${l.finished}`;}).join('|')+`|W:${warmSig}`;

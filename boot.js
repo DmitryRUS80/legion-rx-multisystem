@@ -8,7 +8,11 @@ AppBridge.toast=uiToast;AppBridge.closeModal=uiCloseModal;AppBridge.render=uiRen
 AudioUIBridge.createPlayer=(role)=>{const a=document.createElement('audio');a.preload='auto';a.playsInline=true;a.setAttribute('playsinline','');a.setAttribute('webkit-playsinline','');a.dataset.legionAudio=role;document.getElementById('legionAudioHost')?.appendChild(a);return a;};
 AudioUIBridge.setGate=(message='',kind='')=>{const stateEl=document.getElementById('audioGateState');if(stateEl){stateEl.textContent=message||'';stateEl.className=`audioGateState ${kind||''}`.trim();}};AudioUIBridge.showGate=()=>document.getElementById('audioGate')?.classList.remove('hidden');AudioUIBridge.hideGate=()=>document.getElementById('audioGate')?.classList.add('hidden');AudioUIBridge.setUnlockBusy=busy=>{const btn=document.getElementById('audioGateBtn');if(btn)btn.disabled=!!busy;};AudioUIBridge.refreshOffline=()=>updateOfflineReadyUi();
 initFreePracticeState();
-lapwiz.addEventListener('pass',e=>processPass(e.detail.transponder,e.detail.deviceMs,'LAPWIZ'));
+lapwiz.addEventListener('pass',e=>raceEventBus.pass({transponder:e.detail.transponder,deviceMs:e.detail.deviceMs,source:'LAPWIZ'}));
+raceEventBus.addEventListener('pass',e=>processPass(e.detail.transponder,e.detail.deviceMs,e.detail.source||'EXTERNAL'));
+raceEventBus.addEventListener('pilotstatus',e=>processRaceSourceStatus(e.detail||{}));
+raceEventBus.addEventListener('tick',()=>updateDynamicCockpit());
+raceEventBus.addEventListener('complete',()=>raceSourceMaybeFinish());
 lapwiz.addEventListener('status',e=>{updateHeader();if(e.detail?.connected===false&&state.session&&['warmup','countdown','running','finishing'].includes(state.session.phase))announceService('lapwizDisconnected');});
 announcer.ensurePlayers();setupAudioGate();bootOfflineAudio();
 window.addEventListener('pointerdown',()=>{lapwiz.ensureAudio();},{once:true});

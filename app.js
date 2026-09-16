@@ -1,6 +1,6 @@
 'use strict';
 function processPass(transponder,deviceMs=null,source='MANUAL'){
-  lapwiz.lastId=String(transponder);
+  if(source==='LAPWIZ')lapwiz.lastId=String(transponder);
   if(state.trackDay?.status==='active')return processTrackPass(transponder,deviceMs,source);
   const ev=currentEvent(state.race),s=state.session;if(!ev||!s||!['warmup','countdown','running','finishing'].includes(s.phase))return;const p=getEventPilots(state.race,ev).find(x=>String(x.transponder)===String(transponder));
   if(!p){s.unknown[transponder]=(s.unknown[transponder]||0)+1;if(source==='LAPWIZ')lapwiz.unknownBeep();announceService('unknownTransponder');toast(`Неизвестный ID ${transponder}`);return;}

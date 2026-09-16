@@ -1,3 +1,13 @@
+# RC61 TEST REPORT
+
+PASS: architecture boundaries; RallyCross runtime contains no direct simulator reference.
+PASS: neutral event bus routes LapWiz/test-source passes.
+PASS: separate clock adapter/test source adapter present and offline-cached.
+PASS: Final A third-result tie-break + exact RUN-OFF case.
+PASS: hidden time comparison removed from Final A.
+PASS: cockpit system clock / BEST LAP name+time / distance labels present.
+PASS: RallyCross run-off suite 27/27, start order 12/12, skip/state 11/11, session control, live pilot edit, simulator engine.
+
 # LEGION RX 4.2.0 CLEAN FULL APP RC40 · CLEAN SETTINGS UI — TEST REPORT
 
 ## Scope
