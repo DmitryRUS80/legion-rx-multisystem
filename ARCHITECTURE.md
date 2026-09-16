@@ -1,68 +1,50 @@
-# LEGION RX — CURRENT CLEAN ARCHITECTURE · RC62
+# LEGION RX — CURRENT CLEAN ARCHITECTURE · RC63
 
 ```text
-LapWiz / manual timing source
-        |
-        v
-race-event-bus + ActiveRaceController       Race Simulator (pre-release only)
-        |                                      -> test-source adapter only
-        +-----------------------+
-        |                       |
-        v                       v
-RallyCross controller      Classic RC controller
-RallyCross rules/state     EFRA 2026 rules/state
-        |                       |
-        +-----------+-----------+
-                    v
-          shared cockpit renderer/UI
+LapWiz / removable test source
+          |
+          v
+race-event-bus + ActiveRaceController
+          |
+     +----+-------------------+
+     |                        |
+     v                        v
+RallyCross runtime       Classic RC runtime
+RallyCross rules         EFRA 2026 rules/engine
+     |                        |
+     +-----------+------------+
+                 v
+         shared cockpit UI
 
-Sport mode -> neutral Competition Scheduler -> timeline / pauses / actual times
-            (Scheduler never calculates points, rankings or finals)
+Classic RC mode -> neutral CompetitionScheduler -> timeline / pauses / actual times
+                 -> Classic Director UI only controls schedule/session operations
 ```
 
 ## Hard boundaries
 
-- `platform/lapwiz.js`: BLE/LapWiz only; no sport scoring or UI.
-- `modes/rallycross/*`: RallyCross sport truth only. It imports no Classic RC rule/state.
-- `modes/classic-rc/efra-rules.js`, `groups.js`, `efra-engine.js`, `efra-runtime.js`: independent EFRA 2026 Classic RC module. It imports no RallyCross rule/state and owns its own storage namespace.
-- `runtime/competition-scheduler.js`: neutral time-line engine only. It contains no RallyCross/Classic RC scoring knowledge.
-- `runtime/active-race-controller.js`: the shell boundary that routes neutral timing input to the currently live sport controller. A visible Settings/Pilots page must not steal timing ownership from an active heat.
-- `runtime/race-event-bus.js` / `race-clock-adapter.js`: neutral timing infrastructure.
-- `simulation/race-simulator.js`: pre-release removable test source. RallyCross runtime contains no direct simulator dependency.
-- `ui/*`: presentation/actions only; sport calculations remain in mode modules.
-- `reporting/*`: consumes already-official result snapshots; it does not calculate sport results.
-- `app.js`: orchestration; no DOM/CSS.
-- `index.html`: ordered dependency shell only.
+- `platform/lapwiz.js`: BLE/LapWiz only; no Classic RC, Scheduler or simulator policy.
+- `modes/rallycross/*`: RallyCross sporting truth only; no Classic RC imports.
+- `modes/classic-rc/*`: independent EFRA 2026 Classic RC sporting module with its own event/storage state.
+- `runtime/competition-scheduler.js`: sport-neutral timeline engine only. It does not calculate points, qualifying, finals or rankings.
+- `runtime/active-race-controller.js`: neutral input ownership boundary. It routes passes/status/complete to whichever sport runtime is live.
+- `runtime/race-test-source-adapter.js`: removable pre-release test-source lifecycle. Classic RC uses this adapter; its runtime does not reference `raceSimulator` directly.
+- `simulation/race-simulator.js`: removable pre-release generator of pass/DNS/DNF events only.
+- `ui/classic-rc/*`: presentation and Race Director actions; sporting calculations remain in `modes/classic-rc/*`.
+- Shared cockpit rows/controls are reused visually; RallyCross sport logic is not reused by Classic RC.
 
-## Classic RC internal ownership
+## RC63 virtual test clock
 
-```text
-modes/classic-rc/
-  index.js          # legacy placeholder kept byte-identical for compatibility
-  efra-rules.js     # pure EFRA scoring/tie-break constants/helpers
-  groups.js         # heat seeding / EFRA heat order / final groups
-  efra-engine.js    # own competition state, event progression, results, storage
-  efra-runtime.js   # live timing/session controller, no DOM
+When SIM is enabled, Classic RC owns a mode-local virtual competition clock anchored to the real clock and scaled ×1/×2/×4/×8. The same scale is used for race elapsed time and Scheduler `now`, so heats and breaks advance together. Production/LapWiz operation remains ×1.
 
-ui/classic-rc/
-  classic-rc-ui.js  # setup, shared-cockpit adapter, results, Schedule overlay
-  classic-rc.css    # Classic RC-specific setup/schedule surfaces only
-```
+## Schedule overlay contract
 
-Classic RC reuses the accepted cockpit primitives/pilot-row geometry; it does **not** reuse RallyCross sporting logic.
+- Fixed overlay: never changes cockpit width/height.
+- Wide/landscape: right drawer over the cockpit.
+- Portrait phone: bottom sheet above the bottom navigation.
+- Current/next event and countdown are visible without opening the drawer.
+- Director actions are contextual, not an endless fixed list.
+- Paint comes from active skin tokens for CLASSIC / COBALT / STEEL / LIGHT / MODERN / HERITAGE.
 
-## Scheduler UI contract
+## Protected baseline
 
-- Schedule trigger/drawer is `position: fixed`; it never participates in cockpit grid/layout.
-- Wide/landscape: drawer overlays from the right.
-- Portrait phone: bottom sheet overlays upward.
-- Cockpit does not move or shrink.
-- Visual language: flat dark surfaces, restrained neutral lines, existing blue action accent; no neon/cosmic outline layer and no nested card stack.
-
-## Offline/update boundary
-
-The active release remains cache-first. New builds are staged into a separate cache and validated before explicit install. Interrupted updates cannot replace the current working release.
-
-## Protected RC61 baseline for RC62
-
-RC62 verification compares protected files byte-for-byte to RC61. RallyCross core/runtime, LapWiz, storage/state/timing/audio, Free Practice, Rally Sprint, simulator isolation adapters, `ui/discipline-ui.js` and the shared discipline cockpit stylesheet remain unchanged.
+RC63 does not mix Classic RC logic into RallyCross/LapWiz. The clean foundation regression gate remains `verify_clean_foundation.py`; RallyCross sport regression suites are also run before packaging.

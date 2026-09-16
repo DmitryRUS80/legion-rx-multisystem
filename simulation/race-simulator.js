@@ -22,7 +22,7 @@ class LegionRaceSimulator extends EventTarget{
     if(max<min)[min,max]=[max,min];
     return{mode:allowedMode.has(input.mode)?input.mode:'normal',speed:allowedSpeed.has(Number(input.speed))?Number(input.speed):4,lapMinSec:min,lapMaxSec:max};
   }
-  configure(input={}){this.config=this.normalizeConfig(input);this.emitStatus();return{...this.config};}
+  configure(input={}){this.config=this.normalizeConfig(input);if(this.running&&!this.paused&&this.context){if(this.timer){clearTimeout(this.timer);this.timer=null;}this.schedule();}this.emitStatus();return{...this.config};}
   enable(input={}){this.configure(input);this.enabled=true;this.emitStatus();return{...this.config};}
   disable(){this.stopSession();this.clearWarmup();this.enabled=false;this.emitStatus();}
   getScale(){return this.enabled?this.config.speed:1;}

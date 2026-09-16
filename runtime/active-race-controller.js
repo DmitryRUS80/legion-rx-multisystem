@@ -5,8 +5,6 @@ const ActiveRaceController=(()=>{
   const activePhase=s=>Boolean(s&&['countdown','running','finishing','paused'].includes(s.phase));
   const classicSelected=()=>{
     if(typeof ClassicRCRuntime==='undefined'||typeof ClassicRCEngine==='undefined'||!ClassicRCRuntime.active())return false;
-    /* Input ownership follows the live sport session, never the visible page.
-       This keeps Classic RC timing correct if the director opens Settings/Pilots mid-heat. */
     if(activePhase(ClassicRCRuntime.session?.()))return true;
     if(activePhase(state.session))return false;
     return state.view==='classicCockpit';
@@ -17,7 +15,7 @@ const ActiveRaceController=(()=>{
       return processPass(detail.transponder,detail.deviceMs,detail.source||'EXTERNAL');
     },
     processPilotStatus(detail={}){
-      if(classicSelected())return false;
+      if(classicSelected())return ClassicRCRuntime.processPilotStatus?.(detail)||false;
       return processRaceSourceStatus(detail);
     },
     tick(){
@@ -25,7 +23,7 @@ const ActiveRaceController=(()=>{
       return updateDynamicCockpit();
     },
     complete(){
-      if(classicSelected())return;
+      if(classicSelected())return ClassicRCRuntime.handleSourceComplete?.();
       return raceSourceMaybeFinish();
     }
   });

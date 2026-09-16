@@ -1,3 +1,13 @@
+# RC63 — CLASSIC DIRECTOR CONTROL
+
+- Added a live next-event schedule clock above the Classic RC race timer. It explicitly shows the active heat/break, what is next, and the countdown to the next scheduled event.
+- Expanded the Schedule overlay into Race Director control without moving or resizing the cockpit: early finish, current-heat settings, skip heat, break −1/+1/+5, skip break, and competition hold/resume.
+- Added Classic RC SIM controls using the same removable test-source adapter as the existing simulator. `SIM` opens the existing scenario/lap-time settings; a separate ×1/×2/×4/×8 control cycles speed directly.
+- Simulation speed now advances Classic RC race elapsed time and the competition schedule/pauses on the same virtual clock. RallyCross runtime still has no direct simulator dependency.
+- Added neutral simulator status/complete routing for Classic RC DNS/DNF and heat completion.
+- Schedule and Director surfaces remain token-driven for CLASSIC / COBALT / STEEL / LIGHT / MODERN / HERITAGE; no new neon/outline visual layer was introduced.
+- EFRA scoring, seeding, qualifying and finals rules are unchanged from RC62. RallyCross/LapWiz sport foundation is unchanged.
+
 # RC62 — CLASSIC RC EFRA + NEUTRAL SCHEDULER
 
 - Added a fully independent Classic RC sports engine implementing the EFRA 2026 Appendix 3 Round-by-Round format. It has its own state/storage, scoring, grouping, qualifying, finals and live runtime and does not import RallyCross sporting logic.

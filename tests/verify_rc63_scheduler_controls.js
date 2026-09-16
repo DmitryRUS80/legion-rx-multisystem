@@ -1,0 +1,20 @@
+'use strict';
+const fs=require('fs'),vm=require('vm'),path=require('path');
+const ROOT=path.resolve(__dirname,'..');
+vm.runInThisContext(fs.readFileSync(path.join(ROOT,'runtime/competition-scheduler.js'),'utf8')+'\nglobal.__S=CompetitionScheduler;');
+const S=global.__S;
+function ok(name,cond){if(!cond){console.error('FAIL '+name);process.exitCode=2}else console.log('PASS '+name)}
+const tl=S.make({date:'2026-09-16',startTime:'10:00'});
+const h1=S.add(tl,{kind:'heat',eventKey:'h1',label:'H1',durationMin:5,minStartGapMin:7,plannedStartEpoch:tl.startEpoch});
+const br=S.add(tl,{kind:'break',id:'b1',label:'PAUSE',durationMin:5,plannedStartEpoch:tl.startEpoch+7*60000});
+const h2=S.add(tl,{kind:'heat',eventKey:'h2',label:'H2',durationMin:5,minStartGapMin:7,plannedStartEpoch:tl.startEpoch+12*60000});
+const oldH2=h2.plannedStartEpoch;
+let r=S.adjustBreakMinutes(tl,'b1',-1,br.plannedStartEpoch+1000);
+ok('break_minus_one',r.ok&&br.durationMin===4);
+ok('break_shortening_reflows_tail',h2.plannedStartEpoch===oldH2-60000);
+const beforeDuration=h2.plannedStartEpoch;
+r=S.setHeatDuration(tl,'h1',9);
+ok('heat_duration_update',r.ok&&h1.durationMin===9);
+ok('heat_duration_reflows_tail',h2.plannedStartEpoch===beforeDuration+2*60000);
+const holdShift=h2.plannedStartEpoch;S.shiftPending(tl,180000);ok('competition_resume_can_shift_pending_tail',h2.plannedStartEpoch===holdShift+180000);
+if(process.exitCode)process.exit(process.exitCode);

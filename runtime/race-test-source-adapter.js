@@ -1,6 +1,6 @@
 'use strict';
 /* LEGION RX · removable pre-release test source adapter
-   RallyCross only talks to this neutral lifecycle. The concrete simulator is optional. */
+   Sport runtimes only talk to this neutral lifecycle. The concrete simulator is optional. */
 const raceTestSourceAdapter=(()=>{
   let source=null;
   const api={
@@ -12,6 +12,9 @@ const raceTestSourceAdapter=(()=>{
     id(){return String(source?.id||'TEST');},
     label(){try{return String(source?.label?.()||source?.id||'TEST');}catch{return'TEST';}},
     scale(){try{return Number(source?.getScale?.())||1;}catch{return 1;}},
+    getConfig(){try{return source?.getConfig?.()||null;}catch{return null;}},
+    configure(config={}){try{return source?.configure?.(config)||api.getConfig();}catch{return api.getConfig();}},
+    enable(config={}){try{return source?.enable?.(config)||api.configure(config)||false;}catch{return false;}},
     startWarmup(context={}){if(!api.isEnabled())return false;return Boolean(source?.startWarmup?.({...context,onPass:p=>raceEventBus.pass({transponder:p?.transponder,pilotId:p?.id,deviceMs:null,source:api.id()})}));},
     clearWarmup(){try{source?.clearWarmup?.();}catch{}},
     startSession(context={}){
