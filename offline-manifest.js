@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc68-update-download-diagnostics';
-  const displayVersion='4.2.0 CLEAN FULL APP RC68 · UPDATE DOWNLOAD DIAGNOSTICS';
-  const cacheName='legion-rx-4-2-0-clean-full-rc68-update-download-diagnostics';
+  const appVersion='4.2.0-clean-full-rc69-schedule-click-hotfix';
+  const displayVersion='4.2.0 CLEAN FULL APP RC69 · SCHEDULE CLICK HOTFIX';
+  const cacheName='legion-rx-4-2-0-clean-full-rc69-schedule-click-hotfix';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

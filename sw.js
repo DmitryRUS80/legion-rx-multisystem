@@ -1,8 +1,8 @@
-/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC68 · UPDATE DOWNLOAD DIAGNOSTICS */
+/* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC69 · SCHEDULE CLICK HOTFIX */
 'use strict';
-const LEGION_SW_BUILD='rc68-update-download-diagnostics';
+const LEGION_SW_BUILD='rc69-schedule-click-hotfix';
 /* Unique import URL prevents an older HTTP-cached release manifest being reused during SW update. */
-importScripts('./offline-manifest.js?build=rc68-update-download-diagnostics');
+importScripts('./offline-manifest.js?build=rc69-schedule-click-hotfix');
 
 const CFG=self.LEGION_OFFLINE_CONFIG;
 const CACHE=CFG.cacheName;
@@ -71,15 +71,15 @@ async function validate(url,response){
   if(url==='./modes/classic-rc/groups.js'){const s=await textOf(response);if(!s.includes('classicRCOffroadHeatOrder')||!s.includes('classicRCFinalGroupsFromQualification'))throw new Error(`${url}: stale EFRA grouping module`);}
   if(url==='./modes/classic-rc/efra-engine.js'){const s=await textOf(response);if(!s.includes('legionrx4_classic_rc_efra_event_v1')||!s.includes('buildFinals')||!s.includes('CompetitionScheduler')||!s.includes('updateCurrentHeatSettings')||!s.includes('pauseCompetition'))throw new Error(`${url}: stale Classic RC engine`);}
   if(url==='./modes/classic-rc/efra-runtime.js'){const s=await textOf(response);if(!s.includes('const ClassicRCRuntime')||!s.includes("ev.stage==='qualifying'")||!s.includes('canStartScheduleHeat')||!s.includes('rawNowEpoch')||!s.includes('cycleSimulationSpeed')||!s.includes("['seeding','controlled','finalPractice','qualifying'].includes(ev.stage)")||s.includes('raceSimulator')||s.includes('rxnFormatDuration')||s.includes('document.'))throw new Error(`${url}: stale/coupled Classic RC runtime`);}
-  if(url==='./ui/classic-rc/classic-rc-ui.js'){const s=await textOf(response);if(!s.includes('classicRCScheduleDrawer')||!s.includes('classicRCScheduleStatusStrip')||!s.includes('classicScheduleNext')||!s.includes('Math.ceil((Number(ms)||0)/1000)')||!s.includes('НАЧАТЬ РАНЬШЕ')||!s.includes('ОСТАНОВИТЬ СОРЕВНОВАНИЕ')||!s.includes('sim-speed')||!s.includes('classicRCBindActionElement')||!s.includes("dataset.classicBound='1'")||s.includes('classicRCEnsureDelegatedBindings')||!s.includes('EFRA 2026'))throw new Error(`${url}: stale Classic RC UI`);}
+  if(url==='./ui/classic-rc/classic-rc-ui.js'){const s=await textOf(response);if(!s.includes('classicRCScheduleDrawer')||!s.includes("current?.status||''}:${current?.kind||''}:${snap.hold}")||!s.includes('classicRCScheduleStatusStrip')||!s.includes('classicScheduleNext')||!s.includes('Math.ceil((Number(ms)||0)/1000)')||!s.includes('НАЧАТЬ РАНЬШЕ')||!s.includes('ОСТАНОВИТЬ СОРЕВНОВАНИЕ')||!s.includes('sim-speed')||!s.includes('classicRCBindActionElement')||!s.includes("dataset.classicBound='1'")||s.includes('classicRCEnsureDelegatedBindings')||!s.includes('EFRA 2026'))throw new Error(`${url}: stale Classic RC UI`);}
   if(url==='./ui/classic-rc/classic-rc.css'){const s=await textOf(response);if(!s.includes('.classicScheduleDrawer')||!s.includes('orientation:portrait')||!s.includes('#classicScheduleHost{')||!s.includes('position:fixed;inset:0')||!s.includes('grid-template-rows:38px minmax(145px,34%) minmax(0,1fr)')||!s.includes('.classicScheduleClock')||!s.includes('position:absolute!important')||!s.includes('.classicScheduleTail.open{opacity:0')||s.includes('.classicScheduleDrawer button,.classicScheduleTail{\n  position:relative'))throw new Error(`${url}: stale schedule portal/status style`);}
   if(url==='./ui/skins/rxui/cobalt.css'){const s=await textOf(response);if(!s.includes('data-skin="cobalt"'))throw new Error(`${url}: invalid COBALT skin`);}
   if(url==='./ui/skins/rxui/base.css'){const s=await textOf(response);if(!s.includes('NON-CLASSIC WORKSPACE WALLPAPER')||!s.includes('workspace-landscape.webp')||!s.includes('workspace-portrait.webp'))throw new Error(`${url}: stale workspace wallpaper layer`);}
   if(url==='./ui/shell/discipline-pults.css'){const s=await textOf(response);if(!s.includes('Landscape phone / narrow browser viewport')||!s.includes('.rxnTimeValue')||!s.includes('.rxnPilotStatsProfileEdit')||!s.includes('.rxnSimulatorButton')||!s.includes('.rxnSystemClock')||!s.includes('.rxnMobileRaceInfo'))throw new Error(`${url}: stale RC61 cockpit/profile CSS`);}
   if(url==='./ui/classic-polish/classic-controls.css'){const s=await textOf(response);if(!s.includes('data-skin="classic"'))throw new Error(`${url}: invalid Classic polish CSS`);}
   if(url==='./ui/classic-polish/classic-icons.js'){const s=await textOf(response);if(!s.includes('ClassicControlPolish'))throw new Error(`${url}: invalid Classic polish icons`);}
-  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc68-update-download-diagnostics')||!s.includes('./runtime/race-event-bus.js'))throw new Error(`${url}: stale RC68 release manifest`);}
-  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC68')||!s.includes('UPDATE DOWNLOAD DIAGNOSTICS'))throw new Error(`${url}: stale VERSION`);}
+  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc69-schedule-click-hotfix')||!s.includes('./runtime/race-event-bus.js'))throw new Error(`${url}: stale RC69 release manifest`);}
+  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC69')||!s.includes('SCHEDULE CLICK HOTFIX'))throw new Error(`${url}: stale VERSION`);}
   return response;
 }
 function freshRequestUrl(url){const u=new URL(url,self.registration.scope);u.searchParams.set('__legion_build',LEGION_SW_BUILD);return u.href;}
