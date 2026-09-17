@@ -1,2 +1,2 @@
 'use strict';
-const ClassicRCMode=Object.freeze({id:'classic-rc',enabled:false,label:'Классическая RC-гонка'});
+const ClassicRCMode=Object.freeze({id:'classic-rc',enabled:false,label:'EFRA RC'});

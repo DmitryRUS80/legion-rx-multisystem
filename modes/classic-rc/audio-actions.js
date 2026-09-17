@@ -29,6 +29,15 @@ const ClassicRCAudio=(()=>{
     return false;
   }
   function startSignal(){return announcer.play('startRace',{wait:false,force:true});}
+
+  // Reserved hook for future spoken pilot call during staggered release.
+  // RC76 intentionally keeps this silent: only the precise short release BEEP is active.
+  function staggerPilotCall(_pilot){return Promise.resolve(false);}
+  function staggerRelease(pilot){
+    const beep=announcer.playBleep({force:true});
+    staggerPilotCall(pilot).catch(()=>{});
+    return beep;
+  }
   function bleep(){if(!state.settings.lapSound)return false;return announcer.playBleep({force:true});}
   function bestLap(p){
     if(!voiceEnabled()||!state.settings.voiceBestLap)return Promise.resolve(false);
@@ -52,5 +61,5 @@ const ClassicRCAudio=(()=>{
     return queue(async()=>{await announcer.play('heatResults',{wait:true});for(let i=0;i<ordered.length;i++)await pilotVoice(ordered[i],{delay:i?140:220});return true;});
   }
   function cancel(){voiceQueue=Promise.resolve();try{announcer.cancel();}catch{}}
-  return Object.freeze({countdownTick,startSignal,bleep,bestLap,pilotFinished,service,timeExpired,heatFinished,heatResults,cancel});
+  return Object.freeze({countdownTick,startSignal,staggerRelease,staggerPilotCall,bleep,bestLap,pilotFinished,service,timeExpired,heatFinished,heatResults,cancel});
 })();

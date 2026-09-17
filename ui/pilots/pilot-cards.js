@@ -240,7 +240,7 @@ function pilotOpenAvatarCrop(file){
 
 function pilotResizeAvatar(file){return pilotOpenAvatarCrop(file);}
 
-function pilotModal(existing=null,addToRace=false,originRect=null){
+function pilotModal(existing=null,addToRace=false,originRect=null,options={}){
   const id=existing?.id||uid('profile'),voice=existing?.voice||null,voiceReady=voice?.status==='ready',voiceStale=voiceReady&&voice.text!==existing?.name;let pendingVoice=voice,pendingPhoto=existing?.photo||'';
   const initialModels=pilotModels(existing||{id,name:'',transponder:''}).map(m=>({...m,id:m.id==='primary'&&existing?.models?.length!==0?m.id:(existing?.models?.length?m.id:uid('model'))}));
   $('#modalHost').innerHTML=`<div class="pilotEditorBackdrop" style="${pilotEditorOriginStyle(originRect)}"><section class="pilotEditorPanel" role="dialog" aria-modal="true">
@@ -284,7 +284,9 @@ function pilotModal(existing=null,addToRace=false,originRect=null){
       racePilot.city=profile.city;racePilot.photo=profile.photo;racePilot.modelId=raceModel?.id||racePilot.modelId;racePilot.modelName=raceModel?.name||racePilot.modelName;racePilot.modelClass=raceModel?.className||racePilot.modelClass;racePilot.modelNumber=nextTransponder;racePilot.uiColor=raceModel?.uiColor||racePilot.uiColor;persistRace();
     }
     if(addToRace&&state.race?.stage==='setup'&&!state.race.pilots.some(p=>p.profileId===id))pilotToggleRaceModel(id,first.id,false);
-    closeModal();render();
+    closeModal();
+    if(typeof options?.onSave==='function'){try{const handled=options.onSave(profile);if(handled===true)return;}catch(err){console.error('Pilot onSave callback',err);toast(err?.message||'Не удалось применить пилота');}}
+    render();
   };
 }
 

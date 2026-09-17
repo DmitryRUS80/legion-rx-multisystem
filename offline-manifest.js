@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc75-auto-race-day-final-breaks';
-  const displayVersion='4.2.0 CLEAN FULL APP RC75 · AUTO RACE DAY + FINAL BREAKS';
-  const cacheName='legion-rx-4-2-0-clean-full-rc75-auto-race-day-final-breaks';
+  const appVersion='4.2.0-clean-full-rc76-efra-director-participants';
+  const displayVersion='4.2.0 CLEAN FULL APP RC76 · EFRA DIRECTOR + PARTICIPANTS';
+  const cacheName='legion-rx-4-2-0-clean-full-rc76-efra-director-participants';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',
