@@ -466,3 +466,41 @@ html:not([data-skin="classic"]) .classicRCCockpit,#classicScheduleHost{
  .classicLapMatrix th,.classicLapMatrix td{min-width:108px;padding:9px 10px;font-size:14px}
  .classicLapMatrix th:first-child{min-width:56px;width:56px}
 }
+
+/* RC74 · Classic RC race settings + compact readable final ratings */
+.classicRaceSettingsModal{width:min(980px,96vw);max-height:92vh;overflow:auto}
+.classicRaceSettingsModal .modalHead p{margin:6px 0 0;max-width:720px;color:var(--muted);font:500 14px/1.35 var(--rxn-font)}
+.classicRaceSettingsGrid{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(390px,1.15fr);gap:12px;margin-top:12px}
+.classicRaceSettingsGroup{padding:14px;border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.025)}
+.classicRaceSettingsGroup h3{margin:0 0 12px;font:800 17px/1 var(--rxn-font);letter-spacing:.035em}
+.classicRaceField{display:grid;gap:7px;margin-top:10px}.classicRaceField>span{color:var(--muted);font:700 12px/1 var(--rxn-font);letter-spacing:.04em}.classicRaceField input{height:44px;border:1px solid var(--line);border-radius:4px;background:var(--input);color:var(--text);padding:0 12px;font:700 17px/1 var(--rxn-font)}
+.classicRaceSettingsHint{margin-top:12px;color:var(--muted);font:500 13px/1.4 var(--rxn-font)}
+.classicRaceSettingToggle{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);cursor:pointer}
+.classicRaceSettingToggle>span{min-width:0}.classicRaceSettingToggle b{display:block;font:700 15px/1.15 var(--rxn-font)}.classicRaceSettingToggle small{display:block;margin-top:4px;color:var(--muted);font:500 12px/1.3 var(--rxn-font)}
+.classicRaceSettingToggle input{width:22px;height:22px;flex:none;accent-color:var(--rxn-cobalt)}
+.classicAudioState{display:grid;gap:4px;margin-top:14px;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.02)}.classicAudioState b{font:800 13px/1 var(--rxn-font)}.classicAudioState span{color:var(--muted);font:500 12px/1.3 var(--rxn-font)}.classicAudioState.ready{border-color:rgba(56,228,109,.35);background:rgba(56,228,109,.07)}.classicAudioState.ready b{color:var(--rxn-green)}
+.classicRaceSettingsTests{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.classicRaceSettingsTests .btn{min-height:40px}
+
+.classicResultsRoster{padding-left:14px;padding-right:14px}
+.classicFinalProtocol,.classicTablesModal .classicResultsSummaryGrid,.classicTablesModal .classicResultsSection{width:min(1180px,100%);margin-left:auto;margin-right:auto}
+.classicResultsSummaryGrid small{font-size:12px}.classicResultsSummaryGrid span{font-size:13px}.classicResultsSummaryGrid b{font-size:26px}
+.classicProtocolTitle h3,.classicProtocolSubhead h4{font-size:18px}.classicProtocolTitle span,.classicProtocolSubhead span{font-size:13px}
+.classicProtocolTable th{font-size:12px!important}.classicProtocolTable td{font-size:15px}.classicProtocolFormula{min-width:190px;font-weight:700}
+.classicQualifyingStandings{min-width:940px}
+
+.classicFinalRankHeader{display:grid;grid-template-columns:72px minmax(230px,1fr) 100px minmax(300px,1.2fr) 28px;align-items:center;gap:10px;padding:0 14px;min-height:38px;border:1px solid var(--line);border-bottom:0;border-radius:4px 4px 0 0;background:rgba(255,255,255,.035);color:var(--muted);font:800 12px/1 var(--rxn-font);letter-spacing:.04em}
+.classicFinalRankHeader.withGroup{grid-template-columns:72px minmax(230px,1fr) 70px 100px minmax(300px,1.2fr) 28px}
+.classicFinalRankList{border:1px solid var(--line);border-radius:0 0 4px 4px;overflow:hidden}
+.classicFinalRankRow{background:rgba(255,255,255,.015);border-bottom:1px solid var(--line)}.classicFinalRankRow:last-child{border-bottom:0}
+.classicFinalRankRow>summary{display:grid;grid-template-columns:72px minmax(230px,1fr) 100px minmax(300px,1.2fr) 28px;align-items:center;gap:10px;min-height:58px;padding:0 14px;cursor:pointer;list-style:none}.classicFinalRankRow.withGroup>summary{grid-template-columns:72px minmax(230px,1fr) 70px 100px minmax(300px,1.2fr) 28px}.classicFinalRankRow>summary::-webkit-details-marker{display:none}.classicFinalRankRow[open]>summary{background:rgba(255,255,255,.035);border-bottom:1px solid var(--line)}
+.classicFinalRankPos{font:900 19px/1 var(--rxn-font)}.classicFinalRankPilot{font:800 17px/1.1 var(--rxn-font)}.classicFinalRankGroup{display:inline-flex;align-items:center;justify-content:center;height:28px;border:1px solid var(--line);border-radius:3px;font:800 14px/1 var(--rxn-font)}.classicFinalRankTotal{font-style:normal;color:var(--rxn-green);font:900 21px/1 var(--rxn-font)}.classicFinalRankFormula{display:flex;gap:7px;align-items:center;flex-wrap:wrap;font:700 14px/1.2 var(--rxn-font)}.classicFinalRankFormula b{color:var(--rxn-green);font-size:15px}.classicFinalRankFormula span{color:var(--muted)}.classicFinalRankRow>summary>i{font-style:normal;color:var(--muted);font:800 22px/1 sans-serif;text-align:center;transition:transform .15s}.classicFinalRankRow[open]>summary>i{transform:rotate(180deg)}
+.classicFinalRankDetail{padding:10px 12px 12px;background:rgba(0,0,0,.08);overflow:auto}.classicFinalRunsTable{width:100%;min-width:760px}.classicFinalRunsTable th{font-size:12px!important}.classicFinalRunsTable td{font-size:15px}.classicFinalRunsTable tr.classicFinalCounted td{background:rgba(56,228,109,.08)}.classicProtocolGoodText{color:var(--rxn-green);font-weight:800}
+
+@media (max-width:760px){
+ .classicRaceSettingsModal{width:100vw;max-width:100vw;max-height:100vh;border-radius:0}.classicRaceSettingsGrid{grid-template-columns:1fr}.classicRaceSettingsGroup{padding:12px}.classicRaceSettingToggle b{font-size:15px}.classicRaceSettingToggle small{font-size:12px}
+ .classicResultsRoster{padding-left:6px;padding-right:6px}.classicFinalProtocol{width:100%}
+ .classicFinalRankHeader{display:none}.classicFinalRankRow>summary,.classicFinalRankRow.withGroup>summary{grid-template-columns:38px minmax(0,1fr) 64px 28px;grid-template-areas:"pos pilot total arrow" "formula formula formula formula";gap:7px 9px;min-height:74px;padding:9px 10px}.classicFinalRankPos{grid-area:pos}.classicFinalRankPilot{grid-area:pilot;font-size:16px}.classicFinalRankGroup{display:none}.classicFinalRankTotal{grid-area:total;text-align:right;font-size:20px}.classicFinalRankFormula{grid-area:formula;font-size:13px;padding-left:47px}.classicFinalRankRow>summary>i{grid-area:arrow}.classicFinalRankDetail{padding:7px}.classicFinalRunsTable th{font-size:12px!important}.classicFinalRunsTable td{font-size:14px}
+ .classicResultsSummaryGrid small{font-size:12px}.classicResultsSummaryGrid span{font-size:12px}.classicProtocolTitle span,.classicProtocolSubhead span{font-size:12px}
+}
+.classicFinalRuleNote{margin:8px 0 10px;padding:10px 12px;border-left:3px solid var(--rxn-cobalt);background:rgba(47,143,241,.07);color:var(--text);font:600 13px/1.4 var(--rxn-font)}
+@media (max-width:760px){.classicFinalRuleNote{font-size:13px;padding:9px 10px}}
