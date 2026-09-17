@@ -504,3 +504,10 @@ html:not([data-skin="classic"]) .classicRCCockpit,#classicScheduleHost{
 }
 .classicFinalRuleNote{margin:8px 0 10px;padding:10px 12px;border-left:3px solid var(--rxn-cobalt);background:rgba(47,143,241,.07);color:var(--text);font:600 13px/1.4 var(--rxn-font)}
 @media (max-width:760px){.classicFinalRuleNote{font-size:13px;padding:9px 10px}}
+
+/* RC75 · Auto race-day director */
+.classicAutoDayBar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px;border:1px solid var(--classic-schedule-line-strong);border-radius:4px;background:color-mix(in srgb,var(--classic-schedule-surface) 82%,transparent)}
+.classicAutoDayBar>div:first-child{min-width:0}.classicAutoDayBar b{display:block;font:800 11px/1 var(--rxn-font);letter-spacing:.045em;color:var(--classic-schedule-text)}.classicAutoDayBar span{display:block;margin-top:4px;color:var(--classic-schedule-muted);font:600 9px/1.2 var(--rxn-font)}
+.classicAutoDayBar>div:last-child{display:flex;gap:5px}.classicAutoDayBar .classicScheduleAction{height:34px;padding:0 10px;font-size:10px;white-space:nowrap}.classicAutoDayBar.active{border-color:color-mix(in srgb,var(--classic-schedule-active) 55%,var(--classic-schedule-line-strong));background:color-mix(in srgb,var(--classic-schedule-active) 8%,var(--classic-schedule-surface))}.classicAutoDayBar.paused{border-color:color-mix(in srgb,var(--classic-schedule-warning) 55%,var(--classic-schedule-line-strong));background:color-mix(in srgb,var(--classic-schedule-warning) 8%,var(--classic-schedule-surface))}
+.classicAutoSettings{grid-column:1/-1}.classicAutoSettings .classicRaceField{max-width:320px;margin-top:12px}
+@media (orientation:portrait) and (max-width:599px){.classicAutoDayBar{grid-template-columns:1fr;gap:6px}.classicAutoDayBar>div:last-child{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.classicAutoDayBar .classicScheduleAction{width:100%}.classicAutoSettings{grid-column:auto}}

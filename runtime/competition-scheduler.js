@@ -90,7 +90,7 @@ const CompetitionScheduler=(()=>{
     const it=timeline.items[i];if(it.kind!=='heat')return{ok:false,error:'Событие не является заездом'};
     const t=Number(now)||Date.now();it.status='completed';it.actualStartEpoch=t;it.actualEndEpoch=t;it.meta={...(it.meta||{}),skipped:true};
     const nextIndex=timeline.items.findIndex((x,j)=>j>i&&x.status==='pending');
-    if(nextIndex>=0){const next=timeline.items[nextIndex],planned=Number(next.plannedStartEpoch)||t;shiftFuture(timeline,nextIndex,t-planned);}
+    if(nextIndex>=0){const next=timeline.items[nextIndex],planned=Number(next.plannedStartEpoch)||t;shiftFuture(timeline,nextIndex,t-planned);const nextHeatIndex=timeline.items.findIndex((x,j)=>j>i&&x.kind==='heat'&&x.status==='pending');if(nextHeatIndex>=0){const nextHeat=timeline.items[nextHeatIndex];let prevHeat=null;for(let p=nextHeatIndex-1;p>=0;p--){const cand=timeline.items[p];if(cand.kind==='heat'&&!cand.meta?.skipped){prevHeat=cand;break;}}const earliest=prevHeat?(Number(prevHeat.actualStartEpoch||prevHeat.plannedStartEpoch)||0)+Math.max(0,Number(nextHeat.minStartGapMin)||0)*60000:-Infinity;if(Number.isFinite(earliest)&&nextHeat.plannedStartEpoch<earliest)shiftFuture(timeline,nextHeatIndex,earliest-nextHeat.plannedStartEpoch);}}
     timeline.updatedAt=Date.now();return{ok:true,item:it,nextIndex};
   };
   const skipBreak=(timeline,itemId,now=Date.now())=>{
