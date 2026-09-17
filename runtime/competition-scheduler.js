@@ -36,6 +36,14 @@ const CompetitionScheduler=(()=>{
     timeline.items.forEach((it,i)=>{if(i>=fromIndex&&it.status==='pending')it.plannedStartEpoch=Math.max(0,Number(it.plannedStartEpoch||0)+deltaMs);});timeline.updatedAt=Date.now();return timeline;
   };
   const shiftPending=(timeline,deltaMs)=>shiftFuture(timeline,0,deltaMs);
+  const shiftStart=(timeline,deltaMs)=>{
+    if(!timeline?.items?.length)return{ok:false,error:'Расписание пустое'};
+    if(timeline.items.some(x=>x.status!=='pending'||x.actualStartEpoch||x.actualEndEpoch))return{ok:false,error:'Старт дня можно менять только до первого события'};
+    const delta=Number(deltaMs)||0;if(!delta)return{ok:true,deltaMs:0,startEpoch:Number(timeline.startEpoch)||0};
+    timeline.startEpoch=Math.max(0,(Number(timeline.startEpoch)||Date.now())+delta);
+    timeline.items.forEach(it=>{if(it.status==='pending')it.plannedStartEpoch=Math.max(0,(Number(it.plannedStartEpoch)||timeline.startEpoch)+delta);});
+    timeline.updatedAt=Date.now();return{ok:true,deltaMs:delta,startEpoch:timeline.startEpoch};
+  };
   const indexOfEvent=(timeline,eventKey)=>timeline?.items?.findIndex(x=>x.eventKey===eventKey)??-1;
   const indexOfId=(timeline,itemId)=>timeline?.items?.findIndex(x=>x.id===itemId)??-1;
   const currentItem=(timeline,now=Date.now())=>{
@@ -78,20 +86,31 @@ const CompetitionScheduler=(()=>{
     timeline.updatedAt=Date.now();return it;
   };
   const skipBreak=(timeline,itemId,now=Date.now())=>{
-    const i=indexOfId(timeline,itemId);if(i<0||timeline.items[i].kind!=='break')return{ok:false};const it=timeline.items[i],oldEnd=it.plannedStartEpoch+it.durationMin*60000;
+    const i=indexOfId(timeline,itemId);if(i<0||timeline.items[i].kind!=='break'||timeline.items[i].status!=='pending')return{ok:false,error:'Пауза уже завершена'};const it=timeline.items[i],oldEnd=it.plannedStartEpoch+it.durationMin*60000;
     it.status='completed';it.actualStartEpoch=it.plannedStartEpoch;it.actualEndEpoch=now;shiftFuture(timeline,i+1,now-oldEnd);
     const n=timeline.items.findIndex((x,j)=>j>i&&x.kind==='heat'&&x.status==='pending');if(n>=0){const next=timeline.items[n];let prev=null;for(let p=n-1;p>=0;p--){if(timeline.items[p].kind==='heat'){prev=timeline.items[p];break;}}const earliest=prev?(prev.actualStartEpoch||prev.plannedStartEpoch)+Math.max(0,Number(next.minStartGapMin)||0)*60000:-Infinity;if(next.plannedStartEpoch<earliest)shiftFuture(timeline,n,earliest-next.plannedStartEpoch);}
     timeline.updatedAt=Date.now();return{ok:true,item:it};
   };
   const adjustBreakMinutes=(timeline,itemId,deltaMinutes,now=Date.now())=>{
-    const i=indexOfId(timeline,itemId);if(i<0||timeline.items[i].kind!=='break')return{ok:false};
+    const i=indexOfId(timeline,itemId);if(i<0||timeline.items[i].kind!=='break'||timeline.items[i].status!=='pending')return{ok:false,error:'Можно менять только текущую или будущую паузу'};
     const it=timeline.items[i],oldDuration=Math.max(0,Number(it.durationMin)||0),nextDuration=Math.max(0,oldDuration+(Number(deltaMinutes)||0));
     const delta=(nextDuration-oldDuration)*60000;it.durationMin=nextDuration;shiftFuture(timeline,i+1,delta);
-    const end=(Number(it.plannedStartEpoch)||now)+nextDuration*60000;
-    if(it.status==='pending'&&now>=end){it.status='completed';it.actualStartEpoch=it.plannedStartEpoch||now;it.actualEndEpoch=end;}
+    const end=(Number(it.plannedStartEpoch)||now)+nextDuration*60000,earlierOpen=timeline.items.slice(0,i).some(x=>x.status==='pending'||x.status==='active');
+    if(it.status==='pending'&&!earlierOpen&&now>=end){it.status='completed';it.actualStartEpoch=it.plannedStartEpoch||now;it.actualEndEpoch=end;}
     timeline.updatedAt=Date.now();return{ok:true,item:it,deltaMs:delta};
   };
   const addBreakMinutes=(timeline,itemId,minutes)=>adjustBreakMinutes(timeline,itemId,Math.max(0,Number(minutes)||0));
+  const restartHeat=(timeline,eventKey,now=Date.now())=>{
+    const i=indexOfEvent(timeline,eventKey);if(i<0)return{ok:false,error:'Заезд отсутствует в расписании'};
+    const it=timeline.items[i];if(it.kind!=='heat')return{ok:false,error:'Событие не является заездом'};
+    if(it.status==='completed')return{ok:false,error:'Сохранённый заезд нельзя перезапустить'};
+    if(it.status==='pending'&&!it.actualStartEpoch){it.actualEndEpoch=null;timeline.updatedAt=Date.now();return{ok:true,item:it,deltaMs:0};}
+    const oldStart=Number(it.actualStartEpoch||it.plannedStartEpoch)||now;
+    let earliest=Number(now)||Date.now();
+    for(let p=i-1;p>=0;p--){const prev=timeline.items[p];if(prev.kind!=='heat')continue;const base=Number(prev.actualStartEpoch||prev.plannedStartEpoch)||0;if(base)earliest=Math.max(earliest,base+Math.max(0,Number(it.minStartGapMin)||0)*60000);break;}
+    it.status='pending';it.actualStartEpoch=null;it.actualEndEpoch=null;it.plannedStartEpoch=earliest;
+    const delta=earliest-oldStart;if(delta)shiftFuture(timeline,i+1,delta);timeline.updatedAt=Date.now();return{ok:true,item:it,deltaMs:delta};
+  };
   const setHeatDuration=(timeline,eventKey,durationMin)=>{
     const i=indexOfEvent(timeline,eventKey);if(i<0)return{ok:false};const it=timeline.items[i];if(it.kind!=='heat')return{ok:false};
     const oldSpan=effectiveSpanMs(it),oldDuration=it.durationMin;it.durationMin=Math.max(1/60,Number(durationMin)||oldDuration||1);const newSpan=effectiveSpanMs(it),delta=newSpan-oldSpan;
@@ -100,5 +119,5 @@ const CompetitionScheduler=(()=>{
   const bringForward=(timeline,eventKey,now=Date.now())=>start(timeline,eventKey,now);
   const formatTime=epoch=>epoch?new Intl.DateTimeFormat('ru-RU',{hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(epoch)):'—';
   const snapshot=timeline=>clone(timeline);
-  return Object.freeze({make,add,recalc,shiftFuture,shiftPending,currentItem,nextItemAfter,nextHeat,canStart,start,finish,skipBreak,adjustBreakMinutes,addBreakMinutes,setHeatDuration,bringForward,formatTime,snapshot,indexOfEvent,indexOfId,effectiveSpanMs});
+  return Object.freeze({make,add,recalc,shiftFuture,shiftPending,shiftStart,currentItem,nextItemAfter,nextHeat,canStart,start,finish,restartHeat,skipBreak,adjustBreakMinutes,addBreakMinutes,setHeatDuration,bringForward,formatTime,snapshot,indexOfEvent,indexOfId,effectiveSpanMs});
 })();

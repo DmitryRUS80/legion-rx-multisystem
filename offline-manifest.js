@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc69-schedule-click-hotfix';
-  const displayVersion='4.2.0 CLEAN FULL APP RC69 · SCHEDULE CLICK HOTFIX';
-  const cacheName='legion-rx-4-2-0-clean-full-rc69-schedule-click-hotfix';
+  const appVersion='4.2.0-clean-full-rc70-single-class-director';
+  const displayVersion='4.2.0 CLEAN FULL APP RC70 · SINGLE CLASS DIRECTOR';
+  const cacheName='legion-rx-4-2-0-clean-full-rc70-single-class-director';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',
