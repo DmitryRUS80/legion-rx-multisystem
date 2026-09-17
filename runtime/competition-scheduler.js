@@ -61,7 +61,7 @@ const CompetitionScheduler=(()=>{
     return timeline.items.find((x,j)=>j>i&&x.status==='pending')||null;
   };
   const nextHeat=(timeline)=>timeline?.items?.find(x=>x.status==='pending'&&x.kind==='heat')||null;
-  const canStart=(timeline,eventKey,now=Date.now())=>{
+  const canStart=(timeline,eventKey,now=Date.now(),options={})=>{
     const i=indexOfEvent(timeline,eventKey);if(i<0)return{ok:false,error:'Заезд отсутствует в расписании'};
     const it=timeline.items[i];if(it.status==='completed')return{ok:false,error:'Заезд уже завершён'};
     if(it.status==='active')return{ok:false,error:'Заезд уже запущен'};
@@ -69,12 +69,12 @@ const CompetitionScheduler=(()=>{
     if(earlierPendingHeat)return{ok:false,error:'Сначала проведите предыдущий заезд'};
     if(timeline.items.some((x,j)=>j!==i&&x.kind==='heat'&&x.status==='active'))return{ok:false,error:'Другой заезд уже идёт'};
     let earliest=-Infinity;
-    for(let p=i-1;p>=0;p--){const prev=timeline.items[p];if(prev.kind!=='heat')continue;const base=prev.actualStartEpoch||prev.plannedStartEpoch;if(base){earliest=base+Math.max(0,Number(it.minStartGapMin)||0)*60000;break;}}
-    if(now<earliest)return{ok:false,error:'Минимальный интервал ещё не выдержан',earliestEpoch:earliest,index:i,item:it};
-    return{ok:true,index:i,item:it,earliestEpoch:Number.isFinite(earliest)?earliest:null};
+    for(let p=i-1;p>=0;p--){const prev=timeline.items[p];if(prev.kind!=='heat'||prev.meta?.skipped)continue;const base=prev.actualStartEpoch||prev.plannedStartEpoch;if(base){earliest=base+Math.max(0,Number(it.minStartGapMin)||0)*60000;break;}}
+    if(!options.ignoreMinGap&&now<earliest)return{ok:false,error:'Минимальный интервал ещё не выдержан',earliestEpoch:earliest,index:i,item:it};
+    return{ok:true,index:i,item:it,earliestEpoch:Number.isFinite(earliest)?earliest:null,override:Boolean(options.ignoreMinGap)};
   };
-  const start=(timeline,eventKey,now=Date.now())=>{
-    const check=canStart(timeline,eventKey,now);if(!check.ok)return check;
+  const start=(timeline,eventKey,now=Date.now(),options={})=>{
+    const check=canStart(timeline,eventKey,now,options);if(!check.ok)return check;
     const i=check.index,it=check.item,old=it.plannedStartEpoch||now;
     timeline.items.slice(0,i).forEach(x=>{if(x.kind==='break'&&x.status==='pending'){x.status='completed';x.actualStartEpoch=x.plannedStartEpoch||now;x.actualEndEpoch=now;}});
     it.actualStartEpoch=now;it.plannedStartEpoch=now;it.status='active';
@@ -84,6 +84,14 @@ const CompetitionScheduler=(()=>{
     const i=indexOfEvent(timeline,eventKey);if(i<0)return null;const it=timeline.items[i];it.status='completed';it.actualEndEpoch=now;if(!it.actualStartEpoch)it.actualStartEpoch=it.plannedStartEpoch||now;
     const nextIndex=timeline.items.findIndex((x,j)=>j>i&&x.status==='pending');if(nextIndex>=0){const next=timeline.items[nextIndex],planned=Number(next.plannedStartEpoch)||now;if(now>planned)shiftFuture(timeline,nextIndex,now-planned);}
     timeline.updatedAt=Date.now();return it;
+  };
+  const skipHeat=(timeline,eventKey,now=Date.now())=>{
+    const i=indexOfEvent(timeline,eventKey);if(i<0)return{ok:false,error:'Заезд отсутствует в расписании'};
+    const it=timeline.items[i];if(it.kind!=='heat')return{ok:false,error:'Событие не является заездом'};
+    const t=Number(now)||Date.now();it.status='completed';it.actualStartEpoch=t;it.actualEndEpoch=t;it.meta={...(it.meta||{}),skipped:true};
+    const nextIndex=timeline.items.findIndex((x,j)=>j>i&&x.status==='pending');
+    if(nextIndex>=0){const next=timeline.items[nextIndex],planned=Number(next.plannedStartEpoch)||t;shiftFuture(timeline,nextIndex,t-planned);}
+    timeline.updatedAt=Date.now();return{ok:true,item:it,nextIndex};
   };
   const skipBreak=(timeline,itemId,now=Date.now())=>{
     const i=indexOfId(timeline,itemId);if(i<0||timeline.items[i].kind!=='break'||timeline.items[i].status!=='pending')return{ok:false,error:'Пауза уже завершена'};const it=timeline.items[i],oldEnd=it.plannedStartEpoch+it.durationMin*60000;
@@ -116,8 +124,8 @@ const CompetitionScheduler=(()=>{
     const oldSpan=effectiveSpanMs(it),oldDuration=it.durationMin;it.durationMin=Math.max(1/60,Number(durationMin)||oldDuration||1);const newSpan=effectiveSpanMs(it),delta=newSpan-oldSpan;
     if(delta)shiftFuture(timeline,i+1,delta);timeline.updatedAt=Date.now();return{ok:true,item:it,deltaMs:delta};
   };
-  const bringForward=(timeline,eventKey,now=Date.now())=>start(timeline,eventKey,now);
+  const bringForward=(timeline,eventKey,now=Date.now())=>start(timeline,eventKey,now,{ignoreMinGap:true});
   const formatTime=epoch=>epoch?new Intl.DateTimeFormat('ru-RU',{hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(epoch)):'—';
   const snapshot=timeline=>clone(timeline);
-  return Object.freeze({make,add,recalc,shiftFuture,shiftPending,shiftStart,currentItem,nextItemAfter,nextHeat,canStart,start,finish,restartHeat,skipBreak,adjustBreakMinutes,addBreakMinutes,setHeatDuration,bringForward,formatTime,snapshot,indexOfEvent,indexOfId,effectiveSpanMs});
+  return Object.freeze({make,add,recalc,shiftFuture,shiftPending,shiftStart,currentItem,nextItemAfter,nextHeat,canStart,start,finish,restartHeat,skipHeat,skipBreak,adjustBreakMinutes,addBreakMinutes,setHeatDuration,bringForward,formatTime,snapshot,indexOfEvent,indexOfId,effectiveSpanMs});
 })();

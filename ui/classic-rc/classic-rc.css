@@ -337,3 +337,75 @@ html:not([data-skin="classic"]) .classicRCCockpit,#classicScheduleHost{
   .classicLapChips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}
   .classicLapChip{flex:0 0 auto}
 }
+
+/* RC72 · Portrait schedule workspace + readable run reports */
+.classicRunTable{min-width:1060px}
+.classicRunTable td,.classicRunTable th{white-space:nowrap}
+.classicRunTable td:nth-child(2){min-width:190px}
+.classicRunBest{background:rgba(56,228,109,.13)!important;color:var(--text);font-weight:800}
+.classicLapDetails{min-width:0}
+.classicLapDetails>summary{display:inline-flex!important;align-items:center;justify-content:center;min-height:32px!important;padding:0 10px!important;border:1px solid var(--line);border-radius:3px;background:rgba(255,255,255,.035)!important;color:var(--text);font:700 11px/1 var(--rxn-font)!important;letter-spacing:.035em;cursor:pointer;list-style:none;white-space:nowrap}
+.classicLapDetails>summary::-webkit-details-marker{display:none}
+.classicLapDetails[open]>summary{border-color:rgba(56,228,109,.35);background:rgba(56,228,109,.10)!important}
+.classicLapDetails .classicLapChips{margin:8px 0 2px}
+.classicRunCard{display:grid;gap:9px;padding:11px;border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.025)}
+.classicRunCardHead{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:9px}
+.classicRunCardHead>strong{display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,.055);font:800 17px/1 var(--rxn-font)}
+.classicRunCardHead>b{min-width:0;font:750 17px/1.12 var(--rxn-font)}
+.classicRunSeedBest{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;padding:9px 10px;border:1px solid rgba(56,228,109,.32);border-radius:4px;background:rgba(56,228,109,.11)}
+.classicRunSeedBest small{font:700 10px/1 var(--rxn-font);letter-spacing:.04em;color:var(--muted)}
+.classicRunSeedBest b{font:800 17px/1 var(--rxn-font)}
+.classicRunSeedBest span{font:700 12px/1 var(--rxn-font)}
+.classicRunMetrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+.classicRunMetrics>span{min-width:0;padding:8px 9px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.classicRunMetrics>span.good{border-color:rgba(56,228,109,.32);background:rgba(56,228,109,.11)}
+.classicRunMetrics small{display:block;color:var(--muted);font:700 10px/1 var(--rxn-font);letter-spacing:.04em}
+.classicRunMetrics b{display:block;margin-top:5px;font:800 15px/1 var(--rxn-font);white-space:nowrap}
+
+@media (orientation:portrait) and (max-width:599px){
+  #classicScheduleHost .classicScheduleScrim{inset:0 0 125px 0}
+  #classicScheduleHost .classicScheduleDrawer{top:0;right:0;bottom:125px;left:0;width:auto;border-left:0;border-right:0;border-top:0;border-radius:0 0 5px 5px}
+  .classicScheduleDrawer{grid-template-rows:auto auto auto minmax(0,1fr) auto}
+  .classicScheduleDrawer header{min-height:58px;padding:8px 12px}
+  .classicScheduleDrawer header small{font-size:10px}
+  .classicScheduleDrawer header h2{font-size:24px}
+  .classicScheduleDrawer header button{width:40px;height:40px;font-size:30px}
+  .classicScheduleDrawer>.classicScheduleStatus{height:44px;min-height:44px;padding:0 10px;gap:8px}
+  .classicScheduleDrawer>.classicScheduleStatus b{font-size:11px}
+  .classicScheduleDrawer>.classicScheduleStatus .classicScheduleNext{font-size:10px}
+  .classicScheduleDrawer>.classicScheduleStatus .classicScheduleClock strong{font-size:18px}
+  .classicScheduleTabs{height:44px;padding:0 8px}
+  .classicScheduleTabs button{font-size:12px}
+  .classicScheduleList{padding:3px 8px 8px}
+  .classicScheduleRow{min-height:62px;grid-template-columns:48px 12px minmax(0,1fr) auto;gap:8px}
+  .classicScheduleRow time{font-size:13px}
+  .classicScheduleRow>div b{font-size:16px}
+  .classicScheduleRow>div span{margin-top:5px;font-size:11px;line-height:1.15}
+  .classicScheduleRow.active>strong{font-size:10px}
+  .classicScheduleRow.hasAdjust{padding:4px 0 7px}
+  .classicScheduleRow.hasAdjust>.classicScheduleInlineAdjust{grid-template-columns:repeat(3,44px);gap:4px}
+  .classicScheduleInlineAdjust button{width:44px;height:30px;font-size:10px}
+  .classicScheduleDrawer footer{gap:6px;padding:8px;border-top:1px solid var(--classic-schedule-line)}
+  .classicScheduleAction{height:44px;font-size:13px}
+  .classicBreakAdjust button{min-height:38px;font-size:11px}
+  .classicScheduleDayAdjust{min-height:38px;padding:4px 6px}
+  .classicScheduleDayAdjust>span{font-size:9px}.classicScheduleDayAdjust>span b{font-size:12px}
+  .classicScheduleDayAdjust>div{grid-template-columns:repeat(4,36px);gap:4px}
+  .classicScheduleDayAdjust button{height:30px;font-size:10px}
+
+  .classicHeatProtocol summary span,.classicHeatProtocol summary em{font-size:11px}
+  .classicHeatProtocol summary b{font-size:16px}
+  .classicHeatProtocolBody{display:block;padding:7px}
+  .classicRunCard{padding:10px}
+  .classicRunCardHead>b{font-size:17px}
+  .classicRunCardHead .classicResultBadge{min-height:30px;font-size:11px}
+  .classicRunMetrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+  .classicRunMetrics>span{padding:9px}
+  .classicRunMetrics small{font-size:10px}
+  .classicRunMetrics b{font-size:16px}
+  .classicRunSeedBest{grid-template-columns:1fr auto;grid-template-areas:"label range" "value value";gap:5px 8px}
+  .classicRunSeedBest small{grid-area:label;font-size:10px}.classicRunSeedBest span{grid-area:range;font-size:12px}.classicRunSeedBest b{grid-area:value;font-size:18px}
+  .classicLapDetails>summary{min-height:38px!important;width:100%;font-size:12px!important}
+  .classicLapChip{min-height:34px;padding:0 9px}
+  .classicLapChip small{font-size:10px}.classicLapChip b{font-size:13px}
+}
