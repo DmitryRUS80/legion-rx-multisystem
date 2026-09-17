@@ -582,3 +582,66 @@ html:not([data-skin="classic"]) .classicRCCockpit,#classicScheduleHost{
   .classicParticipantsDrawer header{min-height:58px;padding:8px 10px}.classicParticipantsDrawer header h2{font-size:20px}.classicParticipantsDrawer header p{display:none}
   .classicParticipantsBody{padding:7px;gap:9px}.classicParticipantCard{grid-template-columns:50px minmax(0,1fr) 66px;min-height:54px}.classicParticipantPortrait{width:50px;height:50px}.classicParticipantMain>b{font-size:12px}.classicParticipantModel{height:23px;grid-template-columns:30px minmax(0,1fr)}.classicParticipantModel>strong{font-size:11px}.classicParticipantCard>button{height:28px;min-width:62px;font-size:7px}
 }
+
+/* RC78 · setup day planner / live schedule preview */
+.classicSetupWorkbench{display:grid;grid-template-columns:minmax(0,.98fr) minmax(430px,1.08fr);gap:12px;align-items:start}
+.classicSetupLeft{display:grid;gap:12px;min-width:0}
+.classicSetupWorkbench .classicSetupMain{margin:0}
+.classicSetupLeft .classicFieldsMain{grid-template-columns:1.7fr .9fr 1.35fr .9fr}
+.classicSetupDayPlan{margin:0;min-width:0;padding:12px;position:sticky;top:74px;max-height:calc(100dvh - 92px);display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden}
+.classicSetupDayPlanHead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.classicSetupDayPlanHead h2{margin:5px 0 0;font:700 23px/1 var(--rxn-font)}
+.classicSetupDayPlanHead>span{color:var(--muted);font:700 11px/1 var(--rxn-font);letter-spacing:.05em;white-space:nowrap}
+.classicSetupDayPlan>[data-classic-setup-plan-body]{min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden}
+.classicSetupDaySummary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:10px 0}
+.classicSetupDaySummary span{min-width:0;padding:9px 10px;border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.025)}
+.classicSetupDaySummary small{display:block;color:var(--muted);font:700 9px/1 var(--rxn-font);letter-spacing:.06em}
+.classicSetupDaySummary b{display:block;margin-top:5px;font:800 21px/1 var(--rxn-font);font-variant-numeric:tabular-nums;white-space:nowrap}
+.classicSetupTimelineList{min-height:0;overflow:auto;border-top:1px solid var(--line);scrollbar-width:thin}
+.classicSetupTimelineRow{min-height:52px;display:grid;grid-template-columns:52px 10px minmax(0,1fr) 92px;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding:3px 2px}
+.classicSetupTimelineRow time{color:var(--muted);font:700 12px/1 var(--rxn-font);font-variant-numeric:tabular-nums}
+.classicSetupTimelineRow>i{width:7px;height:7px;border-radius:50%;background:var(--blue)}
+.classicSetupTimelineRow.break>i{border-radius:2px;background:var(--accent)}
+.classicSetupTimelineRow.break .classicSetupTimelineCopy b{color:var(--accent)}
+.classicSetupTimelineCopy{min-width:0}
+.classicSetupTimelineCopy b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:700 13px/1.05 var(--rxn-font)}
+.classicSetupTimelineCopy span{display:block;margin-top:4px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:600 9px/1 var(--rxn-font);letter-spacing:.025em}
+.classicSetupTimelineAdjust{display:grid;grid-template-columns:28px 1fr 28px;align-items:center;gap:3px}
+.classicSetupTimelineAdjust button{height:28px;border:1px solid var(--line);border-radius:3px;background:var(--input);color:var(--text);font:800 17px/1 var(--rxn-font);cursor:pointer}
+.classicSetupTimelineAdjust button:hover{border-color:var(--blue);background:color-mix(in srgb,var(--blue) 10%,var(--input))}
+.classicSetupTimelineAdjust strong{text-align:center;font:800 13px/1 var(--rxn-font);font-variant-numeric:tabular-nums}
+.classicSetupPage>.classicPilotCard,.classicSetupPage>.classicPlanCard{margin-top:12px}
+.classicSetupPlanTail{position:fixed;z-index:415;right:0;top:34%;width:34px;height:112px;border:1px solid var(--line);border-right:0;border-radius:5px 0 0 5px;background:var(--panel2);color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.classicSetupPlanTail span svg{width:17px;height:17px}.classicSetupPlanTail b{writing-mode:vertical-rl;transform:rotate(180deg);font:700 10px/1 var(--rxn-font);letter-spacing:.06em}.classicSetupPlanTail:hover,.classicSetupPlanTail.open{color:var(--text);border-color:var(--blue)}
+.classicSetupPlanScrim{display:none;position:fixed;z-index:445;inset:0;background:rgba(0,0,0,.34)}.classicSetupPlanScrim.open{display:block}
+.classicSetupPlanDrawer{position:fixed;z-index:450;top:4px;right:4px;bottom:4px;width:min(520px,46vw);transform:translateX(calc(100% + 12px));transition:transform .18s ease;background:var(--panel);border:1px solid var(--line);border-radius:6px;box-shadow:-14px 0 28px rgba(0,0,0,.3);overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr)}
+.classicSetupPlanDrawer.open{transform:translateX(0)}
+.classicSetupPlanDrawer header{height:64px;display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-bottom:1px solid var(--line)}
+.classicSetupPlanDrawer header small{color:var(--muted);font:700 9px/1 var(--rxn-font);letter-spacing:.06em}.classicSetupPlanDrawer header h2{margin:5px 0 0;font:800 23px/1 var(--rxn-font)}
+.classicSetupPlanDrawer header button{width:34px;height:34px;border:0;background:transparent;color:var(--muted);font:300 28px/1 sans-serif;cursor:pointer}
+.classicSetupPlanDrawer>[data-classic-setup-plan-body]{min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);padding:0 10px 10px;overflow:hidden}
+
+@media (max-width:1100px){
+ .classicSetupWorkbench{grid-template-columns:minmax(0,1fr) minmax(360px,1fr)}
+ .classicSetupLeft .classicFields,.classicSetupLeft .classicFieldsMain{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .classicSetupDayPlan{top:68px}
+}
+@media (orientation:portrait) and (max-width:700px){
+ .classicSetupPage{padding-left:5px!important;padding-right:5px!important}
+ .classicSetupPage>.pageHeader{padding-left:2px;padding-right:2px}
+ .classicSetupWorkbench{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5px}
+ .classicSetupLeft{gap:5px}
+ .classicSetupLeft .card,.classicSetupDayPlan{padding:9px}
+ .classicSetupLeft .classicFields,.classicSetupLeft .classicFieldsMain{grid-template-columns:1fr;gap:7px;margin-top:8px}
+ .classicSetupLeft .classicFields input,.classicSetupLeft .classicFields select{height:40px;font-size:13px;padding:0 8px}
+ .classicSetupLeft .classicFields label>span{font-size:9px;line-height:1.1}
+ .classicSetupLeft .classicRuleLine{display:grid;gap:5px;margin-top:8px;padding-top:7px}.classicSetupLeft .classicRuleLine b,.classicSetupLeft .classicRuleLine span{font-size:9px;text-align:left}
+ .classicSetupDayPlan{position:sticky;top:64px;max-height:calc(100dvh - 122px);padding:7px}
+ .classicSetupDayPlanHead{align-items:flex-start;display:grid;gap:4px;padding-bottom:7px}.classicSetupDayPlanHead h2{font-size:15px}.classicSetupDayPlanHead>span{font-size:8px}
+ .classicSetupDaySummary{grid-template-columns:1fr;gap:3px;padding:6px 0}.classicSetupDaySummary span{padding:6px}.classicSetupDaySummary small{font-size:7px}.classicSetupDaySummary b{font-size:15px;margin-top:3px}
+ .classicSetupTimelineRow{min-height:46px;grid-template-columns:36px 6px minmax(0,1fr) 72px;gap:4px}.classicSetupTimelineRow time{font-size:9px}.classicSetupTimelineRow>i{width:5px;height:5px}.classicSetupTimelineCopy b{font-size:9px}.classicSetupTimelineCopy span{font-size:7px;margin-top:2px}.classicSetupTimelineAdjust{grid-template-columns:22px 1fr 22px;gap:2px}.classicSetupTimelineAdjust button{height:25px;font-size:14px}.classicSetupTimelineAdjust strong{font-size:10px}
+ .classicSetupPage>.classicPilotCard,.classicSetupPage>.classicPlanCard{margin-top:6px}
+ .classicSetupPlanTail{top:31%;width:30px;height:92px}.classicSetupPlanTail b{font-size:8px}
+ .classicSetupPlanDrawer{top:3px;right:3px;bottom:58px;width:min(92vw,460px)}
+ .classicSetupPlanDrawer header{height:54px}.classicSetupPlanDrawer header h2{font-size:20px}
+}

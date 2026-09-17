@@ -1,44 +1,68 @@
 'use strict';
 /* LEGION RX · CLASSIC RC EFRA UI adapter.
    Uses shared cockpit visual primitives, never RallyCross sport rules. */
-let classicScheduleOpen=false,classicParticipantsOpen=false,classicScheduleTab='now',classicScheduleTicker=null,classicScheduleSig='';
+let classicScheduleOpen=false,classicParticipantsOpen=false,classicSetupPlanOpen=false,classicScheduleTab='now',classicScheduleTicker=null,classicScheduleSig='';
 
 function classicRCOpen(){
   let c=ClassicRCEngine.get();
   if(!c)c=ClassicRCEngine.create({name:'EFRA RC',date:new Date().toISOString().slice(0,10),category:'10-offroad',startTime:new Date(Date.now()+10*60000).toTimeString().slice(0,5)});
   nav(c.status==='setup'?'classicSetup':'classicCockpit');
 }
+function classicRCSetupPreviewSpec(){
+  const c=ClassicRCEngine.get(),cfg=c?.settings||{},number=(sel,fallback)=>{const v=Number($(sel)?.value);return Number.isFinite(v)?v:fallback;},pilotNodes=$$('[data-classic-pilot]'),active=pilotNodes.filter(x=>x.classList.contains('active')).length;
+  return{category:$('#classicCategory')?.value||c?.category||'10-offroad',date:$('#classicDate')?.value||c?.date||new Date().toISOString().slice(0,10),pilotCount:pilotNodes.length?active:(c?.pilotIds?.length||0),settings:{startTime:$('#classicStartTime')?.value||cfg.startTime||'09:00',seedingRounds:number('#classicSeedRounds',cfg.seedingRounds||2),seedingConsecutiveLaps:number('#classicSeedLaps',cfg.seedingConsecutiveLaps||3),controlledPracticeRounds:number('#classicPracticeRounds',cfg.controlledPracticeRounds||2),qualifyingRounds:number('#classicQRounds',cfg.qualifyingRounds||5),roundBreakMin:number('#classicRoundBreak',cfg.roundBreakMin??5),finalBreakMin:number('#classicFinalBreak',cfg.finalBreakMin??20),finalPractice:$('#classicFinalPractice')?Boolean($('#classicFinalPractice').checked):cfg.finalPractice!==false,lowestFinalPolicy:$('#classicLowestFinal')?.value||cfg.lowestFinalPolicy||'keep',scheduleOverrides:{...(cfg.scheduleOverrides||{})}}};
+}
+function classicRCDayDurationText(totalMin){const mins=Math.max(0,Math.round(Number(totalMin)||0)),h=Math.floor(mins/60),m=mins%60;return h?`${h} Ч ${m?`${m} МИН`:''}`:`${m} МИН`;}
+function classicRCSetupTimelineMarkup(preview){
+  if(!preview?.timeline)return'<div class="rxnEmpty">ПЛАН ДНЯ НЕДОСТУПЕН</div>';
+  const rows=(preview.timeline.items||[]).map(it=>{const key=String(it.meta?.scheduleKey||''),kind=it.kind==='break'?'break':'heat',time=CompetitionScheduler.formatTime(it.plannedStartEpoch),duration=Math.max(0,Number(it.durationMin)||0),type=kind==='break'?'ПАУЗА':'ЗАЕЗД';return `<div class="classicSetupTimelineRow ${kind}"><time>${time}</time><i></i><div class="classicSetupTimelineCopy"><b>${esc(it.label)}</b><span>${type} · ${duration} МИН${kind==='heat'&&Number(it.minStartGapMin)>duration?` · СЛЕД. СТАРТ ≥ ${it.minStartGapMin} МИН`:''}</span></div><div class="classicSetupTimelineAdjust"><button type="button" data-classic-preview-adjust="-1" data-preview-key="${esc(key)}" data-preview-kind="${kind}" data-preview-current="${duration}" aria-label="Уменьшить">−</button><strong>${duration}</strong><button type="button" data-classic-preview-adjust="1" data-preview-key="${esc(key)}" data-preview-kind="${kind}" data-preview-current="${duration}" aria-label="Увеличить">+</button></div></div>`;}).join('');
+  return `<div class="classicSetupDaySummary"><span><small>СТАРТ</small><b>${CompetitionScheduler.formatTime(preview.startEpoch)}</b></span><span><small>ФИНИШ</small><b>${CompetitionScheduler.formatTime(preview.endEpoch)}</b></span><span><small>ВСЕГО</small><b>${classicRCDayDurationText(preview.totalMin)}</b></span></div><div class="classicSetupTimelineList">${rows}</div>`;
+}
+function classicRCRefreshSetupTimeline(){
+  if(state.view!=='classicSetup')return;const preview=ClassicRCEngine.previewSchedule(classicRCSetupPreviewSpec());document.querySelectorAll('[data-classic-setup-plan-body]').forEach(host=>host.innerHTML=classicRCSetupTimelineMarkup(preview));classicRCBindSetupPreviewControls();
+}
+function classicRCBindSetupPreviewControls(){
+  $$('[data-classic-preview-adjust]').forEach(b=>{b.onclick=e=>{e.preventDefault();e.stopPropagation();const c=ClassicRCEngine.get();if(!c||c.status!=='setup')return;const key=String(b.dataset.previewKey||''),kind=b.dataset.previewKind==='break'?'break':'heat',delta=Number(b.dataset.classicPreviewAdjust)||0,current=Number(b.dataset.previewCurrent)||0,min=kind==='break'?0:1,next=Math.max(min,current+delta),overrides={...(c.settings?.scheduleOverrides||{})};overrides[key]=next;ClassicRCEngine.updateSetup({settings:{scheduleOverrides:overrides}});classicRCRefreshSetupTimeline();};});
+}
+function classicRCToggleSetupPlan(open){classicSetupPlanOpen=typeof open==='boolean'?open:!classicSetupPlanOpen;document.querySelector('.classicSetupPlanDrawer')?.classList.toggle('open',classicSetupPlanOpen);document.querySelector('.classicSetupPlanScrim')?.classList.toggle('open',classicSetupPlanOpen);document.querySelector('.classicSetupPlanTail')?.classList.toggle('open',classicSetupPlanOpen);if(classicSetupPlanOpen)classicRCRefreshSetupTimeline();}
 function classicRCSetupView(){
   let c=ClassicRCEngine.get();if(!c)c=ClassicRCEngine.create({name:'EFRA RC',date:new Date().toISOString().slice(0,10),category:'10-offroad',startTime:'09:00'});
   const cfg=c.settings||{},cat=ClassicRCEFRARules.categories[c.category]||ClassicRCEFRARules.categories['10-offroad'];
   const selected=new Set(c.pilotIds||[]),pilotCards=(state.pilotDb||[]).map(p=>`<button type="button" class="classicPilotSelect ${selected.has(p.id)?'active':''}" data-classic-pilot="${esc(p.id)}"><span class="classicPilotId" style="--pilot-color:${rxnPilotColor(p)}">${esc(p.transponder||'—')}</span><span><b>${esc(rxnPilotDisplayName(p))}</b><small>${esc(p.club||p.city||'ПИЛОТ')}</small></span><i>${selected.has(p.id)?'✓':'+'}</i></button>`).join('');
-  const heatCount=Math.max(1,Math.ceil(Math.max(1,selected.size)/10)),qCount=classicRCQualifyingRoundsToCount(cfg.qualifyingRounds||5);
+  const heatCount=Math.max(1,Math.ceil(Math.max(1,selected.size)/10)),qCount=classicRCQualifyingRoundsToCount(cfg.qualifyingRounds||5),preview=ClassicRCEngine.previewSchedule({category:c.category,date:c.date,pilotCount:selected.size,settings:cfg}),previewMarkup=classicRCSetupTimelineMarkup(preview);
   if(c.status!=='setup')return `<section class="page classicSetupPage"><div class="pageHeader"><div><div class="sectionLabel">EFRA RC · 2026</div><h1>${esc(c.name)}</h1><p>${esc(cat.label)} · ${c.pilotIds.length} пилотов · ${c.events.filter(e=>e.saved).length}/${c.events.length} заездов завершено</p></div><div class="btnRow"><button class="btn primary" data-classic-action="cockpit">ОТКРЫТЬ ПУЛЬТ</button><button class="btn secondary" data-classic-action="results">РЕЗУЛЬТАТЫ</button></div></div><article class="card classicPreparedSummary"><b>Спортивный модуль сформирован и зафиксирован.</b><span>Расстановка / Практика → Квалификация по раундам → Финалы A/B/C · в зачёт 2 из 3.</span><div class="btnRow"><button class="btn danger" data-classic-action="delete">УДАЛИТЬ EFRA RC</button></div></article></section>`;
-  return `<section class="page classicSetupPage"><div class="pageHeader"><div><div class="sectionLabel">EFRA RC · 2026</div><h1>EFRA RC</h1><p>Отдельный спортивный модуль. RallyCross не используется и не изменяется.</p></div></div>
-  <div class="classicSetupGrid">
-   <article class="card classicSetupMain"><div class="sectionLabel">СОБЫТИЕ</div><div class="classicFields classicFieldsMain">
-    <label><span>Название</span><input id="classicName" value="${esc(c.name||'EFRA RC')}"></label>
-    <label><span>Дата</span><input id="classicDate" type="date" value="${esc(c.date)}"></label>
-    <label><span>Место</span><input id="classicLocation" value="${esc(c.location||'')}" placeholder="Трасса / город"></label>
-    <label><span>Старт дня</span><input id="classicStartTime" type="time" value="${esc(cfg.startTime||'09:00')}"></label>
-   </div></article>
-   <article class="card classicSetupMain"><div class="sectionLabel">EFRA PRESET</div><div class="classicFields">
-    <label><span>Категория</span><select id="classicCategory">${Object.values(ClassicRCEFRARules.categories).map(x=>`<option value="${x.id}" ${x.id===c.category?'selected':''}>${esc(x.label)} · ${x.raceMinutes} МИН</option>`).join('')}</select></label>
-    <label><span>Расстановка · раундов</span><select id="classicSeedRounds">${[2,3,4].map(n=>`<option ${Number(cfg.seedingRounds||2)===n?'selected':''}>${n}</option>`).join('')}</select></label>
-    <label><span>Seeding · подряд кругов для расстановки</span><select id="classicSeedLaps"><option value="2" ${Number(cfg.seedingConsecutiveLaps)===2?'selected':''}>2 круга</option><option value="3" ${Number(cfg.seedingConsecutiveLaps||3)===3?'selected':''}>3 круга</option></select></label>
-    <label><span>Контрольная практика · раундов</span><select id="classicPracticeRounds">${[1,2,3,4].map(n=>`<option ${Number(cfg.controlledPracticeRounds||2)===n?'selected':''}>${n}</option>`).join('')}</select></label>
-    <label><span>Квалификация · раундов</span><select id="classicQRounds">${[2,3,4,5,6].map(n=>`<option ${Number(cfg.qualifyingRounds||5)===n?'selected':''}>${n}</option>`).join('')}</select></label>
-    <label><span>Мин. круг LapWiz · сек</span><input id="classicMinLap" type="number" min="1" max="60" value="${Number(cfg.minLapSec||2)}"></label>
-   </div><div class="classicRuleLine"><b>${cat.raceMinutes} МИН + LAST LAP</b><span>Q: Round-by-Round · зачёт лучших ${qCount||'—'} · до 10 пилотов в heat</span></div></article>
-   <article class="card classicSetupMain"><div class="sectionLabel">РАСПИСАНИЕ</div><div class="classicFields">
-    <label><span>Пауза между раундами · мин</span><input id="classicRoundBreak" type="number" min="0" max="60" value="${Number(cfg.roundBreakMin||5)}"></label>
-    <label><span>Перед финалами · мин</span><input id="classicFinalBreak" type="number" min="0" max="120" value="${Number(cfg.finalBreakMin||20)}"></label>
-    <label><span>Нижний финал &lt; 4 пилотов</span><select id="classicLowestFinal"><option value="keep" ${(cfg.lowestFinalPolicy||'keep')==='keep'?'selected':''}>Провести как есть</option><option value="rebalance" ${cfg.lowestFinalPolicy==='rebalance'?'selected':''}>Уравнять с соседним</option></select></label>
-    <label class="classicCheck"><input id="classicFinalPractice" type="checkbox" ${cfg.finalPractice!==false?'checked':''}><span>Контрольная практика перед финалами</span></label>
-   </div><div class="classicRuleLine"><b>MIN START GAP ${cat.minStartGapMin} МИН</b><span>Расписание можно сдвигать во время соревнования; спортивные результаты не меняются.</span></div></article>
-   <article class="card classicPilotCard"><div class="pageHeader compact"><div><div class="sectionLabel">ПИЛОТЫ</div><h2>Участники · <span id="classicPilotCount">${selected.size}</span></h2></div><button class="btn secondary" data-nav="pilots">БАЗА ПИЛОТОВ</button></div><div class="classicPilotGrid">${pilotCards||'<div class="empty">В базе пока нет пилотов. Добавьте их в разделе «Пилоты».</div>'}</div></article>
-   <article class="card classicPlanCard"><div class="sectionLabel">ПЛАН</div><div class="classicPlanStats"><span><b>${heatCount}</b><small>ГРУПП / РАУНД</small></span><span><b>${cfg.qualifyingRounds||5}</b><small>КВ. РАУНДОВ</small></span><span><b>${qCount||'—'}</b><small>КВ. В ЗАЧЁТ</small></span><span><b>3 / 2</b><small>ФИНАЛОВ / В ЗАЧЁТ</small></span></div><div class="btnRow"><button class="btn primary" data-classic-action="prepare" ${selected.size<2?'disabled':''}>СФОРМИРОВАТЬ EFRA И ОТКРЫТЬ ПУЛЬТ</button><button class="btn danger" data-classic-action="delete">УДАЛИТЬ</button></div></article>
-  </div></section>`;
+  return `<section class="page classicSetupPage"><div class="pageHeader"><div><div class="sectionLabel">EFRA RC · 2026</div><h1>EFRA RC</h1><p>Сформируйте спортивный день и сразу проверьте его длительность.</p></div></div>
+  <div class="classicSetupWorkbench">
+   <div class="classicSetupLeft">
+    <article class="card classicSetupMain"><div class="sectionLabel">СОБЫТИЕ</div><div class="classicFields classicFieldsMain">
+     <label><span>Название</span><input id="classicName" value="${esc(c.name||'EFRA RC')}"></label>
+     <label><span>Дата</span><input id="classicDate" type="date" value="${esc(c.date)}"></label>
+     <label><span>Место</span><input id="classicLocation" value="${esc(c.location||'')}" placeholder="Трасса / город"></label>
+     <label><span>Старт дня</span><input id="classicStartTime" type="time" value="${esc(cfg.startTime||'09:00')}"></label>
+    </div></article>
+    <article class="card classicSetupMain"><div class="sectionLabel">РАСПИСАНИЕ</div><div class="classicFields">
+     <label><span>Пауза между раундами · мин</span><input id="classicRoundBreak" type="number" min="0" max="60" value="${Number(cfg.roundBreakMin??5)}"></label>
+     <label><span>Перед финалами · мин</span><input id="classicFinalBreak" type="number" min="0" max="120" value="${Number(cfg.finalBreakMin??20)}"></label>
+     <label><span>Нижний финал &lt; 4 пилотов</span><select id="classicLowestFinal"><option value="keep" ${(cfg.lowestFinalPolicy||'keep')==='keep'?'selected':''}>Провести как есть</option><option value="rebalance" ${cfg.lowestFinalPolicy==='rebalance'?'selected':''}>Уравнять с соседним</option></select></label>
+     <label class="classicCheck"><input id="classicFinalPractice" type="checkbox" ${cfg.finalPractice!==false?'checked':''}><span>Контрольная практика перед финалами</span></label>
+    </div><div class="classicRuleLine"><b>MIN START GAP ${cat.minStartGapMin} МИН</b><span>Любую строку справа можно подправить отдельно.</span></div></article>
+    <article class="card classicSetupMain"><div class="sectionLabel">EFRA PRESET</div><div class="classicFields">
+     <label><span>Категория</span><select id="classicCategory">${Object.values(ClassicRCEFRARules.categories).map(x=>`<option value="${x.id}" ${x.id===c.category?'selected':''}>${esc(x.label)} · ${x.raceMinutes} МИН</option>`).join('')}</select></label>
+     <label><span>Расстановка · раундов</span><select id="classicSeedRounds">${[2,3,4].map(n=>`<option ${Number(cfg.seedingRounds||2)===n?'selected':''}>${n}</option>`).join('')}</select></label>
+     <label><span>Seeding · подряд кругов</span><select id="classicSeedLaps"><option value="2" ${Number(cfg.seedingConsecutiveLaps)===2?'selected':''}>2 круга</option><option value="3" ${Number(cfg.seedingConsecutiveLaps||3)===3?'selected':''}>3 круга</option></select></label>
+     <label><span>Контрольная практика · раундов</span><select id="classicPracticeRounds">${[1,2,3,4].map(n=>`<option ${Number(cfg.controlledPracticeRounds||2)===n?'selected':''}>${n}</option>`).join('')}</select></label>
+     <label><span>Квалификация · раундов</span><select id="classicQRounds">${[2,3,4,5,6].map(n=>`<option ${Number(cfg.qualifyingRounds||5)===n?'selected':''}>${n}</option>`).join('')}</select></label>
+     <label><span>Мин. круг LapWiz · сек</span><input id="classicMinLap" type="number" min="1" max="60" value="${Number(cfg.minLapSec||2)}"></label>
+    </div><div class="classicRuleLine"><b>${cat.raceMinutes} МИН + LAST LAP</b><span>Round-by-Round · в зачёт ${qCount||'—'} · максимум 10 пилотов в группе</span></div></article>
+   </div>
+   <aside class="card classicSetupDayPlan"><div class="classicSetupDayPlanHead"><div><div class="sectionLabel">ПЛАН ДНЯ</div><h2>Полное расписание</h2></div><span>${heatCount} ГРУПП / РАУНД</span></div><div data-classic-setup-plan-body>${previewMarkup}</div></aside>
+  </div>
+  <article class="card classicPilotCard"><div class="pageHeader compact"><div><div class="sectionLabel">ПИЛОТЫ</div><h2>Участники · <span id="classicPilotCount">${selected.size}</span></h2></div><button class="btn secondary" data-nav="pilots">БАЗА ПИЛОТОВ</button></div><div class="classicPilotGrid">${pilotCards||'<div class="empty">В базе пока нет пилотов. Добавьте их в разделе «Пилоты».</div>'}</div></article>
+  <article class="card classicPlanCard"><div class="sectionLabel">СВОДКА</div><div class="classicPlanStats"><span><b>${heatCount}</b><small>ГРУПП / РАУНД</small></span><span><b>${cfg.qualifyingRounds||5}</b><small>КВ. РАУНДОВ</small></span><span><b>${qCount||'—'}</b><small>КВ. В ЗАЧЁТ</small></span><span><b>3 / 2</b><small>ФИНАЛОВ / В ЗАЧЁТ</small></span></div><div class="btnRow"><button class="btn primary" data-classic-action="prepare" ${selected.size<2?'disabled':''}>СФОРМИРОВАТЬ EFRA И ОТКРЫТЬ ПУЛЬТ</button><button class="btn danger" data-classic-action="delete">УДАЛИТЬ</button></div></article>
+  <button type="button" class="classicSetupPlanTail ${classicSetupPlanOpen?'open':''}" data-classic-action="setup-plan-toggle"><span>${raceSvg('list')}</span><b>ПЛАН ДНЯ</b></button>
+  <div class="classicSetupPlanScrim ${classicSetupPlanOpen?'open':''}" data-classic-action="setup-plan-close"></div>
+  <aside class="classicSetupPlanDrawer ${classicSetupPlanOpen?'open':''}"><header><div><small>EFRA RC · ДО СТАРТА</small><h2>ПЛАН ДНЯ</h2></div><button type="button" data-classic-action="setup-plan-close">×</button></header><div data-classic-setup-plan-body>${previewMarkup}</div></aside>
+  </section>`;
 }
 
 function classicRCStageBanner(ev){
@@ -295,9 +319,11 @@ async function classicRCDispatchAction(b){
   if(a==='cockpit')return nav('classicCockpit');
   if(a==='prepare'){
     const ids=$$('[data-classic-pilot].active').map(x=>x.dataset.classicPilot);
-    ClassicRCEngine.updateSetup({name:$('#classicName')?.value||'EFRA RC',date:$('#classicDate')?.value,location:$('#classicLocation')?.value||'',category:$('#classicCategory')?.value,pilotIds:ids,settings:{startTime:$('#classicStartTime')?.value||'09:00',seedingRounds:Number($('#classicSeedRounds')?.value)||2,seedingConsecutiveLaps:Number($('#classicSeedLaps')?.value)||3,controlledPracticeRounds:Number($('#classicPracticeRounds')?.value)||2,qualifyingRounds:Number($('#classicQRounds')?.value)||5,minLapSec:Number($('#classicMinLap')?.value)||2,roundBreakMin:Number($('#classicRoundBreak')?.value)||0,finalBreakMin:Number($('#classicFinalBreak')?.value)||0,finalPractice:Boolean($('#classicFinalPractice')?.checked),lowestFinalPolicy:$('#classicLowestFinal')?.value==='rebalance'?'rebalance':'keep'}});
+    ClassicRCEngine.updateSetup({name:$('#classicName')?.value||'EFRA RC',date:$('#classicDate')?.value,location:$('#classicLocation')?.value||'',category:$('#classicCategory')?.value,pilotIds:ids,settings:{startTime:$('#classicStartTime')?.value||'09:00',seedingRounds:Number($('#classicSeedRounds')?.value)||2,seedingConsecutiveLaps:Number($('#classicSeedLaps')?.value)||3,controlledPracticeRounds:Number($('#classicPracticeRounds')?.value)||2,qualifyingRounds:Number($('#classicQRounds')?.value)||5,minLapSec:Number($('#classicMinLap')?.value)||2,roundBreakMin:Number($('#classicRoundBreak')?.value)||0,finalBreakMin:Number($('#classicFinalBreak')?.value)||0,finalPractice:Boolean($('#classicFinalPractice')?.checked),lowestFinalPolicy:$('#classicLowestFinal')?.value==='rebalance'?'rebalance':'keep',scheduleOverrides:{...(ClassicRCEngine.get()?.settings?.scheduleOverrides||{})}}});
     try{ClassicRCEngine.prepare();return nav('classicCockpit');}catch(e){return toast(e.message);}
   }
+  if(a==='setup-plan-toggle'){classicRCToggleSetupPlan();return;}
+  if(a==='setup-plan-close'){classicRCToggleSetupPlan(false);return;}
   if(a==='delete'){if(confirm('Удалить текущее EFRA RC соревнование?')){ClassicRCRuntime.dispose();ClassicRCEngine.reset();nav('home');}return;}
   if(a==='start')return ClassicRCRuntime.beginStart();
   if(a==='pause')return ClassicRCRuntime.pause();
@@ -403,5 +429,9 @@ function bindClassicRC(){
   $$('[data-classic-action]').filter(b=>!b.closest('#classicScheduleHost')).forEach(classicRCBindActionElement);
   $$('[data-classic-schedule-tab]').filter(b=>!b.closest('#classicScheduleHost')).forEach(classicRCBindScheduleTab);
   $$('[data-classic-modal-close]').forEach(classicRCBindModalClose);
-  $$('[data-classic-pilot]').forEach(b=>{b.onclick=()=>{b.classList.toggle('active');b.querySelector('i').textContent=b.classList.contains('active')?'✓':'+';const n=$$('[data-classic-pilot].active').length,el=$('#classicPilotCount');if(el)el.textContent=n;const prepare=$('[data-classic-action="prepare"]');if(prepare)prepare.disabled=n<2;};});
+  $$('[data-classic-pilot]').forEach(b=>{b.onclick=()=>{b.classList.toggle('active');b.querySelector('i').textContent=b.classList.contains('active')?'✓':'+';const n=$$('[data-classic-pilot].active').length,el=$('#classicPilotCount');if(el)el.textContent=n;const prepare=$('[data-classic-action="prepare"]');if(prepare)prepare.disabled=n<2;classicRCRefreshSetupTimeline();};});
+  const setupPreviewFields=['#classicDate','#classicStartTime','#classicSeedRounds','#classicPracticeRounds','#classicQRounds','#classicRoundBreak','#classicFinalBreak','#classicFinalPractice','#classicLowestFinal'];
+  setupPreviewFields.forEach(sel=>{const el=$(sel);if(!el)return;const fn=()=>classicRCRefreshSetupTimeline();el.addEventListener('change',fn);if(el.tagName==='INPUT'&&el.type!=='checkbox')el.addEventListener('input',fn);});
+  const category=$('#classicCategory');if(category)category.addEventListener('change',()=>{const c=ClassicRCEngine.get();if(c?.status==='setup'){const overrides={...(c.settings?.scheduleOverrides||{})};Object.keys(overrides).filter(k=>k.startsWith('heat:')).forEach(k=>delete overrides[k]);ClassicRCEngine.updateSetup({settings:{scheduleOverrides:overrides}});}classicRCRefreshSetupTimeline();});
+  classicRCBindSetupPreviewControls();
 }

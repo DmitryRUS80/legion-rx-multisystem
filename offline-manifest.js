@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc77-stagger-participant-ui';
-  const displayVersion='4.2.0 CLEAN FULL APP RC77 · STAGGER + PARTICIPANT UI';
-  const cacheName='legion-rx-4-2-0-clean-full-rc77-stagger-participant-ui';
+  const appVersion='4.2.0-clean-full-rc78-setup-day-planner';
+  const displayVersion='4.2.0 CLEAN FULL APP RC78 · SETUP DAY PLANNER';
+  const cacheName='legion-rx-4-2-0-clean-full-rc78-setup-day-planner';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',
