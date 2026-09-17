@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc72-schedule-protocol-ux';
-  const displayVersion='4.2.0 CLEAN FULL APP RC72 · SCHEDULE + PROTOCOL UX';
-  const cacheName='legion-rx-4-2-0-clean-full-rc72-schedule-protocol-ux';
+  const appVersion='4.2.0-clean-full-rc73-report-style-protocols';
+  const displayVersion='4.2.0 CLEAN FULL APP RC73 · REPORT STYLE PROTOCOLS';
+  const cacheName='legion-rx-4-2-0-clean-full-rc73-report-style-protocols';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',
