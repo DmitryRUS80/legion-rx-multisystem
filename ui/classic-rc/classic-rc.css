@@ -531,3 +531,54 @@ html:not([data-skin="classic"]) .classicRCCockpit,#classicScheduleHost{
 .classicRCCockpit{position:relative}
 .classicFinalGridPanel{position:absolute;z-index:350;left:50%;top:50%;transform:translate(-50%,-50%);width:min(720px,84vw);padding:14px;border:1px solid var(--rxn-line-strong);border-radius:5px;background:color-mix(in srgb,var(--rxn-panel) 96%,transparent);box-shadow:0 20px 70px rgba(0,0,0,.34);pointer-events:none}.classicFinalGridPanel>small{display:block;color:var(--rxn-muted);font:800 10px/1 var(--rxn-font);letter-spacing:.065em}.classicFinalGridPanel h2{margin:7px 0 11px;font:900 24px/1 var(--rxn-font)}.classicFinalGridPanel section{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.classicFinalGridPanel section>div{display:grid;grid-template-columns:34px 54px minmax(0,1fr);align-items:center;gap:7px;min-height:52px;padding:3px 7px;background:var(--rxn-panel2);border:1px solid var(--rxn-line)}.classicFinalGridPanel section>div>strong{font:900 18px/1 var(--rxn-font)}.classicFinalGridPanel section>div>.classicPilotId{height:42px;font-size:17px}.classicFinalGridPanel section>div>b{font:800 15px/1.05 var(--rxn-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (orientation:portrait) and (max-width:599px){.classicFinalGridPanel{top:auto;bottom:130px;width:calc(100vw - 12px);padding:10px}.classicFinalGridPanel h2{font-size:19px}.classicFinalGridPanel section{grid-template-columns:1fr;max-height:42vh;overflow:auto}.classicFinalGridPanel section>div{min-height:46px;grid-template-columns:30px 48px minmax(0,1fr)}.classicFinalGridPanel section>div>.classicPilotId{height:38px}}
+
+/* RC77 · stagger timing + participant preview polish / non-overlapping widget tails */
+.classicParticipantsDrawer{width:min(620px,52vw)}
+.classicParticipantsList.twoCol{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.classicParticipantCard{grid-template-columns:62px minmax(0,1fr) 74px;gap:8px;min-height:68px;padding:3px 4px 3px 3px;border:0;border-radius:0;background:color-mix(in srgb,var(--classic-schedule-surface) 56%,transparent);box-shadow:none}
+.classicParticipantCard:nth-child(even){background:color-mix(in srgb,var(--classic-schedule-surface) 72%,transparent)}
+.classicParticipantPortrait{position:relative;width:62px;height:62px;overflow:hidden;background:var(--classic-schedule-control)}
+.classicParticipantPhoto{width:100%;height:100%;overflow:hidden;background:var(--classic-schedule-control)}
+.classicParticipantPhoto img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.classicParticipantPhoto .pilotAvatarPlaceholder{width:48%;height:62%;position:absolute;left:26%;top:18%;fill:color-mix(in srgb,var(--classic-schedule-muted) 70%,transparent)}
+.classicParticipantPortrait .pilotTileTeam{left:0;bottom:0;max-width:calc(100% - 23px);padding:2px 3px 2px;font-size:7px;line-height:1;background:rgba(6,9,13,.72)}
+.classicParticipantPortrait .pilotTileTeam.legion{padding:3px 4px 2px;font-size:7px;background:#07090d}
+.classicParticipantPortrait .pilotTileFlag{right:0;bottom:0;width:23px;height:14px}
+.classicParticipantMain{min-width:0;align-self:center}.classicParticipantMain>b{display:block;font:800 13px/1.02 var(--rxn-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.classicParticipantModel{display:grid;grid-template-columns:34px minmax(0,1fr);align-items:stretch;min-width:0;height:28px;margin-top:5px;background:color-mix(in srgb,var(--classic-schedule-control) 72%,transparent)}
+.classicParticipantModel>strong{display:flex;align-items:center;justify-content:center;background:var(--pilot-model-color,#ddd);color:#071017;font:900 13px/1 var(--rxn-font)}
+.classicParticipantModel>span{min-width:0;display:flex;align-items:center;padding:0 5px;color:var(--classic-schedule-muted);font:700 8px/1 var(--rxn-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.classicParticipantMain em{margin-top:4px;font-size:7px}
+.classicParticipantCard>button{height:32px;min-width:68px;padding:0 6px;border:0;border-radius:0;background:color-mix(in srgb,var(--classic-schedule-control) 82%,transparent);font-size:8px}
+.classicParticipantCard>button.remove{color:var(--classic-schedule-warning)}
+.classicParticipantCard>button.add{border:0;background:color-mix(in srgb,var(--classic-schedule-active) 13%,var(--classic-schedule-control));color:var(--classic-schedule-text)}
+
+/* Keep the two director widgets physically separated on normal screens. */
+#classicScheduleHost .classicScheduleTail{top:40%}
+#classicScheduleHost .classicParticipantsTail{top:60%;height:96px}
+
+@media (orientation:portrait) and (min-width:600px){
+  #classicScheduleHost .classicScheduleTail{top:60%;bottom:auto;transform:translateY(-50%)}
+  #classicScheduleHost .classicParticipantsTail{top:38%;bottom:auto;right:0;width:32px;height:96px;transform:translateY(-50%);flex-direction:column;border-right:0;border-radius:4px 0 0 4px}
+  #classicScheduleHost .classicParticipantsTail b{writing-mode:vertical-rl;transform:rotate(180deg)}
+  #classicScheduleHost .classicParticipantsTail em{left:-8px;right:auto;top:5px}
+}
+@media (orientation:portrait) and (max-width:599px){
+  #classicScheduleHost .classicParticipantsTail{top:36%;right:0;bottom:auto;width:32px;height:90px;transform:translateY(-50%);flex-direction:column;border-right:0;border-radius:4px 0 0 4px}
+  #classicScheduleHost .classicParticipantsTail b{writing-mode:vertical-rl;transform:rotate(180deg);font-size:8px}
+  #classicScheduleHost .classicParticipantsTail em{left:-8px;right:auto;top:4px}
+  .classicParticipantsDrawer{width:auto}
+  .classicParticipantsList.twoCol{grid-template-columns:1fr}
+  .classicParticipantCard{grid-template-columns:58px minmax(0,1fr) 68px;min-height:64px}
+  .classicParticipantPortrait{width:58px;height:58px}
+  .classicParticipantMain>b{font-size:12px}
+}
+@media (orientation:landscape) and (max-height:600px){
+  #classicScheduleHost .classicScheduleTail{top:34%;bottom:auto;transform:translateY(-50%);height:82px}
+  #classicScheduleHost .classicParticipantsTail{top:72%;bottom:auto;right:0;width:32px;height:78px;transform:translateY(-50%);flex-direction:column;border-right:0;border-radius:4px 0 0 4px}
+  #classicScheduleHost .classicParticipantsTail b{writing-mode:vertical-rl;transform:rotate(180deg);font-size:8px}
+  #classicScheduleHost .classicParticipantsTail em{left:-8px;right:auto;top:4px}
+  .classicParticipantsDrawer{width:min(580px,62vw)}
+  .classicParticipantsDrawer header{min-height:58px;padding:8px 10px}.classicParticipantsDrawer header h2{font-size:20px}.classicParticipantsDrawer header p{display:none}
+  .classicParticipantsBody{padding:7px;gap:9px}.classicParticipantCard{grid-template-columns:50px minmax(0,1fr) 66px;min-height:54px}.classicParticipantPortrait{width:50px;height:50px}.classicParticipantMain>b{font-size:12px}.classicParticipantModel{height:23px;grid-template-columns:30px minmax(0,1fr)}.classicParticipantModel>strong{font-size:11px}.classicParticipantCard>button{height:28px;min-width:62px;font-size:7px}
+}

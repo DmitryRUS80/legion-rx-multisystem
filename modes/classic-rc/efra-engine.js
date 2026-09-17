@@ -9,6 +9,10 @@ const ClassicRCEngine=(()=>{
   let event=null;
   try{event=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');}catch{}
   function persist(){try{if(event)localStorage.setItem(STORAGE_KEY,JSON.stringify(event));else localStorage.removeItem(STORAGE_KEY);}catch(e){console.warn('Classic RC persist',e);}return event;}
+  // RC77: RC76 introduced staggered release with a 1 s default. The director
+  // requirement is now 2 s. Migrate only the untouched legacy default once;
+  // later user-selected values remain fully configurable.
+  if(event?.settings&&!event.settings.staggerReleaseV2){if(Number(event.settings.staggerIntervalMs||0)===1000)event.settings.staggerIntervalMs=2000;event.settings.staggerReleaseV2=true;persist();}
   function get(){return event;}
   function hasActive(){return Boolean(event&&event.status!=='archived');}
   function create(input={}){
@@ -21,7 +25,7 @@ const ClassicRCEngine=(()=>{
         controlledPracticeRounds:Math.max(1,Math.min(4,Number(input.controlledPracticeRounds)||2)),
         qualifyingRounds:Math.max(2,Math.min(6,Number(input.qualifyingRounds)||5)),
         startTime:String(input.startTime||'09:00'),roundBreakMin:Math.max(0,Math.min(60,Number(input.roundBreakMin)||5)),finalBreakMin:Math.max(0,Math.min(120,Number(input.finalBreakMin)||20)),
-        minLapSec:Math.max(1,Math.min(60,Number(input.minLapSec)||2)),staggerIntervalMs:Math.max(500,Math.min(5000,Number(input.staggerIntervalMs)||1000)),finalPractice:Boolean(input.finalPractice!==false),lowestFinalPolicy:input.lowestFinalPolicy==='rebalance'?'rebalance':'keep'
+        minLapSec:Math.max(1,Math.min(60,Number(input.minLapSec)||2)),staggerIntervalMs:Math.max(500,Math.min(5000,Number(input.staggerIntervalMs)||2000)),finalPractice:Boolean(input.finalPractice!==false),lowestFinalPolicy:input.lowestFinalPolicy==='rebalance'?'rebalance':'keep'
       },
       groups:[],seedResults:[],seedStandings:[],controlledPractice:[],qualifying:[],qualifyingScores:[],qualifyingStandings:[],finalGroups:[],finalLegs:[],finalStandings:[],events:[],timeline:null,currentEventKey:'',session:null,runtimeClock:null,directorHold:{active:false,atEpoch:null},autoDirector:null,withdrawnPilotIds:[],lateEntries:[],participantChanges:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),completedAt:'',abortedAt:'',abortReason:''
     };persist();return event;

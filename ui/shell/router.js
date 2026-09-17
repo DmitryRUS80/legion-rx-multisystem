@@ -31,18 +31,21 @@ function uiRender(){
   if(state.view==='classicCockpit'&&typeof ClassicRCRuntime!=='undefined')ClassicRCRuntime.startTicker();
 }
 
+function classicShellStageLabel(status=''){return({setup:'НАСТРОЙКА',seeding:'РАССТАНОВКА',controlled:'ПРАКТИКА',qualifying:'КВАЛИФИКАЦИЯ',finalPractice:'ПРАКТИКА ФИНАЛА',final:'ФИНАЛ',finished:'ЗАВЕРШЕНО',aborted:'ЗАВЕРШЕНО ДОСРОЧНО'})[String(status||'')]||String(status||'').toUpperCase();}
+
 function uiUpdateHeader(){
   const td=state.trackDay,classic=(typeof ClassicRCEngine!=='undefined'?ClassicRCEngine.get():null);
   if(td?.status==='active')$('#headerRace').textContent=`Track Day · ${td.name}`;
-  else if(classic&&classic.status!=='archived')$('#headerRace').textContent=`EFRA RC · ${classic.name} · ${String(classic.status||'').toUpperCase()}`;
+  else if(classic&&classic.status!=='archived'){const n=String(classic.name||'').trim(),namePart=n&&n.toUpperCase()!=='EFRA RC'?` · ${n}`:'';$('#headerRace').textContent=`EFRA RC${namePart} · ${classicShellStageLabel(classic.status)}`;}
   else {const race=state.race;$('#headerRace').textContent=race?`${race.eventName} · ${stageLabel(race.stage)}`:'Нет активной гонки';}
   const el=$('#headerLapwiz');el.textContent=lapwiz.connected?`LapWiz · ${lapwiz.device?.name||'подключён'}`:'LapWiz · не подключён';el.className=`statusPill ${lapwiz.connected?'good':'neutral'}`;
 }
 
 function homeViewClassic(){
- const race=state.race,td=state.trackDay,trackActive=td?.status==='active';
+ const race=state.race,td=state.trackDay,trackActive=td?.status==='active',classic=(typeof ClassicRCEngine!=='undefined'?ClassicRCEngine.get():null),classicLive=Boolean(classic&&!['setup','finished','aborted','archived'].includes(String(classic.status||'')));
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
+   :classicLive?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ · EFRA RC</small><b>${esc(classic.name||'EFRA RC')}</b><span>${esc(classicShellStageLabel(classic.status))} · ${classic.pilotIds?.length||0} пилотов</span></div><button class="btn primary" data-classic-action="open">Продолжить EFRA RC ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
    :`<div class="heroMini"><b>${esc(LEGION_APP_DISPLAY_VERSION)}</b><span>Модульная архитектура · рабочие пульты сохранены</span></div>`;
  return `<section class="page homePage">
@@ -64,9 +67,10 @@ function homeViewClassic(){
 }
 
 function homeViewRxui(){
- const race=state.race,td=state.trackDay,trackActive=td?.status==='active';
+ const race=state.race,td=state.trackDay,trackActive=td?.status==='active',classic=(typeof ClassicRCEngine!=='undefined'?ClassicRCEngine.get():null),classicLive=Boolean(classic&&!['setup','finished','aborted','archived'].includes(String(classic.status||'')));
  const live=trackActive
    ?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНАЯ СЕССИЯ</small><b>${esc(td.name)}</b><span>Track Day · ${fmtClock(trackRemaining(td))} осталось</span></div><button class="btn primary" data-track-action="open-active">Вернуться в Track Day ${uiIcon('chevron','btnIcon')}</button></div>`
+   :classicLive?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ · EFRA RC</small><b>${esc(classic.name||'EFRA RC')}</b><span>${esc(classicShellStageLabel(classic.status))} · ${classic.pilotIds?.length||0} пилотов</span></div><button class="btn primary" data-classic-action="open">Продолжить EFRA RC ${uiIcon('chevron','btnIcon')}</button></div>`
    :race?`<div class="liveCard"><span class="liveDot"></span><div><small>АКТИВНОЕ СОБЫТИЕ</small><b>${esc(race.eventName)}</b><span>${stageLabel(race.stage)}</span></div><button class="btn primary" data-action="open-current">Продолжить ${uiIcon('chevron','btnIcon')}</button></div>`
    :`<div class="heroMini"><b>${esc(LEGION_APP_DISPLAY_VERSION)}</b><span>RACE CONTROL · TIMING · PILOTS</span></div>`;
  return `<section class="page homePage rxuiHomePage">
