@@ -32,7 +32,7 @@ function updateAppUpdateUi(){
   });
 
   document.querySelectorAll('[data-update-progress]').forEach(el=>{
-    const visible=['checking','downloading','ready','activating','current'].includes(s.status);
+    const visible=['checking','downloading','ready','activating','current','error'].includes(s.status);
     const pct=s.ready||s.status==='current'||s.status==='activating'?100:Math.max(0,Math.min(100,Number(s.progressPct)||0));
     el.classList.toggle('visible',visible);
     const bar=el.querySelector('[data-update-progress-bar]'),label=el.querySelector('[data-update-progress-label]'),percent=el.querySelector('[data-update-progress-percent]');
@@ -42,7 +42,8 @@ function updateAppUpdateUi(){
       else if(s.status==='current')label.textContent='УСТАНОВЛЕНО';
       else if(s.status==='activating')label.textContent='УСТАНОВКА…';
       else if(s.status==='checking')label.textContent='ПРОВЕРКА ОБНОВЛЕНИЯ…';
-      else if(s.status==='downloading')label.textContent=`СКАЧИВАНИЕ ${s.progressCompleted||0}/${s.progressTotal||'—'}`;
+      else if(s.status==='downloading')label.textContent=`СКАЧИВАНИЕ ${s.progressCompleted||0}/${s.progressTotal||'—'}${s.progressUrl?` · ${String(s.progressUrl).replace(/^\.\//,'')}`:''}`;
+      else if(s.status==='error')label.textContent=`ОШИБКА ${s.progressTotal?Math.min((s.progressCompleted||0)+1,s.progressTotal):(s.progressCompleted||0)}/${s.progressTotal||'—'}${s.errorUrl?` · ${String(s.errorUrl).replace(/^\.\//,'')}`:''}`;
       else label.textContent='ГОТОВО';
     }
   });

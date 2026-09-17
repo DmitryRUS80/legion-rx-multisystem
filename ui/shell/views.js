@@ -68,9 +68,9 @@ function champStageCard(c,s){const activeRace=state.race&&state.race.id===s.race
 function updateSettingsCard(){
  const u=appUpdater.snapshot(),o=offlineReady.snapshot();
  const updateClass=u.ready?'ready':['checking','downloading','activating'].includes(u.status)?'preparing':u.status==='error'?'error':'';
- const progressVisible=['checking','downloading','ready','activating','current'].includes(u.status);
+ const progressVisible=['checking','downloading','ready','activating','current','error'].includes(u.status);
  const progressPct=u.ready||u.status==='current'||u.status==='activating'?100:Math.max(0,Math.min(100,Number(u.progressPct)||0));
- const progressText=u.status==='ready'?'СКАЧИВАНИЕ ЗАВЕРШЕНО':u.status==='current'?'УСТАНОВЛЕНО':u.status==='activating'?'УСТАНОВКА…':u.status==='checking'?'ПРОВЕРКА ОБНОВЛЕНИЯ…':u.status==='downloading'?`СКАЧИВАНИЕ ${u.progressCompleted||0}/${u.progressTotal||'—'}`:'ГОТОВО';
+ const progressText=u.status==='ready'?'СКАЧИВАНИЕ ЗАВЕРШЕНО':u.status==='current'?'УСТАНОВЛЕНО':u.status==='activating'?'УСТАНОВКА…':u.status==='checking'?'ПРОВЕРКА ОБНОВЛЕНИЯ…':u.status==='downloading'?`СКАЧИВАНИЕ ${u.progressCompleted||0}/${u.progressTotal||'—'}`:u.status==='error'?`ОШИБКА ${u.progressTotal?Math.min((u.progressCompleted||0)+1,u.progressTotal):(u.progressCompleted||0)}/${u.progressTotal||'—'}${u.errorUrl?` · ${String(u.errorUrl).replace(/^\.\//,'')}`:''}`:'ГОТОВО';
  return `<div class="settingsStatusList">
   <div class="updateStateBox ${updateClass}" data-update-state data-status="${esc(u.status)}"><i></i><span><b data-update-title>${esc(appUpdater.label())}</b><small data-update-meta>${u.ready?`Готово: ${esc(u.availableDisplayVersion)}. Текущая: ${esc(u.currentDisplayVersion)}.`:`Установлено: ${esc(u.currentDisplayVersion)}.`}</small></span></div>
   <div class="updateDownloadProgress ${progressVisible?'visible':''}" data-update-progress><div class="updateProgressLine"><b data-update-progress-label>${esc(progressText)}</b><span data-update-progress-percent>${progressPct}%</span></div><div class="updateProgressTrack"><span data-update-progress-bar style="width:${progressPct}%"></span></div></div>
