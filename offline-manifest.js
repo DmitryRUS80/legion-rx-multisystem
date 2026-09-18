@@ -1,8 +1,8 @@
 'use strict';
 (function(root){
-  const appVersion='4.2.0-clean-full-rc78-setup-day-planner';
-  const displayVersion='4.2.0 CLEAN FULL APP RC78 · SETUP DAY PLANNER';
-  const cacheName='legion-rx-4-2-0-clean-full-rc78-setup-day-planner';
+  const appVersion='4.2.0-clean-full-rc79-track-day-icon-hotfix';
+  const displayVersion='4.2.0 CLEAN FULL APP RC79 · TRACK DAY ICON HOTFIX';
+  const cacheName='legion-rx-4-2-0-clean-full-rc79-track-day-icon-hotfix';
   const assets=[
     './',
     './index.html','./VERSION.txt','./manifest.webmanifest','./offline-manifest.js','./app-bridge.js','./app.js','./boot.js',

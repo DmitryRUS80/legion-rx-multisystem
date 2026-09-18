@@ -1,8 +1,8 @@
 /* LEGION RX · SAFE OFFLINE SERVICE WORKER · RC78 · SETUP DAY PLANNER */
 'use strict';
-const LEGION_SW_BUILD='rc78-setup-day-planner';
+const LEGION_SW_BUILD='rc79-track-day-icon-hotfix';
 /* Unique import URL prevents an older HTTP-cached release manifest being reused during SW update. */
-importScripts('./offline-manifest.js?build=rc78-setup-day-planner');
+importScripts('./offline-manifest.js?build=rc79-track-day-icon-hotfix');
 
 const CFG=self.LEGION_OFFLINE_CONFIG;
 const CACHE=CFG.cacheName;
@@ -81,8 +81,8 @@ async function validate(url,response){
   if(url==='./ui/shell/discipline-pults.css'){const s=await textOf(response);if(!s.includes('Landscape phone / narrow browser viewport')||!s.includes('.rxnTimeValue')||!s.includes('.rxnPilotStatsProfileEdit')||!s.includes('.rxnSimulatorButton')||!s.includes('.rxnSystemClock')||!s.includes('.rxnMobileRaceInfo'))throw new Error(`${url}: stale RC61 cockpit/profile CSS`);}
   if(url==='./ui/classic-polish/classic-controls.css'){const s=await textOf(response);if(!s.includes('data-skin="classic"'))throw new Error(`${url}: invalid Classic polish CSS`);}
   if(url==='./ui/classic-polish/classic-icons.js'){const s=await textOf(response);if(!s.includes('ClassicControlPolish'))throw new Error(`${url}: invalid Classic polish icons`);}
-  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc78-setup-day-planner')||!s.includes('./runtime/competition-autopilot.js')||!s.includes('./runtime/race-event-bus.js'))throw new Error(`${url}: stale RC78 release manifest`);}
-  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC78')||!s.includes('SETUP DAY PLANNER'))throw new Error(`${url}: stale VERSION`);}
+  if(url==='./offline-manifest.js'){const s=await textOf(response);if(!s.includes('4.2.0-clean-full-rc79-track-day-icon-hotfix')||!s.includes('./runtime/competition-autopilot.js')||!s.includes('./runtime/race-event-bus.js'))throw new Error(`${url}: stale RC79 release manifest`);}
+  if(url==='./VERSION.txt'){const s=await textOf(response);if(!s.includes('RC79')||!s.includes('TRACK DAY ICON HOTFIX'))throw new Error(`${url}: stale VERSION`);}
   return response;
 }
 function freshRequestUrl(url){const u=new URL(url,self.registration.scope);u.searchParams.set('__legion_build',LEGION_SW_BUILD);return u.href;}

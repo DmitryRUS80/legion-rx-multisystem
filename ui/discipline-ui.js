@@ -412,7 +412,6 @@ function rxnTrackHeader(td){
       ${rxnTopButton({cls:'danger',attrs:'data-track-action="finish" title="Завершить практику"',icon:'stop',title:'ЗАВЕРШИТЬ',sub:'ПРАКТИКУ'})}
       ${rxnTopButton({cls:'blue',attrs:'data-track-action="report" title="Результаты"',icon:'chart',title:'РЕЗУЛЬТАТЫ'})}
       ${rxnTopButton({cls:'iconOnly',attrs:'data-action="open-settings" title="Настройки"',icon:'settings'})}
-      ${rxnTopButton({cls:'iconOnly',attrs:'data-track-action="home" title="Главная"',icon:'list'})}
     </nav>
   </header>`;
 }
